@@ -1,0 +1,193 @@
+import { useState } from 'react';
+import { usePatient, useSettings } from '@/hooks/useDatabase';
+import { Card } from '@/components/shared/Card';
+import { exportAllData, importData, clearAllData } from '@/lib/db';
+import type { DrugEntry } from '@/types';
+
+export function SettingsView() {
+  const { patient, update: updatePatient } = usePatient();
+  const { settings, update: updateSettings } = useSettings();
+  const [showApiKey, setShowApiKey] = useState(false);
+  const [apiKeyInput, setApiKeyInput] = useState(settings?.apiKey || '');
+
+  async function handleSaveApiKey() {
+    await updateSettings({ apiKey: apiKeyInput });
+  }
+
+  async function handleExport() {
+    const json = await exportAllData();
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `alpakalive-backup-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async function handleImport() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+      const text = await file.text();
+      await importData(text);
+      window.location.reload();
+    };
+    input.click();
+  }
+
+  async function handleReset() {
+    if (confirm('Na pewno chcesz usunac WSZYSTKIE dane? Tej operacji nie mozna cofnac.')) {
+      if (confirm('To jest OSTATECZNE. Czy jestes pewien/pewna?')) {
+        await clearAllData();
+        window.location.reload();
+      }
+    }
+  }
+
+  return (
+    <div className="h-full overflow-y-auto px-3 py-4 space-y-4">
+      <h2 className="font-display text-lg font-semibold text-accent-dark">Ustawienia</h2>
+
+      {/* API Key */}
+      <Card title="Klucz API Anthropic">
+        <div className="space-y-2">
+          <div className="relative">
+            <input
+              type={showApiKey ? 'text' : 'password'}
+              value={apiKeyInput}
+              onChange={e => setApiKeyInput(e.target.value)}
+              placeholder="sk-ant-..."
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm bg-bg-primary pr-16"
+            />
+            <button
+              onClick={() => setShowApiKey(!showApiKey)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-text-secondary"
+            >
+              {showApiKey ? 'Ukryj' : 'Pokaz'}
+            </button>
+          </div>
+          <button
+            onClick={handleSaveApiKey}
+            className="w-full bg-accent-dark text-accent-warm rounded-lg py-2 text-sm font-medium"
+          >
+            Zapisz klucz
+          </button>
+          <p className="text-[10px] text-text-secondary">
+            Klucz jest przechowywany tylko lokalnie na Twoim urzadzeniu.
+          </p>
+        </div>
+      </Card>
+
+      {/* Patient Profile */}
+      {patient && (
+        <Card title="Profil pacjenta">
+          <div className="space-y-2 text-sm">
+            <ProfileRow label="Pseudonim" value={patient.displayName} />
+            <ProfileRow label="Diagnoza" value={patient.diagnosis} />
+            <ProfileRow label="Stadium" value={patient.stage} />
+            {patient.molecularSubtype && <ProfileRow label="Podtyp" value={patient.molecularSubtype} />}
+            <ProfileRow label="Schemat chemii" value={patient.currentChemo || 'Nie podano'} />
+            <ProfileRow label="Cykl" value={patient.chemoCycle || 'Nie podano'} />
+
+            {patient.oncologyMeds.filter(m => m.active).length > 0 && (
+              <div>
+                <div className="text-xs text-text-secondary mt-2 mb-1">Leki onkologiczne:</div>
+                {patient.oncologyMeds.filter(m => m.active).map((med, i) => (
+                  <DrugRow key={i} drug={med} />
+                ))}
+              </div>
+            )}
+
+            {patient.psychiatricMeds.filter(m => m.active).length > 0 && (
+              <div>
+                <div className="text-xs text-text-secondary mt-2 mb-1">Leki psychiatryczne:</div>
+                {patient.psychiatricMeds.filter(m => m.active).map((med, i) => (
+                  <DrugRow key={i} drug={med} />
+                ))}
+              </div>
+            )}
+          </div>
+        </Card>
+      )}
+
+      {/* Privacy */}
+      {patient?.pii && (
+        <Card title="Ochrona prywatnosci">
+          <div className="space-y-1 text-xs">
+            <div className="flex items-center gap-2">
+              <span>🔒</span>
+              <span className="text-text-secondary">Imie:</span>
+              <span>{patient.pii.firstName || '(nie podano)'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span>🔒</span>
+              <span className="text-text-secondary">Nazwisko:</span>
+              <span>{patient.pii.lastName || '(nie podano)'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span>🔒</span>
+              <span className="text-text-secondary">PESEL:</span>
+              <span>{patient.pii.pesel ? '***' + patient.pii.pesel.slice(-4) : '(nie podano)'}</span>
+            </div>
+            <p className="text-[10px] text-text-secondary mt-2">
+              Te dane nie opuszczaja Twojego urzadzenia. Agent widzi Cie jako "{patient.displayName}".
+            </p>
+          </div>
+        </Card>
+      )}
+
+      {/* Data management */}
+      <Card title="Zarzadzanie danymi">
+        <div className="space-y-2">
+          <button
+            onClick={handleExport}
+            className="w-full border border-accent-dark text-accent-dark rounded-lg py-2 text-sm"
+          >
+            Eksportuj dane (JSON)
+          </button>
+          <button
+            onClick={handleImport}
+            className="w-full border border-accent-dark text-accent-dark rounded-lg py-2 text-sm"
+          >
+            Importuj dane (JSON)
+          </button>
+          <button
+            onClick={handleReset}
+            className="w-full border border-alert-critical text-alert-critical rounded-lg py-2 text-sm"
+          >
+            Resetuj wszystkie dane
+          </button>
+        </div>
+      </Card>
+
+      {/* PWA install hint */}
+      <Card title="Instalacja na telefonie">
+        <div className="text-xs text-text-secondary space-y-1">
+          <p><strong>iPhone:</strong> Safari → Udostepnij → Dodaj do ekranu poczatkowego</p>
+          <p><strong>Android:</strong> Chrome → Menu (3 kropki) → Zainstaluj aplikacje</p>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function ProfileRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex justify-between py-1 border-b border-border">
+      <span className="text-text-secondary text-xs">{label}</span>
+      <span className="text-xs font-medium">{value}</span>
+    </div>
+  );
+}
+
+function DrugRow({ drug }: { drug: DrugEntry }) {
+  return (
+    <div className="text-xs py-0.5 pl-2 border-l-2 border-accent-green">
+      {drug.name} {drug.dose} — {drug.frequency}
+    </div>
+  );
+}
