@@ -20,7 +20,7 @@ export function calculateCurrentPhase(
     .sort((a, b) => new Date(b.actualDate || b.date).getTime() - new Date(a.actualDate || a.date).getTime());
 
   if (completed.length === 0) {
-    return { phase: 'C', dayInCycle: 0, description: 'Oczekiwanie na pierwsza chemie' };
+    return { phase: 'C', dayInCycle: 0, description: 'Oczekiwanie na pierwszą chemię' };
   }
 
   const lastChemoDate = new Date(completed[0].actualDate || completed[0].date);
@@ -38,13 +38,13 @@ export function calculateCurrentPhase(
 
   if (daysSinceChemo <= 3) {
     phase = 'A';
-    description = `Faza A — Kryzys (dzien ${daysSinceChemo} po chemii). Nawodnienie, sen, zero wysilku, dieta lekkostrawna.`;
+    description = `Faza A — Kryzys (dzień ${daysSinceChemo} po chemii). Nawodnienie, sen, zero wysiłku, dieta lekkostrawna.`;
   } else if (daysSinceChemo <= 7) {
     phase = 'B';
-    description = `Faza B — Regeneracja (dzien ${daysSinceChemo} po chemii). Delikatny ruch, pelniejsze posilki.`;
+    description = `Faza B — Regeneracja (dzień ${daysSinceChemo} po chemii). Delikatny ruch, pełniejsze posiłki.`;
   } else {
     phase = 'C';
-    description = `Faza C — Odbudowa (dzien ${daysSinceChemo} po chemii). Maks odzywienie, aktywnosc, wlewy, badania krwi.`;
+    description = `Faza C — Odbudowa (dzień ${daysSinceChemo} po chemii). Maks odżywienie, aktywność, wlewy, badania krwi.`;
   }
 
   const daysUntilNextChemo = Math.max(0, cycleLength - daysSinceChemo);

@@ -11,9 +11,9 @@ export function EnergyChart({ data }: EnergyChartProps) {
     .map(d => ({
       date: d.date.slice(5), // MM-DD
       energia: d.energy,
-      nastroj: d.mood,
-      bol: d.pain,
-      nudnosci: d.nausea,
+      nastrój: d.mood,
+      ból: d.pain,
+      nudności: d.nausea,
     }));
 
   if (chartData.length === 0) {
@@ -29,9 +29,9 @@ export function EnergyChart({ data }: EnergyChartProps) {
         <Tooltip contentStyle={{ fontSize: 12 }} />
         <Legend wrapperStyle={{ fontSize: 10 }} />
         <Line type="monotone" dataKey="energia" stroke="#7d9a6e" strokeWidth={2} dot={{ r: 3 }} />
-        <Line type="monotone" dataKey="nastroj" stroke="#3498db" strokeWidth={2} dot={{ r: 3 }} />
-        <Line type="monotone" dataKey="bol" stroke="#e74c3c" strokeWidth={2} dot={{ r: 3 }} />
-        <Line type="monotone" dataKey="nudnosci" stroke="#f39c12" strokeWidth={1.5} dot={{ r: 2 }} strokeDasharray="5 5" />
+        <Line type="monotone" dataKey="nastrój" stroke="#3498db" strokeWidth={2} dot={{ r: 3 }} />
+        <Line type="monotone" dataKey="ból" stroke="#e74c3c" strokeWidth={2} dot={{ r: 3 }} />
+        <Line type="monotone" dataKey="nudności" stroke="#f39c12" strokeWidth={1.5} dot={{ r: 2 }} strokeDasharray="5 5" />
       </LineChart>
     </ResponsiveContainer>
   );

@@ -23,7 +23,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         }`}
       >
         {hasImages && (
-          <div className="mb-2 text-xs opacity-70">📷 Zdjecie dolaczone</div>
+          <div className="mb-2 text-xs opacity-70">📷 Zdjęcie dołączone</div>
         )}
         <div className="whitespace-pre-wrap">{text}</div>
         <div className={`text-[10px] mt-1 ${isUser ? 'text-accent-warm/60' : 'text-text-secondary'}`}>

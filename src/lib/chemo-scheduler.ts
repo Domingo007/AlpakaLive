@@ -41,10 +41,10 @@ export function evaluatePreChemoBlood(results: PreChemoBlood): ChemoReadinessAss
     issues,
     recommendation:
       readiness === 'postpone'
-        ? 'Wyniki ponizej progu bezpieczenstwa. Onkolog prawdopodobnie odroczy chemie.'
+        ? 'Wyniki poniżej progu bezpieczeństwa. Onkolog prawdopodobnie odroczy chemię.'
         : readiness === 'caution'
-        ? 'Wyniki na granicy. Decyzja onkologa — mozliwe odroczenie lub redukcja dawki.'
-        : 'Wyniki pozwalaja na podanie chemii.',
+        ? 'Wyniki na granicy. Decyzja onkologa — możliwe odroczenie lub redukcja dawki.'
+        : 'Wyniki pozwalają na podanie chemii.',
     affectedPredictions: readiness !== 'go',
   };
 }

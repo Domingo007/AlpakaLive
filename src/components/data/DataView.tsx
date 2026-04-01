@@ -10,7 +10,7 @@ export function DataView() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full text-text-secondary">
-        Ladowanie danych...
+        Ładowanie danych...
       </div>
     );
   }
@@ -35,14 +35,14 @@ export function DataView() {
         <Card>
           <div className="text-center py-8 text-text-secondary text-sm">
             <div className="text-3xl mb-3">📊</div>
-            <p>Brak danych do wyswietlenia.</p>
-            <p className="mt-1">Zacznij od codziennych wpisow w zakladce Chat — wykresy pojawia sie automatycznie.</p>
+            <p>Brak danych do wyświetlenia.</p>
+            <p className="mt-1">Zacznij od codziennych wpisów w zakładce Chat — wykresy pojawią się automatycznie.</p>
           </div>
         </Card>
       ) : (
         <>
           {daily.length > 0 && (
-            <Card title="Energia / Nastroj / Bol (14 dni)">
+            <Card title="Energia / Nastrój / Ból (14 dni)">
               <EnergyChart data={daily} />
             </Card>
           )}

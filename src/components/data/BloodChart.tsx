@@ -11,7 +11,7 @@ export function BloodChart({ data }: BloodChartProps) {
   const sorted = [...data].sort((a, b) => a.date.localeCompare(b.date));
 
   if (sorted.length === 0) {
-    return <div className="text-center text-text-secondary text-xs py-4">Brak badan krwi</div>;
+    return <div className="text-center text-text-secondary text-xs py-4">Brak badań krwi</div>;
   }
 
   return (

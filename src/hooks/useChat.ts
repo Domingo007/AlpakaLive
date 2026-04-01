@@ -59,7 +59,7 @@ export function useChat() {
       const settings = await getSettings();
       const patient = await getPatient();
 
-      let systemPrompt = 'Jestes agentem medycznym AlpakaLive. Pomagasz pacjentowi onkologicznemu. Mow po polsku.';
+      let systemPrompt = 'Jesteś agentem medycznym AlpakaLive. Pomagasz pacjentowi onkologicznemu. Mów po polsku.';
 
       if (patient) {
         const [daily, blood, wearable, meals, chemo, imaging, predictions] = await Promise.all([
@@ -100,7 +100,7 @@ export function useChat() {
       await addChatMessage(assistantMessage);
       setMessages(prev => [...prev, assistantMessage]);
     } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'Nieznany blad';
+      const errorMsg = err instanceof Error ? err.message : 'Nieznany błąd';
       setError(errorMsg);
     } finally {
       setIsLoading(false);

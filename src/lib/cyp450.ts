@@ -60,10 +60,10 @@ export function checkInteractions(drugNames: string[]): DrugInteraction[] {
         interactions.push({
           drug1: drugNames[i],
           drug2: drugNames[j],
-          mechanism: `Oba leki sa substratami ${enzyme}`,
+          mechanism: `Oba leki są substratami ${enzyme}`,
           severity: enzyme.includes('3A4') ? 'moderate' : 'low',
-          description: `Konkurencja o metabolizm przez ${enzyme} — mozliwe wyzsze stezenie obu lekow`,
-          recommendation: 'Monitorowac efekty uboczne obu lekow',
+          description: `Konkurencja o metabolizm przez ${enzyme} — możliwe wyższe stężenie obu leków`,
+          recommendation: 'Monitorować efekty uboczne obu leków',
         });
       }
 
@@ -77,8 +77,8 @@ export function checkInteractions(drugNames: string[]): DrugInteraction[] {
             drug2: drugNames[j],
             mechanism: `${drugNames[i]} hamuje ${baseEnzyme}, ${drugNames[j]} jest jego substratem`,
             severity,
-            description: `Mozliwe podwyzszenie stezenia ${drugNames[j]} we krwi`,
-            recommendation: severity === 'high' ? 'Skonsultowac z lekarzem — mozliwa zmiana dawki' : 'Monitorowac',
+            description: `Możliwe podwyższenie stężenia ${drugNames[j]} we krwi`,
+            recommendation: severity === 'high' ? 'Skonsultować z lekarzem — możliwa zmiana dawki' : 'Monitorować',
           });
         }
       }
@@ -92,8 +92,8 @@ export function checkInteractions(drugNames: string[]): DrugInteraction[] {
             drug2: drugNames[i],
             mechanism: `${drugNames[j]} hamuje ${baseEnzyme}, ${drugNames[i]} jest jego substratem`,
             severity,
-            description: `Mozliwe podwyzszenie stezenia ${drugNames[i]} we krwi`,
-            recommendation: severity === 'high' ? 'Skonsultowac z lekarzem — mozliwa zmiana dawki' : 'Monitorowac',
+            description: `Możliwe podwyższenie stężenia ${drugNames[i]} we krwi`,
+            recommendation: severity === 'high' ? 'Skonsultować z lekarzem — możliwa zmiana dawki' : 'Monitorować',
           });
         }
       }
@@ -107,8 +107,8 @@ export function checkInteractions(drugNames: string[]): DrugInteraction[] {
             drug2: drugNames[j],
             mechanism: `${drugNames[i]} indukuje ${baseEnzyme}, ${drugNames[j]} jest jego substratem`,
             severity: indEnzyme.includes('strong') ? 'high' : 'moderate',
-            description: `Mozliwe obnizenie stezenia ${drugNames[j]} — zmniejszona skutecznosc`,
-            recommendation: 'Skonsultowac z lekarzem',
+            description: `Możliwe obniżenie stężenia ${drugNames[j]} — zmniejszona skuteczność`,
+            recommendation: 'Skonsultować z lekarzem',
           });
         }
       }
@@ -118,10 +118,10 @@ export function checkInteractions(drugNames: string[]): DrugInteraction[] {
         interactions.push({
           drug1: drugNames[i],
           drug2: drugNames[j],
-          mechanism: 'Oba leki maja dzialanie serotoninergiczne',
+          mechanism: 'Oba leki mają działanie serotoninergiczne',
           severity: 'high',
-          description: 'Ryzyko zespolu serotoninowego — goraczka, pobudzenie, drżenia, biegunka',
-          recommendation: 'Konieczna kontrola psychiatry. Monitorowac objawy zespolu serotoninowego.',
+          description: 'Ryzyko zespołu serotoninowego — gorączka, pobudzenie, drżenia, biegunka',
+          recommendation: 'Konieczna kontrola psychiatry. Monitorować objawy zespołu serotoninowego.',
         });
       }
     }

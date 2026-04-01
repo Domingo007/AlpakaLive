@@ -35,7 +35,7 @@ export function ChatView() {
     reader.onload = async () => {
       const base64 = (reader.result as string).split(',')[1];
       const mediaType = file.type;
-      await send(input || 'Przeanalizuj to zdjecie', [{ base64, mediaType }]);
+      await send(input || 'Przeanalizuj to zdjęcie', [{ base64, mediaType }]);
       setInput('');
     };
     reader.readAsDataURL(file);
@@ -60,7 +60,7 @@ export function ChatView() {
               <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '150ms' }} />
               <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '300ms' }} />
             </div>
-            <span className="text-xs text-text-secondary">Mysle...</span>
+            <span className="text-xs text-text-secondary">Myślę...</span>
           </div>
         )}
         {error && (
@@ -80,7 +80,7 @@ export function ChatView() {
           <button
             onClick={() => fileInputRef.current?.click()}
             className="p-2 text-xl shrink-0"
-            title="Dodaj zdjecie"
+            title="Dodaj zdjęcie"
           >
             📷
           </button>
@@ -96,7 +96,7 @@ export function ChatView() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Napisz wiadomosc..."
+            placeholder="Napisz wiadomość..."
             rows={1}
             className="flex-1 resize-none rounded-xl border border-border px-3 py-2 text-sm bg-bg-primary focus:outline-none focus:border-accent-dark min-h-[40px] max-h-[120px]"
             style={{ height: 'auto', overflow: 'hidden' }}

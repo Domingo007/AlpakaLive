@@ -14,13 +14,13 @@ interface AIResponse {
 }
 
 const MOCK_RESPONSES: Record<string, string> = {
-  default: 'Dzien dobry! Jestem Twoim agentem medycznym AlpakaLive. Jak sie dzis czujesz? Opowiedz mi o swoim samopoczuciu — energia, bol, nudnosci, nastroj.',
-  morning: 'Dzien dobry! Jak sie dziis czujesz po przebudzeniu?\n\nPowiedz mi o:\n- Energia (1-10)\n- Bol (0-10)\n- Nudnosci (0-10)\n- Jak spalas/spales?',
-  evening: 'Czas na wieczorne podsumowanie. Jak minol dzien?\n\nOpowiedz o:\n- Energia pod koniec dnia\n- Co jadlas/jables?\n- Czy bral/a suplementy?\n- Jak ogolnie nastroj?',
-  chemo: 'Rozumiem, ze miales/miala dzis chemie. To wazne zeby monitorowac jak sie czujesz.\n\nPowiedz mi:\n- Jakie leki podano?\n- Jak sie czujesz teraz? (nudnosci, zmeczenie)\n- Czy jestes dobrze nawodniona/y?',
-  report: '## Raport dla lekarza\n\n**Okres:** ostatnie 7 dni\n\n**Trendy:**\n- Energia: brak danych (tryb demo)\n- Bol: brak danych\n- Waga: brak danych\n\n**Alerty:** Brak danych do analizy\n\n*Aby uzyskac pelny raport, dodaj klucz API w ustawieniach i wprowadz dane przez dziennik.*',
-  prediction: '**Predykcja** wymaga minimum 7 dni danych dziennika i 2 cykli chemii.\n\nZacznij od codziennego raportowania samopoczucia — po zebraniu wystarczajacej ilosci danych, bede mogl przewidywac Twoje samopoczucie.',
-  imaging: 'Analiza obrazowania wymaga klucza API Claude z obsluga Vision.\n\nGdy dodasz klucz API, bede mogl:\n- Analizowac zdjecia RTG, CT, PET, MRI\n- Porownywac z poprzednimi badaniami\n- Sledzic zmiany rozmiarow guza (RECIST)',
+  default: 'Dzień dobry! Jestem Twoim agentem medycznym AlpakaLive. Jak się dziś czujesz? Opowiedz mi o swoim samopoczuciu — energia, ból, nudności, nastrój.',
+  morning: 'Dzień dobry! Jak się dzisiaj czujesz po przebudzeniu?\n\nPowiedz mi o:\n- Energia (1-10)\n- Ból (0-10)\n- Nudności (0-10)\n- Jak spałaś/spałeś?',
+  evening: 'Czas na wieczorne podsumowanie. Jak minął dzień?\n\nOpowiedz o:\n- Energia pod koniec dnia\n- Co jadłaś/jadłeś?\n- Czy brałaś/brałeś suplementy?\n- Jak ogólnie nastrój?',
+  chemo: 'Rozumiem, że miałeś/miała dziś chemię. To ważne żeby monitorować jak się czujesz.\n\nPowiedz mi:\n- Jakie leki podano?\n- Jak się czujesz teraz? (nudności, zmęczenie)\n- Czy jesteś dobrze nawodniona/y?',
+  report: '## Raport dla lekarza\n\n**Okres:** ostatnie 7 dni\n\n**Trendy:**\n- Energia: brak danych (tryb demo)\n- Ból: brak danych\n- Waga: brak danych\n\n**Alerty:** Brak danych do analizy\n\n*Aby uzyskać pełny raport, dodaj klucz API w ustawieniach i wprowadź dane przez dziennik.*',
+  prediction: '**Predykcja** wymaga minimum 7 dni danych dziennika i 2 cykli chemii.\n\nZacznij od codziennego raportowania samopoczucia — po zebraniu wystarczającej ilości danych, będę mógł przewidywać Twoje samopoczucie.',
+  imaging: 'Analiza obrazowania wymaga klucza API Claude z obsługą Vision.\n\nGdy dodasz klucz API, będę mógł:\n- Analizować zdjęcia RTG, CT, PET, MRI\n- Porównywać z poprzednimi badaniami\n- Śledzić zmiany rozmiarów guza (RECIST)',
 };
 
 function getMockResponse(userMessage: string): string {
@@ -32,7 +32,7 @@ function getMockResponse(userMessage: string): string {
   if (lower.includes('rano') || lower.includes('pobudz') || lower.includes('dzien dobry')) return MOCK_RESPONSES.morning;
   if (lower.includes('wiecz') || lower.includes('koniec dnia') || lower.includes('dobranoc')) return MOCK_RESPONSES.evening;
 
-  return `Dzieki za informacje! W trybie demo nie moge pelnie analizowac danych. Dodaj klucz API Anthropic w ustawieniach, zeby odblokować pelna funkcjonalnosc agenta.\n\nNa razie moge Ci pomoc poruszac sie po aplikacji — sprawdz zakladki Dane, Obrazowanie i Ustawienia.`;
+  return `Dzięki za informacje! W trybie demo nie mogę w pełni analizować danych. Dodaj klucz API Anthropic w ustawieniach, żeby odblokować pełną funkcjonalność agenta.\n\nNa razie mogę Ci pomóc poruszać się po aplikacji — sprawdź zakładki Dane, Obrazowanie i Ustawienia.`;
 }
 
 export async function sendMessage(

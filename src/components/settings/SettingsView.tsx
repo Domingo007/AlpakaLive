@@ -40,8 +40,8 @@ export function SettingsView() {
   }
 
   async function handleReset() {
-    if (confirm('Na pewno chcesz usunac WSZYSTKIE dane? Tej operacji nie mozna cofnac.')) {
-      if (confirm('To jest OSTATECZNE. Czy jestes pewien/pewna?')) {
+    if (confirm('Na pewno chcesz usunąć WSZYSTKIE dane? Tej operacji nie można cofnąć.')) {
+      if (confirm('To jest OSTATECZNE. Czy jesteś pewien/pewna?')) {
         await clearAllData();
         window.location.reload();
       }
@@ -67,7 +67,7 @@ export function SettingsView() {
               onClick={() => setShowApiKey(!showApiKey)}
               className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-text-secondary"
             >
-              {showApiKey ? 'Ukryj' : 'Pokaz'}
+              {showApiKey ? 'Ukryj' : 'Pokaż'}
             </button>
           </div>
           <button
@@ -77,7 +77,7 @@ export function SettingsView() {
             Zapisz klucz
           </button>
           <p className="text-[10px] text-text-secondary">
-            Klucz jest przechowywany tylko lokalnie na Twoim urzadzeniu.
+            Klucz jest przechowywany tylko lokalnie na Twoim urządzeniu.
           </p>
         </div>
       </Card>
@@ -116,7 +116,7 @@ export function SettingsView() {
 
       {/* Privacy */}
       {patient?.pii && (
-        <Card title="Ochrona prywatnosci">
+        <Card title="Ochrona prywatności">
           <div className="space-y-1 text-xs">
             <div className="flex items-center gap-2">
               <span>🔒</span>
@@ -134,14 +134,14 @@ export function SettingsView() {
               <span>{patient.pii.pesel ? '***' + patient.pii.pesel.slice(-4) : '(nie podano)'}</span>
             </div>
             <p className="text-[10px] text-text-secondary mt-2">
-              Te dane nie opuszczaja Twojego urzadzenia. Agent widzi Cie jako "{patient.displayName}".
+              Te dane nie opuszczają Twojego urządzenia. Agent widzi Cię jako "{patient.displayName}".
             </p>
           </div>
         </Card>
       )}
 
       {/* Data management */}
-      <Card title="Zarzadzanie danymi">
+      <Card title="Zarządzanie danymi">
         <div className="space-y-2">
           <button
             onClick={handleExport}
@@ -167,7 +167,7 @@ export function SettingsView() {
       {/* PWA install hint */}
       <Card title="Instalacja na telefonie">
         <div className="text-xs text-text-secondary space-y-1">
-          <p><strong>iPhone:</strong> Safari → Udostepnij → Dodaj do ekranu poczatkowego</p>
+          <p><strong>iPhone:</strong> Safari → Udostępnij → Dodaj do ekranu początkowego</p>
           <p><strong>Android:</strong> Chrome → Menu (3 kropki) → Zainstaluj aplikacje</p>
         </div>
       </Card>

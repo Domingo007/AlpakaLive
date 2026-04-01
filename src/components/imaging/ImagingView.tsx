@@ -42,7 +42,7 @@ export function ImagingView() {
             </select>
           </div>
           <div>
-            <label className="text-xs text-text-secondary block mb-1">Region ciala</label>
+            <label className="text-xs text-text-secondary block mb-1">Region ciała</label>
             <input
               value={bodyRegion}
               onChange={e => setBodyRegion(e.target.value)}
@@ -54,7 +54,7 @@ export function ImagingView() {
             onClick={() => fileInputRef.current?.click()}
             className="w-full bg-accent-dark text-accent-warm rounded-xl py-3 text-sm font-medium"
           >
-            📷 Dodaj zdjecie badania
+            📷 Dodaj zdjęcie badania
           </button>
           <input
             ref={fileInputRef}
@@ -68,13 +68,13 @@ export function ImagingView() {
 
       {/* Timeline */}
       {loading ? (
-        <div className="text-center text-text-secondary text-sm py-4">Ladowanie...</div>
+        <div className="text-center text-text-secondary text-sm py-4">Ładowanie...</div>
       ) : imaging.length === 0 ? (
         <Card>
           <div className="text-center py-8 text-text-secondary text-sm">
             <div className="text-3xl mb-3">🏥</div>
-            <p>Brak badan obrazowych.</p>
-            <p className="mt-1">Dodaj zdjecia RTG, CT, PET lub MRI aby sledzic zmiany w czasie.</p>
+            <p>Brak badań obrazowych.</p>
+            <p className="mt-1">Dodaj zdjęcia RTG, CT, PET lub MRI aby śledzić zmiany w czasie.</p>
           </div>
         </Card>
       ) : (

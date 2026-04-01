@@ -26,8 +26,8 @@ export function calculateRecistResponse(
 
 export function getRecistLabel(response: RecistResponse): string {
   switch (response) {
-    case 'CR': return 'Calkowita odpowiedz';
-    case 'PR': return 'Czesciowa odpowiedz';
+    case 'CR': return 'Całkowita odpowiedź';
+    case 'PR': return 'Częściowa odpowiedź';
     case 'SD': return 'Stabilna choroba';
     case 'PD': return 'Progresja';
   }

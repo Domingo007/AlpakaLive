@@ -24,7 +24,7 @@ export default function App() {
       <div className="h-screen flex items-center justify-center bg-bg-primary">
         <div className="text-center">
           <div className="text-4xl mb-3">🦙</div>
-          <div className="text-sm text-text-secondary">Ladowanie...</div>
+          <div className="text-sm text-text-secondary">Ładowanie...</div>
         </div>
       </div>
     );

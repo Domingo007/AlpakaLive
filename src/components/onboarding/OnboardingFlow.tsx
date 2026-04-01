@@ -28,17 +28,17 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             <div className="text-6xl">🦙</div>
             <h1 className="font-display text-2xl font-bold text-accent-dark">AlpakaLive</h1>
             <p className="text-text-secondary text-sm leading-relaxed">
-              Holistyczny System Wsparcia Onkologicznego. Twoj codzienny towarzysz w walce z choroba.
+              Holistyczny System Wsparcia Onkologicznego. Twój codzienny towarzysz w walce z chorobą.
             </p>
             <div className="bg-accent-warm/50 rounded-xl p-4 text-xs text-text-primary">
-              <p className="font-medium mb-2">🔒 Twoje dane sa bezpieczne</p>
-              <p>Wszystko przechowywane lokalnie na Twoim urzadzeniu. Dane osobowe nigdy nie opuszczaja telefonu.</p>
+              <p className="font-medium mb-2">🔒 Twoje dane są bezpieczne</p>
+              <p>Wszystko przechowywane lokalnie na Twoim urządzeniu. Dane osobowe nigdy nie opuszczają telefonu.</p>
             </div>
             <button
               onClick={ob.next}
               className="w-full bg-accent-dark text-accent-warm rounded-xl py-3 text-sm font-medium"
             >
-              Rozpocznij konfiguracje
+              Rozpocznij konfigurację
             </button>
           </div>
         )}
@@ -47,16 +47,16 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           <div className="space-y-4">
             <h2 className="font-display text-xl font-semibold text-accent-dark">🔒 Dane prywatne</h2>
             <p className="text-xs text-text-secondary">
-              Te dane NIE opuszcza Twojego telefonu. Agent widzi tylko pseudonim.
+              Te dane NIE opuszczą Twojego telefonu. Agent widzi tylko pseudonim.
             </p>
 
-            <InputField label="Imie" value={ob.pii.firstName} onChange={v => ob.setPii({ ...ob.pii, firstName: v })} />
+            <InputField label="Imię" value={ob.pii.firstName} onChange={v => ob.setPii({ ...ob.pii, firstName: v })} />
             <InputField label="Nazwisko (opcjonalnie)" value={ob.pii.lastName} onChange={v => ob.setPii({ ...ob.pii, lastName: v })} />
             <InputField label="PESEL (opcjonalnie)" value={ob.pii.pesel} onChange={v => ob.setPii({ ...ob.pii, pesel: v })} />
             <InputField label="Pseudonim dla agenta" value={ob.displayName} onChange={ob.setDisplayName} placeholder={ob.pii.firstName || 'np. Paula'} />
 
             <p className="text-[10px] text-text-secondary">
-              Agent bedzie Cie nazywal "{ob.displayName || ob.pii.firstName || 'Pacjent'}".
+              Agent będzie Cię nazywał "{ob.displayName || ob.pii.firstName || 'Pacjent'}".
             </p>
 
             <NavButtons onBack={ob.back} onNext={ob.next} canBack={ob.canGoBack} />
@@ -67,7 +67,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           <div className="space-y-4">
             <h2 className="font-display text-xl font-semibold text-accent-dark">🔑 Klucz API</h2>
             <p className="text-xs text-text-secondary">
-              Klucz Anthropic Claude jest potrzebny do pelnej funkcjonalnosci AI. Mozesz go dodac pozniej.
+              Klucz Anthropic Claude jest potrzebny do pełnej funkcjonalności AI. Możesz go dodać później.
             </p>
 
             <InputField
@@ -79,7 +79,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             />
 
             <p className="text-[10px] text-text-secondary">
-              Klucz przechowywany lokalnie. Bez klucza aplikacja dziala w trybie demo.
+              Klucz przechowywany lokalnie. Bez klucza aplikacja działa w trybie demo.
             </p>
 
             <NavButtons onBack={ob.back} onNext={ob.next} canBack={ob.canGoBack} />
@@ -117,7 +117,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             </div>
 
             <InputField
-              label="Podtyp molekularny (jesli znany)"
+              label="Podtyp molekularny (jeśli znany)"
               value={ob.molecularSubtype}
               onChange={ob.setMolecularSubtype}
               placeholder="np. HER2+, Triple Negative..."
@@ -131,7 +131,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           <div className="space-y-4">
             <h2 className="font-display text-xl font-semibold text-accent-dark">💊 Leczenie</h2>
             <p className="text-xs text-text-secondary">
-              Mozesz to uzupelnic pozniej przez chat lub ustawienia.
+              Możesz to uzupełnić później przez chat lub ustawienia.
             </p>
 
             <InputField
@@ -145,7 +145,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               label="Cykl chemii"
               value={ob.chemoCycle}
               onChange={ob.setChemoCycle}
-              placeholder="np. co 3 tygodnie, pon-pon-tydzien wolny"
+              placeholder="np. co 3 tygodnie, pon-pon-tydzień wolny"
             />
 
             <NavButtons onBack={ob.back} onNext={ob.next} canBack={ob.canGoBack} />
@@ -167,7 +167,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             </div>
 
             <p className="text-xs text-text-secondary">
-              Wszystkie dane mozna zmienic pozniej w Ustawieniach lub przez rozmowe z agentem.
+              Wszystkie dane można zmienić później w Ustawieniach lub przez rozmowę z agentem.
             </p>
 
             <button

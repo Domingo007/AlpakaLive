@@ -111,9 +111,9 @@ export class PIISanitizer {
 }
 
 export const IMAGE_PII_INSTRUCTION = `
-INSTRUKCJA PRYWATNOSCI DLA ZDJECIA:
-Na tym zdjeciu moga byc widoczne dane osobowe pacjenta (imie, nazwisko, PESEL, adres, numer pacjenta).
+INSTRUKCJA PRYWATNOŚCI DLA ZDJĘCIA:
+Na tym zdjęciu mogą być widoczne dane osobowe pacjenta (imię, nazwisko, PESEL, adres, numer pacjenta).
 NIGDY nie powtarzaj tych danych w odpowiedzi.
-Wyciagnij WYLACZNIE wartosci medyczne: wyniki badan, markery, daty badan.
-Jesli w wynikach widnieje nazwisko lekarza — mozesz je podac (to nie dane pacjenta).
-Wszelkie dane pacjenta z naglowka dokumentu — ZIGNORUJ i NIE CYTUJ.`;
+Wyciągnij WYŁĄCZNIE wartości medyczne: wyniki badań, markery, daty badań.
+Jeśli w wynikach widnieje nazwisko lekarza — możesz je podać (to nie dane pacjenta).
+Wszelkie dane pacjenta z nagłówka dokumentu — ZIGNORUJ i NIE CYTUJ.`;
