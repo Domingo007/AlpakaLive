@@ -2,9 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import { useChat } from '@/hooks/useChat';
 import { MessageBubble } from './MessageBubble';
 import { QuickActions } from './QuickActions';
+import { PredictionCards } from './PredictionCards';
 
 export function ChatView() {
-  const { messages, isLoading, error, send } = useChat();
+  const { messages, isLoading, error, send, lastPrediction } = useChat();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -61,6 +62,11 @@ export function ChatView() {
               <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '300ms' }} />
             </div>
             <span className="text-xs text-text-secondary">Myślę...</span>
+          </div>
+        )}
+        {lastPrediction && (
+          <div className="px-1">
+            <PredictionCards result={lastPrediction} />
           </div>
         )}
         {error && (

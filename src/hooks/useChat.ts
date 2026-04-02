@@ -5,11 +5,20 @@ import { getChatMessages, addChatMessage, getSettings, getPatient, getRecentDail
 import { sendMessage, getWelcomeMessage } from '@/lib/ai';
 import { buildSystemPrompt } from '@/lib/system-prompt';
 import { extractDataFromResponse, saveExtractedData, cleanResponseFromTags } from '@/lib/data-extractor';
+import { generatePrediction, savePrediction, formatPredictionForChat, checkPredictionAccuracy, type PredictionResult } from '@/lib/prediction-engine';
+
+const PREDICTION_TRIGGERS = ['predykcja', 'prognoza', 'przewiduj', 'jak będę się czuć', 'jak bede sie czuc', 'jak będę', 'co mnie czeka', 'najbliższe dni', 'ten tydzień', 'ten tydzien'];
+
+function isPredictionRequest(text: string): boolean {
+  const lower = text.toLowerCase();
+  return PREDICTION_TRIGGERS.some(t => lower.includes(t));
+}
 
 export function useChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [lastPrediction, setLastPrediction] = useState<PredictionResult | null>(null);
 
   useEffect(() => {
     loadMessages();
@@ -56,6 +65,38 @@ export function useChat() {
     setIsLoading(true);
 
     try {
+      const userText = typeof content === 'string' ? content : text;
+
+      // Check for prediction request — handle locally
+      if (isPredictionRequest(userText)) {
+        const predResult = await generatePrediction();
+        setLastPrediction(predResult);
+
+        if (!predResult.insufficientData) {
+          await savePrediction(predResult);
+        }
+
+        // Also check past prediction accuracy
+        const accuracyCheck = await checkPredictionAccuracy();
+
+        let responseText = formatPredictionForChat(predResult);
+        if (accuracyCheck) {
+          responseText += `\n\n🎯 **Trafność poprzednich predykcji:** ${accuracyCheck.overallAccuracy}%`;
+        }
+
+        const assistantMessage: ChatMessage = {
+          id: uuidv4(),
+          role: 'assistant',
+          content: responseText,
+          timestamp: new Date(),
+        };
+        await addChatMessage(assistantMessage);
+        setMessages(prev => [...prev, assistantMessage]);
+        setIsLoading(false);
+        return;
+      }
+
+      // Regular AI flow
       const settings = await getSettings();
       const patient = await getPatient();
 
@@ -107,5 +148,5 @@ export function useChat() {
     }
   }, [messages]);
 
-  return { messages, isLoading, error, send, reload: loadMessages };
+  return { messages, isLoading, error, send, reload: loadMessages, lastPrediction };
 }
