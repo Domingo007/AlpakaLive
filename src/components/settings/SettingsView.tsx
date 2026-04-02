@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { usePatient, useSettings } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
+import { HistoricalImport } from './HistoricalImport';
 import { exportAllData, importData, clearAllData } from '@/lib/db';
 import type { DrugEntry } from '@/types';
 
@@ -113,6 +114,9 @@ export function SettingsView() {
           </div>
         </Card>
       )}
+
+      {/* Historical Data Import */}
+      <HistoricalImport />
 
       {/* Privacy */}
       {patient?.pii && (
