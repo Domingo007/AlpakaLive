@@ -1,5 +1,12 @@
-node_modules
-dist
+node_modules/
+dist/
+out/
 .vite
+.next/
+.vercel
+.env
+.env.local
+.env.production
 *.local
+*.log
 .DS_Store

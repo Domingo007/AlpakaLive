@@ -1,16 +1,56 @@
-# AlpakaLive
+# AlpakaLive — Holistyczny System Wsparcia Onkologicznego
 
-Holistyczny System Wsparcia Pacjenta Onkologicznego — aplikacja PWA działająca lokalnie na telefonie.
+**Darmowa, open-source aplikacja webowa (PWA) wspierająca pacjentów onkologicznych i ich opiekunów w codziennym monitoringu zdrowia podczas chemioterapii.**
 
-## Funkcje
+> **Nie jest wyrobem medycznym. Nie zastępuje porady lekarskiej.**
 
-- **Chat z agentem AI** — codzienny dziennik zdrowia, analiza wyników, predykcje
-- **Analiza wyników krwi** — rozpoznawanie ze zdjęć, porównanie z normami, alerty
-- **Obrazowanie** — analiza RTG/CT/PET/MRI, śledzenie zmian guzów (RECIST 1.1)
-- **Predykcje** — przewidywanie samopoczucia na podstawie wzorców z cykli chemii
-- **Interakcje leków** — automatyczne sprawdzanie CYP450 między lekami onkologicznymi, psychiatrycznymi i suplementami
-- **Harmonogram chemii** — fazy A/B/C cyklu, obsługa odroczeń
-- **Ochrona prywatności** — dane osobowe (PESEL, nazwisko) nigdy nie opuszczają urządzenia
+---
+
+## Co wyróżnia AlpakaLive
+
+| Funkcja | AlpakaLive | Inne apki onkologiczne |
+|---------|-----------|----------------------|
+| Dziennik zdrowia | Rozmowa z agentem AI | Ręczne formularze |
+| Wyniki krwi | Zdjęcie → automatyczna analiza | Ręczne wpisywanie |
+| Predykcja | Przewiduje samopoczucie wg cyklu chemii | Brak |
+| Interakcje leków | Dynamiczna baza CYP450 | Brak |
+| Obrazowanie | Analiza RTG/CT/PET z RECIST | Brak |
+| Prywatność | PII Sanitizer — dane osobowe nie opuszczają telefonu | Różnie |
+| Kod | Open source, MIT | Zamknięty |
+
+## Szybki start
+
+```bash
+git clone https://github.com/Domingo007/AlpakaLive.git
+cd AlpakaLive
+npm install
+npm run dev
+```
+
+Wymagania: Node.js 18+, [klucz API Anthropic](https://console.anthropic.com/) (opcjonalny — aplikacja działa w trybie demo bez klucza)
+
+### Instalacja na telefonie
+1. Otwórz w przeglądarce (Safari/Chrome)
+2. **iPhone:** Udostępnij → "Dodaj do ekranu początkowego"
+3. **Android:** Menu → "Dodaj do ekranu głównego"
+4. Wpisz klucz API w ustawieniach
+
+### Deploy własnej instancji
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Domingo007/AlpakaLive)
+
+## Architektura
+
+```
+AlpakaLive (100% lokalne — brak chmury)
+├── PWA (Vite + React + TypeScript + Tailwind)
+├── Dane (IndexedDB via Dexie.js — na urządzeniu)
+├── AI Agent (Claude API — klucz użytkownika)
+│   ├── PII Sanitizer → filtruje dane osobowe
+│   ├── Medical Skill → pełna wiedza onkologiczna
+│   ├── Data Extractor → parsuje odpowiedzi
+│   └── Vision API → analiza zdjęć wyników i obrazowania
+└── Brak backendu / brak analytics / brak reklam
+```
 
 ## Stos technologiczny
 
@@ -21,31 +61,23 @@ Holistyczny System Wsparcia Pacjenta Onkologicznego — aplikacja PWA działają
 | Baza danych | IndexedDB via Dexie.js |
 | AI | Anthropic Claude API (claude-sonnet) |
 | Wykresy | Recharts |
+| Raporty PDF | jsPDF |
 | PWA | vite-plugin-pwa + Workbox |
 | Deploy | Vercel |
 
-## Uruchomienie lokalne
+## Jak dołączyć
 
-```bash
-npm install
-npm run dev
-```
+Szukamy **pacjentów** (Twoje doświadczenie z chemią jest bezcenne!), **programistów**, **lekarzy** i **tłumaczy**. Przeczytaj [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Aplikacja dostępna pod `http://localhost:5173`
+## Dokumentacja medyczna
 
-## Deploy
-
-Podłącz repo do Vercel — konfiguracja w `vercel.json` jest gotowa.
-
-## Instalacja na telefonie (PWA)
-
-- **iPhone**: Safari → Udostępnij → Dodaj do ekranu początkowego
-- **Android**: Chrome → Menu (⋮) → Zainstaluj aplikację
+- [Baza wiedzy medycznej](docs/MEDICAL_KNOWLEDGE.md) — suplementy, interakcje, wzorce
+- [Kompatybilne opaski](docs/wearables.md) — ranking dla pacjentów onkologicznych
 
 ## Prywatność
 
-Wszystkie dane przechowywane lokalnie w IndexedDB na urządzeniu użytkownika. Jedyna komunikacja zewnętrzna to zapytania do Claude API — przed wysłaniem dane osobowe są automatycznie zastępowane placeholderami (`[PACJENT]`, `[PESEL]` itp.).
+Wszystkie dane przechowywane lokalnie w IndexedDB na urządzeniu użytkownika. Jedyna komunikacja zewnętrzna to zapytania do Claude API — przed wysłaniem dane osobowe są automatycznie zastępowane placeholderami (`[PACJENT]`, `[PESEL]` itp.). Szczegóły w [SECURITY.md](SECURITY.md).
 
 ## Licencja
 
-MIT
+MIT — zobacz [LICENSE](LICENSE)
