@@ -3,6 +3,7 @@ import { Card } from '@/components/shared/Card';
 import { useDashboardData } from '@/hooks/useDatabase';
 import { getRecistLabel, getRecistColor } from '@/lib/recist';
 import type { ImagingStudy } from '@/types';
+import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
 
 const IMAGING_TYPES = ['CT', 'PET', 'MRI', 'RTG', 'USG', 'mammography', 'bone_density', 'other'] as const;
 
@@ -24,6 +25,7 @@ export function ImagingView() {
   return (
     <div className="h-full overflow-y-auto px-3 py-4 space-y-4">
       <h2 className="font-display text-lg font-semibold text-accent-dark">Obrazowanie</h2>
+      <DisclaimerBanner variant="imaging" />
 
       {/* Upload section */}
       <Card title="Nowe badanie">

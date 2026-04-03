@@ -5,6 +5,7 @@ import { StatCard } from '@/components/shared/StatCard';
 import { EnergyChart } from './EnergyChart';
 import { BloodChart } from './BloodChart';
 import { generateReportPDF } from '@/lib/report-generator';
+import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
 
 export function DataView() {
   const { daily, blood, wearable, counts, loading } = useDashboardData();
@@ -43,6 +44,8 @@ export function DataView() {
           {generating ? '⏳ Generuję...' : '📋 Raport PDF'}
         </button>
       </div>
+
+      <DisclaimerBanner variant="data" />
 
       {/* Stats summary */}
       <div className="grid grid-cols-2 gap-2">

@@ -411,18 +411,18 @@ function analyzeBloodImpact(bloodWork: BloodWork[]): BloodImpact {
   const plt = latest.markers.plt;
 
   if (wbc !== undefined) {
-    if (wbc < 2.0) { energyMod -= 2; alerts.push('WBC krytycznie niskie — ryzyko infekcji'); }
-    else if (wbc < 4.0) { energyMod -= 1; alerts.push('WBC poniżej normy — osłabiona odporność'); }
+    if (wbc < 2.0) { energyMod -= 2; alerts.push(`WBC ${wbc} tys/µl — poniżej progu 2.0 opisanego w kryteriach kwalifikacji do chemioterapii. Wymaga konsultacji z onkologiem.`); }
+    else if (wbc < 4.0) { energyMod -= 1; alerts.push(`WBC ${wbc} tys/µl — poniżej normy referencyjnej (4.0-10.0). Omów wynik z lekarzem prowadzącym.`); }
   }
 
   if (hgb !== undefined) {
-    if (hgb < 8.0) { energyMod -= 2; alerts.push('Hemoglobina krytyczna — silne zmęczenie'); }
-    else if (hgb < 10.0) { energyMod -= 1; alerts.push('Hemoglobina niska — możliwe zmęczenie'); }
+    if (hgb < 8.0) { energyMod -= 2; alerts.push(`Hemoglobina ${hgb} g/dl — poniżej progu 8.0 g/dl. W literaturze wartość ta jest opisywana jako klinicznie istotna. Wymaga pilnej konsultacji z onkologiem.`); }
+    else if (hgb < 10.0) { energyMod -= 1; alerts.push(`Hemoglobina ${hgb} g/dl — poniżej normy referencyjnej (12-16 g/dl). Omów z lekarzem prowadzącym.`); }
   }
 
   if (plt !== undefined) {
-    if (plt < 50) { painMod += 1; alerts.push('Płytki krytycznie niskie — ryzyko krwawień'); }
-    else if (plt < 100) { alerts.push('Płytki poniżej normy'); }
+    if (plt < 50) { painMod += 1; alerts.push(`Płytki ${plt} tys/µl — poniżej progu 50 tys/µl. W literaturze wartość ta wiąże się ze zwiększonym ryzykiem krwawień. Wymaga pilnej konsultacji z onkologiem.`); }
+    else if (plt < 100) { alerts.push(`Płytki ${plt} tys/µl — poniżej normy referencyjnej (150-400). Omów z lekarzem.`); }
   }
 
   return { energyModifier: energyMod, painModifier: painMod, alerts };
@@ -454,7 +454,7 @@ function analyzeWeightTrend(dailyLogs: DailyLog[]): WeightTrend {
 
   if (weeklyChange < -1) {
     trend = 'falling';
-    alert = `Spadek wagi ${Math.abs(weeklyChange).toFixed(1)} kg/tydzień — poinformuj onkologa`;
+    alert = `Spadek wagi ${Math.abs(weeklyChange).toFixed(1)} kg/tydzień — w literaturze istotny klinicznie. Omów z onkologiem prowadzącym.`;
   } else if (weeklyChange < -0.5) {
     trend = 'falling';
   } else if (weeklyChange > 0.5) {
@@ -477,24 +477,23 @@ function generateRecommendations(
   const recs: string[] = [];
 
   if (phase === 'A') {
-    recs.push('Nawadniaj się — minimum 2l płynów');
-    if (nausea >= 5) recs.push('Małe, częste posiłki. Unikaj ciężkich potraw');
-    recs.push('Odpoczynek priorytetem — nie zmuszaj się do aktywności');
+    recs.push('Faza A (kryzys) — w literaturze opisywana jako okres wymagający odpoczynku i nawodnienia');
+    if (nausea >= 5) recs.push('Nudności powyżej 5/10 — omów z lekarzem ewentualne leki przeciwwymiotne');
+    recs.push('Dane wskazują na obniżoną energię — rozważ kontakt z zespołem leczącym');
   } else if (phase === 'B') {
-    recs.push('Delikatne spacery 15-20 min jeśli energia pozwala');
-    if (energy >= 5) recs.push('Możesz spróbować pełniejszych posiłków');
-    recs.push('Białko 60-80g/dzień — wspieraj regenerację');
+    recs.push('Faza B (regeneracja) — w opublikowanych badaniach pacjenci stopniowo zwiększają aktywność');
+    if (energy >= 5) recs.push('Energia pozwala na lekkie posiłki — omów dietę z dietetykiem klinicznym');
+    recs.push('W literaturze podkreśla się znaczenie białka w regeneracji — skonsultuj z dietetykiem');
   } else {
-    recs.push('Najlepszy czas na aktywność — spacery 30-40 min');
-    recs.push('Białko 80g+/dzień — buduj rezerwy przed chemią');
-    recs.push('Dobry czas na badania kontrolne krwi');
+    recs.push('Faza C (odbudowa) — w badaniach opisywana jako najlepsze okno na aktywność i badania kontrolne');
+    recs.push('Dobry moment na zaplanowanie kontrolnych badań krwi z lekarzem prowadzącym');
   }
 
   if (blood.energyModifier < -1) {
-    recs.push('Niskie parametry krwi — unikaj kontaktu z chorymi');
+    recs.push('Parametry krwi poniżej norm — w literaturze wiązane ze zwiększoną podatnością na infekcje. Skonsultuj z onkologiem.');
   }
   if (weight.trend === 'falling') {
-    recs.push('Spadek wagi — zwiększ kaloryczność posiłków');
+    recs.push('Trend spadkowy wagi — omów z lekarzem lub dietetykiem klinicznym');
   }
 
   return recs.slice(0, 4);
@@ -565,7 +564,7 @@ function identifyRisks(blood: BloodImpact, weight: WeightTrend, phase: ReturnTyp
   risks.push(...blood.alerts);
   if (weight.alert) risks.push(weight.alert);
   if (phase.phase === 'A') {
-    risks.push('Faza A — unikaj miejsc z dużą ilością ludzi (ryzyko infekcji)');
+    risks.push('Faza A — w literaturze opisywana jako okres zwiększonej podatności na infekcje. Skonsultuj środki ostrożności z lekarzem.');
   }
   return risks;
 }

@@ -103,6 +103,11 @@ export function useOnboarding() {
         pdl1Status: pdl1Status as PatientProfile['pdl1Status'],
         piK3caStatus: piK3caStatus as PatientProfile['piK3caStatus'],
       } : {}),
+      disclaimerAccepted: {
+        accepted: true,
+        acceptedAt: new Date().toISOString(),
+        version: '1.0',
+      },
       createdAt: new Date(),
       updatedAt: new Date(),
     };

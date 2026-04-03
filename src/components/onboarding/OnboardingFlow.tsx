@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useOnboarding } from '@/hooks/useOnboarding';
 
 interface OnboardingFlowProps {
@@ -6,6 +7,7 @@ interface OnboardingFlowProps {
 
 export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
   const ob = useOnboarding();
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
 
   async function handleComplete() {
     await ob.complete();
@@ -24,19 +26,61 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
       <div className="flex-1 px-6 py-8 max-w-md mx-auto w-full">
         {ob.step === 'welcome' && (
-          <div className="text-center space-y-6 mt-12">
-            <div className="text-6xl">🦙</div>
-            <h1 className="font-display text-2xl font-bold text-accent-dark">AlpakaLive</h1>
-            <p className="text-text-secondary text-sm leading-relaxed">
-              Holistyczny System Wsparcia Onkologicznego. Twój codzienny towarzysz w walce z chorobą.
-            </p>
-            <div className="bg-accent-warm/50 rounded-xl p-4 text-xs text-text-primary">
-              <p className="font-medium mb-2">🔒 Twoje dane są bezpieczne</p>
-              <p>Wszystko przechowywane lokalnie na Twoim urządzeniu. Dane osobowe nigdy nie opuszczają telefonu.</p>
+          <div className="space-y-4 mt-4">
+            <div className="text-center">
+              <div className="text-5xl mb-2">🦙</div>
+              <h1 className="font-display text-2xl font-bold text-accent-dark">AlpakaLive</h1>
             </div>
+
+            <div className="text-sm font-medium text-accent-dark">Ważna informacja przed rozpoczęciem</div>
+
+            <div className="bg-bg-card rounded-xl border border-border p-4 text-xs text-text-primary space-y-2">
+              <p>AlpakaLive jest narzędziem do <strong>ANALIZY DANYCH</strong> dostarczonych przez użytkownika.</p>
+
+              <div className="space-y-1">
+                <p className="font-medium">⚠️ Aplikacja:</p>
+                <ul className="list-disc pl-4 text-text-secondary space-y-0.5">
+                  <li>NIE jest wyrobem medycznym</li>
+                  <li>NIE stawia diagnoz</li>
+                  <li>NIE zaleca leków ani suplementów</li>
+                  <li>NIE zastępuje lekarza, farmaceuty ani żadnego specjalisty medycznego</li>
+                </ul>
+              </div>
+
+              <div className="space-y-1">
+                <p className="font-medium">Aplikacja MOŻE:</p>
+                <ul className="list-disc pl-4 text-text-secondary space-y-0.5">
+                  <li>Analizować dostarczone wyniki</li>
+                  <li>Porównywać dane z normami referencyjnymi</li>
+                  <li>Pokazywać trendy i sygnalizować wartości poza normami</li>
+                  <li>Informować o opublikowanych badaniach naukowych</li>
+                  <li>Sugerować pytania do lekarza</li>
+                </ul>
+              </div>
+
+              <p className="text-text-secondary">Wszelkie decyzje dotyczące zdrowia podejmuj <strong>WYŁĄCZNIE</strong> w konsultacji z lekarzem prowadzącym.</p>
+              <p className="text-text-secondary">Twórcy aplikacji nie ponoszą odpowiedzialności za decyzje zdrowotne podjęte na podstawie informacji wyświetlanych w aplikacji.</p>
+            </div>
+
+            <div className="bg-accent-warm/50 rounded-xl p-3 text-xs text-text-primary">
+              <p className="font-medium mb-1">🔒 Twoje dane są bezpieczne</p>
+              <p className="text-text-secondary">Wszystko przechowywane lokalnie na Twoim urządzeniu. Dane osobowe nigdy nie opuszczają telefonu.</p>
+            </div>
+
+            <label className="flex items-start gap-2 cursor-pointer py-2">
+              <input
+                type="checkbox"
+                checked={disclaimerAccepted}
+                onChange={e => setDisclaimerAccepted(e.target.checked)}
+                className="mt-0.5 w-4 h-4 shrink-0"
+              />
+              <span className="text-xs text-text-primary">Rozumiem i akceptuję powyższe zastrzeżenia</span>
+            </label>
+
             <button
               onClick={ob.next}
-              className="w-full bg-accent-dark text-accent-warm rounded-xl py-3 text-sm font-medium"
+              disabled={!disclaimerAccepted}
+              className="w-full bg-accent-dark text-accent-warm rounded-xl py-3 text-sm font-medium disabled:opacity-40"
             >
               Rozpocznij konfigurację
             </button>

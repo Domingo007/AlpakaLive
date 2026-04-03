@@ -58,6 +58,11 @@ export interface PatientProfile {
   pdl1Status?: GeneticTestStatus;
   pdl1Score?: number | null;
   piK3caStatus?: 'mutated' | 'wild_type' | 'not_tested' | 'unknown';
+  disclaimerAccepted?: {
+    accepted: boolean;
+    acceptedAt: string;
+    version: string;
+  };
   createdAt: Date;
   updatedAt: Date;
 }

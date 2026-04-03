@@ -3,6 +3,7 @@ import { useChat } from '@/hooks/useChat';
 import { MessageBubble } from './MessageBubble';
 import { QuickActions } from './QuickActions';
 import { PredictionCards } from './PredictionCards';
+import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
 
 export function ChatView() {
   const { messages, isLoading, error, send, lastPrediction } = useChat();
@@ -79,6 +80,9 @@ export function ChatView() {
 
       {/* Quick Actions */}
       <QuickActions onAction={handleQuickAction} />
+
+      {/* Disclaimer */}
+      <DisclaimerBanner variant="chat" />
 
       {/* Input */}
       <div className="border-t border-border bg-bg-card px-3 py-2 safe-bottom">

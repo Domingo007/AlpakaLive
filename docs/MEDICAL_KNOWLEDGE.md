@@ -1,5 +1,12 @@
 # Baza wiedzy medycznej AlpakaLive
 
+> **ZASTRZEŻENIE**
+>
+> Informacje w tym dokumencie pochodzą z opublikowanych badań naukowych i doświadczeń pacjentów.
+> **NIE stanowią rekomendacji medycznych.** Przed podjęciem jakichkolwiek decyzji zdrowotnych
+> na podstawie tych informacji skonsultuj się z lekarzem prowadzącym.
+> Dawki podawane przy suplementach to dawki stosowane w cytowanych badaniach — nie zalecenia.
+
 Każda informacja ma oznaczony **poziom dowodów** i **źródło**.
 Społeczność może dodawać wiedzę przez Pull Request lub Issue.
 
@@ -12,10 +19,12 @@ Szczegółowa baza wiedzy o podtypach, leczeniu i różnicach regionalnych: [bre
 - 🔴 **Przedkliniczne** — in vitro / in vivo
 - 🔵 **Z doświadczenia pacjentów** — niezweryfikowane klinicznie ale cenne
 
-## Suplementacja z dowodami
+## Suplementy — przegląd opublikowanych badań naukowych
 
-| Suplement | Dawka | Dowody | Uwagi |
-|-----------|-------|--------|-------|
+**Poniższe informacje pochodzą z opublikowanych badań naukowych i NIE stanowią rekomendacji medycznych. Przed zastosowaniem jakiegokolwiek suplementu skonsultuj się z lekarzem onkologiem prowadzącym.**
+
+| Substancja | Dawki w badaniach | Poziom dowodów | Uwagi |
+|-----------|-------------------|----------------|-------|
 | Witamina D3 | 2000-4000 IU/d | 🟢 | Cel: 40-60 ng/ml. Bezpieczna z chemią |
 | L-Glutamina | 30g/d | 🟢 | Redukcja neuropatii (11/15 RCT+). Ochrona GI |
 | Omega-3 EPA/DHA | 640mg 3x/d | 🟢 | 30% vs 70% neuropatii z paklitakselem (RCT) |
@@ -27,7 +36,7 @@ Szczegółowa baza wiedzy o podtypach, leczeniu i różnicach regionalnych: [bre
 | Fenbendazol | 222-444mg/d | 🔴 | ⚠️ CYP3A4! Konkuruje z paklitakselem |
 | Iwermektyna | eskalacja | 🔴 | Faza I/II ASCO 2025 NCT05318469 w TNBC |
 
-### UNIKAĆ podczas chemii:
+### Substancje z opublikowanymi danymi o potencjalnych interakcjach:
 - Antyoksydanty w dużych dawkach (wit. C doustna, E, A, CoQ10) — 41% wzrost ryzyka nawrotu (SWOG S0221)
 - Żelazo w suplementach (bez potwierdzonej anemii)
 - Wit. B12 w suplementach — gorsza DFS w SWOG S0221

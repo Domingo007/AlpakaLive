@@ -1,8 +1,15 @@
+> **WAŻNE ZASTRZEŻENIE PRAWNE**
+>
+> AlpakaLive jest narzędziem do analizy danych dostarczonych przez użytkownika.
+> **NIE jest wyrobem medycznym, NIE stawia diagnoz, NIE zaleca leków ani suplementów.**
+> Informacje wyświetlane w aplikacji opierają się na danych użytkownika i opublikowanej literaturze naukowej.
+> Wszelkie decyzje dotyczące zdrowia powinny być podejmowane wyłącznie w konsultacji z lekarzem prowadzącym.
+> Twórcy aplikacji nie ponoszą odpowiedzialności za decyzje zdrowotne podjęte na podstawie informacji z aplikacji.
+> Pełne zastrzeżenie: [DISCLAIMER.md](DISCLAIMER.md) | [TERMS.md](TERMS.md)
+
 # AlpakaLive — Holistyczny System Wsparcia Onkologicznego
 
-**Darmowa, open-source aplikacja webowa (PWA) wspierająca pacjentów onkologicznych i ich opiekunów w codziennym monitoringu zdrowia podczas chemioterapii.**
-
-> **Nie jest wyrobem medycznym. Nie zastępuje porady lekarskiej.**
+**Darmowa, open-source aplikacja webowa (PWA) wspierająca pacjentów onkologicznych i ich opiekunów w analizie danych zdrowotnych podczas chemioterapii.**
 
 ---
 
