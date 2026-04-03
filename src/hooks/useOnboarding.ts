@@ -1,12 +1,12 @@
 import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import type { PatientProfile, PIIData, PatientLocation, BreastCancerSubtype, ReceptorStatus, HER2Status } from '@/types';
+import type { PatientProfile, PIIData, PatientLocation, PatientLanguages, BreastCancerSubtype, ReceptorStatus, HER2Status } from '@/types';
 import { detectGuidelineRegion, DEFAULT_NOTIFICATIONS } from '@/types';
 import { savePatient, saveSettings } from '@/lib/db';
 
-export type OnboardingStep = 'welcome' | 'privacy' | 'apikey' | 'location' | 'diagnosis' | 'biomarkers' | 'medications' | 'confirmation';
+export type OnboardingStep = 'welcome' | 'privacy' | 'apikey' | 'location' | 'languages' | 'diagnosis' | 'biomarkers' | 'medications' | 'confirmation';
 
-const STEPS: OnboardingStep[] = ['welcome', 'privacy', 'apikey', 'location', 'diagnosis', 'biomarkers', 'medications', 'confirmation'];
+const STEPS: OnboardingStep[] = ['welcome', 'privacy', 'apikey', 'location', 'languages', 'diagnosis', 'biomarkers', 'medications', 'confirmation'];
 
 export function useOnboarding() {
   const [step, setStep] = useState<OnboardingStep>('welcome');
@@ -27,6 +27,9 @@ export function useOnboarding() {
   const [treatmentCountry, setTreatmentCountry] = useState('Polska');
   const [treatmentCity, setTreatmentCity] = useState('');
   const [treatmentFacility, setTreatmentFacility] = useState('');
+
+  // Languages
+  const [documentLanguages, setDocumentLanguages] = useState<string[]>(['pl']);
 
   // Breast cancer biomarkers
   const [breastCancerSubtype, setBreastCancerSubtype] = useState<BreastCancerSubtype>('unknown');
@@ -93,6 +96,11 @@ export function useOnboarding() {
       preferences: [],
       pii,
       location,
+      languages: {
+        appLanguage: 'pl',
+        documentLanguages,
+        preferredMedicalTerms: 'pl',
+      },
       ...(isBreastCancer ? {
         breastCancerSubtype,
         erStatus,
@@ -117,7 +125,7 @@ export function useOnboarding() {
 
     return patient;
   }, [apiKey, pii, displayName, diagnosis, stage, molecularSubtype, currentChemo, chemoCycle,
-      residenceCountry, residenceCity, treatmentCountry, treatmentCity, treatmentFacility,
+      documentLanguages, residenceCountry, residenceCity, treatmentCountry, treatmentCity, treatmentFacility,
       isBreastCancer, breastCancerSubtype, erStatus, prStatus, her2Status, ki67, brcaStatus, pdl1Status, piK3caStatus]);
 
   return {
@@ -130,6 +138,8 @@ export function useOnboarding() {
     molecularSubtype, setMolecularSubtype,
     currentChemo, setCurrentChemo,
     chemoCycle, setChemoCycle,
+    // Languages
+    documentLanguages, setDocumentLanguages,
     // Location
     residenceCountry, setResidenceCountry,
     residenceCity, setResidenceCity,

@@ -7,6 +7,23 @@ export interface PatientLocation {
   guidelineRegion: 'europe' | 'usa' | 'other';
 }
 
+export interface PatientLanguages {
+  appLanguage: string;
+  documentLanguages: string[];
+  preferredMedicalTerms: string;
+}
+
+export const LANGUAGE_OPTIONS = [
+  { code: 'pl', label: 'Polski' },
+  { code: 'de', label: 'Niemiecki' },
+  { code: 'en', label: 'Angielski' },
+  { code: 'fr', label: 'Francuski' },
+  { code: 'es', label: 'Hiszpański' },
+  { code: 'it', label: 'Włoski' },
+  { code: 'uk', label: 'Ukraiński' },
+  { code: 'cs', label: 'Czeski' },
+];
+
 export type BreastCancerSubtype = 'luminal_a' | 'luminal_b' | 'her2_positive' | 'tnbc' | 'her2_low' | 'other' | 'unknown';
 export type ReceptorStatus = 'positive' | 'negative' | 'unknown';
 export type HER2Status = 'positive' | 'negative' | 'low' | 'unknown';
@@ -48,6 +65,7 @@ export interface PatientProfile {
   displayName: string;
   diseaseProfile?: DiseaseProfile;
   location?: PatientLocation;
+  languages?: PatientLanguages;
   // Breast cancer specific biomarkers
   breastCancerSubtype?: BreastCancerSubtype;
   erStatus?: ReceptorStatus;
@@ -209,7 +227,7 @@ export interface SupplementEntry {
 export interface ImagingStudy {
   id: string;
   date: string;
-  type: 'CT' | 'PET' | 'MRI' | 'RTG' | 'USG' | 'mammography' | 'bone_density' | 'other';
+  type: 'CT' | 'PET' | 'PET_CT' | 'MRI' | 'RTG' | 'USG' | 'mammography' | 'bone_scan' | 'bone_density' | 'other';
   bodyRegion: string;
   images: ImagingImage[];
   findings: string;
@@ -217,7 +235,68 @@ export interface ImagingStudy {
   tumors?: TumorMeasurement[];
   metastases?: MetastasisRecord[];
   comparison?: ImagingComparison;
+  radiologistReport?: RadiologistReport;
+  combinedAnalysis?: CombinedAnalysis;
   notes: string;
+}
+
+export interface RadiologistReport {
+  originalText: string;
+  originalLanguage: string;
+  translatedSummary?: string;
+  extractedData?: {
+    tumors: TumorFromReport[];
+    metastases: MetastasisFromReport[];
+    lymphNodes: LymphNodeFromReport[];
+    otherFindings: string[];
+    conclusion: string;
+    recistAssessment?: string;
+  };
+}
+
+export interface CombinedAnalysis {
+  summary: string;
+  comparisonWithPrevious?: string;
+  questionsForDoctor: string[];
+  analyzedAt: string;
+}
+
+export interface TumorFromReport {
+  id: string;
+  location: string;
+  locationTranslated: string;
+  currentSize: { dimensions: number[]; volume?: number; description: string };
+  previousSize?: { dimensions: number[]; studyDate: string; studyId: string };
+  change?: {
+    type: 'shrinking' | 'stable' | 'growing' | 'new' | 'resolved';
+    percentChange?: number;
+    absoluteChange?: number;
+    recist?: 'CR' | 'PR' | 'SD' | 'PD';
+    description: string;
+  };
+  firstDetectedDate?: string;
+  treatmentAtDetection?: string;
+}
+
+export interface MetastasisFromReport {
+  id: string;
+  location: string;
+  locationTranslated: string;
+  status: 'new' | 'stable' | 'growing' | 'shrinking' | 'resolved';
+  size?: number[];
+  previousStatus?: string;
+  previousStudyDate?: string;
+  notes: string;
+}
+
+export interface LymphNodeFromReport {
+  id: string;
+  location: string;
+  locationTranslated: string;
+  size?: number;
+  status: 'normal' | 'enlarged' | 'suspicious' | 'pathological';
+  previousSize?: number;
+  change?: string;
 }
 
 export interface ImagingImage {

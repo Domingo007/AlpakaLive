@@ -147,6 +147,45 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           </div>
         )}
 
+        {ob.step === 'languages' && (
+          <div className="space-y-4">
+            <h2 className="font-display text-xl font-semibold text-accent-dark">🌐 Języki dokumentów</h2>
+            <p className="text-xs text-text-secondary">
+              W jakim języku są Twoje dokumenty medyczne? Możesz wybrać kilka.
+            </p>
+            <div className="space-y-2">
+              {[
+                { code: 'pl', label: 'Polski' },
+                { code: 'de', label: 'Niemiecki' },
+                { code: 'en', label: 'Angielski' },
+                { code: 'fr', label: 'Francuski' },
+                { code: 'uk', label: 'Ukraiński' },
+                { code: 'cs', label: 'Czeski' },
+              ].map(lang => (
+                <label key={lang.code} className="flex items-center gap-2 py-1 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={ob.documentLanguages.includes(lang.code)}
+                    onChange={e => {
+                      if (e.target.checked) {
+                        ob.setDocumentLanguages([...ob.documentLanguages, lang.code]);
+                      } else {
+                        ob.setDocumentLanguages(ob.documentLanguages.filter(l => l !== lang.code));
+                      }
+                    }}
+                    className="w-4 h-4"
+                  />
+                  <span className="text-sm">{lang.label}</span>
+                </label>
+              ))}
+            </div>
+            <p className="text-[10px] text-text-secondary">
+              Agent przeanalizuje dokumenty w oryginalnym języku i odpowie Ci po polsku z terminami medycznymi w nawiasie.
+            </p>
+            <NavButtons onBack={ob.back} onNext={ob.next} canBack={ob.canGoBack} />
+          </div>
+        )}
+
         {ob.step === 'diagnosis' && (
           <div className="space-y-4">
             <h2 className="font-display text-xl font-semibold text-accent-dark">🏥 Diagnoza</h2>
