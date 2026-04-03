@@ -1,4 +1,7 @@
 import Dexie, { type Table } from 'dexie';
+import {
+  DEFAULT_NOTIFICATIONS,
+} from '@/types';
 import type {
   PatientProfile,
   ChemoSession,
@@ -55,7 +58,7 @@ export async function saveSettings(settings: Partial<AppSettings>): Promise<void
   if (existing) {
     await db.settings.update('main', settings);
   } else {
-    await db.settings.put({ id: 'main', apiKey: '', onboardingCompleted: false, ...settings } as AppSettings & { id: string });
+    await db.settings.put({ id: 'main', apiKey: '', onboardingCompleted: false, notifications: DEFAULT_NOTIFICATIONS, ...settings } as AppSettings & { id: string });
   }
 }
 

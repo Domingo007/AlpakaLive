@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { usePatient, useSettings } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
 import { HistoricalImport } from './HistoricalImport';
+import { NotificationSettings } from './NotificationSettings';
 import { exportAllData, importData, clearAllData } from '@/lib/db';
 import type { DrugEntry } from '@/types';
 
@@ -82,6 +83,9 @@ export function SettingsView() {
           </p>
         </div>
       </Card>
+
+      {/* Notifications */}
+      <NotificationSettings />
 
       {/* Patient Profile */}
       {patient && (

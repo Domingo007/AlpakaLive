@@ -282,7 +282,32 @@ export type ChemoPhase = 'A' | 'B' | 'C' | null;
 
 export type TabId = 'chat' | 'data' | 'imaging' | 'settings';
 
+export interface NotificationConfig {
+  enabled: boolean;
+  morningEnabled: boolean;
+  morningHour: number;
+  morningMinute: number;
+  eveningEnabled: boolean;
+  eveningHour: number;
+  eveningMinute: number;
+  chemoReminderEnabled: boolean;
+  chemoReminderDaysBefore: number;
+}
+
+export const DEFAULT_NOTIFICATIONS: NotificationConfig = {
+  enabled: false,
+  morningEnabled: true,
+  morningHour: 8,
+  morningMinute: 0,
+  eveningEnabled: true,
+  eveningHour: 20,
+  eveningMinute: 0,
+  chemoReminderEnabled: true,
+  chemoReminderDaysBefore: 1,
+};
+
 export interface AppSettings {
   apiKey: string;
   onboardingCompleted: boolean;
+  notifications: NotificationConfig;
 }

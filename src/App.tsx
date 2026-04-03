@@ -7,6 +7,7 @@ import { ImagingView } from '@/components/imaging/ImagingView';
 import { SettingsView } from '@/components/settings/SettingsView';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { getSettings } from '@/lib/db';
+import { startNotificationScheduler } from '@/lib/notification-scheduler';
 import type { TabId } from '@/types';
 
 export default function App() {
@@ -16,6 +17,9 @@ export default function App() {
   useEffect(() => {
     getSettings().then(s => {
       setOnboarded(s?.onboardingCompleted ?? false);
+      if (s?.onboardingCompleted && s?.notifications?.enabled) {
+        startNotificationScheduler();
+      }
     });
   }, []);
 
