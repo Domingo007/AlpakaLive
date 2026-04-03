@@ -464,9 +464,12 @@ export const DEFAULT_NOTIFICATIONS: NotificationConfig = {
   chemoReminderDaysBefore: 1,
 };
 
+export type AppMode = 'ai' | 'notebook';
+
 export interface AppSettings {
   apiKey: string;
   aiProvider: 'anthropic' | 'openai' | 'gemini';
+  appMode: AppMode;
   onboardingCompleted: boolean;
   notifications: NotificationConfig;
   dataProcessingConsent?: {

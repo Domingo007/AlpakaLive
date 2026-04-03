@@ -137,6 +137,42 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           </div>
         )}
 
+        {ob.step === 'mode' && (
+          <div className="space-y-4">
+            <h2 className="font-display text-xl font-semibold text-accent-dark">Jak chcesz korzystać?</h2>
+            <div className="space-y-3">
+              <button
+                onClick={() => ob.setAppMode('ai')}
+                className={`w-full text-left rounded-xl p-4 border-2 transition-colors ${
+                  ob.appMode === 'ai' ? 'border-accent-dark bg-accent-warm/20' : 'border-border'
+                }`}
+              >
+                <div className="text-lg mb-1">🤖 Z agentem AI</div>
+                <div className="text-xs text-text-secondary">
+                  Rozmowa z agentem, analiza zdjęć wyników, predykcja samopoczucia, pełne funkcje.
+                  Wymaga klucza API.
+                </div>
+              </button>
+              <button
+                onClick={() => ob.setAppMode('notebook')}
+                className={`w-full text-left rounded-xl p-4 border-2 transition-colors ${
+                  ob.appMode === 'notebook' ? 'border-accent-dark bg-accent-warm/20' : 'border-border'
+                }`}
+              >
+                <div className="text-lg mb-1">📓 Inteligentny notatnik</div>
+                <div className="text-xs text-text-secondary">
+                  Ręczne wpisywanie danych, wykresy, alerty, kalendarz.
+                  Wszystkie funkcje poza AI — darmowe, na zawsze.
+                </div>
+              </button>
+            </div>
+            <p className="text-[10px] text-text-secondary text-center">
+              Możesz zmienić tryb w dowolnym momencie w Ustawieniach.
+            </p>
+            <NavButtons onBack={ob.back} onNext={ob.next} canBack={ob.canGoBack} />
+          </div>
+        )}
+
         {ob.step === 'privacy' && (
           <div className="space-y-4">
             <h2 className="font-display text-xl font-semibold text-accent-dark">🔒 Dane prywatne</h2>

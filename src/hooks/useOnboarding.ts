@@ -4,9 +4,9 @@ import type { PatientProfile, PIIData, PatientLocation, PatientLanguages, Breast
 import { detectGuidelineRegion, DEFAULT_NOTIFICATIONS } from '@/types';
 import { savePatient, saveSettings } from '@/lib/db';
 
-export type OnboardingStep = 'welcome' | 'data_transparency' | 'privacy' | 'apikey' | 'location' | 'languages' | 'diagnosis' | 'biomarkers' | 'medications' | 'confirmation';
+export type OnboardingStep = 'welcome' | 'data_transparency' | 'mode' | 'privacy' | 'apikey' | 'location' | 'languages' | 'diagnosis' | 'biomarkers' | 'medications' | 'confirmation';
 
-const STEPS: OnboardingStep[] = ['welcome', 'data_transparency', 'privacy', 'apikey', 'location', 'languages', 'diagnosis', 'biomarkers', 'medications', 'confirmation'];
+const STEPS: OnboardingStep[] = ['welcome', 'data_transparency', 'mode', 'privacy', 'apikey', 'location', 'languages', 'diagnosis', 'biomarkers', 'medications', 'confirmation'];
 
 export function useOnboarding() {
   const [step, setStep] = useState<OnboardingStep>('welcome');
@@ -28,6 +28,9 @@ export function useOnboarding() {
   const [treatmentCity, setTreatmentCity] = useState('');
   const [treatmentFacility, setTreatmentFacility] = useState('');
 
+  // App mode
+  const [appMode, setAppMode] = useState<'ai' | 'notebook'>('notebook');
+
   // Languages
   const [documentLanguages, setDocumentLanguages] = useState<string[]>(['pl']);
 
@@ -48,24 +51,26 @@ export function useOnboarding() {
   // Check if diagnosis is breast cancer
   const isBreastCancer = diagnosis.toLowerCase().includes('piersi') || diagnosis.toLowerCase().includes('breast');
 
-  // Skip biomarkers step if not breast cancer
+  // Skip steps based on mode and diagnosis
+  function shouldSkip(step: OnboardingStep): boolean {
+    if (step === 'apikey' && appMode === 'notebook') return true;
+    if (step === 'biomarkers' && !isBreastCancer) return true;
+    return false;
+  }
+
   const next = useCallback(() => {
     if (!canGoNext) return;
     let nextIndex = currentIndex + 1;
-    if (STEPS[nextIndex] === 'biomarkers' && !isBreastCancer) {
-      nextIndex++; // Skip biomarkers
-    }
+    while (nextIndex < STEPS.length && shouldSkip(STEPS[nextIndex])) nextIndex++;
     if (nextIndex < STEPS.length) setStep(STEPS[nextIndex]);
-  }, [currentIndex, canGoNext, isBreastCancer]);
+  }, [currentIndex, canGoNext, isBreastCancer, appMode]);
 
   const back = useCallback(() => {
     if (!canGoBack) return;
     let prevIndex = currentIndex - 1;
-    if (STEPS[prevIndex] === 'biomarkers' && !isBreastCancer) {
-      prevIndex--; // Skip biomarkers
-    }
+    while (prevIndex >= 0 && shouldSkip(STEPS[prevIndex])) prevIndex--;
     if (prevIndex >= 0) setStep(STEPS[prevIndex]);
-  }, [currentIndex, canGoBack, isBreastCancer]);
+  }, [currentIndex, canGoBack, isBreastCancer, appMode]);
 
   const complete = useCallback(async () => {
     const location: PatientLocation = {
@@ -121,11 +126,11 @@ export function useOnboarding() {
     };
 
     await savePatient(patient);
-    await saveSettings({ apiKey, onboardingCompleted: true, notifications: DEFAULT_NOTIFICATIONS });
+    await saveSettings({ apiKey, aiProvider: 'anthropic', appMode, onboardingCompleted: true, notifications: DEFAULT_NOTIFICATIONS });
 
     return patient;
   }, [apiKey, pii, displayName, diagnosis, stage, molecularSubtype, currentChemo, chemoCycle,
-      documentLanguages, residenceCountry, residenceCity, treatmentCountry, treatmentCity, treatmentFacility,
+      appMode, documentLanguages, residenceCountry, residenceCity, treatmentCountry, treatmentCity, treatmentFacility,
       isBreastCancer, breastCancerSubtype, erStatus, prStatus, her2Status, ki67, brcaStatus, pdl1Status, piK3caStatus]);
 
   return {
@@ -138,6 +143,8 @@ export function useOnboarding() {
     molecularSubtype, setMolecularSubtype,
     currentChemo, setCurrentChemo,
     chemoCycle, setChemoCycle,
+    // Mode
+    appMode, setAppMode,
     // Languages
     documentLanguages, setDocumentLanguages,
     // Location

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Header } from '@/components/shared/Header';
 import { TabBar } from '@/components/shared/TabBar';
 import { ChatView } from '@/components/chat/ChatView';
+import { NotebookView } from '@/components/notebook/NotebookView';
 import { DataView } from '@/components/data/DataView';
 import { CalendarView } from '@/components/calendar/CalendarView';
 import { ImagingView } from '@/components/imaging/ImagingView';
@@ -9,20 +10,33 @@ import { SettingsView } from '@/components/settings/SettingsView';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { getSettings } from '@/lib/db';
 import { startNotificationScheduler } from '@/lib/notification-scheduler';
-import type { TabId } from '@/types';
+import type { TabId, AppMode } from '@/types';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('chat');
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
+  const [appMode, setAppMode] = useState<AppMode>('notebook');
 
   useEffect(() => {
     getSettings().then(s => {
       setOnboarded(s?.onboardingCompleted ?? false);
+      setAppMode(s?.appMode || 'notebook');
       if (s?.onboardingCompleted && s?.notifications?.enabled) {
         startNotificationScheduler();
       }
     });
   }, []);
+
+  // Re-check mode when returning to app (e.g. after changing in settings)
+  useEffect(() => {
+    if (!onboarded) return;
+    const interval = setInterval(() => {
+      getSettings().then(s => {
+        if (s?.appMode && s.appMode !== appMode) setAppMode(s.appMode);
+      });
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [onboarded, appMode]);
 
   if (onboarded === null) {
     return (
@@ -36,14 +50,17 @@ export default function App() {
   }
 
   if (!onboarded) {
-    return <OnboardingFlow onComplete={() => setOnboarded(true)} />;
+    return <OnboardingFlow onComplete={() => {
+      getSettings().then(s => setAppMode(s?.appMode || 'notebook'));
+      setOnboarded(true);
+    }} />;
   }
 
   return (
     <div className="h-screen flex flex-col bg-bg-primary">
       <Header />
       <main className="flex-1 overflow-hidden">
-        {activeTab === 'chat' && <ChatView />}
+        {activeTab === 'chat' && (appMode === 'ai' ? <ChatView /> : <NotebookView />)}
         {activeTab === 'calendar' && <CalendarView />}
         {activeTab === 'data' && <DataView />}
         {activeTab === 'imaging' && <ImagingView />}

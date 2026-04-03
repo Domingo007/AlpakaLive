@@ -48,8 +48,37 @@ export function SettingsView() {
     <div className="h-full overflow-y-auto px-3 py-4 space-y-4">
       <h2 className="font-display text-lg font-semibold text-accent-dark">Ustawienia</h2>
 
-      {/* AI Provider */}
-      <AIProviderSettings />
+      {/* App Mode */}
+      <Card title="🦙 Tryb aplikacji">
+        <div className="space-y-2">
+          {[
+            { mode: 'ai' as const, icon: '🤖', label: 'Z agentem AI', desc: 'Rozmowa z agentem, analiza zdjęć, predykcja. Wymaga klucza API.' },
+            { mode: 'notebook' as const, icon: '📓', label: 'Inteligentny notatnik', desc: 'Ręczne wpisywanie danych, wykresy, alerty. Darmowy, bez API.' },
+          ].map(opt => (
+            <button
+              key={opt.mode}
+              onClick={async () => {
+                const { update } = await import('@/lib/db').then(m => ({ update: m.saveSettings }));
+                await update({ appMode: opt.mode });
+              }}
+              className={`w-full text-left rounded-lg p-3 border transition-colors ${
+                settings?.appMode === opt.mode ? 'border-accent-dark bg-accent-warm/20' : 'border-border bg-bg-primary'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-lg">{opt.icon}</span>
+                <div>
+                  <div className="text-xs font-medium">{opt.label}</div>
+                  <div className="text-[10px] text-text-secondary">{opt.desc}</div>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </Card>
+
+      {/* AI Provider — only show in AI mode */}
+      {settings?.appMode === 'ai' && <AIProviderSettings />}
 
       {/* Notifications */}
       <NotificationSettings />
