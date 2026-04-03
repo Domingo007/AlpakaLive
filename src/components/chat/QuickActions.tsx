@@ -19,7 +19,7 @@ export function QuickActions({ onAction }: QuickActionsProps) {
           <button
             key={action.label}
             onClick={() => onAction(action.prompt)}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-bg-card border border-border text-xs whitespace-nowrap hover:bg-accent-warm/30 transition-colors shrink-0"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-bg-card border border-lavender-200 text-[13px] font-medium text-lavender-700 whitespace-nowrap shadow-[0_1px_2px_rgba(45,31,84,0.05)] active:bg-lavender-100 shrink-0"
           >
             <span>{action.emoji}</span>
             <span>{action.label}</span>

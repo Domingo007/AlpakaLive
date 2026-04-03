@@ -60,12 +60,12 @@ export function ChatView() {
           />
         ))}
         {isLoading && (
-          <div className="bg-bg-card border border-border rounded-xl px-3 py-2.5 mx-1">
+          <div className="bg-bg-card border border-lavender-100 rounded-2xl px-4 py-3 mx-1 shadow-[0_4px_12px_rgba(45,31,84,0.08)]">
             <div className="flex items-center gap-2">
               <div className="flex gap-1">
-                <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '0ms' }} />
-                <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="w-2 h-2 rounded-full bg-lavender-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-2 h-2 rounded-full bg-lavender-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-2 h-2 rounded-full bg-lavender-500 animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
               <span className="text-xs text-text-secondary">Analizuję...</span>
             </div>
@@ -94,11 +94,11 @@ export function ChatView() {
       <DisclaimerBanner variant="chat" />
 
       {/* Input */}
-      <div className="border-t border-border bg-bg-card px-3 py-2 safe-bottom">
+      <div className="border-t border-lavender-100 bg-bg-card px-3 py-2 safe-bottom">
         <div className="flex items-end gap-2">
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="p-2 text-xl shrink-0"
+            className="w-11 h-11 rounded-xl bg-lavender-50 border-[1.5px] border-lavender-200 text-lavender-500 text-xl flex items-center justify-center shrink-0"
             title="Dodaj zdjęcie"
           >
             📷
@@ -117,7 +117,7 @@ export function ChatView() {
             onKeyDown={handleKeyDown}
             placeholder="Napisz wiadomość..."
             rows={1}
-            className="flex-1 resize-none rounded-xl border border-border px-3 py-2 text-sm bg-bg-primary focus:outline-none focus:border-accent-dark min-h-[40px] max-h-[120px]"
+            className="flex-1 resize-none rounded-2xl border-[1.5px] border-lavender-200 px-4 py-3 text-[15px] bg-lavender-50 text-text-primary focus:outline-none focus:border-lavender-500 focus:shadow-[0_0_0_3px_rgba(155,122,232,0.15)] min-h-[44px] max-h-[120px]"
             style={{ height: 'auto', overflow: 'hidden' }}
             onInput={e => {
               const t = e.currentTarget;
@@ -128,7 +128,7 @@ export function ChatView() {
           <button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
-            className="p-2 rounded-xl bg-accent-dark text-accent-warm disabled:opacity-40 shrink-0 min-w-[40px] min-h-[40px] flex items-center justify-center"
+            className="w-11 h-11 rounded-xl bg-lavender-500 text-white disabled:bg-lavender-200 shrink-0 flex items-center justify-center shadow-[0_4px_12px_rgba(45,31,84,0.15)]"
           >
             ↑
           </button>

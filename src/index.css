@@ -1,25 +1,49 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #f5f2ed;
-  --color-bg-card: #ffffff;
-  --color-accent-dark: #3d4f4f;
-  --color-accent-green: #7d9a6e;
-  --color-accent-warm: #f4e8d1;
-  --color-text-primary: #333333;
-  --color-text-secondary: #888888;
-  --color-border: #e5e0d8;
-  --color-alert-critical: #e74c3c;
-  --color-alert-warning: #f39c12;
-  --color-alert-positive: #27ae60;
-  --color-alert-info: #3498db;
+  /* === LAVENDER PALETTE === */
+  --color-lavender-50: #faf8ff;
+  --color-lavender-100: #f3eeff;
+  --color-lavender-200: #e8deff;
+  --color-lavender-300: #d4c4ff;
+  --color-lavender-400: #b69df7;
+  --color-lavender-500: #9b7ae8;
+  --color-lavender-600: #7c5cc9;
+  --color-lavender-700: #5e3fa8;
+  --color-lavender-800: #432d7a;
+  --color-lavender-900: #2d1f54;
 
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'DM Sans', sans-serif;
+  /* === SEMANTIC COLORS (mapped to Tailwind) === */
+  --color-bg-primary: #faf8ff;
+  --color-bg-card: #ffffff;
+  --color-bg-elevated: #f3eeff;
+  --color-accent-dark: #7c5cc9;
+  --color-accent-green: #059669;
+  --color-accent-warm: #f3eeff;
+  --color-text-primary: #1a1225;
+  --color-text-secondary: #6b5f7a;
+  --color-text-tertiary: #9a90a8;
+  --color-border: #e8deff;
+  --color-alert-critical: #dc2626;
+  --color-alert-warning: #d97706;
+  --color-alert-positive: #059669;
+  --color-alert-info: #7c5cc9;
+
+  /* === PHASE COLORS === */
+  --color-phase-a: #dc2626;
+  --color-phase-a-bg: #fef2f2;
+  --color-phase-b: #d97706;
+  --color-phase-b-bg: #fffbeb;
+  --color-phase-c: #059669;
+  --color-phase-c-bg: #ecfdf5;
+
+  /* === FONT === */
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 * {
   box-sizing: border-box;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 html, body, #root {
@@ -37,22 +61,46 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
+  letter-spacing: -0.3px;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 4px;
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-lavender-300); border-radius: 2px; }
+
+/* Safe area */
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+/* Animations */
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-::-webkit-scrollbar-track {
-  background: transparent;
+@keyframes bubble-enter {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 2px;
+@keyframes lavender-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
 }
 
-/* Safe area for mobile */
-.safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+button:active { transform: scale(0.97); }
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-primary: #0f0a1a;
+    --color-bg-card: #1a1225;
+    --color-bg-elevated: #241a35;
+    --color-accent-warm: #241a35;
+    --color-text-primary: #e8deff;
+    --color-text-secondary: #9a90a8;
+    --color-text-tertiary: #6b5f7a;
+    --color-border: #352a4d;
+    --color-lavender-100: #241a35;
+    --color-lavender-200: #352a4d;
+  }
 }

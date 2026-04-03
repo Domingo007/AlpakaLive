@@ -15,23 +15,29 @@ export function MessageBubble({ message, providerInfo }: MessageBubbleProps) {
     message.content.some(c => c.type === 'image');
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`} style={{ animation: 'bubble-enter 0.2s ease-out' }}>
+      {/* Agent avatar */}
+      {!isUser && (
+        <div className="w-7 h-7 rounded-lg bg-lavender-100 flex items-center justify-center text-sm shrink-0 mr-2 mt-1">
+          🦙
+        </div>
+      )}
       <div
-        className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+        className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${
           isUser
-            ? 'bg-accent-dark text-accent-warm rounded-br-sm'
-            : 'bg-bg-card border border-border text-text-primary rounded-bl-sm'
+            ? 'bg-lavender-600 text-white rounded-[18px_18px_4px_18px] shadow-[0_1px_2px_rgba(45,31,84,0.15)]'
+            : 'bg-bg-card text-text-primary rounded-[18px_18px_18px_4px] shadow-[0_4px_12px_rgba(45,31,84,0.08)] border border-lavender-100'
         }`}
       >
         {hasImages && (
           <div className="mb-2 text-xs opacity-70">📷 Zdjęcie dołączone</div>
         )}
         <div className="whitespace-pre-wrap">{text}</div>
-        <div className={`text-[10px] mt-1 ${isUser ? 'text-accent-warm/60' : 'text-text-secondary'}`}>
+        <div className={`text-[10px] mt-1.5 ${isUser ? 'text-white/50' : 'text-text-tertiary'}`}>
           {new Date(message.timestamp).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}
         </div>
         {!isUser && providerInfo && (
-          <div className="text-[9px] text-text-secondary/50 mt-0.5">
+          <div className="text-[9px] text-text-tertiary mt-0.5">
             Analiza: {providerInfo.provider} | PII Sanitizer
           </div>
         )}
