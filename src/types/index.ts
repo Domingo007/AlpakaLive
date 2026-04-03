@@ -1,3 +1,33 @@
+export interface PatientLocation {
+  residenceCountry: string;
+  residenceCity?: string;
+  treatmentCountry: string;
+  treatmentCity?: string;
+  treatmentFacility?: string;
+  guidelineRegion: 'europe' | 'usa' | 'other';
+}
+
+export type BreastCancerSubtype = 'luminal_a' | 'luminal_b' | 'her2_positive' | 'tnbc' | 'her2_low' | 'other' | 'unknown';
+export type ReceptorStatus = 'positive' | 'negative' | 'unknown';
+export type HER2Status = 'positive' | 'negative' | 'low' | 'unknown';
+export type GeneticTestStatus = 'positive' | 'negative' | 'not_tested' | 'unknown';
+
+export const EU_COUNTRIES = [
+  'Polska', 'Niemcy', 'Francja', 'Włochy', 'Hiszpania', 'Holandia', 'Belgia',
+  'Austria', 'Czechy', 'Szwecja', 'Dania', 'Finlandia', 'Norwegia', 'Irlandia',
+  'Portugalia', 'Grecja', 'Rumunia', 'Węgry', 'Bułgaria', 'Chorwacja', 'Słowacja',
+  'Słowenia', 'Litwa', 'Łotwa', 'Estonia', 'Cypr', 'Malta', 'Luksemburg',
+  'Wielka Brytania', 'Szwajcaria', 'Islandia',
+];
+
+export const USA_COUNTRIES = ['USA', 'Stany Zjednoczone', 'Kanada'];
+
+export function detectGuidelineRegion(treatmentCountry: string): 'europe' | 'usa' | 'other' {
+  if (EU_COUNTRIES.includes(treatmentCountry)) return 'europe';
+  if (USA_COUNTRIES.includes(treatmentCountry)) return 'usa';
+  return 'other';
+}
+
 export interface PatientProfile {
   id: string;
   name: string;
@@ -17,6 +47,17 @@ export interface PatientProfile {
   pii: PIIData;
   displayName: string;
   diseaseProfile?: DiseaseProfile;
+  location?: PatientLocation;
+  // Breast cancer specific biomarkers
+  breastCancerSubtype?: BreastCancerSubtype;
+  erStatus?: ReceptorStatus;
+  prStatus?: ReceptorStatus;
+  her2Status?: HER2Status;
+  ki67?: number | null;
+  brcaStatus?: 'brca1' | 'brca2' | 'negative' | 'not_tested' | 'unknown';
+  pdl1Status?: GeneticTestStatus;
+  pdl1Score?: number | null;
+  piK3caStatus?: 'mutated' | 'wild_type' | 'not_tested' | 'unknown';
   createdAt: Date;
   updatedAt: Date;
 }

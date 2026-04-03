@@ -1,6 +1,19 @@
-import type { PatientProfile, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, Prediction } from '@/types';
+import type { PatientProfile, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, Prediction, BreastCancerSubtype } from '@/types';
 import { calculateCurrentPhase } from './phase-calculator';
 import { checkInteractions } from './cyp450';
+
+function formatSubtype(subtype: BreastCancerSubtype): string {
+  const map: Record<BreastCancerSubtype, string> = {
+    luminal_a: 'Luminal A (HR+/HER2-, Ki-67 niski)',
+    luminal_b: 'Luminal B (HR+/HER2-, Ki-67 wysoki lub HR+/HER2+)',
+    her2_positive: 'HER2-dodatni',
+    tnbc: 'Potrójnie ujemny (TNBC)',
+    her2_low: 'HER2-low',
+    other: 'Inny',
+    unknown: 'Nieznany — zapytaj pacjenta!',
+  };
+  return map[subtype] || subtype;
+}
 
 interface RecentData {
   daily: DailyLog[];
@@ -36,6 +49,31 @@ Jesteś empatycznym, ale konkretnym agentem medycznym prowadzącym codzienny dzi
 - Leki psychiatryczne: ${activePsych.map(m => `${m.name} ${m.dose}`).join(', ') || 'brak'}
 - Leki onkologiczne: ${activeOnco.map(m => `${m.name} ${m.dose}`).join(', ') || 'brak'}
 - Inne leki: ${activeOther.map(m => `${m.name} ${m.dose}`).join(', ') || 'brak'}
+${patient.location ? `
+## REGION I WYTYCZNE
+Region leczenia: ${patient.location.guidelineRegion === 'europe' ? 'EUROPA (stosuj wytyczne ESMO, leki zatwierdzone przez EMA)' : patient.location.guidelineRegion === 'usa' ? 'USA (stosuj wytyczne NCCN, leki zatwierdzone przez FDA)' : 'Inny (stosuj najbliższe dostępne wytyczne)'}
+Kraj leczenia: ${patient.location.treatmentCountry}
+Kraj zamieszkania: ${patient.location.residenceCountry}
+${patient.location.treatmentFacility ? `Placówka: ${patient.location.treatmentFacility}` : ''}
+
+ZASADY REGIONALIZACJI:
+- Podawaj nazwy leków właściwe dla regionu pacjenta (np. Verzenios w Europie, Verzenio w USA)
+- Informuj o dostępności leku w regionie (np. "T-DXd zatwierdzone przez EMA ale refundacja zależy od programu lekowego NFZ")
+- Cytuj właściwe wytyczne (ESMO dla Europy, NCCN dla USA)
+- Jeśli pacjent pyta o lek niedostępny w jego regionie — poinformuj i zasugeruj alternatywy
+- Uwzględnij różnice w schematach chemii (Europa preferuje EC nad AC)` : ''}
+${patient.breastCancerSubtype ? `
+## PODTYP RAKA PIERSI
+Podtyp: ${formatSubtype(patient.breastCancerSubtype)}
+Status receptorowy: ER ${patient.erStatus || '?'}, PR ${patient.prStatus || '?'}, HER2 ${patient.her2Status || '?'}, Ki-67 ${patient.ki67 != null ? patient.ki67 + '%' : '?'}
+BRCA: ${patient.brcaStatus || '?'}, PD-L1: ${patient.pdl1Status || '?'}${patient.pdl1Score != null ? ` (CPS ${patient.pdl1Score})` : ''}, PIK3CA: ${patient.piK3caStatus || '?'}
+
+Na podstawie podtypu agent MUSI:
+- Stosować właściwe schematy chemii dla tego podtypu
+- Śledzić właściwe markery nowotworowe
+- Znać typowe lokalizacje przerzutów
+- Dopasować suplementację do konkretnych leków (nie do "raka piersi" ogólnie)
+- Informować o nowych lekach/badaniach klinicznych dla tego podtypu` : ''}
 
 ## AKTUALNE DANE
 ### Samopoczucie (ostatnie wpisy):

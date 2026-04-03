@@ -3,6 +3,9 @@
 Każda informacja ma oznaczony **poziom dowodów** i **źródło**.
 Społeczność może dodawać wiedzę przez Pull Request lub Issue.
 
+## Podtypy raka piersi
+Szczegółowa baza wiedzy o podtypach, leczeniu i różnicach regionalnych: [breast-cancer-subtypes.md](breast-cancer-subtypes.md)
+
 ## Poziomy dowodów
 - 🟢 **Silne** — meta-analiza lub wiele RCT
 - 🟡 **Umiarkowane** — jedno RCT lub badania obserwacyjne

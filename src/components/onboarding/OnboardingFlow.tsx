@@ -86,6 +86,23 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           </div>
         )}
 
+        {ob.step === 'location' && (
+          <div className="space-y-4">
+            <h2 className="font-display text-xl font-semibold text-accent-dark">📍 Lokalizacja</h2>
+            <p className="text-xs text-text-secondary">
+              Potrzebne aby dobrać właściwe wytyczne leczenia (ESMO/NCCN).
+            </p>
+
+            <InputField label="Kraj zamieszkania" value={ob.residenceCountry} onChange={v => { ob.setResidenceCountry(v); if (!ob.treatmentCountry || ob.treatmentCountry === ob.residenceCountry) ob.setTreatmentCountry(v); }} placeholder="np. Polska" />
+            <InputField label="Miasto (opcjonalnie)" value={ob.residenceCity} onChange={ob.setResidenceCity} placeholder="np. Warszawa" />
+            <InputField label="Kraj leczenia (jeśli inny)" value={ob.treatmentCountry} onChange={ob.setTreatmentCountry} placeholder="np. Polska" />
+            <InputField label="Miasto leczenia (opcjonalnie)" value={ob.treatmentCity} onChange={ob.setTreatmentCity} />
+            <InputField label="Szpital / klinika (opcjonalnie)" value={ob.treatmentFacility} onChange={ob.setTreatmentFacility} />
+
+            <NavButtons onBack={ob.back} onNext={ob.next} canBack={ob.canGoBack} />
+          </div>
+        )}
+
         {ob.step === 'diagnosis' && (
           <div className="space-y-4">
             <h2 className="font-display text-xl font-semibold text-accent-dark">🏥 Diagnoza</h2>
@@ -122,6 +139,49 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               onChange={ob.setMolecularSubtype}
               placeholder="np. HER2+, Triple Negative..."
             />
+
+            <NavButtons onBack={ob.back} onNext={ob.next} canBack={ob.canGoBack} />
+          </div>
+        )}
+
+        {ob.step === 'biomarkers' && ob.isBreastCancer && (
+          <div className="space-y-4">
+            <h2 className="font-display text-xl font-semibold text-accent-dark">🧬 Podtyp i biomarkery</h2>
+            <p className="text-xs text-text-secondary">
+              Z opisu histopatologicznego. Nie znasz? Wyślij agentowi zdjęcie wyniku.
+            </p>
+
+            <div>
+              <label className="text-xs text-text-secondary block mb-1">Podtyp molekularny</label>
+              <select value={ob.breastCancerSubtype} onChange={e => ob.setBreastCancerSubtype(e.target.value as any)} className="w-full rounded-lg border border-border px-3 py-2 text-sm bg-bg-primary">
+                <option value="unknown">Nie wiem</option>
+                <option value="luminal_a">HR+/HER2- (Luminal A)</option>
+                <option value="luminal_b">HR+/HER2- Ki-67 wysoki (Luminal B)</option>
+                <option value="her2_positive">HER2-dodatni</option>
+                <option value="tnbc">Potrójnie ujemny (TNBC)</option>
+                <option value="her2_low">HER2-low</option>
+                <option value="other">Inny</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs text-text-secondary block">Status receptorowy</label>
+              <StatusRow label="ER" value={ob.erStatus} onChange={ob.setErStatus} options={['positive', 'negative', 'unknown']} labels={['Dodatni', 'Ujemny', 'Nie wiem']} />
+              <StatusRow label="PR" value={ob.prStatus} onChange={ob.setPrStatus} options={['positive', 'negative', 'unknown']} labels={['Dodatni', 'Ujemny', 'Nie wiem']} />
+              <StatusRow label="HER2" value={ob.her2Status} onChange={ob.setHer2Status} options={['positive', 'negative', 'low', 'unknown']} labels={['Dodatni (3+)', 'Ujemny', 'Low (1+/2+)', 'Nie wiem']} />
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-text-secondary w-10">Ki-67</span>
+                <input type="number" value={ob.ki67} onChange={e => ob.setKi67(e.target.value)} placeholder="%" className="flex-1 rounded-lg border border-border px-3 py-1.5 text-sm bg-bg-primary" />
+                <span className="text-[10px] text-text-secondary">%</span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs text-text-secondary block">Badania genetyczne</label>
+              <StatusRow label="BRCA" value={ob.brcaStatus} onChange={ob.setBrcaStatus} options={['brca1', 'brca2', 'negative', 'not_tested']} labels={['BRCA1+', 'BRCA2+', 'Negatywny', 'Nie badano']} />
+              <StatusRow label="PD-L1" value={ob.pdl1Status} onChange={ob.setPdl1Status} options={['positive', 'negative', 'not_tested']} labels={['Dodatni', 'Ujemny', 'Nie badano']} />
+              <StatusRow label="PIK3CA" value={ob.piK3caStatus} onChange={ob.setPiK3caStatus} options={['mutated', 'wild_type', 'not_tested']} labels={['Zmutowany', 'Dziki typ', 'Nie badano']} />
+            </div>
 
             <NavButtons onBack={ob.back} onNext={ob.next} canBack={ob.canGoBack} />
           </div>
@@ -228,6 +288,35 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
     <div className="flex justify-between py-1 border-b border-border">
       <span className="text-text-secondary text-xs">{label}</span>
       <span className="text-xs font-medium">{value}</span>
+    </div>
+  );
+}
+
+function StatusRow({ label, value, onChange, options, labels }: {
+  label: string;
+  value: string;
+  onChange: (v: any) => void;
+  options: string[];
+  labels: string[];
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-xs text-text-secondary w-10 shrink-0">{label}</span>
+      <div className="flex gap-1 flex-1 flex-wrap">
+        {options.map((opt, i) => (
+          <button
+            key={opt}
+            onClick={() => onChange(opt)}
+            className={`px-2 py-1 rounded text-[10px] border ${
+              value === opt
+                ? 'bg-accent-dark text-accent-warm border-accent-dark'
+                : 'bg-bg-card border-border text-text-primary'
+            }`}
+          >
+            {labels[i]}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
