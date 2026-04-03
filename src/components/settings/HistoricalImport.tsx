@@ -8,7 +8,21 @@ import type { BloodWork, ChemoSession } from '@/types';
 
 type ImportTab = 'photos' | 'manual' | 'chemo';
 
-const KEY_MARKERS = ['wbc', 'hgb', 'plt', 'neutrophils', 'albumin'] as const;
+// Podstawowe markery widoczne domyślnie
+const BASIC_MARKERS = ['wbc', 'hgb', 'plt', 'neutrophils', 'albumin'] as const;
+
+// Pełny zakres markerów (rozwijany)
+const ALL_MARKERS = [
+  // Morfologia
+  'wbc', 'neutrophils', 'lymphocytes', 'hgb', 'hct', 'plt', 'rbc', 'mcv',
+  // Biochemia
+  'albumin', 'totalProtein', 'creatinine', 'urea', 'alt', 'ast', 'bilirubin',
+  'glucose', 'crp', 'sodium', 'potassium', 'calcium', 'ldh',
+  // Markery nowotworowe
+  'ca153', 'cea', 'ca125',
+  // Koagulacja
+  'inr', 'dDimer',
+] as const;
 
 interface BloodRow {
   id: string;
@@ -66,12 +80,15 @@ function ManualBloodImport() {
   const [rows, setRows] = useState<BloodRow[]>([createEmptyRow()]);
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+
+  const visibleMarkers = showAll ? ALL_MARKERS : BASIC_MARKERS;
 
   function createEmptyRow(): BloodRow {
     return {
       id: uuidv4(),
       date: '',
-      values: Object.fromEntries(KEY_MARKERS.map(k => [k, ''])),
+      values: Object.fromEntries(ALL_MARKERS.map(k => [k, ''])),
     };
   }
 
@@ -124,53 +141,120 @@ function ManualBloodImport() {
     }
   }
 
+  // Group markers by category for expanded view
+  const markerCategories = showAll ? [
+    { label: 'Morfologia', markers: ['wbc', 'neutrophils', 'lymphocytes', 'hgb', 'hct', 'plt', 'rbc', 'mcv'] },
+    { label: 'Biochemia', markers: ['albumin', 'totalProtein', 'creatinine', 'urea', 'alt', 'ast', 'bilirubin', 'glucose', 'crp', 'sodium', 'potassium', 'calcium', 'ldh'] },
+    { label: 'Markery nowotw.', markers: ['ca153', 'cea', 'ca125'] },
+    { label: 'Koagulacja', markers: ['inr', 'dDimer'] },
+  ] : null;
+
   return (
     <div className="space-y-3">
-      <p className="text-[10px] text-text-secondary">
-        Wpisz historyczne wyniki krwi. Pola: data + kluczowe markery.
-      </p>
-
-      {/* Header */}
-      <div className="grid grid-cols-[90px_repeat(5,1fr)_28px] gap-1 text-[9px] text-text-secondary font-medium">
-        <div>Data</div>
-        {KEY_MARKERS.map(k => (
-          <div key={k} title={BLOOD_NORMS[k]?.name}>
-            {BLOOD_NORMS[k]?.shortName || k}
-            <span className="block text-[8px] opacity-60">{BLOOD_NORMS[k]?.unit}</span>
-          </div>
-        ))}
-        <div />
+      <div className="flex items-center justify-between">
+        <p className="text-[10px] text-text-secondary">
+          Wpisz historyczne wyniki krwi. {showAll ? 'Pełny zakres markerów.' : 'Podstawowe markery.'}
+        </p>
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="text-[10px] text-accent-dark underline whitespace-nowrap"
+        >
+          {showAll ? 'Pokaż podstawowe' : 'Pokaż wszystkie markery'}
+        </button>
       </div>
 
-      {/* Rows */}
-      {rows.map(row => (
-        <div key={row.id} className="grid grid-cols-[90px_repeat(5,1fr)_28px] gap-1 items-center">
-          <input
-            type="date"
-            value={row.date}
-            onChange={e => updateRow(row.id, 'date', e.target.value)}
-            className="rounded border border-border px-1.5 py-1 text-[11px] bg-bg-primary w-full"
-          />
-          {KEY_MARKERS.map(k => (
-            <input
-              key={k}
-              type="number"
-              step="0.1"
-              value={row.values[k]}
-              onChange={e => updateRow(row.id, k, e.target.value)}
-              placeholder={`${BLOOD_NORMS[k]?.normalMin ?? ''}`}
-              className="rounded border border-border px-1.5 py-1 text-[11px] bg-bg-primary w-full text-center"
-            />
+      {!showAll ? (
+        <>
+          {/* Compact table for basic markers */}
+          <div className="grid grid-cols-[90px_repeat(5,1fr)_28px] gap-1 text-[9px] text-text-secondary font-medium">
+            <div>Data</div>
+            {BASIC_MARKERS.map(k => (
+              <div key={k} title={BLOOD_NORMS[k]?.name}>
+                {BLOOD_NORMS[k]?.shortName || k}
+                <span className="block text-[8px] opacity-60">{BLOOD_NORMS[k]?.unit}</span>
+              </div>
+            ))}
+            <div />
+          </div>
+
+          {rows.map(row => (
+            <div key={row.id} className="grid grid-cols-[90px_repeat(5,1fr)_28px] gap-1 items-center">
+              <input
+                type="date"
+                value={row.date}
+                onChange={e => updateRow(row.id, 'date', e.target.value)}
+                className="rounded border border-border px-1.5 py-1 text-[11px] bg-bg-primary w-full"
+              />
+              {BASIC_MARKERS.map(k => (
+                <input
+                  key={k}
+                  type="number"
+                  step="0.1"
+                  value={row.values[k]}
+                  onChange={e => updateRow(row.id, k, e.target.value)}
+                  placeholder={`${BLOOD_NORMS[k]?.normalMin ?? ''}`}
+                  className="rounded border border-border px-1.5 py-1 text-[11px] bg-bg-primary w-full text-center"
+                />
+              ))}
+              <button
+                onClick={() => removeRow(row.id)}
+                className="text-alert-critical text-sm w-7 h-7 flex items-center justify-center"
+                title="Usuń wiersz"
+              >
+                ×
+              </button>
+            </div>
           ))}
-          <button
-            onClick={() => removeRow(row.id)}
-            className="text-alert-critical text-sm w-7 h-7 flex items-center justify-center"
-            title="Usuń wiersz"
-          >
-            ×
-          </button>
-        </div>
-      ))}
+        </>
+      ) : (
+        <>
+          {/* Expanded form — one row at a time with all markers grouped by category */}
+          {rows.map(row => (
+            <div key={row.id} className="border border-border rounded-lg p-3 space-y-3">
+              <div className="flex items-center justify-between">
+                <input
+                  type="date"
+                  value={row.date}
+                  onChange={e => updateRow(row.id, 'date', e.target.value)}
+                  className="rounded border border-border px-2 py-1.5 text-xs bg-bg-primary"
+                />
+                <button
+                  onClick={() => removeRow(row.id)}
+                  className="text-alert-critical text-xs px-2 py-1"
+                >
+                  Usuń
+                </button>
+              </div>
+
+              {markerCategories!.map(cat => (
+                <div key={cat.label}>
+                  <div className="text-[9px] font-medium text-accent-dark mb-1">{cat.label}</div>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {cat.markers.map(k => {
+                      const norm = BLOOD_NORMS[k];
+                      return (
+                        <div key={k} className="flex flex-col">
+                          <label className="text-[8px] text-text-secondary" title={norm?.name}>
+                            {norm?.shortName || k} <span className="opacity-50">({norm?.unit})</span>
+                          </label>
+                          <input
+                            type="number"
+                            step="0.1"
+                            value={row.values[k] || ''}
+                            onChange={e => updateRow(row.id, k, e.target.value)}
+                            placeholder={norm ? `${norm.normalMin}–${norm.normalMax}` : ''}
+                            className="rounded border border-border px-1.5 py-1 text-[11px] bg-bg-primary text-center"
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </>
+      )}
 
       {/* Actions */}
       <div className="flex gap-2">
@@ -407,11 +491,21 @@ function PhotoBatchImport() {
                 },
                 {
                   type: 'text',
-                  text: `Odczytaj wyniki badań krwi z tego zdjęcia. Zwróć TYLKO dane w formacie JSON:
-{"date":"YYYY-MM-DD","markers":{"wbc":wartość,"hgb":wartość,"plt":wartość,"neutrophils":wartość,"albumin":wartość,...}}
-Użyj kluczy: wbc, hgb, plt, neutrophils, lymphocytes, rbc, mcv, hct, albumin, totalProtein, creatinine, alt, ast, bilirubin, glucose, crp, sodium, potassium, calcium, ldh.
-Podaj tylko te markery które widzisz na zdjęciu. Datę odczytaj ze zdjęcia, jeśli nie widać użyj dzisiejszej.
-IGNORUJ dane osobowe pacjenta (imię, nazwisko, PESEL).`,
+                  text: `Odczytaj WSZYSTKIE wyniki badań krwi z tego zdjęcia. Zwróć dane w formacie JSON:
+{"date":"YYYY-MM-DD","markers":{"wbc":wartość,"hgb":wartość,"plt":wartość,...}}
+
+KLUCZOWE MARKERY (użyj tych kluczy):
+Morfologia: wbc, neutrophils, lymphocytes, hgb, hct, plt, rbc, mcv
+Biochemia: albumin, totalProtein, creatinine, urea, alt, ast, bilirubin, glucose, crp, sodium, potassium, calcium, ldh
+Markery nowotworowe: ca153, cea, ca125
+Koagulacja: inr, dDimer
+
+INSTRUKCJE:
+1. Odczytaj KAŻDĄ wartość liczbową widoczną na zdjęciu — nawet jeśli nie ma jej na powyższej liście, dodaj ją z oryginalną nazwą jako kluczem.
+2. Datę odczytaj ze zdjęcia (nagłówek/stopka). Jeśli nie widać, użyj dzisiejszej.
+3. Wartości podawaj jako liczby (nie tekst). Jeśli jednostka inna niż standardowa, przelicz.
+4. IGNORUJ dane osobowe pacjenta (imię, nazwisko, PESEL, adres).
+5. Jeśli zdjęcie zawiera kilka stron/badań z różnych dat — zwróć tablicę: [{"date":...,"markers":...}, ...]`,
                 },
               ],
             }],
@@ -423,20 +517,29 @@ IGNORUJ dane osobowe pacjenta (imię, nazwisko, PESEL).`,
         const data = await response.json();
         const text = data.content?.[0]?.text || '';
 
-        // Extract JSON from response
-        const jsonMatch = text.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) throw new Error('Nie znaleziono danych');
+        // Extract JSON from response — support single object or array
+        const arrayMatch = text.match(/\[[\s\S]*\]/);
+        const objMatch = text.match(/\{[\s\S]*\}/);
+        if (!arrayMatch && !objMatch) throw new Error('Nie znaleziono danych');
 
-        const parsed = JSON.parse(jsonMatch[0]);
-        const bloodRecord: BloodWork & { id: string } = {
-          id: photo.id,
-          date: parsed.date || new Date().toISOString().split('T')[0],
-          source: 'photo_extraction',
-          markers: parsed.markers || {},
-          notes: 'Import ze zdjęcia',
-        };
+        let results: { date?: string; markers?: Record<string, number> }[];
+        try {
+          const raw = JSON.parse(arrayMatch ? arrayMatch[0] : objMatch![0]);
+          results = Array.isArray(raw) ? raw : [raw];
+        } catch {
+          throw new Error('Błąd parsowania danych ze zdjęcia');
+        }
 
-        await db.blood.put(bloodRecord);
+        for (const parsed of results) {
+          const bloodRecord: BloodWork & { id: string } = {
+            id: results.length === 1 ? photo.id : uuidv4(),
+            date: parsed.date || new Date().toISOString().split('T')[0],
+            source: 'photo_extraction',
+            markers: parsed.markers || {},
+            notes: `Import ze zdjęcia (${Object.keys(parsed.markers || {}).length} markerów)`,
+          };
+          await db.blood.put(bloodRecord);
+        }
         setPhotos(prev => prev.map(p => p.id === photo.id ? { ...p, status: 'done' } : p));
       } catch (err) {
         const msg = err instanceof Error ? err.message : 'Nieznany błąd';
