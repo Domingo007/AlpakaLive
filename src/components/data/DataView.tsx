@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDashboardData } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
 import { StatCard } from '@/components/shared/StatCard';
@@ -6,10 +6,17 @@ import { EnergyChart } from './EnergyChart';
 import { BloodChart } from './BloodChart';
 import { generateReportPDF } from '@/lib/report-generator';
 import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
+import { buildCalendarEvents, getUpcomingEvents } from '@/lib/calendar-events';
+import type { CalendarEvent } from '@/types';
 
 export function DataView() {
   const { daily, blood, wearable, counts, loading } = useDashboardData();
   const [generating, setGenerating] = useState(false);
+  const [upcoming, setUpcoming] = useState<CalendarEvent[]>([]);
+
+  useEffect(() => {
+    buildCalendarEvents().then(ev => setUpcoming(getUpcomingEvents(ev, 7)));
+  }, [loading]);
 
   async function handleGenerateReport() {
     setGenerating(true);
@@ -46,6 +53,25 @@ export function DataView() {
       </div>
 
       <DisclaimerBanner variant="data" />
+
+      {/* Upcoming events */}
+      {upcoming.length > 0 && (
+        <Card title="📅 Nadchodzące (7 dni)">
+          <div className="space-y-1.5">
+            {upcoming.slice(0, 5).map(ev => {
+              const daysFromNow = Math.round((new Date(ev.date).getTime() - Date.now()) / (1000*60*60*24));
+              const label = daysFromNow === 0 ? 'Dziś' : daysFromNow === 1 ? 'Jutro' : `Za ${daysFromNow} dni`;
+              return (
+                <div key={ev.id} className="flex items-center gap-2 text-xs">
+                  <span className="text-text-secondary w-14 shrink-0">{label}</span>
+                  <span>{ev.icon}</span>
+                  <span className="truncate">{ev.title}</span>
+                </div>
+              );
+            })}
+          </div>
+        </Card>
+      )}
 
       {/* Stats summary */}
       <div className="grid grid-cols-2 gap-2">

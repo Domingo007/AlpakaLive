@@ -7,6 +7,7 @@ interface TabBarProps {
 
 const TABS: { id: TabId; icon: string; label: string }[] = [
   { id: 'chat', icon: '💬', label: 'Chat' },
+  { id: 'calendar', icon: '📅', label: 'Kalendarz' },
   { id: 'data', icon: '📊', label: 'Dane' },
   { id: 'imaging', icon: '🏥', label: 'Obrazowanie' },
   { id: 'settings', icon: '⚙️', label: 'Ustawienia' },

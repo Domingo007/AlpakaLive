@@ -14,6 +14,7 @@ import type {
   Prediction,
   ChatMessage,
   AppSettings,
+  CalendarNote,
 } from '@/types';
 
 class AlpakaLiveDB extends Dexie {
@@ -28,6 +29,7 @@ class AlpakaLiveDB extends Dexie {
   predictions!: Table<Prediction>;
   chat!: Table<ChatMessage>;
   settings!: Table<AppSettings>;
+  calendarNotes!: Table<CalendarNote>;
 
   constructor() {
     super('AlpakaLiveDB');
@@ -43,6 +45,7 @@ class AlpakaLiveDB extends Dexie {
       predictions: 'id, date, targetDate, type',
       chat: 'id, timestamp',
       settings: 'id',
+      calendarNotes: 'id, date, type',
     });
   }
 }

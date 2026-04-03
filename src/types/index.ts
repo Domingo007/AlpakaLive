@@ -405,7 +405,40 @@ export interface ChemoReadinessAssessment {
 
 export type ChemoPhase = 'A' | 'B' | 'C' | null;
 
-export type TabId = 'chat' | 'data' | 'imaging' | 'settings';
+export type TabId = 'chat' | 'calendar' | 'data' | 'imaging' | 'settings';
+
+// Calendar types
+export type CalendarEventType =
+  | 'chemo' | 'chemo_postponed' | 'blood_test' | 'imaging' | 'daily_log'
+  | 'supplement' | 'doctor_visit' | 'side_effect' | 'weight'
+  | 'wearable_alert' | 'prediction' | 'medication_change' | 'note'
+  | 'phase_a' | 'phase_b' | 'phase_c';
+
+export interface CalendarEvent {
+  id: string;
+  date: string;
+  type: CalendarEventType;
+  title: string;
+  subtitle?: string;
+  color: string;
+  icon: string;
+  sourceId?: string;
+  sourceType?: string;
+  editable: boolean;
+  allDay: boolean;
+  time?: string;
+  data?: Record<string, unknown>;
+}
+
+export interface CalendarNote {
+  id: string;
+  date: string;
+  type: 'doctor_visit' | 'note';
+  title: string;
+  description?: string;
+  time?: string;
+  reminder?: boolean;
+}
 
 export interface NotificationConfig {
   enabled: boolean;

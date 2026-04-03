@@ -3,6 +3,7 @@ import { Header } from '@/components/shared/Header';
 import { TabBar } from '@/components/shared/TabBar';
 import { ChatView } from '@/components/chat/ChatView';
 import { DataView } from '@/components/data/DataView';
+import { CalendarView } from '@/components/calendar/CalendarView';
 import { ImagingView } from '@/components/imaging/ImagingView';
 import { SettingsView } from '@/components/settings/SettingsView';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
@@ -43,6 +44,7 @@ export default function App() {
       <Header />
       <main className="flex-1 overflow-hidden">
         {activeTab === 'chat' && <ChatView />}
+        {activeTab === 'calendar' && <CalendarView />}
         {activeTab === 'data' && <DataView />}
         {activeTab === 'imaging' && <ImagingView />}
         {activeTab === 'settings' && <SettingsView />}
