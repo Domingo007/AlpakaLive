@@ -19,6 +19,7 @@ export function useChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastPrediction, setLastPrediction] = useState<PredictionResult | null>(null);
+  const [lastProviderInfo, setLastProviderInfo] = useState<{ provider: string; model: string } | null>(null);
 
   useEffect(() => {
     loadMessages();
@@ -118,6 +119,7 @@ export function useChat() {
       const allMessages = [...messages, userMessage];
       const response = await sendMessage(allMessages, {
         apiKey: settings?.apiKey || '',
+        provider: (settings?.aiProvider as any) || 'anthropic',
         systemPrompt,
         piiData: patient?.pii,
       });
@@ -129,6 +131,7 @@ export function useChat() {
       }
 
       const cleanContent = cleanResponseFromTags(response.content);
+      setLastProviderInfo({ provider: response.provider, model: response.model });
 
       const assistantMessage: ChatMessage = {
         id: uuidv4(),
@@ -148,5 +151,5 @@ export function useChat() {
     }
   }, [messages]);
 
-  return { messages, isLoading, error, send, reload: loadMessages, lastPrediction };
+  return { messages, isLoading, error, send, reload: loadMessages, lastPrediction, lastProviderInfo };
 }

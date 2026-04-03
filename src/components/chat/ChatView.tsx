@@ -6,7 +6,7 @@ import { PredictionCards } from './PredictionCards';
 import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
 
 export function ChatView() {
-  const { messages, isLoading, error, send, lastPrediction } = useChat();
+  const { messages, isLoading, error, send, lastPrediction, lastProviderInfo } = useChat();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -52,17 +52,26 @@ export function ChatView() {
     <div className="flex flex-col h-full">
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3">
-        {messages.map(msg => (
-          <MessageBubble key={msg.id} message={msg} />
+        {messages.map((msg, i) => (
+          <MessageBubble
+            key={msg.id}
+            message={msg}
+            providerInfo={msg.role === 'assistant' && i === messages.length - 1 ? lastProviderInfo : undefined}
+          />
         ))}
         {isLoading && (
-          <div className="flex items-center gap-2 px-3 py-2">
-            <div className="flex gap-1">
-              <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '0ms' }} />
-              <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '150ms' }} />
-              <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '300ms' }} />
+          <div className="bg-bg-card border border-border rounded-xl px-3 py-2.5 mx-1">
+            <div className="flex items-center gap-2">
+              <div className="flex gap-1">
+                <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-2 h-2 rounded-full bg-accent-dark animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+              <span className="text-xs text-text-secondary">Analizuję...</span>
             </div>
-            <span className="text-xs text-text-secondary">Myślę...</span>
+            <div className="text-[9px] text-text-secondary mt-1">
+              🔒 Dane osobowe usunięte przez PII Sanitizer
+            </div>
           </div>
         )}
         {lastPrediction && (

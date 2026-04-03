@@ -1,26 +1,31 @@
 import type { ChatMessage, MessageContent } from '@/types';
 import { PIISanitizer, IMAGE_PII_INSTRUCTION } from './pii-sanitizer';
 import type { PIIData } from '@/types';
+import { sendToAI, getProviderLabel, type AIProvider, type AIMessage, type AIMessageContent } from './ai-provider';
 
-interface AIConfig {
+export interface AIConfig {
   apiKey: string;
+  provider: AIProvider;
   systemPrompt: string;
   piiData?: PIIData;
 }
 
-interface AIResponse {
+export interface AIResponseResult {
   content: string;
   rawContent?: string;
+  provider: AIProvider;
+  model: string;
+  piiRemoved: number;
 }
 
 const MOCK_RESPONSES: Record<string, string> = {
-  default: 'Dzień dobry! Jestem Twoim agentem medycznym AlpakaLive. Jak się dziś czujesz? Opowiedz mi o swoim samopoczuciu — energia, ból, nudności, nastrój.',
+  default: 'Dzień dobry! Jestem narzędziem do analizy danych zdrowotnych AlpakaLive. Jak się dziś czujesz? Opowiedz mi o swoim samopoczuciu — energia, ból, nudności, nastrój.',
   morning: 'Dzień dobry! Jak się dzisiaj czujesz po przebudzeniu?\n\nPowiedz mi o:\n- Energia (1-10)\n- Ból (0-10)\n- Nudności (0-10)\n- Jak spałaś/spałeś?',
   evening: 'Czas na wieczorne podsumowanie. Jak minął dzień?\n\nOpowiedz o:\n- Energia pod koniec dnia\n- Co jadłaś/jadłeś?\n- Czy brałaś/brałeś suplementy?\n- Jak ogólnie nastrój?',
   chemo: 'Rozumiem, że miałeś/miała dziś chemię. To ważne żeby monitorować jak się czujesz.\n\nPowiedz mi:\n- Jakie leki podano?\n- Jak się czujesz teraz? (nudności, zmęczenie)\n- Czy jesteś dobrze nawodniona/y?',
   report: '## Raport dla lekarza\n\n**Okres:** ostatnie 7 dni\n\n**Trendy:**\n- Energia: brak danych (tryb demo)\n- Ból: brak danych\n- Waga: brak danych\n\n**Alerty:** Brak danych do analizy\n\n*Aby uzyskać pełny raport, dodaj klucz API w ustawieniach i wprowadź dane przez dziennik.*',
   prediction: '**Predykcja** wymaga minimum 7 dni danych dziennika i 2 cykli chemii.\n\nZacznij od codziennego raportowania samopoczucia — po zebraniu wystarczającej ilości danych, będę mógł przewidywać Twoje samopoczucie.',
-  imaging: 'Analiza obrazowania wymaga klucza API Claude z obsługą Vision.\n\nGdy dodasz klucz API, będę mógł:\n- Analizować zdjęcia RTG, CT, PET, MRI\n- Porównywać z poprzednimi badaniami\n- Śledzić zmiany rozmiarów guza (RECIST)',
+  imaging: 'Analiza obrazowania wymaga klucza API.\n\nGdy dodasz klucz API, będę mógł:\n- Analizować zdjęcia RTG, CT, PET, MRI\n- Porównywać z poprzednimi badaniami\n- Śledzić zmiany rozmiarów guza (RECIST)',
 };
 
 function getMockResponse(userMessage: string): string {
@@ -32,74 +37,73 @@ function getMockResponse(userMessage: string): string {
   if (lower.includes('rano') || lower.includes('pobudz') || lower.includes('dzien dobry')) return MOCK_RESPONSES.morning;
   if (lower.includes('wiecz') || lower.includes('koniec dnia') || lower.includes('dobranoc')) return MOCK_RESPONSES.evening;
 
-  return `Dzięki za informacje! W trybie demo nie mogę w pełni analizować danych. Dodaj klucz API Anthropic w ustawieniach, żeby odblokować pełną funkcjonalność agenta.\n\nNa razie mogę Ci pomóc poruszać się po aplikacji — sprawdź zakładki Dane, Obrazowanie i Ustawienia.`;
+  return `Dzięki za informacje! W trybie demo nie mogę w pełni analizować danych. Dodaj klucz API w ustawieniach, żeby odblokować pełną funkcjonalność.\n\nNa razie mogę Ci pomóc poruszać się po aplikacji — sprawdź zakładki Kalendarz, Dane, Obrazowanie i Ustawienia.`;
 }
 
 export async function sendMessage(
   messages: ChatMessage[],
   config: AIConfig,
-): Promise<AIResponse> {
+): Promise<AIResponseResult> {
+  const provider = config.provider || 'anthropic';
+
   if (!config.apiKey) {
     const lastMsg = messages[messages.length - 1];
     const userText = typeof lastMsg?.content === 'string' ? lastMsg.content : '';
-    return { content: getMockResponse(userText) };
+    return { content: getMockResponse(userText), provider, model: 'demo', piiRemoved: 0 };
   }
 
   const sanitizer = config.piiData ? new PIISanitizer(config.piiData) : null;
+  let piiRemoved = 0;
 
-  const apiMessages = messages
+  // Convert ChatMessages to AIMessages with PII sanitization
+  const hasImages = messages.some(m => Array.isArray(m.content) && m.content.some(c => c.type === 'image'));
+
+  const aiMessages: AIMessage[] = messages
     .filter(m => m.role !== 'system')
     .map(m => {
-      let content: string | MessageContent[];
       if (typeof m.content === 'string') {
-        content = sanitizer ? sanitizer.sanitizeOutgoing(m.content) : m.content;
-      } else {
-        content = m.content.map(c => {
-          if (c.type === 'text') {
-            return { ...c, text: sanitizer ? sanitizer.sanitizeOutgoing(c.text) : c.text };
-          }
-          return c;
-        });
+        const sanitized = sanitizer ? sanitizer.sanitizeOutgoing(m.content) : m.content;
+        if (sanitized !== m.content) piiRemoved++;
+        return { role: m.role, content: sanitized };
       }
-      return { role: m.role, content };
+      const parts: AIMessageContent[] = m.content.map(c => {
+        if (c.type === 'text') {
+          const sanitized = sanitizer ? sanitizer.sanitizeOutgoing(c.text) : c.text;
+          if (sanitized !== c.text) piiRemoved++;
+          return { type: 'text' as const, text: sanitized };
+        }
+        if (c.type === 'image') {
+          return { type: 'image' as const, mimeType: c.source.media_type, data: c.source.data };
+        }
+        return { type: 'text' as const, text: '' };
+      });
+      return { role: m.role, content: parts };
     });
 
-  const systemPrompt = sanitizer
-    ? sanitizer.sanitizeOutgoing(config.systemPrompt)
-    : config.systemPrompt;
+  const systemPrompt = (sanitizer ? sanitizer.sanitizeOutgoing(config.systemPrompt) : config.systemPrompt)
+    + (hasImages ? '\n\n' + IMAGE_PII_INSTRUCTION : '');
 
-  const hasImages = messages.some(
-    m => Array.isArray(m.content) && m.content.some(c => c.type === 'image'),
+  console.log(`[PII Sanitizer] Usunięto ${piiRemoved} dopasowań`);
+  console.log(`[API] Wysyłam do: ${provider}`);
+
+  const result = await sendToAI(
+    { provider, apiKey: config.apiKey },
+    systemPrompt,
+    aiMessages,
+    hasImages,
   );
 
-  const body = {
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 4096,
-    system: systemPrompt + (hasImages ? '\n\n' + IMAGE_PII_INSTRUCTION : ''),
-    messages: apiMessages,
+  console.log(`[API] Odpowiedź: ${result.text.length} znaków, model: ${result.model}`);
+
+  const content = sanitizer ? sanitizer.restoreIncoming(result.text) : result.text;
+
+  return {
+    content,
+    rawContent: result.text,
+    provider: result.provider,
+    model: result.model,
+    piiRemoved,
   };
-
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': config.apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`API Error ${response.status}: ${error}`);
-  }
-
-  const data = await response.json();
-  const rawContent = data.content?.[0]?.text || 'Brak odpowiedzi.';
-  const content = sanitizer ? sanitizer.restoreIncoming(rawContent) : rawContent;
-
-  return { content, rawContent };
 }
 
 export function getWelcomeMessage(): string {

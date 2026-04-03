@@ -2,9 +2,10 @@ import type { ChatMessage } from '@/types';
 
 interface MessageBubbleProps {
   message: ChatMessage;
+  providerInfo?: { provider: string; model: string } | null;
 }
 
-export function MessageBubble({ message }: MessageBubbleProps) {
+export function MessageBubble({ message, providerInfo }: MessageBubbleProps) {
   const isUser = message.role === 'user';
   const text = typeof message.content === 'string'
     ? message.content
@@ -29,6 +30,11 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         <div className={`text-[10px] mt-1 ${isUser ? 'text-accent-warm/60' : 'text-text-secondary'}`}>
           {new Date(message.timestamp).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}
         </div>
+        {!isUser && providerInfo && (
+          <div className="text-[9px] text-text-secondary/50 mt-0.5">
+            Analiza: {providerInfo.provider} | PII Sanitizer
+          </div>
+        )}
       </div>
     </div>
   );

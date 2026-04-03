@@ -4,9 +4,9 @@ import type { PatientProfile, PIIData, PatientLocation, PatientLanguages, Breast
 import { detectGuidelineRegion, DEFAULT_NOTIFICATIONS } from '@/types';
 import { savePatient, saveSettings } from '@/lib/db';
 
-export type OnboardingStep = 'welcome' | 'privacy' | 'apikey' | 'location' | 'languages' | 'diagnosis' | 'biomarkers' | 'medications' | 'confirmation';
+export type OnboardingStep = 'welcome' | 'data_transparency' | 'privacy' | 'apikey' | 'location' | 'languages' | 'diagnosis' | 'biomarkers' | 'medications' | 'confirmation';
 
-const STEPS: OnboardingStep[] = ['welcome', 'privacy', 'apikey', 'location', 'languages', 'diagnosis', 'biomarkers', 'medications', 'confirmation'];
+const STEPS: OnboardingStep[] = ['welcome', 'data_transparency', 'privacy', 'apikey', 'location', 'languages', 'diagnosis', 'biomarkers', 'medications', 'confirmation'];
 
 export function useOnboarding() {
   const [step, setStep] = useState<OnboardingStep>('welcome');

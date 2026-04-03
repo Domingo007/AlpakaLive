@@ -40,6 +40,31 @@ Informacje o suplementach, witaminach i substancjach eksperymentalnych:
 - Decyzja o zastosowaniu MUSI być podjęta w konsultacji z lekarzem onkologiem
 - Dawki podawane w aplikacji to dawki stosowane w cytowanych badaniach, NIE zalecenia
 
+## Przetwarzanie danych przez AI
+
+AlpakaLive korzysta z zewnętrznych usług AI do analizy danych medycznych dostarczonych przez użytkownika:
+
+**Dane przechowywane WYŁĄCZNIE na urządzeniu:**
+- Imię, nazwisko, PESEL, adres, telefon, email
+- Numery identyfikacyjne pacjenta
+- Pełna historia danych i rozmów
+- Zdjęcia dokumentów (kopie lokalne)
+
+**Dane wysyłane do dostawcy AI (po filtracji PII Sanitizer):**
+- Treść rozmów z agentem (bez danych osobowych)
+- Wartości wyników badań (bez danych identyfikujących pacjenta)
+- Zdjęcia dokumentów medycznych (mogą zawierać dane w nagłówku — agent jest instruowany aby je ignorować)
+- Dane medyczne: diagnoza, leki, wyniki, dane z opaski
+
+**PII Sanitizer** automatycznie usuwa dane osobowe z treści przed wysłaniem do API. Filtr zastępuje imię, nazwisko, PESEL, adres, telefon i email placeholderami (np. "[PACJENT]", "[PESEL]").
+
+**Dostawcy AI:**
+- Anthropic (Claude) — serwery w USA. Polityka: dane z API nie są używane do trenowania modeli.
+- OpenAI (GPT) — serwery w USA. Polityka: dane z API (nie ChatGPT) nie są używane do trenowania.
+- Google (Gemini) — serwery w USA/UE. Polityka: darmowy tier może być używany do trenowania.
+
+**Uwaga dotycząca Gemini (darmowy tier):** Google może używać danych z darmowego API Gemini do ulepszania swoich modeli. Jeśli prywatność jest priorytetem, zalecamy Anthropic Claude lub OpenAI z płatnym API.
+
 ## Dane prywatne
 
 - Dane osobowe (PESEL, imię, nazwisko, adres) przechowywane wyłącznie na urządzeniu użytkownika

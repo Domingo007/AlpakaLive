@@ -1,20 +1,14 @@
-import { useState } from 'react';
 import { usePatient, useSettings } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
 import { HistoricalImport } from './HistoricalImport';
 import { NotificationSettings } from './NotificationSettings';
+import { AIProviderSettings } from './AIProviderSettings';
 import { exportAllData, importData, clearAllData } from '@/lib/db';
 import type { DrugEntry } from '@/types';
 
 export function SettingsView() {
-  const { patient, update: updatePatient } = usePatient();
-  const { settings, update: updateSettings } = useSettings();
-  const [showApiKey, setShowApiKey] = useState(false);
-  const [apiKeyInput, setApiKeyInput] = useState(settings?.apiKey || '');
-
-  async function handleSaveApiKey() {
-    await updateSettings({ apiKey: apiKeyInput });
-  }
+  const { patient } = usePatient();
+  const { settings } = useSettings();
 
   async function handleExport() {
     const json = await exportAllData();
@@ -54,35 +48,8 @@ export function SettingsView() {
     <div className="h-full overflow-y-auto px-3 py-4 space-y-4">
       <h2 className="font-display text-lg font-semibold text-accent-dark">Ustawienia</h2>
 
-      {/* API Key */}
-      <Card title="Klucz API Anthropic">
-        <div className="space-y-2">
-          <div className="relative">
-            <input
-              type={showApiKey ? 'text' : 'password'}
-              value={apiKeyInput}
-              onChange={e => setApiKeyInput(e.target.value)}
-              placeholder="sk-ant-..."
-              className="w-full rounded-lg border border-border px-3 py-2 text-sm bg-bg-primary pr-16"
-            />
-            <button
-              onClick={() => setShowApiKey(!showApiKey)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-text-secondary"
-            >
-              {showApiKey ? 'Ukryj' : 'Pokaż'}
-            </button>
-          </div>
-          <button
-            onClick={handleSaveApiKey}
-            className="w-full bg-accent-dark text-accent-warm rounded-lg py-2 text-sm font-medium"
-          >
-            Zapisz klucz
-          </button>
-          <p className="text-[10px] text-text-secondary">
-            Klucz jest przechowywany tylko lokalnie na Twoim urządzeniu.
-          </p>
-        </div>
-      </Card>
+      {/* AI Provider */}
+      <AIProviderSettings />
 
       {/* Notifications */}
       <NotificationSettings />

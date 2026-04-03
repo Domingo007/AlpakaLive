@@ -466,6 +466,12 @@ export const DEFAULT_NOTIFICATIONS: NotificationConfig = {
 
 export interface AppSettings {
   apiKey: string;
+  aiProvider: 'anthropic' | 'openai' | 'gemini';
   onboardingCompleted: boolean;
   notifications: NotificationConfig;
+  dataProcessingConsent?: {
+    accepted: boolean;
+    acceptedAt: string;
+    provider: string;
+  };
 }

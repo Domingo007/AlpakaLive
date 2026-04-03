@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useOnboarding } from '@/hooks/useOnboarding';
+import type { AIProvider } from '@/lib/ai-provider';
 
 interface OnboardingFlowProps {
   onComplete: () => void;
@@ -8,6 +9,7 @@ interface OnboardingFlowProps {
 export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
   const ob = useOnboarding();
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
+  const [dataConsentAccepted, setDataConsentAccepted] = useState(false);
 
   async function handleComplete() {
     await ob.complete();
@@ -83,6 +85,54 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               className="w-full bg-accent-dark text-accent-warm rounded-xl py-3 text-sm font-medium disabled:opacity-40"
             >
               Rozpocznij konfigurację
+            </button>
+          </div>
+        )}
+
+        {ob.step === 'data_transparency' && (
+          <div className="space-y-3 mt-2">
+            <h2 className="font-display text-lg font-semibold text-accent-dark">🔒 Jak przetwarzamy Twoje dane</h2>
+
+            <div className="bg-accent-green/10 border border-accent-green/30 rounded-xl p-3 text-xs space-y-1">
+              <div className="font-medium text-accent-dark">📱 Na Twoim telefonie (nie opuszczają urządzenia):</div>
+              <div className="text-text-secondary space-y-0.5 pl-2">
+                <div>✅ Imię, nazwisko, PESEL, adres, telefon, email</div>
+                <div>✅ Numery identyfikacyjne pacjenta</div>
+                <div>✅ Pełna historia danych i rozmów</div>
+                <div>✅ Zdjęcia dokumentów (kopie lokalne)</div>
+              </div>
+            </div>
+
+            <div className="bg-alert-warning/10 border border-alert-warning/30 rounded-xl p-3 text-xs space-y-1">
+              <div className="font-medium text-accent-dark">☁️ Wysyłane do API AI (serwery dostawcy):</div>
+              <div className="text-text-secondary space-y-0.5 pl-2">
+                <div>📤 Treść rozmów (BEZ danych osobowych — PII Sanitizer je usuwa)</div>
+                <div>📤 Zdjęcia wyników (mogą zawierać nagłówek z danymi)</div>
+                <div>📤 Dane medyczne: diagnoza, wyniki krwi, leki</div>
+                <div>📤 Dane z opaski (RHR, sen, SpO2)</div>
+              </div>
+              <div className="text-[10px] text-text-secondary mt-1">
+                Dostawcy AI (Anthropic/OpenAI/Google) — serwery w USA/UE. Dane szyfrowane (HTTPS).
+              </div>
+            </div>
+
+            <div className="bg-bg-card border border-border rounded-xl p-3 text-xs space-y-1">
+              <div className="font-medium text-accent-dark">🛡️ PII Sanitizer</div>
+              <div className="text-text-secondary space-y-0.5 pl-2">
+                <div>"Paula Kowalska" → "[PACJENT]"</div>
+                <div>"90011512345" → "[PESEL]"</div>
+                <div>"ul. Kwiatowa 5" → "[ADRES]"</div>
+              </div>
+              <div className="text-[10px] text-text-secondary">Model AI widzi Cię jako "[PACJENT]" lub pseudonim.</div>
+            </div>
+
+            <label className="flex items-start gap-2 cursor-pointer py-1">
+              <input type="checkbox" checked={dataConsentAccepted} onChange={e => setDataConsentAccepted(e.target.checked)} className="mt-0.5 w-4 h-4 shrink-0" />
+              <span className="text-xs">Rozumiem jak przetwarzane są moje dane i wyrażam zgodę</span>
+            </label>
+
+            <button onClick={ob.next} disabled={!dataConsentAccepted} className="w-full bg-accent-dark text-accent-warm rounded-xl py-3 text-sm font-medium disabled:opacity-40">
+              Dalej
             </button>
           </div>
         )}
