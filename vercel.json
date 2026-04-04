@@ -18,6 +18,7 @@
     }
   ],
   "rewrites": [
-    { "source": "/((?!assets|sw\\.js|manifest\\.webmanifest|icon-.*\\.png|favicon\\.ico).*)", "destination": "/index.html" }
+    { "source": "/app", "destination": "/app.html" },
+    { "source": "/app/(.*)", "destination": "/app.html" }
   ]
 }

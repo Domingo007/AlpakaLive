@@ -10,25 +10,25 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png'],
+      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'logo.png'],
       manifest: {
         name: 'AlpacaLive',
         short_name: 'AlpacaLive',
-        description: 'Twój towarzysz w leczeniu onkologicznym',
-        start_url: '/',
+        description: 'Your companion through cancer treatment',
+        start_url: '/app',
         display: 'standalone',
         background_color: '#faf8ff',
         theme_color: '#7c5cc9',
         orientation: 'portrait-primary',
         icons: [
-          { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
           { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
         ],
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api/],
+        navigateFallback: '/app.html',
+        navigateFallbackDenylist: [/^\/api/, /^\/landing/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\.anthropic\.com\/.*/i,
@@ -51,6 +51,14 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        app: path.resolve(__dirname, 'app.html'),
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
