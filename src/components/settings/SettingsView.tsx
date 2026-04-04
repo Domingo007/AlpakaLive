@@ -67,7 +67,7 @@ export function SettingsView() {
               }`}
             >
               <div className="flex items-center gap-2">
-                <span className="text-lg">{opt.icon}</span>
+                <Icon name={opt.icon} size={24} className="text-lavender-500" />
                 <div>
                   <div className="text-xs font-medium">{opt.label}</div>
                   <div className="text-[10px] text-text-secondary">{opt.desc}</div>

@@ -569,7 +569,7 @@ INSTRUKCJE:
         onClick={() => fileInputRef.current?.click()}
         className="w-full border-2 border-dashed border-border rounded-lg py-4 text-xs text-text-secondary hover:border-accent-dark transition-colors"
       >
-        📷 Kliknij aby dodać zdjęcia wyników krwi
+        <span className="material-symbols-rounded" style={{fontSize:16}}>photo_camera</span> Kliknij aby dodać zdjęcia wyników krwi
       </button>
       <input
         ref={fileInputRef}

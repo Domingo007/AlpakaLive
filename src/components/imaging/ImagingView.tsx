@@ -4,6 +4,7 @@ import { useDashboardData } from '@/hooks/useDatabase';
 import { getRecistLabel, getRecistColor } from '@/lib/recist';
 import type { ImagingStudy, TumorFromReport } from '@/types';
 import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
+import { Icon } from '@/components/shared/Icon';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const IMAGING_TYPES = ['CT', 'PET', 'PET_CT', 'MRI', 'RTG', 'USG', 'mammography', 'bone_scan', 'bone_density', 'other'] as const;
@@ -101,13 +102,13 @@ export function ImagingView() {
                 onClick={() => setInputMode('text')}
                 className={`flex-1 py-1.5 rounded-lg text-xs ${inputMode === 'text' ? 'bg-accent-dark text-accent-warm' : 'bg-bg-primary border border-border'}`}
               >
-                📋 Wklej tekst
+                <Icon name="content_paste" size={14} className="inline-block mr-1" />Wklej tekst
               </button>
               <button
                 onClick={() => setInputMode('photo')}
                 className={`flex-1 py-1.5 rounded-lg text-xs ${inputMode === 'photo' ? 'bg-accent-dark text-accent-warm' : 'bg-bg-primary border border-border'}`}
               >
-                📷 Zdjęcie opisu
+                <Icon name="photo_camera" size={14} className="inline-block mr-1" />Zdjęcie opisu
               </button>
             </div>
 
@@ -125,7 +126,7 @@ export function ImagingView() {
                   onClick={() => fileInputRef.current?.click()}
                   className="w-full border-2 border-dashed border-border rounded-lg py-4 text-xs text-text-secondary"
                 >
-                  📷 Zdjęcie opisu radiologicznego
+                  <Icon name="photo_camera" size={16} className="inline-block mr-1" />Zdjęcie opisu radiologicznego
                 </button>
                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleReportPhoto} />
               </>
@@ -139,13 +140,13 @@ export function ImagingView() {
               onClick={() => imageInputRef.current?.click()}
               className="w-full border border-border rounded-lg py-2 text-xs text-text-secondary"
             >
-              📷 Dodaj zdjęcia CT/MRI/RTG
+              <Icon name="photo_camera" size={16} className="inline-block mr-1" />Dodaj zdjęcia CT/MRI/RTG
             </button>
             <input ref={imageInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleImageUpload} />
           </div>
 
           <p className="text-[10px] text-text-secondary">
-            💡 Opis radiologiczny jest ważniejszy niż zdjęcia badania. Jeśli masz opis — zacznij od niego.
+            <Icon name="lightbulb" size={14} className="inline-block mr-0.5 text-lavender-500" />Opis radiologiczny jest ważniejszy niż zdjęcia badania. Jeśli masz opis — zacznij od niego.
           </p>
 
           <button
@@ -174,7 +175,7 @@ export function ImagingView() {
       ) : imaging.length === 0 ? (
         <Card>
           <div className="text-center py-8 text-text-secondary text-sm">
-            <div className="text-3xl mb-3">🏥</div>
+            <div className="text-lavender-400 mb-3"><Icon name="imagesmode" size={48} /></div>
             <p>Brak badań obrazowych.</p>
             <p className="mt-1">Dodaj opis radiologiczny lub zdjęcia badań aby śledzić zmiany.</p>
           </div>

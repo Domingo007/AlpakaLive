@@ -71,7 +71,7 @@ export function ChatView() {
               <span className="text-xs text-text-secondary">Analizuję...</span>
             </div>
             <div className="text-[9px] text-text-secondary mt-1">
-              🔒 Dane osobowe usunięte przez PII Sanitizer
+              <Icon name="lock" size={12} className="inline-block mr-0.5" /> Dane osobowe usunięte przez PII Sanitizer
             </div>
           </div>
         )}
