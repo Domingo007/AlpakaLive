@@ -1,4 +1,5 @@
 import type { TabId } from '@/types';
+import { Icon } from './Icon';
 
 interface TabBarProps {
   activeTab: TabId;
@@ -6,11 +7,11 @@ interface TabBarProps {
 }
 
 const TABS: { id: TabId; icon: string; label: string }[] = [
-  { id: 'chat', icon: '💬', label: 'Chat' },
-  { id: 'calendar', icon: '📅', label: 'Kalendarz' },
-  { id: 'data', icon: '📊', label: 'Dane' },
-  { id: 'imaging', icon: '🏥', label: 'Obrazy' },
-  { id: 'settings', icon: '⚙️', label: 'Więcej' },
+  { id: 'chat', icon: 'chat_bubble', label: 'Chat' },
+  { id: 'calendar', icon: 'calendar_month', label: 'Kalendarz' },
+  { id: 'data', icon: 'monitoring', label: 'Dane' },
+  { id: 'imaging', icon: 'radiology', label: 'Obrazy' },
+  { id: 'settings', icon: 'more_horiz', label: 'Więcej' },
 ];
 
 export function TabBar({ activeTab, onTabChange }: TabBarProps) {
@@ -24,7 +25,7 @@ export function TabBar({ activeTab, onTabChange }: TabBarProps) {
             onClick={() => onTabChange(tab.id)}
             className="flex-1 flex flex-col items-center py-2 min-h-[56px] relative"
           >
-            <span className={`text-xl transition-transform ${active ? 'scale-110' : ''}`}>{tab.icon}</span>
+            <Icon name={tab.icon} size={22} className={active ? 'text-lavender-600' : 'text-text-tertiary'} />
             <span className={`text-[10px] mt-0.5 font-medium ${active ? 'text-lavender-600' : 'text-text-tertiary'}`}>
               {tab.label}
             </span>

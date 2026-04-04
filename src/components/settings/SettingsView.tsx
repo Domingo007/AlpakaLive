@@ -1,10 +1,11 @@
 import { usePatient, useSettings } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
+import { Icon } from '@/components/shared/Icon';
 import { HistoricalImport } from './HistoricalImport';
 import { NotificationSettings } from './NotificationSettings';
 import { AIProviderSettings } from './AIProviderSettings';
-import { exportAllData, importData, clearAllData } from '@/lib/db';
-import type { DrugEntry } from '@/types';
+import { exportAllData, importData, clearAllData, saveSettings } from '@/lib/db';
+import type { DrugEntry, ThemeMode } from '@/types';
 
 export function SettingsView() {
   const { patient } = usePatient();
@@ -74,6 +75,33 @@ export function SettingsView() {
               </div>
             </button>
           ))}
+        </div>
+      </Card>
+
+      {/* Theme */}
+      <Card title="🎨 Wygląd">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Icon name={settings?.theme === 'dark' ? 'dark_mode' : 'light_mode'} size={20} className="text-lavender-500" />
+            <div>
+              <div className="text-xs font-medium">Motyw</div>
+              <div className="text-[10px] text-text-secondary">{settings?.theme === 'dark' ? 'Ciemny' : 'Jasny'}</div>
+            </div>
+          </div>
+          <button
+            onClick={async () => {
+              const newTheme: ThemeMode = settings?.theme === 'dark' ? 'light' : 'dark';
+              await saveSettings({ theme: newTheme });
+              document.documentElement.classList.toggle('dark', newTheme === 'dark');
+            }}
+            className={`w-11 h-6 rounded-full relative transition-colors ${
+              settings?.theme === 'dark' ? 'bg-lavender-600' : 'bg-lavender-200'
+            }`}
+          >
+            <div className={`w-5 h-5 rounded-full bg-white shadow-sm absolute top-0.5 transition-transform ${
+              settings?.theme === 'dark' ? 'translate-x-[22px]' : 'translate-x-0.5'
+            }`} />
+          </button>
         </div>
       </Card>
 

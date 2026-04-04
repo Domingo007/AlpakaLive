@@ -466,10 +466,13 @@ export const DEFAULT_NOTIFICATIONS: NotificationConfig = {
 
 export type AppMode = 'ai' | 'notebook';
 
+export type ThemeMode = 'light' | 'dark';
+
 export interface AppSettings {
   apiKey: string;
   aiProvider: 'anthropic' | 'openai' | 'gemini';
   appMode: AppMode;
+  theme: ThemeMode;
   onboardingCompleted: boolean;
   notifications: NotificationConfig;
   dataProcessingConsent?: {

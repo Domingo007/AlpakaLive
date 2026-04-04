@@ -1,15 +1,14 @@
-interface HeaderProps {
-  title?: string;
-}
-
-export function Header({ title = 'AlpakaLive' }: HeaderProps) {
+export function Header() {
   return (
     <header className="bg-bg-card px-4 py-3 flex items-center justify-between shrink-0 shadow-[0_1px_2px_rgba(45,31,84,0.05)]">
       <div className="flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-lg bg-lavender-900 flex items-center justify-center text-sm">
-          🦙
-        </div>
-        <span className="text-lg font-bold text-text-primary tracking-tight">{title}</span>
+        <img
+          src="/logo.png"
+          alt="AlpakaLive"
+          className="w-8 h-8 rounded-lg object-cover"
+          onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+        />
+        <span className="text-lg font-bold text-text-primary tracking-tight">AlpakaLive</span>
       </div>
     </header>
   );

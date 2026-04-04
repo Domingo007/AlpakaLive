@@ -4,6 +4,7 @@ import { MessageBubble } from './MessageBubble';
 import { QuickActions } from './QuickActions';
 import { PredictionCards } from './PredictionCards';
 import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
+import { Icon } from '@/components/shared/Icon';
 
 export function ChatView() {
   const { messages, isLoading, error, send, lastPrediction, lastProviderInfo } = useChat();
@@ -98,10 +99,10 @@ export function ChatView() {
         <div className="flex items-end gap-2">
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="w-11 h-11 rounded-xl bg-lavender-50 border-[1.5px] border-lavender-200 text-lavender-500 text-xl flex items-center justify-center shrink-0"
+            className="w-11 h-11 rounded-xl bg-lavender-50 border-[1.5px] border-lavender-200 text-lavender-500 flex items-center justify-center shrink-0"
             title="Dodaj zdjęcie"
           >
-            📷
+            <Icon name="photo_camera" size={20} />
           </button>
           <input
             ref={fileInputRef}
@@ -130,7 +131,7 @@ export function ChatView() {
             disabled={isLoading || !input.trim()}
             className="w-11 h-11 rounded-xl bg-lavender-500 text-white disabled:bg-lavender-200 shrink-0 flex items-center justify-center shadow-[0_4px_12px_rgba(45,31,84,0.15)]"
           >
-            ↑
+            <Icon name="arrow_upward" size={20} />
           </button>
         </div>
       </div>

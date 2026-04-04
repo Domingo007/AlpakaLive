@@ -21,6 +21,9 @@ export default function App() {
     getSettings().then(s => {
       setOnboarded(s?.onboardingCompleted ?? false);
       setAppMode(s?.appMode || 'notebook');
+      // Apply theme — default to light
+      const theme = s?.theme || 'light';
+      document.documentElement.classList.toggle('dark', theme === 'dark');
       if (s?.onboardingCompleted && s?.notifications?.enabled) {
         startNotificationScheduler();
       }
@@ -33,6 +36,8 @@ export default function App() {
     const interval = setInterval(() => {
       getSettings().then(s => {
         if (s?.appMode && s.appMode !== appMode) setAppMode(s.appMode);
+        const theme = s?.theme || 'light';
+        document.documentElement.classList.toggle('dark', theme === 'dark');
       });
     }, 2000);
     return () => clearInterval(interval);

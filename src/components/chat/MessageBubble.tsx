@@ -18,9 +18,8 @@ export function MessageBubble({ message, providerInfo }: MessageBubbleProps) {
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`} style={{ animation: 'bubble-enter 0.2s ease-out' }}>
       {/* Agent avatar */}
       {!isUser && (
-        <div className="w-7 h-7 rounded-lg bg-lavender-100 flex items-center justify-center text-sm shrink-0 mr-2 mt-1">
-          🦙
-        </div>
+        <img src="/logo.png" alt="" className="w-7 h-7 rounded-lg bg-lavender-100 object-cover shrink-0 mr-2 mt-1"
+          onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
       )}
       <div
         className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed ${

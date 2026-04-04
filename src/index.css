@@ -89,18 +89,25 @@ h1, h2, h3 {
 
 button:active { transform: scale(0.97); }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg-primary: #0f0a1a;
-    --color-bg-card: #1a1225;
-    --color-bg-elevated: #241a35;
-    --color-accent-warm: #241a35;
-    --color-text-primary: #e8deff;
-    --color-text-secondary: #9a90a8;
-    --color-text-tertiary: #6b5f7a;
-    --color-border: #352a4d;
-    --color-lavender-100: #241a35;
-    --color-lavender-200: #352a4d;
-  }
+/* Dark mode — activated by .dark class on <html>, NOT by media query */
+html.dark {
+  --color-bg-primary: #0f0a1a;
+  --color-bg-card: #1a1225;
+  --color-bg-elevated: #241a35;
+  --color-accent-warm: #241a35;
+  --color-text-primary: #e8deff;
+  --color-text-secondary: #9a90a8;
+  --color-text-tertiary: #6b5f7a;
+  --color-border: #352a4d;
+  --color-lavender-50: #140e22;
+  --color-lavender-100: #241a35;
+  --color-lavender-200: #352a4d;
+}
+
+/* Material Symbols helper */
+.material-symbols-rounded {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 24px;
+  line-height: 1;
+  vertical-align: middle;
 }
