@@ -32,7 +32,7 @@ Otwórz Issue z labelem `medical-review` lub wyślij PR.
 
 ## Dla tłumaczy
 
-Potrzebujemy wersji w: EN, DE, ES, FR, UA i innych. Skontaktuj się przez Issues.
+Potrzebujemy wersji w: EN, DE, ES, FR, UA i innych. Skontaktuj się przez Issues lub email: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com).
 
 ## Zasady
 
@@ -40,3 +40,7 @@ Potrzebujemy wersji w: EN, DE, ES, FR, UA i innych. Skontaktuj się przez Issues
 - Brak trackingu, analytics, reklam
 - Rekomendacje medyczne muszą mieć źródło i poziom dowodów
 - Bądź empatyczny — za tym projektem stoją prawdziwi pacjenci
+
+## Kontakt
+
+**Dominik Gaweł** · [Gravity Design](https://www.gravitydesign.pl/) · [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)

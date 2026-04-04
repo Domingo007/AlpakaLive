@@ -79,3 +79,8 @@ Niniejsze zastrzeżenie podlega prawu Unii Europejskiej. W przypadku sporów wł
 ## Akceptacja
 
 Korzystanie z aplikacji AlpacaLive oznacza zapoznanie się z powyższym zastrzeżeniem i jego akceptację. Akceptacja jest wymagana przy pierwszym uruchomieniu aplikacji i rejestrowana z datą i godziną.
+
+## Kontakt
+
+**Dominik Gaweł** · [Gravity Design](https://www.gravitydesign.pl/)
+Email: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)

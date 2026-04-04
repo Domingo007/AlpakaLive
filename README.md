@@ -91,3 +91,11 @@ AGPL-3.0 — zobacz [LICENSE](LICENSE)
 
 Kod jest otwarty. Możesz go używać, modyfikować i dystrybuować pod warunkami AGPL-3.0.
 Jeśli zmodyfikujesz kod i udostępnisz go jako usługę (np. SaaS) — musisz udostępnić swoje zmiany na tej samej licencji.
+
+Zainteresowany licencją komercyjną (bez wymogów AGPL)? Skontaktuj się: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)
+
+## Kontakt
+
+**Dominik Gaweł** · [Gravity Design](https://www.gravitydesign.pl/)
+Email: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)
+GitHub: [github.com/Domingo007](https://github.com/Domingo007)

@@ -13,6 +13,10 @@ Jeśli znajdziesz lukę — szczególnie taką która mogłaby ujawnić dane pac
 
 1. **NIE** otwieraj publicznego Issue
 2. Otwórz Issue z labelem `security` z OGÓLNYM opisem (bez szczegółów exploitu)
-3. Lub skontaktuj się bezpośrednio z maintainerem
+3. Lub skontaktuj się bezpośrednio z maintainerem: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)
 
 Odpowiedź w ciągu 48h.
+
+## Maintainer
+
+**Dominik Gaweł** · [Gravity Design](https://www.gravitydesign.pl/) · [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)
