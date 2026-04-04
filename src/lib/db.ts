@@ -1,3 +1,8 @@
+/*
+ * AlpacaLive — Your Companion Through Cancer Treatment
+ * Copyright (C) 2025 AlpacaLive Contributors
+ * Licensed under AGPL-3.0 — see LICENSE file
+ */
 import Dexie, { type Table } from 'dexie';
 import {
   DEFAULT_NOTIFICATIONS,

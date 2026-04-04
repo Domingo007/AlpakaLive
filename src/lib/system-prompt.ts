@@ -1,3 +1,8 @@
+/*
+ * AlpacaLive — Your Companion Through Cancer Treatment
+ * Copyright (C) 2025 AlpacaLive Contributors
+ * Licensed under AGPL-3.0 — see LICENSE file
+ */
 import type { PatientProfile, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, Prediction, BreastCancerSubtype } from '@/types';
 import { calculateCurrentPhase } from './phase-calculator';
 import { checkInteractions } from './cyp450';

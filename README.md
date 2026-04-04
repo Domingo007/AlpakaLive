@@ -23,7 +23,7 @@
 | Interakcje leków | Dynamiczna baza CYP450 | Brak |
 | Obrazowanie | Analiza RTG/CT/PET z RECIST | Brak |
 | Prywatność | PII Sanitizer — dane osobowe nie opuszczają telefonu | Różnie |
-| Kod | Open source, MIT | Zamknięty |
+| Kod | Open source, AGPL-3.0 | Zamknięty |
 
 ## Szybki start
 
@@ -85,6 +85,9 @@ Szukamy **pacjentów** (Twoje doświadczenie z chemią jest bezcenne!), **progra
 
 Wszystkie dane przechowywane lokalnie w IndexedDB na urządzeniu użytkownika. Jedyna komunikacja zewnętrzna to zapytania do Claude API — przed wysłaniem dane osobowe są automatycznie zastępowane placeholderami (`[PACJENT]`, `[PESEL]` itp.). Szczegóły w [SECURITY.md](SECURITY.md).
 
-## Licencja
+## Licencja / License
 
-MIT — zobacz [LICENSE](LICENSE)
+AGPL-3.0 — zobacz [LICENSE](LICENSE)
+
+Kod jest otwarty. Możesz go używać, modyfikować i dystrybuować pod warunkami AGPL-3.0.
+Jeśli zmodyfikujesz kod i udostępnisz go jako usługę (np. SaaS) — musisz udostępnić swoje zmiany na tej samej licencji.
