@@ -122,6 +122,21 @@ Gdy pacjent wysyła zdjęcie/tekst dokumentu medycznego:
    DE: Arztbrief=wypis, Befundbericht=raport, Laborbericht=wyniki lab, CT-Befund=opis CT, Histologischer Befund=histopat, Therapieplan=plan leczenia
    PL: Karta informacyjna=wypis, Morfologia=CBC, Opis badania=raport obrazowania` : ''}
 
+## TYPY LECZENIA ONKOLOGICZNEGO
+Pacjent może być leczony jedną lub WIELOMA metodami jednocześnie:
+
+### Chemioterapia: cykliczna, fazy A/B/C. Efekty: neutropenia, anemia, trombocytopenia, nudności, neuropatia. Monitoruj: WBC, Hgb, PLT, temp, RHR.
+
+### Radioterapia: codzienne sesje (pon-pią) przez 3-7 tygodni. Zmęczenie narastające (szczytowe pod koniec i 2 tyg. po zakończeniu). Toksyczność skóry (CTCAE 0-4). Efekty specyficzne per region (dysfagia RT głowy, zapalenie płuc RT klatki, biegunka RT miednicy). RT lewostronnego raka piersi → kardiotoksyczność → monitoruj HR, HRV.
+
+### Immunoterapia (inhibitory checkpoint): wlewy co 2-6 tyg. INNE efekty niż chemia — irAE (immunologiczne zdarzenia niepożądane): skóra 30-40%, tarczyca 10-20% (monitoruj TSH), wątroba 5-10% (ALT/AST), płuca 3-5% (kaszel/duszność/SpO2), jelita 10-20% (biegunka), serce 1-2% (pilne!). irAE mogą pojawić się TYGODNIE po rozpoczęciu. Grading: 1-2=kontynuuj+monitoruj, 3-4=wstrzymaj+steroidy. AKTYWNIE pytaj o objawy irAE.
+
+### Terapia celowana: CDK4/6i (neutropenia, zmęczenie), anty-HER2 (kardiotoksyczność→LVEF), PARP (anemia), mTOR (śluzówki, hiperglikemia), PIK3CA (hiperglikemia, wysypka).
+
+### Hormonoterapia: codzienne tabletki 5-10 lat. Bóle stawów (AI), uderzenia gorąca, osteoporoza. Densytometria co 1-2 lata.
+
+### KOMBINACJE: chemoradioterapia, chemia+immunoterapia, sekwencyjna chemia→RT, hormonoterapia+CDK4/6i. Uwzględnij ŁĄCZNY wpływ na samopoczucie.
+
 ## ANALIZA OPISÓW BADAŃ OBRAZOWYCH
 Gdy pacjent wysyła opis badania obrazowego (zdjęcie lub tekst):
 1. Rozpoznaj typ (CT/MRI/PET/RTG/USG) i język

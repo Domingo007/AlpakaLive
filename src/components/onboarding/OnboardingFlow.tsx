@@ -314,6 +314,58 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           </div>
         )}
 
+        {ob.step === 'treatments' && (
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-text-primary">Jakie leczenie otrzymujesz?</h2>
+            <p className="text-xs text-text-secondary">Możesz wybrać kilka. Uzupełnisz szczegóły później.</p>
+            <div className="space-y-3">
+              {[
+                { id: 'chemotherapy', label: 'Chemioterapia', icon: 'vaccines' },
+                { id: 'radiotherapy', label: 'Radioterapia', icon: 'radiation' },
+                { id: 'immunotherapy', label: 'Immunoterapia', icon: 'shield' },
+                { id: 'targeted_therapy', label: 'Terapia celowana', icon: 'target' },
+                { id: 'hormonal_therapy', label: 'Hormonoterapia', icon: 'medication' },
+              ].map(t => (
+                <label key={t.id} className="flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors"
+                  style={{ borderColor: ob.treatmentTypes.includes(t.id) ? '#7c5cc9' : undefined, backgroundColor: ob.treatmentTypes.includes(t.id) ? '#f3eeff' : undefined }}>
+                  <input type="checkbox" checked={ob.treatmentTypes.includes(t.id)}
+                    onChange={e => {
+                      if (e.target.checked) ob.setTreatmentTypes([...ob.treatmentTypes, t.id]);
+                      else ob.setTreatmentTypes(ob.treatmentTypes.filter(x => x !== t.id));
+                    }} className="w-4 h-4" />
+                  <Icon name={t.icon} size={20} className="text-lavender-500" />
+                  <span className="text-sm font-medium">{t.label}</span>
+                </label>
+              ))}
+            </div>
+
+            {ob.treatmentTypes.includes('radiotherapy') && (
+              <div className="bg-bg-elevated rounded-xl p-3 space-y-2">
+                <div className="text-xs font-medium">Radioterapia — szczegóły</div>
+                <InputField label="Region" value={ob.rtRegion} onChange={ob.setRtRegion} placeholder="np. lewa pierś + węzły" />
+                <InputField label="Liczba frakcji (planowana)" value={ob.rtFractions} onChange={ob.setRtFractions} placeholder="np. 25" />
+              </div>
+            )}
+            {ob.treatmentTypes.includes('immunotherapy') && (
+              <div className="bg-bg-elevated rounded-xl p-3">
+                <InputField label="Lek immunoterapii" value={ob.immunoDrug} onChange={ob.setImmunoDrug} placeholder="np. pembrolizumab (Keytruda)" />
+              </div>
+            )}
+            {ob.treatmentTypes.includes('targeted_therapy') && (
+              <div className="bg-bg-elevated rounded-xl p-3">
+                <InputField label="Lek terapii celowanej" value={ob.targetedDrug} onChange={ob.setTargetedDrug} placeholder="np. trastuzumab (Herceptin)" />
+              </div>
+            )}
+            {ob.treatmentTypes.includes('hormonal_therapy') && (
+              <div className="bg-bg-elevated rounded-xl p-3">
+                <InputField label="Lek hormonoterapii" value={ob.hormonalDrug} onChange={ob.setHormonalDrug} placeholder="np. letrozol (Femara)" />
+              </div>
+            )}
+
+            <NavButtons onBack={ob.back} onNext={ob.next} canBack={ob.canGoBack} />
+          </div>
+        )}
+
         {ob.step === 'biomarkers' && ob.isBreastCancer && (
           <div className="space-y-4">
             <h2 className="font-display text-xl font-semibold text-accent-dark">Podtyp i biomarkery</h2>

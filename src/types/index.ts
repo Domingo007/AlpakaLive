@@ -66,6 +66,10 @@ export interface PatientProfile {
   diseaseProfile?: DiseaseProfile;
   location?: PatientLocation;
   languages?: PatientLanguages;
+  treatments?: TreatmentProtocol[];
+  immunotherapy?: ImmunotherapyEntry[];
+  targetedTherapy?: TargetedTherapyEntry[];
+  hormonalTherapy?: HormonalTherapyEntry[];
   // Breast cancer specific biomarkers
   breastCancerSubtype?: BreastCancerSubtype;
   erStatus?: ReceptorStatus;
@@ -106,6 +110,99 @@ export interface DrugEntry {
   interactions: string[];
   sideEffects: string[];
   active: boolean;
+}
+
+// ==================== TREATMENT TYPES ====================
+
+export type TreatmentType = 'chemotherapy' | 'immunotherapy' | 'radiotherapy' | 'targeted_therapy' | 'hormonal_therapy' | 'combination';
+
+export interface TreatmentProtocol {
+  id: string;
+  type: TreatmentType;
+  name: string;
+  startDate: string;
+  endDate?: string;
+  status: 'active' | 'completed' | 'paused' | 'switched';
+  drugs?: DrugEntry[];
+  radiotherapy?: RadiotherapyPlan;
+  notes?: string;
+}
+
+export interface RadiotherapyPlan {
+  type: 'external_beam' | 'brachytherapy' | 'proton' | 'stereotactic' | 'other';
+  targetArea: string;
+  totalDoseGy: number;
+  fractions: number;
+  dosePerFractionGy: number;
+  frequency: string;
+  startDate: string;
+  endDate?: string;
+  sessions: RadiotherapySession[];
+  boostPlanned?: boolean;
+  boostDoseGy?: number;
+  boostFractions?: number;
+  concurrentChemo?: boolean;
+}
+
+export interface RadiotherapySession {
+  id: string;
+  date: string;
+  fractionNumber: number;
+  completed: boolean;
+  doseGy: number;
+  cumulativeDoseGy: number;
+  sideEffects?: {
+    skinToxicity?: 0 | 1 | 2 | 3 | 4;
+    fatigue?: number;
+    pain?: number;
+    swelling?: boolean;
+    dysphagia?: boolean;
+    nausea?: boolean;
+    diarrhea?: boolean;
+    cough?: boolean;
+    other?: string;
+  };
+  notes?: string;
+}
+
+export interface ImmunotherapyEntry {
+  id: string;
+  drug: string;
+  type: 'anti_pd1' | 'anti_pdl1' | 'anti_ctla4' | 'car_t' | 'other';
+  doseSchedule: string;
+  infusionDates: string[];
+  irAEs: ImmuneRelatedAdverseEvent[];
+}
+
+export interface ImmuneRelatedAdverseEvent {
+  id: string;
+  date: string;
+  type: 'skin' | 'gi' | 'hepatic' | 'endocrine' | 'pulmonary' | 'renal' | 'neurologic' | 'cardiac' | 'other';
+  description: string;
+  grade: 1 | 2 | 3 | 4;
+  treatment?: string;
+  resolved?: boolean;
+  resolvedDate?: string;
+}
+
+export interface TargetedTherapyEntry {
+  id: string;
+  drug: string;
+  target: string;
+  doseSchedule: string;
+  startDate: string;
+  endDate?: string;
+  sideEffects?: string[];
+}
+
+export interface HormonalTherapyEntry {
+  id: string;
+  drug: string;
+  type: 'aromatase_inhibitor' | 'serm' | 'serd' | 'gnrh_agonist' | 'other';
+  doseSchedule: string;
+  startDate: string;
+  endDate?: string;
+  sideEffects?: string[];
 }
 
 export interface ChemoSession {
@@ -412,6 +509,7 @@ export type CalendarEventType =
   | 'chemo' | 'chemo_postponed' | 'blood_test' | 'imaging' | 'daily_log'
   | 'supplement' | 'doctor_visit' | 'side_effect' | 'weight'
   | 'wearable_alert' | 'prediction' | 'medication_change' | 'note'
+  | 'radiotherapy_session' | 'immunotherapy_infusion' | 'targeted_therapy' | 'hormonal_therapy'
   | 'phase_a' | 'phase_b' | 'phase_c';
 
 export interface CalendarEvent {

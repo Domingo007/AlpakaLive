@@ -65,3 +65,48 @@ Szczegółowa baza wiedzy o podtypach, leczeniu i różnicach regionalnych: [bre
 - Tydzień wolny: najlepsza faza (energia 6-8/10), okno na aktywność
 
 <!-- DODAJ SWOJE DOŚWIADCZENIE TUTAJ przez Pull Request -->
+
+## Radioterapia — efekty uboczne per region
+
+> **Informacje z opublikowanych badań. NIE stanowią rekomendacji. Konsultuj z lekarzem.**
+
+| Region | Typowe efekty | Monitoruj |
+|--------|--------------|-----------|
+| Pierś | Toksyczność skóry, zmęczenie | Skóra (CTCAE), energia, HR/HRV (lewostronny → serce) |
+| Głowa/szyja | Zapalenie śluzówek, dysfagia, suchość w ustach | Waga (trudności w jedzeniu), nawodnienie |
+| Klatka piersiowa | Kaszel, zapalenie płuc popromienne | SpO2, kaszel, duszność |
+| Brzuch/miednica | Nudności, biegunka | Nawodnienie, waga, częstość stolca |
+| Mózg | Zmęczenie, nudności, ból głowy | Energia, nudności, objawy neurologiczne |
+| Kości | Ból, zmęczenie | Ból (1-10), markery krwi |
+
+## Immunoterapia — monitorowane irAE
+
+> **Immunologiczne zdarzenia niepożądane (irAE) to efekty uboczne INNE niż chemioterapia. Wymagają specyficznego monitoringu.**
+
+| irAE | Częstość | Objawy | Badania | Postępowanie wg CTCAE |
+|------|---------|---------|---------|----------------------|
+| Skóra | 30-40% | Wysypka, świąd | Obserwacja | 1-2: krem, 3+: steroidy |
+| Tarczyca | 10-20% | Zmęczenie, wahania wagi | TSH, fT4 | 1-2: leczenie substytucyjne |
+| Wątroba | 5-10% | Często bezobjawowe | ALT, AST, bilirubina | 2: wstrzymaj, 3+: steroidy |
+| Płuca | 3-5% | Kaszel, duszność | SpO2, RTG/CT | 2+: wstrzymaj, steroidy |
+| Jelita | 10-20% | Biegunka, ból brzucha | Kalprotektyna | 2+: wstrzymaj, steroidy |
+| Serce | 1-2% | Ból w klatce, duszność | ECG, troponina, HR | KAŻDY: wstrzymaj, pilnie! |
+
+## Terapia celowana — efekty uboczne per cel
+
+| Cel | Lek (przykład) | Główne efekty | Monitoruj |
+|-----|----------------|---------------|-----------|
+| HER2 | Trastuzumab | Kardiotoksyczność | LVEF (echo), HR, duszność |
+| CDK4/6 | Palbocyklib | Neutropenia, zmęczenie | WBC, neutrofile |
+| PARP | Olaparib | Anemia, nudności | Hgb, MCV |
+| mTOR | Everolimus | Zapalenie śluzówek, hiperglikemia | Glukoza, śluzówki jamy ustnej |
+| PIK3CA | Alpelisib | Hiperglikemia, wysypka, biegunka | Glukoza, skóra |
+
+## Hormonoterapia — długoterminowe efekty
+
+| Typ | Lek (przykład) | Efekty | Monitoruj | Czas trwania |
+|-----|----------------|--------|-----------|-------------|
+| Inhibitor aromatazy | Letrozol | Bóle stawów, osteoporoza | Densytometria, ból | 5-10 lat |
+| SERM | Tamoksyfen | Uderzenia gorąca, zakrzepy | Nastrój, objawy zakrzepowe | 5-10 lat |
+| SERD | Fulwestrant | Ból w miejscu wstrzyknięcia | Miejscowe reakcje | Do progresji |
+| Agonista GnRH | Goserelina | Uderzenia gorąca, osteoporoza | Densytometria, nastrój | Zależnie od schematu |

@@ -4,9 +4,9 @@ import type { PatientProfile, PIIData, PatientLocation, PatientLanguages, Breast
 import { detectGuidelineRegion, DEFAULT_NOTIFICATIONS } from '@/types';
 import { savePatient, saveSettings } from '@/lib/db';
 
-export type OnboardingStep = 'welcome' | 'data_transparency' | 'mode' | 'privacy' | 'apikey' | 'location' | 'languages' | 'diagnosis' | 'biomarkers' | 'medications' | 'confirmation';
+export type OnboardingStep = 'welcome' | 'data_transparency' | 'mode' | 'privacy' | 'apikey' | 'location' | 'languages' | 'diagnosis' | 'treatments' | 'biomarkers' | 'medications' | 'confirmation';
 
-const STEPS: OnboardingStep[] = ['welcome', 'data_transparency', 'mode', 'privacy', 'apikey', 'location', 'languages', 'diagnosis', 'biomarkers', 'medications', 'confirmation'];
+const STEPS: OnboardingStep[] = ['welcome', 'data_transparency', 'mode', 'privacy', 'apikey', 'location', 'languages', 'diagnosis', 'treatments', 'biomarkers', 'medications', 'confirmation'];
 
 export function useOnboarding() {
   const [step, setStep] = useState<OnboardingStep>('welcome');
@@ -30,6 +30,14 @@ export function useOnboarding() {
 
   // App mode
   const [appMode, setAppMode] = useState<'ai' | 'notebook'>('notebook');
+
+  // Treatment types
+  const [treatmentTypes, setTreatmentTypes] = useState<string[]>([]);
+  const [rtRegion, setRtRegion] = useState('');
+  const [rtFractions, setRtFractions] = useState('');
+  const [immunoDrug, setImmunoDrug] = useState('');
+  const [targetedDrug, setTargetedDrug] = useState('');
+  const [hormonalDrug, setHormonalDrug] = useState('');
 
   // Languages
   const [documentLanguages, setDocumentLanguages] = useState<string[]>(['pl']);
@@ -145,6 +153,10 @@ export function useOnboarding() {
     chemoCycle, setChemoCycle,
     // Mode
     appMode, setAppMode,
+    // Treatments
+    treatmentTypes, setTreatmentTypes,
+    rtRegion, setRtRegion, rtFractions, setRtFractions,
+    immunoDrug, setImmunoDrug, targetedDrug, setTargetedDrug, hormonalDrug, setHormonalDrug,
     // Languages
     documentLanguages, setDocumentLanguages,
     // Location
