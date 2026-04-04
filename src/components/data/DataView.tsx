@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDashboardData } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
 import { StatCard } from '@/components/shared/StatCard';
+import { Icon } from '@/components/shared/Icon';
 import { EnergyChart } from './EnergyChart';
 import { BloodChart } from './BloodChart';
 import { generateReportPDF } from '@/lib/report-generator';
@@ -48,7 +49,7 @@ export function DataView() {
           disabled={generating || !hasData}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-accent-dark text-accent-warm text-xs font-medium disabled:opacity-40"
         >
-          {generating ? '⏳ Generuję...' : '📋 Raport PDF'}
+          {generating ? 'Generuję...' : 'Raport PDF'}
         </button>
       </div>
 
@@ -56,7 +57,7 @@ export function DataView() {
 
       {/* Upcoming events */}
       {upcoming.length > 0 && (
-        <Card title="📅 Nadchodzące (7 dni)">
+        <Card title="Nadchodzące (7 dni)">
           <div className="space-y-1.5">
             {upcoming.slice(0, 5).map(ev => {
               const daysFromNow = Math.round((new Date(ev.date).getTime() - Date.now()) / (1000*60*60*24));
@@ -64,7 +65,7 @@ export function DataView() {
               return (
                 <div key={ev.id} className="flex items-center gap-2 text-xs">
                   <span className="text-text-secondary w-14 shrink-0">{label}</span>
-                  <span>{ev.icon}</span>
+                  {ev.icon && <Icon name={ev.icon} size={14} />}
                   <span className="truncate">{ev.title}</span>
                 </div>
               );
@@ -86,7 +87,7 @@ export function DataView() {
       {!hasData ? (
         <Card>
           <div className="text-center py-8 text-text-secondary text-sm">
-            <div className="text-3xl mb-3">📊</div>
+            <div className="text-lavender-400 mb-3"><span className="material-symbols-rounded" style={{fontSize:48}}>bar_chart</span></div>
             <p>Brak danych do wyświetlenia.</p>
             <p className="mt-1">Zacznij od codziennych wpisów w zakładce Chat — wykresy pojawią się automatycznie.</p>
           </div>

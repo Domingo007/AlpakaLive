@@ -28,7 +28,7 @@ export function ChemoEntryForm() {
   }
 
   return (
-    <Card title="💉 Dodaj sesję chemii">
+    <Card title="Dodaj sesję chemii">
       <div className="space-y-3">
         <div>
           <label className="text-xs text-text-secondary block mb-1">Data</label>

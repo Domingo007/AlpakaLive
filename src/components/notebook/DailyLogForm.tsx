@@ -43,7 +43,7 @@ export function DailyLogForm() {
   }
 
   return (
-    <Card title="📝 Jak się dziś czujesz?">
+    <Card title="Jak się dziś czujesz?">
       <div className="space-y-4">
         <SliderField label="Energia" value={energy} onChange={setEnergy} min={1} max={10} emoji={energy <= 3 ? '😞' : energy <= 6 ? '😐' : '😊'} />
         <SliderField label="Ból" value={pain} onChange={setPain} min={0} max={10} emoji={pain >= 7 ? '😣' : pain >= 4 ? '😕' : '😌'} />

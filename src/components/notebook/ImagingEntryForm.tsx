@@ -56,7 +56,7 @@ export function ImagingEntryForm() {
   }
 
   return (
-    <Card title="🏥 Dodaj badanie obrazowe">
+    <Card title="Dodaj badanie obrazowe">
       <DisclaimerBanner variant="imaging" />
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-2">

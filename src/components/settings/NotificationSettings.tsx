@@ -35,7 +35,7 @@ export function NotificationSettings() {
   }
 
   return (
-    <Card title="🔔 Przypomnienia">
+    <Card title="Przypomnienia">
       {permission === 'unsupported' ? (
         <p className="text-xs text-text-secondary">
           Twoja przeglądarka nie obsługuje powiadomień. Użyj Chrome lub Safari.
@@ -60,7 +60,7 @@ export function NotificationSettings() {
               {/* Morning */}
               <div className="border-t border-border pt-3 space-y-2">
                 <ToggleRow
-                  label="☀️ Raport poranny"
+                  label="Raport poranny"
                   description="Przypomnienie o wpisaniu samopoczucia"
                   checked={config.morningEnabled}
                   onChange={v => updateConfig({ morningEnabled: v })}
@@ -77,7 +77,7 @@ export function NotificationSettings() {
               {/* Evening */}
               <div className="border-t border-border pt-3 space-y-2">
                 <ToggleRow
-                  label="🌙 Podsumowanie wieczorne"
+                  label="Podsumowanie wieczorne"
                   description="Przypomnienie o diecie i suplementach"
                   checked={config.eveningEnabled}
                   onChange={v => updateConfig({ eveningEnabled: v })}
@@ -94,7 +94,7 @@ export function NotificationSettings() {
               {/* Chemo reminder */}
               <div className="border-t border-border pt-3 space-y-2">
                 <ToggleRow
-                  label="💉 Przypomnienie o chemii"
+                  label="Przypomnienie o chemii"
                   description="Dzień przed zaplanowaną sesją"
                   checked={config.chemoReminderEnabled}
                   onChange={v => updateConfig({ chemoReminderEnabled: v })}

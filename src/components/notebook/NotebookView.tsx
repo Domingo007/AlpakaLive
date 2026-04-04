@@ -50,7 +50,7 @@ export function NotebookView() {
       {/* AI upsell banner */}
       <div className="px-3 py-2 bg-accent-warm/30 border-t border-accent-warm/50 text-center shrink-0">
         <p className="text-[10px] text-text-secondary">
-          🤖 Z AI: automatyczna analiza zdjęć wyników, predykcja samopoczucia, rozmowa z agentem.
+          Z AI: automatyczna analiza zdjęć wyników, predykcja samopoczucia, rozmowa z agentem.
           <span className="text-accent-dark font-medium ml-1 cursor-pointer">Włącz w Ustawieniach →</span>
         </p>
       </div>

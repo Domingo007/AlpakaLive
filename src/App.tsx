@@ -47,7 +47,7 @@ export default function App() {
     return (
       <div className="h-screen flex items-center justify-center bg-bg-primary">
         <div className="text-center">
-          <div className="text-4xl mb-3">🦙</div>
+          <img src="/logo.png" alt="" className="w-12 h-12 rounded-xl mx-auto" onError={(e: any) => e.target.style.display="none"} />
           <div className="text-sm text-text-secondary">Ładowanie...</div>
         </div>
       </div>

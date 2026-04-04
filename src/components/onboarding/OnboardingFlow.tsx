@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useOnboarding } from '@/hooks/useOnboarding';
+import { Icon } from '@/components/shared/Icon';
 import type { AIProvider } from '@/lib/ai-provider';
 
 interface OnboardingFlowProps {
@@ -30,7 +31,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         {ob.step === 'welcome' && (
           <div className="space-y-4 mt-4">
             <div className="text-center">
-              <div className="text-5xl mb-2">🦙</div>
+              <img src="/logo.png" alt="AlpacaLive" className="w-20 h-20 rounded-2xl mx-auto shadow-lg" onError={(e: any) => e.target.style.display="none"} />
               <h1 className="font-display text-2xl font-bold text-accent-dark">AlpacaLive</h1>
             </div>
 
@@ -40,7 +41,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               <p>AlpacaLive jest narzędziem do <strong>ANALIZY DANYCH</strong> dostarczonych przez użytkownika.</p>
 
               <div className="space-y-1">
-                <p className="font-medium">⚠️ Aplikacja:</p>
+                <p className="font-medium flex items-center gap-1"><span className="material-symbols-rounded text-alert-warning" style={{fontSize:16}}>warning</span> Aplikacja:</p>
                 <ul className="list-disc pl-4 text-text-secondary space-y-0.5">
                   <li>NIE jest wyrobem medycznym</li>
                   <li>NIE stawia diagnoz</li>
@@ -65,7 +66,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             </div>
 
             <div className="bg-accent-warm/50 rounded-xl p-3 text-xs text-text-primary">
-              <p className="font-medium mb-1">🔒 Twoje dane są bezpieczne</p>
+              <p className="font-medium mb-1 flex items-center gap-1"><span className="material-symbols-rounded" style={{fontSize:16}}>lock</span> Twoje dane są bezpieczne</p>
               <p className="text-text-secondary">Wszystko przechowywane lokalnie na Twoim urządzeniu. Dane osobowe nigdy nie opuszczają telefonu.</p>
             </div>
 
@@ -91,10 +92,10 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
         {ob.step === 'data_transparency' && (
           <div className="space-y-3 mt-2">
-            <h2 className="font-display text-lg font-semibold text-accent-dark">🔒 Jak przetwarzamy Twoje dane</h2>
+            <h2 className="font-display text-lg font-semibold text-accent-dark">Jak przetwarzamy Twoje dane</h2>
 
             <div className="bg-accent-green/10 border border-accent-green/30 rounded-xl p-3 text-xs space-y-1">
-              <div className="font-medium text-accent-dark">📱 Na Twoim telefonie (nie opuszczają urządzenia):</div>
+              <div className="font-medium text-accent-dark">Na Twoim telefonie (nie opuszczają urządzenia):</div>
               <div className="text-text-secondary space-y-0.5 pl-2">
                 <div>✅ Imię, nazwisko, PESEL, adres, telefon, email</div>
                 <div>✅ Numery identyfikacyjne pacjenta</div>
@@ -104,12 +105,12 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             </div>
 
             <div className="bg-alert-warning/10 border border-alert-warning/30 rounded-xl p-3 text-xs space-y-1">
-              <div className="font-medium text-accent-dark">☁️ Wysyłane do API AI (serwery dostawcy):</div>
+              <div className="font-medium text-accent-dark">Wysyłane do API AI (serwery dostawcy):</div>
               <div className="text-text-secondary space-y-0.5 pl-2">
-                <div>📤 Treść rozmów (BEZ danych osobowych — PII Sanitizer je usuwa)</div>
-                <div>📤 Zdjęcia wyników (mogą zawierać nagłówek z danymi)</div>
-                <div>📤 Dane medyczne: diagnoza, wyniki krwi, leki</div>
-                <div>📤 Dane z opaski (RHR, sen, SpO2)</div>
+                <div>Treść rozmów (BEZ danych osobowych — PII Sanitizer je usuwa)</div>
+                <div>Zdjęcia wyników (mogą zawierać nagłówek z danymi)</div>
+                <div>Dane medyczne: diagnoza, wyniki krwi, leki</div>
+                <div>Dane z opaski (RHR, sen, SpO2)</div>
               </div>
               <div className="text-[10px] text-text-secondary mt-1">
                 Dostawcy AI (Anthropic/OpenAI/Google) — serwery w USA/UE. Dane szyfrowane (HTTPS).
@@ -117,7 +118,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             </div>
 
             <div className="bg-bg-card border border-border rounded-xl p-3 text-xs space-y-1">
-              <div className="font-medium text-accent-dark">🛡️ PII Sanitizer</div>
+              <div className="font-medium text-accent-dark">PII Sanitizer</div>
               <div className="text-text-secondary space-y-0.5 pl-2">
                 <div>"Paula Kowalska" → "[PACJENT]"</div>
                 <div>"90011512345" → "[PESEL]"</div>
@@ -147,7 +148,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                   ob.appMode === 'ai' ? 'border-accent-dark bg-accent-warm/20' : 'border-border'
                 }`}
               >
-                <div className="text-lg mb-1">🤖 Z agentem AI</div>
+                <div className="text-lg mb-1">Z agentem AI</div>
                 <div className="text-xs text-text-secondary">
                   Rozmowa z agentem, analiza zdjęć wyników, predykcja samopoczucia, pełne funkcje.
                   Wymaga klucza API.
@@ -159,7 +160,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                   ob.appMode === 'notebook' ? 'border-accent-dark bg-accent-warm/20' : 'border-border'
                 }`}
               >
-                <div className="text-lg mb-1">📓 Inteligentny notatnik</div>
+                <div className="text-lg mb-1">Inteligentny notatnik</div>
                 <div className="text-xs text-text-secondary">
                   Ręczne wpisywanie danych, wykresy, alerty, kalendarz.
                   Wszystkie funkcje poza AI — darmowe, na zawsze.
@@ -175,7 +176,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
         {ob.step === 'privacy' && (
           <div className="space-y-4">
-            <h2 className="font-display text-xl font-semibold text-accent-dark">🔒 Dane prywatne</h2>
+            <h2 className="font-display text-xl font-semibold text-accent-dark">Dane prywatne</h2>
             <p className="text-xs text-text-secondary">
               Te dane NIE opuszczą Twojego telefonu. Agent widzi tylko pseudonim.
             </p>
@@ -195,7 +196,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
         {ob.step === 'apikey' && (
           <div className="space-y-4">
-            <h2 className="font-display text-xl font-semibold text-accent-dark">🔑 Klucz API</h2>
+            <h2 className="font-display text-xl font-semibold text-accent-dark">Klucz API</h2>
             <p className="text-xs text-text-secondary">
               Klucz Anthropic Claude jest potrzebny do pełnej funkcjonalności AI. Możesz go dodać później.
             </p>
@@ -218,7 +219,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
         {ob.step === 'location' && (
           <div className="space-y-4">
-            <h2 className="font-display text-xl font-semibold text-accent-dark">📍 Lokalizacja</h2>
+            <h2 className="font-display text-xl font-semibold text-accent-dark">Lokalizacja</h2>
             <p className="text-xs text-text-secondary">
               Potrzebne aby dobrać właściwe wytyczne leczenia (ESMO/NCCN).
             </p>
@@ -235,7 +236,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
         {ob.step === 'languages' && (
           <div className="space-y-4">
-            <h2 className="font-display text-xl font-semibold text-accent-dark">🌐 Języki dokumentów</h2>
+            <h2 className="font-display text-xl font-semibold text-accent-dark">Języki dokumentów</h2>
             <p className="text-xs text-text-secondary">
               W jakim języku są Twoje dokumenty medyczne? Możesz wybrać kilka.
             </p>
@@ -274,7 +275,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
         {ob.step === 'diagnosis' && (
           <div className="space-y-4">
-            <h2 className="font-display text-xl font-semibold text-accent-dark">🏥 Diagnoza</h2>
+            <h2 className="font-display text-xl font-semibold text-accent-dark">Diagnoza</h2>
 
             <InputField
               label="Nazwa choroby"
@@ -315,7 +316,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
         {ob.step === 'biomarkers' && ob.isBreastCancer && (
           <div className="space-y-4">
-            <h2 className="font-display text-xl font-semibold text-accent-dark">🧬 Podtyp i biomarkery</h2>
+            <h2 className="font-display text-xl font-semibold text-accent-dark">Podtyp i biomarkery</h2>
             <p className="text-xs text-text-secondary">
               Z opisu histopatologicznego. Nie znasz? Wyślij agentowi zdjęcie wyniku.
             </p>
@@ -358,7 +359,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
         {ob.step === 'medications' && (
           <div className="space-y-4">
-            <h2 className="font-display text-xl font-semibold text-accent-dark">💊 Leczenie</h2>
+            <h2 className="font-display text-xl font-semibold text-accent-dark">Leczenie</h2>
             <p className="text-xs text-text-secondary">
               Możesz to uzupełnić później przez chat lub ustawienia.
             </p>

@@ -36,7 +36,7 @@ export function BloodEntryForm() {
   }
 
   return (
-    <Card title="🩸 Wyniki badań krwi">
+    <Card title="Wyniki badań krwi">
       <div className="space-y-3">
         <div>
           <label className="text-xs text-text-secondary block mb-1">Data badania</label>

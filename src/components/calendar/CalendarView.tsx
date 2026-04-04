@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { buildCalendarEvents, getEventsForDate, getPhaseForDate, DEFAULT_EVENT_COLORS } from '@/lib/calendar-events';
 import { db } from '@/lib/db';
 import { getPhaseColor } from '@/lib/phase-calculator';
+import { Icon } from '@/components/shared/Icon';
 import type { CalendarEvent, CalendarEventType } from '@/types';
 
 const WEEKDAYS = ['Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'Sb', 'Nd'];
@@ -113,8 +114,8 @@ export function CalendarView() {
                 <div className={`text-[10px] ${isToday ? 'font-bold text-accent-dark' : 'text-text-primary'}`}>{day}</div>
                 <div className="flex flex-wrap gap-0.5 mt-0.5">
                   {dayEvents.slice(0, 4).map(ev => (
-                    <span key={ev.id} className="text-[8px] leading-none" title={ev.title}>
-                      {ev.icon}
+                    <span key={ev.id} title={ev.title} style={{ color: ev.color }}>
+                      {ev.icon ? <Icon name={ev.icon} size={10} /> : null}
                     </span>
                   ))}
                   {dayEvents.length > 4 && (
@@ -141,7 +142,7 @@ export function CalendarView() {
               }`}
               style={!hidden ? { backgroundColor: cfg.color + '20', color: cfg.color } : undefined}
             >
-              <span>{cfg.icon}</span>
+              {cfg.icon && <Icon name={cfg.icon} size={14} />}
               <span>{cfg.label}</span>
             </button>
           );
@@ -178,13 +179,13 @@ export function CalendarView() {
                   onClick={() => setNoteType('doctor_visit')}
                   className={`flex-1 py-1.5 rounded text-[10px] ${noteType === 'doctor_visit' ? 'bg-accent-dark text-accent-warm' : 'border border-border'}`}
                 >
-                  👨‍⚕️ Wizyta
+                  Wizyta lekarska
                 </button>
                 <button
                   onClick={() => setNoteType('note')}
                   className={`flex-1 py-1.5 rounded text-[10px] ${noteType === 'note' ? 'bg-accent-dark text-accent-warm' : 'border border-border'}`}
                 >
-                  📌 Notatka
+                  Notatka
                 </button>
               </div>
               <input
@@ -229,7 +230,7 @@ function DayEventCard({ event }: { event: CalendarEvent }) {
       style={{ borderColor: event.color + '40', backgroundColor: event.color + '08' }}
     >
       <div className="flex items-center gap-2">
-        <span className="text-sm">{event.icon}</span>
+        {event.icon && <Icon name={event.icon} size={18} className="shrink-0" />}
         <div className="flex-1 min-w-0">
           <div className="text-xs font-medium truncate">{event.title}</div>
           {event.subtitle && <div className="text-[10px] text-text-secondary truncate">{event.subtitle}</div>}

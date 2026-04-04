@@ -43,7 +43,7 @@ export function HistoricalImport() {
   const [tab, setTab] = useState<ImportTab>('manual');
 
   return (
-    <Card title="📥 Import danych historycznych">
+    <Card title="Import danych historycznych">
       <p className="text-xs text-text-secondary mb-3">
         Dodaj historyczne dane aby model predykcji mógł analizować wzorce. Potrzebne minimum 2 pełne cykle chemii z wynikami krwi.
       </p>

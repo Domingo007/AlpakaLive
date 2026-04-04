@@ -33,7 +33,7 @@ export function AIProviderSettings() {
   }
 
   return (
-    <Card title="🤖 Model AI">
+    <Card title="Model AI">
       <div className="space-y-3">
         {/* Provider selection */}
         <div className="space-y-2">

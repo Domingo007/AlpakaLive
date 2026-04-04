@@ -50,11 +50,11 @@ export function SettingsView() {
       <h2 className="font-display text-lg font-semibold text-accent-dark">Ustawienia</h2>
 
       {/* App Mode */}
-      <Card title="🦙 Tryb aplikacji">
+      <Card title="Tryb aplikacji">
         <div className="space-y-2">
           {[
-            { mode: 'ai' as const, icon: '🤖', label: 'Z agentem AI', desc: 'Rozmowa z agentem, analiza zdjęć, predykcja. Wymaga klucza API.' },
-            { mode: 'notebook' as const, icon: '📓', label: 'Inteligentny notatnik', desc: 'Ręczne wpisywanie danych, wykresy, alerty. Darmowy, bez API.' },
+            { mode: 'ai' as const, icon: 'smart_toy', label: 'Z agentem AI', desc: 'Rozmowa z agentem, analiza zdjęć, predykcja. Wymaga klucza API.' },
+            { mode: 'notebook' as const, icon: 'note', label: 'Inteligentny notatnik', desc: 'Ręczne wpisywanie danych, wykresy, alerty. Darmowy, bez API.' },
           ].map(opt => (
             <button
               key={opt.mode}
@@ -79,7 +79,7 @@ export function SettingsView() {
       </Card>
 
       {/* Theme */}
-      <Card title="🎨 Wygląd">
+      <Card title="Wygląd">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Icon name={settings?.theme === 'dark' ? 'dark_mode' : 'light_mode'} size={20} className="text-lavender-500" />
@@ -151,17 +151,17 @@ export function SettingsView() {
         <Card title="Ochrona prywatności">
           <div className="space-y-1 text-xs">
             <div className="flex items-center gap-2">
-              <span>🔒</span>
+              <span className="material-symbols-rounded text-lavender-500" style={{fontSize:16}}>lock</span>
               <span className="text-text-secondary">Imie:</span>
               <span>{patient.pii.firstName || '(nie podano)'}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span>🔒</span>
+              <span className="material-symbols-rounded text-lavender-500" style={{fontSize:16}}>lock</span>
               <span className="text-text-secondary">Nazwisko:</span>
               <span>{patient.pii.lastName || '(nie podano)'}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span>🔒</span>
+              <span className="material-symbols-rounded text-lavender-500" style={{fontSize:16}}>lock</span>
               <span className="text-text-secondary">PESEL:</span>
               <span>{patient.pii.pesel ? '***' + patient.pii.pesel.slice(-4) : '(nie podano)'}</span>
             </div>

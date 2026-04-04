@@ -9,7 +9,7 @@ export function PredictionCards({ result }: PredictionCardsProps) {
   if (result.insufficientData) {
     return (
       <div className="bg-accent-warm/30 rounded-xl p-4 text-sm space-y-2">
-        <div className="font-medium">📊 Predykcja niedostępna</div>
+        <div className="font-medium">Predykcja niedostępna</div>
         <p className="text-xs text-text-secondary">{result.message}</p>
       </div>
     );
@@ -19,7 +19,7 @@ export function PredictionCards({ result }: PredictionCardsProps) {
     <div className="space-y-2">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium">📊 Predykcja 5 dni</span>
+        <span className="text-sm font-medium">Predykcja 5 dni</span>
         <ConfidenceBadge confidence={result.overallConfidence} />
       </div>
       <div className="text-[10px] text-text-secondary">
@@ -102,7 +102,7 @@ function DayCard({ day }: { day: DayPrediction }) {
         <div className="space-y-0.5">
           {day.recommendations.map((rec, i) => (
             <div key={i} className="text-[10px] text-text-secondary flex items-start gap-1">
-              <span className="text-accent-green shrink-0">💡</span>
+              <span className="material-symbols-rounded text-lavender-500 shrink-0" style={{fontSize:14}}>lightbulb</span>
               <span>{rec}</span>
             </div>
           ))}
@@ -186,7 +186,7 @@ export function AccuracyCard({ accuracy, predictions }: {
   return (
     <div className="bg-bg-card rounded-xl border border-border p-3 space-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium">🎯 Trafność predykcji</span>
+        <span className="text-xs font-medium">Trafność predykcji</span>
         <span className="text-sm font-bold" style={{ color: accuracy >= 70 ? '#27ae60' : accuracy >= 50 ? '#f39c12' : '#e74c3c' }}>
           {accuracy}%
         </span>

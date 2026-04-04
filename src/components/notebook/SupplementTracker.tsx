@@ -60,7 +60,7 @@ export function SupplementTracker() {
   const taken = supplements.filter(s => s.taken).length;
 
   return (
-    <Card title={`💊 Suplementy (${taken}/${supplements.length})`}>
+    <Card title={`Suplementy (${taken}/${supplements.length})`}>
       <div className="space-y-2">
         {supplements.map((s, i) => (
           <div key={i} className="flex items-center gap-2 py-1">
