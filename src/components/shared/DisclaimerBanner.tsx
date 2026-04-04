@@ -6,7 +6,7 @@ export function DisclaimerBanner({ variant = 'chat' }: DisclaimerBannerProps) {
   if (variant === 'chat') {
     return (
       <div className="px-4 py-1.5 bg-lavender-50 border-t border-lavender-100 text-[10px] text-text-tertiary text-center tracking-wide shrink-0">
-        * AlpakaLive analizuje dane dostarczone przez użytkownika. Nie stanowi porady medycznej. Konsultuj decyzje z lekarzem.
+        * AlpacaLive analizuje dane dostarczone przez użytkownika. Nie stanowi porady medycznej. Konsultuj decyzje z lekarzem.
       </div>
     );
   }

@@ -5,15 +5,16 @@ import { ChemoEntryForm } from './ChemoEntryForm';
 import { SupplementTracker } from './SupplementTracker';
 import { ImagingEntryForm } from './ImagingEntryForm';
 import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
+import { Icon } from '@/components/shared/Icon';
 
 type NotebookTab = 'daily' | 'blood' | 'chemo' | 'supplements' | 'imaging';
 
 const TABS: { id: NotebookTab; icon: string; label: string }[] = [
-  { id: 'daily', icon: '📝', label: 'Dziennik' },
-  { id: 'blood', icon: '🩸', label: 'Krew' },
-  { id: 'chemo', icon: '💉', label: 'Chemia' },
-  { id: 'supplements', icon: '💊', label: 'Suplementy' },
-  { id: 'imaging', icon: '🏥', label: 'Obrazowanie' },
+  { id: 'daily', icon: 'edit_note', label: 'Dziennik' },
+  { id: 'blood', icon: 'water_drop', label: 'Krew' },
+  { id: 'chemo', icon: 'vaccines', label: 'Chemia' },
+  { id: 'supplements', icon: 'medication', label: 'Suplementy' },
+  { id: 'imaging', icon: 'imagesmode', label: 'Obrazowanie' },
 ];
 
 export function NotebookView() {
@@ -31,7 +32,7 @@ export function NotebookView() {
               tab === t.id ? 'bg-accent-dark text-accent-warm' : 'bg-bg-card border border-border text-text-secondary'
             }`}
           >
-            <span>{t.icon}</span>
+            <Icon name={t.icon} size={16} />
             <span>{t.label}</span>
           </button>
         ))}

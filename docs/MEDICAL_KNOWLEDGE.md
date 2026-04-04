@@ -1,4 +1,4 @@
-# Baza wiedzy medycznej AlpakaLive
+# Baza wiedzy medycznej AlpacaLive
 
 > **ZASTRZEŻENIE**
 >

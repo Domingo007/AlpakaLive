@@ -17,7 +17,7 @@ export function SettingsView() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `alpakalive-backup-${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `alpacalive-backup-${new Date().toISOString().split('T')[0]}.json`;
     a.click();
     URL.revokeObjectURL(url);
   }

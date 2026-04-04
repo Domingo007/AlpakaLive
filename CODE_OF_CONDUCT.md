@@ -1,6 +1,6 @@
 # Kodeks postępowania
 
-AlpakaLive to projekt dla ludzi walczących z rakiem. Zobowiązujemy się do utrzymania bezpiecznej, wspierającej przestrzeni.
+AlpacaLive to projekt dla ludzi walczących z rakiem. Zobowiązujemy się do utrzymania bezpiecznej, wspierającej przestrzeni.
 
 ## Standardy
 

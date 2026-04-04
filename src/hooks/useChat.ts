@@ -101,7 +101,7 @@ export function useChat() {
       const settings = await getSettings();
       const patient = await getPatient();
 
-      let systemPrompt = 'Jesteś agentem medycznym AlpakaLive. Pomagasz pacjentowi onkologicznemu. Mów po polsku.';
+      let systemPrompt = 'Jesteś agentem medycznym AlpacaLive. Pomagasz pacjentowi onkologicznemu. Mów po polsku.';
 
       if (patient) {
         const [daily, blood, wearable, meals, chemo, imaging, predictions] = await Promise.all([

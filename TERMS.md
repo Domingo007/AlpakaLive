@@ -1,8 +1,8 @@
-# Warunki użytkowania — AlpakaLive
+# Warunki użytkowania — AlpacaLive
 
 ## W skrócie
 
-1. AlpakaLive to narzędzie do analizy TWOICH danych — nie doradca medyczny
+1. AlpacaLive to narzędzie do analizy TWOICH danych — nie doradca medyczny
 2. Wszystko co widzisz to analiza danych + informacje z opublikowanych badań
 3. ZAWSZE konsultuj decyzje zdrowotne z lekarzem
 4. Twoje dane zostają na Twoim telefonie — nie mamy do nich dostępu

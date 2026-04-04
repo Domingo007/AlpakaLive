@@ -1,8 +1,8 @@
-# Zastrzeżenie prawne — AlpakaLive
+# Zastrzeżenie prawne — AlpacaLive
 
 ## Status prawny aplikacji
 
-AlpakaLive jest aplikacją open source służącą do analizy danych zdrowotnych dostarczonych przez użytkownika.
+AlpacaLive jest aplikacją open source służącą do analizy danych zdrowotnych dostarczonych przez użytkownika.
 
 **Aplikacja NIE jest:**
 - Wyrobem medycznym w rozumieniu przepisów UE (MDR 2017/745) ani USA (FDA)
@@ -17,7 +17,7 @@ AlpakaLive jest aplikacją open source służącą do analizy danych zdrowotnych
 
 ## Odpowiedzialność
 
-Twórcy, kontrybutorzy i opiekunowie projektu AlpakaLive:
+Twórcy, kontrybutorzy i opiekunowie projektu AlpacaLive:
 - NIE ponoszą odpowiedzialności za decyzje zdrowotne podjęte na podstawie informacji wyświetlanych w aplikacji
 - NIE gwarantują poprawności, kompletności ani aktualności informacji medycznych
 - NIE zapewniają że analiza AI jest wolna od błędów
@@ -42,7 +42,7 @@ Informacje o suplementach, witaminach i substancjach eksperymentalnych:
 
 ## Przetwarzanie danych przez AI
 
-AlpakaLive korzysta z zewnętrznych usług AI do analizy danych medycznych dostarczonych przez użytkownika:
+AlpacaLive korzysta z zewnętrznych usług AI do analizy danych medycznych dostarczonych przez użytkownika:
 
 **Dane przechowywane WYŁĄCZNIE na urządzeniu:**
 - Imię, nazwisko, PESEL, adres, telefon, email
@@ -78,4 +78,4 @@ Niniejsze zastrzeżenie podlega prawu Unii Europejskiej. W przypadku sporów wł
 
 ## Akceptacja
 
-Korzystanie z aplikacji AlpakaLive oznacza zapoznanie się z powyższym zastrzeżeniem i jego akceptację. Akceptacja jest wymagana przy pierwszym uruchomieniu aplikacji i rejestrowana z datą i godziną.
+Korzystanie z aplikacji AlpacaLive oznacza zapoznanie się z powyższym zastrzeżeniem i jego akceptację. Akceptacja jest wymagana przy pierwszym uruchomieniu aplikacji i rejestrowana z datą i godziną.

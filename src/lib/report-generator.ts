@@ -67,7 +67,7 @@ export async function generateReportPDF(daysBack = 30): Promise<void> {
   // ===== HEADER =====
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
-  doc.text('AlpakaLive — Raport dla lekarza', margin, y);
+  doc.text('AlpacaLive — Raport dla lekarza', margin, y);
   y += 8;
 
   doc.setFontSize(9);
@@ -302,7 +302,7 @@ export async function generateReportPDF(daysBack = 30): Promise<void> {
     doc.setFontSize(7);
     doc.setTextColor(150, 150, 150);
     doc.text(
-      `AlpakaLive — raport wygenerowany automatycznie | str. ${i}/${pageCount}`,
+      `AlpacaLive — raport wygenerowany automatycznie | str. ${i}/${pageCount}`,
       margin,
       doc.internal.pageSize.getHeight() - 8,
     );
@@ -314,7 +314,7 @@ export async function generateReportPDF(daysBack = 30): Promise<void> {
   }
 
   // ===== SAVE =====
-  const filename = `AlpakaLive-raport-${data.periodEnd}.pdf`;
+  const filename = `AlpacaLive-raport-${data.periodEnd}.pdf`;
   doc.save(filename);
 }
 

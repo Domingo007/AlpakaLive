@@ -17,7 +17,7 @@ import type {
   CalendarNote,
 } from '@/types';
 
-class AlpakaLiveDB extends Dexie {
+class AlpacaLiveDB extends Dexie {
   patient!: Table<PatientProfile>;
   chemo!: Table<ChemoSession>;
   blood!: Table<BloodWork>;
@@ -32,7 +32,7 @@ class AlpakaLiveDB extends Dexie {
   calendarNotes!: Table<CalendarNote>;
 
   constructor() {
-    super('AlpakaLiveDB');
+    super('AlpacaLiveDB');
     this.version(1).stores({
       patient: 'id',
       chemo: 'id, date, plannedDate, status',
@@ -50,7 +50,7 @@ class AlpakaLiveDB extends Dexie {
   }
 }
 
-export const db = new AlpakaLiveDB();
+export const db = new AlpacaLiveDB();
 
 export async function getSettings(): Promise<AppSettings | undefined> {
   return db.settings.get('main');

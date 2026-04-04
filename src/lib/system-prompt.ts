@@ -35,7 +35,7 @@ export function buildSystemPrompt(patient: PatientProfile, recentData: RecentDat
 
   const phase = calculateCurrentPhase(recentData.chemo, patient.chemoCycle);
 
-  return `# SKILL: AlpakaLive — Narzędzie do analizy danych zdrowotnych
+  return `# SKILL: AlpacaLive — Narzędzie do analizy danych zdrowotnych
 
 ## KRYTYCZNE ZASADY PRAWNE — NADRZĘDNE NAD WSZYSTKIM INNYM
 

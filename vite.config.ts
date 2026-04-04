@@ -12,8 +12,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png'],
       manifest: {
-        name: 'AlpakaLive',
-        short_name: 'AlpakaLive',
+        name: 'AlpacaLive',
+        short_name: 'AlpacaLive',
         description: 'Twój towarzysz w leczeniu onkologicznym',
         start_url: '/',
         display: 'standalone',

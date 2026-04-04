@@ -75,12 +75,12 @@ export function DataView() {
 
       {/* Stats summary */}
       <div className="grid grid-cols-2 gap-2">
-        <StatCard icon="📝" label="Wpisy dziennika" value={counts.daily || 0} />
-        <StatCard icon="🩸" label="Badania krwi" value={counts.blood || 0} />
-        <StatCard icon="⌚" label="Dane z opaski" value={counts.wearable || 0} />
-        <StatCard icon="🍽️" label="Posilki" value={counts.meals || 0} />
-        <StatCard icon="💉" label="Sesje chemii" value={counts.chemo || 0} />
-        <StatCard icon="🏥" label="Obrazowanie" value={counts.imaging || 0} />
+        <StatCard icon="edit_note" label="Wpisy dziennika" value={counts.daily || 0} />
+        <StatCard icon="water_drop" label="Badania krwi" value={counts.blood || 0} />
+        <StatCard icon="watch" label="Dane z opaski" value={counts.wearable || 0} />
+        <StatCard icon="restaurant" label="Posiłki" value={counts.meals || 0} />
+        <StatCard icon="vaccines" label="Sesje chemii" value={counts.chemo || 0} />
+        <StatCard icon="imagesmode" label="Obrazowanie" value={counts.imaging || 0} />
       </div>
 
       {!hasData ? (

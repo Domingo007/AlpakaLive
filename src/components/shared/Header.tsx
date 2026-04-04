@@ -4,11 +4,11 @@ export function Header() {
       <div className="flex items-center gap-2.5">
         <img
           src="/logo.png"
-          alt="AlpakaLive"
+          alt="AlpacaLive"
           className="w-8 h-8 rounded-lg object-cover"
           onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
         />
-        <span className="text-lg font-bold text-text-primary tracking-tight">AlpakaLive</span>
+        <span className="text-lg font-bold text-text-primary tracking-tight">AlpacaLive</span>
       </div>
     </header>
   );

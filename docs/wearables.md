@@ -1,6 +1,6 @@
 # Kompatybilne opaski i pierścienie
 
-AlpakaLive działa z danymi z dowolnego urządzenia — ręcznie lub przez Apple Health/Health Connect.
+AlpacaLive działa z danymi z dowolnego urządzenia — ręcznie lub przez Apple Health/Health Connect.
 
 ## Ranking dla pacjenta onkologicznego
 

@@ -1,21 +1,21 @@
 > **WAŻNE ZASTRZEŻENIE PRAWNE**
 >
-> AlpakaLive jest narzędziem do analizy danych dostarczonych przez użytkownika.
+> AlpacaLive jest narzędziem do analizy danych dostarczonych przez użytkownika.
 > **NIE jest wyrobem medycznym, NIE stawia diagnoz, NIE zaleca leków ani suplementów.**
 > Informacje wyświetlane w aplikacji opierają się na danych użytkownika i opublikowanej literaturze naukowej.
 > Wszelkie decyzje dotyczące zdrowia powinny być podejmowane wyłącznie w konsultacji z lekarzem prowadzącym.
 > Twórcy aplikacji nie ponoszą odpowiedzialności za decyzje zdrowotne podjęte na podstawie informacji z aplikacji.
 > Pełne zastrzeżenie: [DISCLAIMER.md](DISCLAIMER.md) | [TERMS.md](TERMS.md)
 
-# AlpakaLive — Holistyczny System Wsparcia Onkologicznego
+# AlpacaLive — Holistyczny System Wsparcia Onkologicznego
 
 **Darmowa, open-source aplikacja webowa (PWA) wspierająca pacjentów onkologicznych i ich opiekunów w analizie danych zdrowotnych podczas chemioterapii.**
 
 ---
 
-## Co wyróżnia AlpakaLive
+## Co wyróżnia AlpacaLive
 
-| Funkcja | AlpakaLive | Inne apki onkologiczne |
+| Funkcja | AlpacaLive | Inne apki onkologiczne |
 |---------|-----------|----------------------|
 | Dziennik zdrowia | Rozmowa z agentem AI | Ręczne formularze |
 | Wyniki krwi | Zdjęcie → automatyczna analiza | Ręczne wpisywanie |
@@ -28,8 +28,8 @@
 ## Szybki start
 
 ```bash
-git clone https://github.com/Domingo007/AlpakaLive.git
-cd AlpakaLive
+git clone https://github.com/Domingo007/AlpacaLive.git
+cd AlpacaLive
 npm install
 npm run dev
 ```
@@ -43,12 +43,12 @@ Wymagania: Node.js 18+, [klucz API Anthropic](https://console.anthropic.com/) (o
 4. Wpisz klucz API w ustawieniach
 
 ### Deploy własnej instancji
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Domingo007/AlpakaLive)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Domingo007/AlpacaLive)
 
 ## Architektura
 
 ```
-AlpakaLive (100% lokalne — brak chmury)
+AlpacaLive (100% lokalne — brak chmury)
 ├── PWA (Vite + React + TypeScript + Tailwind)
 ├── Dane (IndexedDB via Dexie.js — na urządzeniu)
 ├── AI Agent (Claude API — klucz użytkownika)

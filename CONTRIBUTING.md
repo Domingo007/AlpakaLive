@@ -1,6 +1,6 @@
-# Jak dołączyć do AlpakaLive
+# Jak dołączyć do AlpacaLive
 
-Dziękujemy za zainteresowanie! AlpakaLive to projekt tworzony przez i dla ludzi dotkniętych rakiem.
+Dziękujemy za zainteresowanie! AlpacaLive to projekt tworzony przez i dla ludzi dotkniętych rakiem.
 
 ## Dla programistów
 

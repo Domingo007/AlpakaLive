@@ -1,4 +1,4 @@
-# Podtypy raka piersi — baza wiedzy AlpakaLive
+# Podtypy raka piersi — baza wiedzy AlpacaLive
 
 Rak piersi to NIE jedna choroba. To grupa różnych chorób o różnym leczeniu i rokowaniu.
 Agent musi znać podtyp pacjenta aby dać trafne informacje.

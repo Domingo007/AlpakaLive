@@ -10,7 +10,7 @@ const TABS: { id: TabId; icon: string; label: string }[] = [
   { id: 'chat', icon: 'chat_bubble', label: 'Chat' },
   { id: 'calendar', icon: 'calendar_month', label: 'Kalendarz' },
   { id: 'data', icon: 'monitoring', label: 'Dane' },
-  { id: 'imaging', icon: 'radiology', label: 'Obrazy' },
+  { id: 'imaging', icon: 'imagesmode', label: 'Obrazy' },
   { id: 'settings', icon: 'more_horiz', label: 'Więcej' },
 ];
 

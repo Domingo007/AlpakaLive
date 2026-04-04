@@ -8,7 +8,7 @@ let lastEveningCheck = '';
 let lastChemoCheck = '';
 
 const MORNING_MESSAGES = [
-  'Dzień dobry! Jak się dziś czujesz? Wejdź do AlpakaLive i powiedz agentowi. 🦙',
+  'Dzień dobry! Jak się dziś czujesz? Wejdź do AlpacaLive i powiedz agentowi. 🦙',
   'Pora na poranny raport! Jak energia, ból, nastrój? 🌅',
   'Dzień dobry! Opowiedz mi jak się czujesz po przebudzeniu. ☀️',
 ];
@@ -50,7 +50,7 @@ function showNotification(title: string, body: string) {
       body,
       icon: '/icon-192.png',
       badge: '/icon-192.png',
-      tag: `alpakalive-${Date.now()}`,
+      tag: `alpacalive-${Date.now()}`,
       requireInteraction: false,
     });
 
@@ -83,7 +83,7 @@ async function checkAndSendNotifications() {
   // Morning notification
   if (config.morningEnabled && lastMorningCheck !== todayStr) {
     if (currentHour === config.morningHour && currentMinute >= config.morningMinute && currentMinute < config.morningMinute + 5) {
-      showNotification('AlpakaLive — Raport poranny', randomMessage(MORNING_MESSAGES));
+      showNotification('AlpacaLive — Raport poranny', randomMessage(MORNING_MESSAGES));
       lastMorningCheck = todayStr;
     }
   }
@@ -91,7 +91,7 @@ async function checkAndSendNotifications() {
   // Evening notification
   if (config.eveningEnabled && lastEveningCheck !== todayStr) {
     if (currentHour === config.eveningHour && currentMinute >= config.eveningMinute && currentMinute < config.eveningMinute + 5) {
-      showNotification('AlpakaLive — Podsumowanie wieczorne', randomMessage(EVENING_MESSAGES));
+      showNotification('AlpacaLive — Podsumowanie wieczorne', randomMessage(EVENING_MESSAGES));
       lastEveningCheck = todayStr;
     }
   }
@@ -113,7 +113,7 @@ async function checkAndSendNotifications() {
       if (plannedChemo.length > 0) {
         const dayLabel = config.chemoReminderDaysBefore === 1 ? 'Jutro' : `Za ${config.chemoReminderDaysBefore} dni`;
         showNotification(
-          `AlpakaLive — Przypomnienie o chemii`,
+          `AlpacaLive — Przypomnienie o chemii`,
           `${dayLabel} zaplanowana sesja chemii. Pamiętaj o kontrolnej krwi i nawodnieniu! 💉`,
         );
       }

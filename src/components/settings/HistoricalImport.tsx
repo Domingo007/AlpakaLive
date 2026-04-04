@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Card } from '@/components/shared/Card';
+import { Icon } from '@/components/shared/Icon';
 import { db } from '@/lib/db';
 import { useSettings } from '@/hooks/useDatabase';
 import { BLOOD_NORMS } from '@/lib/blood-norms';
@@ -49,9 +50,9 @@ export function HistoricalImport() {
 
       {/* Tab switcher */}
       <div className="flex gap-1 mb-4 bg-bg-primary rounded-lg p-1">
-        <TabButton active={tab === 'manual'} onClick={() => setTab('manual')} icon="🩸" label="Wyniki krwi" />
-        <TabButton active={tab === 'chemo'} onClick={() => setTab('chemo')} icon="💉" label="Daty chemii" />
-        <TabButton active={tab === 'photos'} onClick={() => setTab('photos')} icon="📷" label="Zdjęcia" />
+        <TabButton active={tab === 'manual'} onClick={() => setTab('manual')} icon="water_drop" label="Wyniki krwi" />
+        <TabButton active={tab === 'chemo'} onClick={() => setTab('chemo')} icon="vaccines" label="Daty chemii" />
+        <TabButton active={tab === 'photos'} onClick={() => setTab('photos')} icon="photo_camera" label="Zdjęcia" />
       </div>
 
       {tab === 'manual' && <ManualBloodImport />}
@@ -65,11 +66,12 @@ function TabButton({ active, onClick, icon, label }: { active: boolean; onClick:
   return (
     <button
       onClick={onClick}
-      className={`flex-1 text-xs py-2 rounded-md font-medium transition-colors ${
+      className={`flex-1 text-xs py-2 rounded-md font-medium transition-colors flex items-center justify-center gap-1 ${
         active ? 'bg-bg-card text-accent-dark shadow-sm' : 'text-text-secondary'
       }`}
     >
-      {icon} {label}
+      <Icon name={icon} size={16} />
+      {label}
     </button>
   );
 }

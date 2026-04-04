@@ -31,13 +31,13 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           <div className="space-y-4 mt-4">
             <div className="text-center">
               <div className="text-5xl mb-2">🦙</div>
-              <h1 className="font-display text-2xl font-bold text-accent-dark">AlpakaLive</h1>
+              <h1 className="font-display text-2xl font-bold text-accent-dark">AlpacaLive</h1>
             </div>
 
             <div className="text-sm font-medium text-accent-dark">Ważna informacja przed rozpoczęciem</div>
 
             <div className="bg-bg-card rounded-xl border border-border p-4 text-xs text-text-primary space-y-2">
-              <p>AlpakaLive jest narzędziem do <strong>ANALIZY DANYCH</strong> dostarczonych przez użytkownika.</p>
+              <p>AlpacaLive jest narzędziem do <strong>ANALIZY DANYCH</strong> dostarczonych przez użytkownika.</p>
 
               <div className="space-y-1">
                 <p className="font-medium">⚠️ Aplikacja:</p>
@@ -409,7 +409,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               onClick={handleComplete}
               className="w-full bg-accent-dark text-accent-warm rounded-xl py-3 text-sm font-medium"
             >
-              Rozpocznij korzystanie z AlpakaLive
+              Rozpocznij korzystanie z AlpacaLive
             </button>
           </div>
         )}
