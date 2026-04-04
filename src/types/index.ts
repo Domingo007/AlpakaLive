@@ -70,6 +70,7 @@ export interface PatientProfile {
   immunotherapy?: ImmunotherapyEntry[];
   targetedTherapy?: TargetedTherapyEntry[];
   hormonalTherapy?: HormonalTherapyEntry[];
+  surgicalProcedures?: SurgicalProcedure[];
   // Breast cancer specific biomarkers
   breastCancerSubtype?: BreastCancerSubtype;
   erStatus?: ReceptorStatus;
@@ -203,6 +204,70 @@ export interface HormonalTherapyEntry {
   startDate: string;
   endDate?: string;
   sideEffects?: string[];
+}
+
+// ==================== SURGICAL PROCEDURES ====================
+
+export type SurgeryType =
+  | 'mastectomy' | 'lumpectomy' | 'lymph_node_dissection' | 'oophorectomy'
+  | 'hysterectomy' | 'tumor_resection' | 'port_catheter' | 'reconstruction'
+  | 'orchiectomy' | 'colostomy' | 'other';
+
+export interface SurgicalProcedure {
+  id: string;
+  date: string;
+  type: SurgeryType;
+  subtype?: string;
+  description: string;
+  hospital?: string;
+  details: {
+    mastectomy?: {
+      side: 'left' | 'right' | 'bilateral';
+      type: 'total' | 'skin_sparing' | 'nipple_sparing' | 'radical';
+      reconstruction?: 'immediate' | 'delayed' | 'none';
+      reconstructionType?: 'implant' | 'autologous_flap' | 'other';
+    };
+    lymphNodes?: {
+      type: 'sentinel_biopsy' | 'axillary_dissection';
+      side: 'left' | 'right' | 'bilateral';
+      nodesRemoved?: number;
+      nodesPositive?: number;
+      lymphedemaRisk: boolean;
+    };
+    oophorectomy?: {
+      type: 'bilateral' | 'unilateral';
+      reason: 'prophylactic_brca' | 'treatment' | 'hormonal_suppression';
+      surgicalMenopause: boolean;
+    };
+    tumorResection?: {
+      location: string;
+      type: 'complete' | 'partial' | 'debulking';
+      margins?: 'clear' | 'close' | 'positive' | 'unknown';
+    };
+    portCatheter?: {
+      type: 'port_a_cath' | 'picc_line' | 'hickman';
+      action: 'insertion' | 'removal';
+      location: string;
+    };
+    other?: { description: string };
+  };
+  recovery: {
+    expectedDurationDays: number;
+    restrictions: string[];
+    drains?: boolean;
+    drainsRemovedDate?: string;
+    physiotherapy?: boolean;
+    physiotherapyNotes?: string;
+    hospitalDischargeDate?: string;
+    followUpDates?: string[];
+  };
+  treatmentImpact: {
+    chemoDelayed?: boolean;
+    chemoResumeDate?: string;
+    radiotherapyPlanned?: boolean;
+    hormonalTherapyStarted?: boolean;
+    treatmentNotes?: string;
+  };
 }
 
 export interface ChemoSession {
@@ -510,6 +575,7 @@ export type CalendarEventType =
   | 'supplement' | 'doctor_visit' | 'side_effect' | 'weight'
   | 'wearable_alert' | 'prediction' | 'medication_change' | 'note'
   | 'radiotherapy_session' | 'immunotherapy_infusion' | 'targeted_therapy' | 'hormonal_therapy'
+  | 'surgery' | 'surgery_followup' | 'recovery_period'
   | 'phase_a' | 'phase_b' | 'phase_c';
 
 export interface CalendarEvent {

@@ -130,7 +130,7 @@ export function CalendarView() {
 
       {/* Legend / filters */}
       <div className="flex flex-wrap gap-1.5">
-        {(['chemo', 'blood_test', 'imaging', 'daily_log', 'supplement', 'doctor_visit', 'radiotherapy_session', 'immunotherapy_infusion', 'targeted_therapy', 'hormonal_therapy', 'wearable_alert', 'note'] as CalendarEventType[]).map(type => {
+        {(['chemo', 'blood_test', 'imaging', 'daily_log', 'supplement', 'doctor_visit', 'surgery', 'radiotherapy_session', 'immunotherapy_infusion', 'targeted_therapy', 'hormonal_therapy', 'wearable_alert', 'note'] as CalendarEventType[]).map(type => {
           const cfg = DEFAULT_EVENT_COLORS[type];
           const hidden = hiddenTypes.has(type);
           return (

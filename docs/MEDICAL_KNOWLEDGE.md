@@ -110,3 +110,35 @@ Szczegółowa baza wiedzy o podtypach, leczeniu i różnicach regionalnych: [bre
 | SERM | Tamoksyfen | Uderzenia gorąca, zakrzepy | Nastrój, objawy zakrzepowe | 5-10 lat |
 | SERD | Fulwestrant | Ból w miejscu wstrzyknięcia | Miejscowe reakcje | Do progresji |
 | Agonista GnRH | Goserelina | Uderzenia gorąca, osteoporoza | Densytometria, nastrój | Zależnie od schematu |
+
+## Zabiegi chirurgiczne w onkologii
+
+> **Informacje z opublikowanych badań. NIE stanowią rekomendacji. Konsultuj z lekarzem.**
+
+### Mastektomia (usunięcie piersi)
+- **Typy:** totalna, oszczędzająca skórę, oszczędzająca brodawkę, radykalna
+- **Rekonwalescencja:** 4-8 tygodni. Ból, ograniczony ruch ręki, dreny 1-2 tygodnie
+- **Rekonstrukcja:** natychmiastowa (implant lub płat) lub odroczona
+- **Powikłania:** seroma, infekcja, ograniczony ruch barku, obrzęk limfatyczny
+- **Dane z urządzeń:** RHR +5-15bpm przez 1-3 tyg. = normalne. Sen gorszy = ból/pozycja
+
+### Usunięcie węzłów chłonnych
+- **Biopsja węzła wartowniczego (SLNB):** 1-3 węzły, niskie ryzyko powikłań
+- **Pełne usunięcie pachowe (ALND):** 10-20+ węzłów, ryzyko obrzęku limfatycznego
+- **WAŻNE:** NIE mierzyć ciśnienia na ręce po stronie usunięcia węzłów!
+- **Obrzęk limfatyczny:** może pojawić się tygodnie, miesiące lub LATA po operacji
+
+### Usunięcie jajników (oophorectomy)
+- **Skutki:** natychmiastowa menopauza chirurgiczna — uderzenia gorąca, nocne poty, bezsenność, wahania nastroju
+- **Dane z urządzeń:** wzrosty temperatury w nocy = uderzenia gorąca (NIE infekcja!), zaburzenia snu = normalne
+- **Densytometria kości** wskazana ze względu na spadek estrogenów
+
+### Resekcja guza
+- **Wątroba:** albumina może spaść, regeneracja 4-8 tyg.
+- **Płuca:** SpO2 może być trwale niższe o 1-3% — ustal nowy baseline
+- **Ból pooperacyjny** 5-8/10 przez 1-2 tyg. to norma
+
+### Port-a-cath / PICC
+- **Założenie:** ból w klatce/szyi 2-5 dni
+- **Monitoruj:** gorączka + zaczerwienienie wokół portu = możliwa infekcja
+- **Usunięcie:** po zakończeniu chemii, zabieg ambulatoryjny

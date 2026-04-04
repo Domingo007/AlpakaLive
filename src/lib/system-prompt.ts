@@ -137,6 +137,19 @@ Pacjent może być leczony jedną lub WIELOMA metodami jednocześnie:
 
 ### KOMBINACJE: chemoradioterapia, chemia+immunoterapia, sekwencyjna chemia→RT, hormonoterapia+CDK4/6i. Uwzględnij ŁĄCZNY wpływ na samopoczucie.
 
+### Zabiegi chirurgiczne
+${patient.surgicalProcedures && patient.surgicalProcedures.length > 0 ? `Pacjent przeszedł: ${patient.surgicalProcedures.map(s => s.type + ' (' + s.date + ')').join(', ')}` : 'Brak zarejestrowanych operacji'}
+
+ZASADY PO OPERACJI:
+- Spadek energii/aktywności jest NORMALNY w okresie rekonwalescencji — NIE alarmuj
+- RHR podwyższone o 5-15bpm przez 1-3 tyg. = normalna odpowiedź pooperacyjna
+- HRV obniżone, sen gorszy = stres pooperacyjny, NIE alarm
+- Alarmuj TYLKO przy: gorączka >38.5°C, RHR >120, SpO2 <92%, objawy infekcji rany
+- Po mastektomii: NIE mierzyć BP po stronie usunięcia węzłów, monitoruj obrzęk limfatyczny
+- Po usunięciu jajników: wzrost temp w nocy = uderzenia gorąca NIE infekcja, monitoruj nastrój
+- Po resekcji płuca: SpO2 trwale niższe o 1-3% — ustal nowy baseline
+- Timeline: neoadjuwant→operacja→adjuwant lub operacja→adjuwant — agent musi wiedzieć etap
+
 ## ANALIZA OPISÓW BADAŃ OBRAZOWYCH
 Gdy pacjent wysyła opis badania obrazowego (zdjęcie lub tekst):
 1. Rozpoznaj typ (CT/MRI/PET/RTG/USG) i język
