@@ -7,6 +7,13 @@ import { Icon } from '@/components/shared/Icon';
 import { useI18n } from '@/lib/i18n';
 import type { CalendarEvent, CalendarEventType } from '@/types';
 
+const ADDABLE_EVENT_TYPES: CalendarEventType[] = [
+  'doctor_visit', 'note', 'chemo', 'blood_test', 'imaging',
+  'radiotherapy_session', 'immunotherapy_infusion', 'targeted_therapy',
+  'hormonal_therapy', 'surgery', 'surgery_followup', 'medication_change',
+  'side_effect', 'supplement', 'daily_log', 'wearable_alert',
+];
+
 export function CalendarView() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [viewMonth, setViewMonth] = useState(new Date());
@@ -15,7 +22,7 @@ export function CalendarView() {
   const [loading, setLoading] = useState(true);
   const [showAddMenu, setShowAddMenu] = useState(false);
   const [noteTitle, setNoteTitle] = useState('');
-  const [noteType, setNoteType] = useState<'doctor_visit' | 'note'>('note');
+  const [noteType, setNoteType] = useState<CalendarEventType>('note');
   const { t, lang } = useI18n();
 
   const locale = lang === 'pl' ? 'pl-PL' : 'en-US';
@@ -166,24 +173,39 @@ export function CalendarView() {
 
           {showAddMenu && (
             <div className="bg-bg-primary rounded-lg p-3 space-y-2">
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setNoteType('doctor_visit')}
-                  className={`flex-1 py-1.5 rounded text-[10px] ${noteType === 'doctor_visit' ? 'bg-accent-dark text-accent-warm' : 'border border-border'}`}
-                >
-                  {t.calendar.doctorVisit}
-                </button>
-                <button
-                  onClick={() => setNoteType('note')}
-                  className={`flex-1 py-1.5 rounded text-[10px] ${noteType === 'note' ? 'bg-accent-dark text-accent-warm' : 'border border-border'}`}
-                >
-                  {t.calendar.note}
-                </button>
+              <div className="flex flex-wrap gap-1.5">
+                {ADDABLE_EVENT_TYPES.map(type => {
+                  const cfg = DEFAULT_EVENT_COLORS[type];
+                  const isActive = noteType === type;
+                  const label = (t.calendar.eventTypes as Record<string, string>)[type] || cfg.label;
+                  return (
+                    <button
+                      key={type}
+                      onClick={() => setNoteType(type)}
+                      className={`flex items-center gap-1 px-2 py-1.5 rounded-lg text-[10px] font-medium transition-all ${
+                        isActive
+                          ? 'ring-2 ring-accent-dark shadow-sm'
+                          : 'border border-border hover:border-transparent'
+                      }`}
+                      style={isActive
+                        ? { backgroundColor: cfg.color + '25', color: cfg.color }
+                        : undefined
+                      }
+                    >
+                      {cfg.icon && <Icon name={cfg.icon} size={14} />}
+                      <span>{label}</span>
+                    </button>
+                  );
+                })}
               </div>
               <input
                 value={noteTitle}
                 onChange={e => setNoteTitle(e.target.value)}
-                placeholder={noteType === 'doctor_visit' ? t.calendar.visitPlaceholder : t.calendar.noteContentPlaceholder}
+                placeholder={
+                  noteType === 'doctor_visit' ? t.calendar.visitPlaceholder
+                    : noteType === 'note' ? t.calendar.noteContentPlaceholder
+                    : t.calendar.eventTitlePlaceholder
+                }
                 className="w-full rounded border border-border px-2 py-1.5 text-xs bg-bg-card"
               />
               <button onClick={addNote} disabled={!noteTitle.trim()} className="w-full bg-accent-dark text-accent-warm rounded py-1.5 text-xs disabled:opacity-40">

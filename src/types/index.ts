@@ -597,7 +597,7 @@ export interface CalendarEvent {
 export interface CalendarNote {
   id: string;
   date: string;
-  type: 'doctor_visit' | 'note';
+  type: CalendarEventType;
   title: string;
   description?: string;
   time?: string;
