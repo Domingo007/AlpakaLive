@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { DailyLogForm } from './DailyLogForm';
 import { BloodEntryForm } from './BloodEntryForm';
 import { ChemoEntryForm } from './ChemoEntryForm';
@@ -7,11 +6,14 @@ import { ImagingEntryForm } from './ImagingEntryForm';
 import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
 import { Icon } from '@/components/shared/Icon';
 import { useI18n } from '@/lib/i18n';
+import type { NotebookTab } from '@/types';
 
-type NotebookTab = 'daily' | 'blood' | 'chemo' | 'supplements' | 'imaging';
+interface NotebookViewProps {
+  activeTab: NotebookTab;
+  onTabChange: (tab: NotebookTab) => void;
+}
 
-export function NotebookView() {
-  const [tab, setTab] = useState<NotebookTab>('daily');
+export function NotebookView({ activeTab: tab, onTabChange: setTab }: NotebookViewProps) {
   const { t } = useI18n();
 
   const tabs: { id: NotebookTab; icon: string; label: string }[] = [

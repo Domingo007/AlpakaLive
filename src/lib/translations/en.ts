@@ -214,6 +214,8 @@ export const en: typeof pl = {
     phaseCrisis: 'crisis',
     phaseRecovery: 'recovery',
     phaseRebuild: 'rebuild',
+    deleteConfirm: 'Delete this event?',
+    goToSource: 'View details',
     eventTypes: {
       chemo: 'Chemotherapy',
       blood_test: 'Blood test',

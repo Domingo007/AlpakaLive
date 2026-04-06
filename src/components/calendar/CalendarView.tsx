@@ -5,7 +5,16 @@ import { db } from '@/lib/db';
 import { getPhaseColor } from '@/lib/phase-calculator';
 import { Icon } from '@/components/shared/Icon';
 import { useI18n } from '@/lib/i18n';
-import type { CalendarEvent, CalendarEventType } from '@/types';
+import type { CalendarEvent, CalendarEventType, TabId, NotebookTab } from '@/types';
+
+const SOURCE_TYPE_NAV: Record<string, { tab: TabId; notebookTab?: NotebookTab }> = {
+  chemo:       { tab: 'chat', notebookTab: 'chemo' },
+  blood:       { tab: 'chat', notebookTab: 'blood' },
+  daily:       { tab: 'chat', notebookTab: 'daily' },
+  supplements: { tab: 'chat', notebookTab: 'supplements' },
+  imaging:     { tab: 'imaging' },
+  wearable:    { tab: 'data' },
+};
 
 const ADDABLE_EVENT_TYPES: CalendarEventType[] = [
   'doctor_visit', 'note', 'chemo', 'blood_test', 'imaging',
@@ -14,7 +23,11 @@ const ADDABLE_EVENT_TYPES: CalendarEventType[] = [
   'side_effect', 'supplement', 'daily_log', 'wearable_alert',
 ];
 
-export function CalendarView() {
+interface CalendarViewProps {
+  onNavigate: (tab: TabId, notebookTab?: NotebookTab) => void;
+}
+
+export function CalendarView({ onNavigate }: CalendarViewProps) {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [viewMonth, setViewMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -60,6 +73,19 @@ export function CalendarView() {
     setNoteTitle('');
     setShowAddMenu(false);
     loadEvents();
+  }
+
+  async function deleteNote(eventId: string) {
+    const noteId = eventId.replace('note-', '');
+    await db.calendarNotes.delete(noteId);
+    loadEvents();
+  }
+
+  function handleEventNavigate(event: CalendarEvent) {
+    if (event.sourceType && SOURCE_TYPE_NAV[event.sourceType]) {
+      const nav = SOURCE_TYPE_NAV[event.sourceType];
+      onNavigate(nav.tab, nav.notebookTab);
+    }
   }
 
   const visibleEvents = events.filter(e => !hiddenTypes.has(e.type));
@@ -219,7 +245,12 @@ export function CalendarView() {
           ) : (
             <div className="space-y-2">
               {selectedEvents.map(ev => (
-                <DayEventCard key={ev.id} event={ev} />
+                <DayEventCard
+                  key={ev.id}
+                  event={ev}
+                  onDelete={ev.id.startsWith('note-') ? () => deleteNote(ev.id) : undefined}
+                  onNavigate={ev.sourceType ? () => handleEventNavigate(ev) : undefined}
+                />
               ))}
             </div>
           )}
@@ -233,37 +264,73 @@ export function CalendarView() {
   );
 }
 
-function DayEventCard({ event }: { event: CalendarEvent }) {
+interface DayEventCardProps {
+  event: CalendarEvent;
+  onDelete?: () => void;
+  onNavigate?: () => void;
+}
+
+function DayEventCard({ event, onDelete, onNavigate }: DayEventCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const { t } = useI18n();
 
   return (
-    <button
-      onClick={() => setExpanded(!expanded)}
+    <div
       className="w-full text-left rounded-lg p-2 border transition-colors"
       style={{ borderColor: event.color + '40', backgroundColor: event.color + '08' }}
     >
-      <div className="flex items-center gap-2">
-        {event.icon && <Icon name={event.icon} size={18} className="shrink-0" />}
-        <div className="flex-1 min-w-0">
-          <div className="text-xs font-medium truncate">{event.title}</div>
-          {event.subtitle && <div className="text-[10px] text-text-secondary truncate">{event.subtitle}</div>}
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full text-left"
+      >
+        <div className="flex items-center gap-2">
+          {event.icon && <Icon name={event.icon} size={18} className="shrink-0" />}
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-medium truncate">{event.title}</div>
+            {event.subtitle && <div className="text-[10px] text-text-secondary truncate">{event.subtitle}</div>}
+          </div>
+          {event.time && <span className="text-[10px] text-text-secondary">{event.time}</span>}
+          <Icon name={expanded ? 'expand_less' : 'expand_more'} size={16} className="text-text-secondary shrink-0" />
         </div>
-        {event.time && <span className="text-[10px] text-text-secondary">{event.time}</span>}
-      </div>
+      </button>
 
-      {expanded && event.data && (
-        <div className="mt-2 pt-2 border-t border-border/50 space-y-0.5">
-          {Object.entries(event.data).map(([key, value]) => {
-            if (value === null || value === undefined || typeof value === 'object') return null;
-            return (
-              <div key={key} className="flex justify-between text-[10px]">
-                <span className="text-text-secondary">{key}</span>
-                <span>{String(value)}</span>
-              </div>
-            );
-          })}
+      {expanded && (
+        <div className="mt-2 pt-2 border-t border-border/50 space-y-2">
+          {event.data && (
+            <div className="space-y-0.5">
+              {Object.entries(event.data).map(([key, value]) => {
+                if (value === null || value === undefined || typeof value === 'object') return null;
+                return (
+                  <div key={key} className="flex justify-between text-[10px]">
+                    <span className="text-text-secondary">{key}</span>
+                    <span>{String(value)}</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="flex gap-2">
+            {onNavigate && (
+              <button
+                onClick={onNavigate}
+                className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium bg-accent-dark/10 text-accent-dark hover:bg-accent-dark/20 transition-colors"
+              >
+                <Icon name="open_in_new" size={12} />
+                {t.calendar.goToSource}
+              </button>
+            )}
+            {onDelete && (
+              <button
+                onClick={() => { if (confirm(t.calendar.deleteConfirm)) onDelete(); }}
+                className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium bg-red-50 text-red-600 hover:bg-red-100 transition-colors ml-auto"
+              >
+                <Icon name="delete" size={12} />
+              </button>
+            )}
+          </div>
         </div>
       )}
-    </button>
+    </div>
   );
 }

@@ -16,10 +16,11 @@ import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { getSettings } from '@/lib/db';
 import { startNotificationScheduler } from '@/lib/notification-scheduler';
 import { useI18n } from '@/lib/i18n';
-import type { TabId, AppMode } from '@/types';
+import type { TabId, NotebookTab, AppMode } from '@/types';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('chat');
+  const [notebookTab, setNotebookTab] = useState<NotebookTab>('daily');
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
   const [appMode, setAppMode] = useState<AppMode>('notebook');
   const { t, setLang } = useI18n();
@@ -72,8 +73,8 @@ export default function App() {
     <div className="h-screen flex flex-col bg-bg-primary">
       <Header />
       <main className="flex-1 overflow-hidden">
-        {activeTab === 'chat' && (appMode === 'ai' ? <ChatView /> : <NotebookView />)}
-        {activeTab === 'calendar' && <CalendarView />}
+        {activeTab === 'chat' && (appMode === 'ai' ? <ChatView /> : <NotebookView activeTab={notebookTab} onTabChange={setNotebookTab} />)}
+        {activeTab === 'calendar' && <CalendarView onNavigate={(tab, nbTab) => { setActiveTab(tab); if (nbTab) setNotebookTab(nbTab); }} />}
         {activeTab === 'data' && <DataView />}
         {activeTab === 'imaging' && <ImagingView />}
         {activeTab === 'settings' && <SettingsView />}

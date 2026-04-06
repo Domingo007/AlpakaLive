@@ -568,6 +568,7 @@ export interface ChemoReadinessAssessment {
 export type ChemoPhase = 'A' | 'B' | 'C' | null;
 
 export type TabId = 'chat' | 'calendar' | 'data' | 'imaging' | 'settings';
+export type NotebookTab = 'daily' | 'blood' | 'chemo' | 'supplements' | 'imaging';
 
 // Calendar types
 export type CalendarEventType =

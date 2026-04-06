@@ -212,6 +212,8 @@ export const pl = {
     phaseCrisis: 'kryzys',
     phaseRecovery: 'regeneracja',
     phaseRebuild: 'odbudowa',
+    deleteConfirm: 'Usunąć to wydarzenie?',
+    goToSource: 'Zobacz szczegóły',
     eventTypes: {
       chemo: 'Chemioterapia',
       blood_test: 'Wyniki krwi',
