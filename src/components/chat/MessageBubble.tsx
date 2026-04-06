@@ -1,4 +1,5 @@
 import type { ChatMessage } from '@/types';
+import { useI18n } from '@/lib/i18n';
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -6,6 +7,7 @@ interface MessageBubbleProps {
 }
 
 export function MessageBubble({ message, providerInfo }: MessageBubbleProps) {
+  const { t, lang } = useI18n();
   const isUser = message.role === 'user';
   const text = typeof message.content === 'string'
     ? message.content
@@ -14,9 +16,10 @@ export function MessageBubble({ message, providerInfo }: MessageBubbleProps) {
   const hasImages = Array.isArray(message.content) &&
     message.content.some(c => c.type === 'image');
 
+  const locale = lang === 'pl' ? 'pl-PL' : 'en-US';
+
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`} style={{ animation: 'bubble-enter 0.2s ease-out' }}>
-      {/* Agent avatar */}
       {!isUser && (
         <img src="/logo.png" alt="" className="w-7 h-7 rounded-lg bg-lavender-100 object-cover shrink-0 mr-2 mt-1"
           onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
@@ -29,15 +32,15 @@ export function MessageBubble({ message, providerInfo }: MessageBubbleProps) {
         }`}
       >
         {hasImages && (
-          <div className="mb-2 text-xs opacity-70 flex items-center gap-1"><span className="material-symbols-rounded" style={{fontSize:14}}>photo_camera</span> Zdjęcie dołączone</div>
+          <div className="mb-2 text-xs opacity-70 flex items-center gap-1"><span className="material-symbols-rounded" style={{fontSize:14}}>photo_camera</span> {t.chat.photoAttached}</div>
         )}
         <div className="whitespace-pre-wrap">{text}</div>
         <div className={`text-[10px] mt-1.5 ${isUser ? 'text-white/50' : 'text-text-tertiary'}`}>
-          {new Date(message.timestamp).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}
+          {new Date(message.timestamp).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}
         </div>
         {!isUser && providerInfo && (
           <div className="text-[9px] text-text-tertiary mt-0.5">
-            Analiza: {providerInfo.provider} | PII Sanitizer
+            {providerInfo.provider} | PII Sanitizer
           </div>
         )}
       </div>

@@ -66,7 +66,7 @@ export async function saveSettings(settings: Partial<AppSettings>): Promise<void
   if (existing) {
     await db.settings.update('main', settings);
   } else {
-    await db.settings.put({ id: 'main', apiKey: '', aiProvider: 'anthropic', appMode: 'notebook', theme: 'light', onboardingCompleted: false, notifications: DEFAULT_NOTIFICATIONS, ...settings } as AppSettings & { id: string });
+    await db.settings.put({ id: 'main', apiKey: '', aiProvider: 'anthropic', appMode: 'notebook', theme: 'light', language: 'en', onboardingCompleted: false, notifications: DEFAULT_NOTIFICATIONS, ...settings } as AppSettings & { id: string });
   }
 }
 

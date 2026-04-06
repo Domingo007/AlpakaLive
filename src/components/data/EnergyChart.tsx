@@ -1,4 +1,5 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { useI18n } from '@/lib/i18n';
 import type { DailyLog } from '@/types';
 
 interface EnergyChartProps {
@@ -6,18 +7,20 @@ interface EnergyChartProps {
 }
 
 export function EnergyChart({ data }: EnergyChartProps) {
+  const { t } = useI18n();
+
   const chartData = [...data]
     .sort((a, b) => a.date.localeCompare(b.date))
     .map(d => ({
-      date: d.date.slice(5), // MM-DD
-      energia: d.energy,
-      nastrój: d.mood,
-      ból: d.pain,
-      nudności: d.nausea,
+      date: d.date.slice(5),
+      [t.charts.energy]: d.energy,
+      [t.charts.mood]: d.mood,
+      [t.charts.pain]: d.pain,
+      [t.charts.nausea]: d.nausea,
     }));
 
   if (chartData.length === 0) {
-    return <div className="text-center text-text-secondary text-xs py-4">Brak danych</div>;
+    return <div className="text-center text-text-secondary text-xs py-4">{t.charts.noData}</div>;
   }
 
   return (
@@ -28,10 +31,10 @@ export function EnergyChart({ data }: EnergyChartProps) {
         <YAxis domain={[0, 10]} tick={{ fontSize: 10 }} />
         <Tooltip contentStyle={{ fontSize: 12 }} />
         <Legend wrapperStyle={{ fontSize: 10 }} />
-        <Line type="monotone" dataKey="energia" stroke="#7d9a6e" strokeWidth={2} dot={{ r: 3 }} />
-        <Line type="monotone" dataKey="nastrój" stroke="#3498db" strokeWidth={2} dot={{ r: 3 }} />
-        <Line type="monotone" dataKey="ból" stroke="#e74c3c" strokeWidth={2} dot={{ r: 3 }} />
-        <Line type="monotone" dataKey="nudności" stroke="#f39c12" strokeWidth={1.5} dot={{ r: 2 }} strokeDasharray="5 5" />
+        <Line type="monotone" dataKey={t.charts.energy} stroke="#7d9a6e" strokeWidth={2} dot={{ r: 3 }} />
+        <Line type="monotone" dataKey={t.charts.mood} stroke="#3498db" strokeWidth={2} dot={{ r: 3 }} />
+        <Line type="monotone" dataKey={t.charts.pain} stroke="#e74c3c" strokeWidth={2} dot={{ r: 3 }} />
+        <Line type="monotone" dataKey={t.charts.nausea} stroke="#f39c12" strokeWidth={1.5} dot={{ r: 2 }} strokeDasharray="5 5" />
       </LineChart>
     </ResponsiveContainer>
   );

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '@/lib/db';
 import { Card } from '@/components/shared/Card';
+import { useI18n } from '@/lib/i18n';
 
 export function DailyLogForm() {
   const [energy, setEnergy] = useState(5);
@@ -19,6 +20,7 @@ export function DailyLogForm() {
   const [sleepHours, setSleepHours] = useState('');
   const [notes, setNotes] = useState('');
   const [saved, setSaved] = useState(false);
+  const { t } = useI18n();
 
   async function handleSave() {
     const today = new Date().toISOString().split('T')[0];
@@ -43,37 +45,37 @@ export function DailyLogForm() {
   }
 
   return (
-    <Card title="Jak się dziś czujesz?">
+    <Card title={t.dailyLog.title}>
       <div className="space-y-4">
-        <SliderField label="Energia" value={energy} onChange={setEnergy} min={1} max={10} emoji={energy <= 3 ? '😞' : energy <= 6 ? '😐' : '😊'} />
-        <SliderField label="Ból" value={pain} onChange={setPain} min={0} max={10} emoji={pain >= 7 ? '😣' : pain >= 4 ? '😕' : '😌'} />
-        <SliderField label="Nudności" value={nausea} onChange={setNausea} min={0} max={10} />
-        <SliderField label="Nastrój" value={mood} onChange={setMood} min={1} max={10} />
-        <SliderField label="Neuropatia (CTCAE)" value={neuropathy} onChange={setNeuropathy} min={0} max={4} />
-        <SliderField label="Apetyt" value={appetite} onChange={setAppetite} min={1} max={10} />
+        <SliderField label={t.dailyLog.energy} value={energy} onChange={setEnergy} min={1} max={10} emoji={energy <= 3 ? '😞' : energy <= 6 ? '😐' : '😊'} />
+        <SliderField label={t.dailyLog.pain} value={pain} onChange={setPain} min={0} max={10} emoji={pain >= 7 ? '😣' : pain >= 4 ? '😕' : '😌'} />
+        <SliderField label={t.dailyLog.nausea} value={nausea} onChange={setNausea} min={0} max={10} />
+        <SliderField label={t.dailyLog.mood} value={mood} onChange={setMood} min={1} max={10} />
+        <SliderField label={t.dailyLog.neuropathy} value={neuropathy} onChange={setNeuropathy} min={0} max={4} />
+        <SliderField label={t.dailyLog.appetite} value={appetite} onChange={setAppetite} min={1} max={10} />
 
         <div className="border-t border-border pt-3 grid grid-cols-2 gap-2">
-          <NumField label="Waga (kg)" value={weight} onChange={setWeight} placeholder="54.5" />
-          <NumField label="Temperatura (°C)" value={temperature} onChange={setTemperature} placeholder="36.6" />
-          <NumField label="Ciśnienie skurczowe" value={bpSystolic} onChange={setBpSystolic} placeholder="120" />
-          <NumField label="Ciśnienie rozkurczowe" value={bpDiastolic} onChange={setBpDiastolic} placeholder="80" />
-          <NumField label="Tętno (bpm)" value={heartRate} onChange={setHeartRate} placeholder="72" />
-          <NumField label="Nawodnienie (litry)" value={hydration} onChange={setHydration} placeholder="2.0" />
-          <NumField label="Sen (godziny)" value={sleepHours} onChange={setSleepHours} placeholder="7" />
+          <NumField label={t.dailyLog.weight} value={weight} onChange={setWeight} placeholder="54.5" />
+          <NumField label={t.dailyLog.temperature} value={temperature} onChange={setTemperature} placeholder="36.6" />
+          <NumField label={t.dailyLog.bpSystolic} value={bpSystolic} onChange={setBpSystolic} placeholder="120" />
+          <NumField label={t.dailyLog.bpDiastolic} value={bpDiastolic} onChange={setBpDiastolic} placeholder="80" />
+          <NumField label={t.dailyLog.heartRate} value={heartRate} onChange={setHeartRate} placeholder="72" />
+          <NumField label={t.dailyLog.hydration} value={hydration} onChange={setHydration} placeholder="2.0" />
+          <NumField label={t.dailyLog.sleep} value={sleepHours} onChange={setSleepHours} placeholder="7" />
         </div>
 
         <div>
-          <label className="text-xs text-text-secondary block mb-1">Notatki</label>
+          <label className="text-xs text-text-secondary block mb-1">{t.dailyLog.notesLabel}</label>
           <textarea
             value={notes} onChange={e => setNotes(e.target.value)}
-            placeholder="Jak minął dzień? Co jadłaś? Objawy?"
+            placeholder={t.dailyLog.notesPlaceholder}
             rows={3}
             className="w-full rounded-lg border border-border px-3 py-2 text-xs bg-bg-primary resize-y"
           />
         </div>
 
         <button onClick={handleSave} className="w-full bg-accent-dark text-accent-warm rounded-xl py-3 text-sm font-medium">
-          {saved ? '✓ Zapisano!' : 'Zapisz wpis'}
+          {saved ? t.common.saved : t.dailyLog.saveEntry}
         </button>
       </div>
     </Card>

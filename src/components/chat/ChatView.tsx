@@ -5,12 +5,14 @@ import { QuickActions } from './QuickActions';
 import { PredictionCards } from './PredictionCards';
 import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
 import { Icon } from '@/components/shared/Icon';
+import { useI18n } from '@/lib/i18n';
 
 export function ChatView() {
   const { messages, isLoading, error, send, lastPrediction, lastProviderInfo } = useChat();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useI18n();
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -38,7 +40,7 @@ export function ChatView() {
     reader.onload = async () => {
       const base64 = (reader.result as string).split(',')[1];
       const mediaType = file.type;
-      await send(input || 'Przeanalizuj to zdjęcie', [{ base64, mediaType }]);
+      await send(input || t.chat.analyzePhoto, [{ base64, mediaType }]);
       setInput('');
     };
     reader.readAsDataURL(file);
@@ -51,7 +53,6 @@ export function ChatView() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Messages */}
       <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3">
         {messages.map((msg, i) => (
           <MessageBubble
@@ -68,10 +69,10 @@ export function ChatView() {
                 <div className="w-2 h-2 rounded-full bg-lavender-500 animate-bounce" style={{ animationDelay: '150ms' }} />
                 <div className="w-2 h-2 rounded-full bg-lavender-500 animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
-              <span className="text-xs text-text-secondary">Analizuję...</span>
+              <span className="text-xs text-text-secondary">{t.chat.analyzing}</span>
             </div>
             <div className="text-[9px] text-text-secondary mt-1">
-              <Icon name="lock" size={12} className="inline-block mr-0.5" /> Dane osobowe usunięte przez PII Sanitizer
+              <Icon name="lock" size={12} className="inline-block mr-0.5" /> {t.chat.piiRemoved}
             </div>
           </div>
         )}
@@ -88,19 +89,15 @@ export function ChatView() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Quick Actions */}
       <QuickActions onAction={handleQuickAction} />
-
-      {/* Disclaimer */}
       <DisclaimerBanner variant="chat" />
 
-      {/* Input */}
       <div className="border-t border-lavender-100 bg-bg-card px-3 py-2 safe-bottom">
         <div className="flex items-end gap-2">
           <button
             onClick={() => fileInputRef.current?.click()}
             className="w-11 h-11 rounded-xl bg-lavender-50 border-[1.5px] border-lavender-200 text-lavender-500 flex items-center justify-center shrink-0"
-            title="Dodaj zdjęcie"
+            title={t.chat.addPhoto}
           >
             <Icon name="photo_camera" size={20} />
           </button>
@@ -116,14 +113,14 @@ export function ChatView() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Napisz wiadomość..."
+            placeholder={t.chat.placeholder}
             rows={1}
             className="flex-1 resize-none rounded-2xl border-[1.5px] border-lavender-200 px-4 py-3 text-[15px] bg-lavender-50 text-text-primary focus:outline-none focus:border-lavender-500 focus:shadow-[0_0_0_3px_rgba(155,122,232,0.15)] min-h-[44px] max-h-[120px]"
             style={{ height: 'auto', overflow: 'hidden' }}
             onInput={e => {
-              const t = e.currentTarget;
-              t.style.height = 'auto';
-              t.style.height = Math.min(t.scrollHeight, 120) + 'px';
+              const ta = e.currentTarget;
+              ta.style.height = 'auto';
+              ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
             }}
           />
           <button

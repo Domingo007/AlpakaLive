@@ -15,25 +15,27 @@ import { SettingsView } from '@/components/settings/SettingsView';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { getSettings } from '@/lib/db';
 import { startNotificationScheduler } from '@/lib/notification-scheduler';
+import { useI18n } from '@/lib/i18n';
 import type { TabId, AppMode } from '@/types';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('chat');
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
   const [appMode, setAppMode] = useState<AppMode>('notebook');
+  const { t, setLang } = useI18n();
 
   useEffect(() => {
     getSettings().then(s => {
       setOnboarded(s?.onboardingCompleted ?? false);
       setAppMode(s?.appMode || 'notebook');
-      // Apply theme — default to light
       const theme = s?.theme || 'light';
       document.documentElement.classList.toggle('dark', theme === 'dark');
+      if (s?.language) setLang(s.language);
       if (s?.onboardingCompleted && s?.notifications?.enabled) {
         startNotificationScheduler();
       }
     });
-  }, []);
+  }, [setLang]);
 
   // Re-check mode when returning to app (e.g. after changing in settings)
   useEffect(() => {
@@ -53,7 +55,7 @@ export default function App() {
       <div className="h-screen flex items-center justify-center bg-bg-primary">
         <div className="text-center">
           <img src="/logo.png" alt="" className="w-12 h-12 rounded-xl mx-auto" onError={(e: any) => e.target.style.display="none"} />
-          <div className="text-sm text-text-secondary">Ładowanie...</div>
+          <div className="text-sm text-text-secondary">{t.common.loading}</div>
         </div>
       </div>
     );

@@ -1,23 +1,26 @@
 import { Icon } from '@/components/shared/Icon';
+import { useI18n } from '@/lib/i18n';
 
 interface QuickActionsProps {
   onAction: (prompt: string) => void;
 }
 
-const ACTIONS = [
-  { icon: 'wb_sunny', label: 'Raport poranny', prompt: 'Chcę zrobić raport poranny — jak się dzisiaj czuję.' },
-  { icon: 'dark_mode', label: 'Podsumowanie', prompt: 'Zróbmy wieczorne podsumowanie dnia.' },
-  { icon: 'vaccines', label: 'Po chemii', prompt: 'Właśnie wróciłam z chemii. Zanotuj sesję.' },
-  { icon: 'description', label: 'Raport', prompt: 'Wygeneruj raport dla lekarza z ostatnich danych.' },
-  { icon: 'auto_awesome', label: 'Predykcja', prompt: 'Jak będę się czuć w tym tygodniu? Predykcja.' },
-  { icon: 'imagesmode', label: 'Obrazowanie', prompt: 'Chcę przeanalizować wyniki obrazowania.' },
-];
-
 export function QuickActions({ onAction }: QuickActionsProps) {
+  const { t } = useI18n();
+
+  const actions = [
+    { icon: 'wb_sunny', label: t.quickActions.morningReport, prompt: t.quickActions.morningPrompt },
+    { icon: 'dark_mode', label: t.quickActions.summary, prompt: t.quickActions.summaryPrompt },
+    { icon: 'vaccines', label: t.quickActions.afterChemo, prompt: t.quickActions.afterChemoPrompt },
+    { icon: 'description', label: t.quickActions.report, prompt: t.quickActions.reportPrompt },
+    { icon: 'auto_awesome', label: t.quickActions.prediction, prompt: t.quickActions.predictionPrompt },
+    { icon: 'imagesmode', label: t.quickActions.imaging, prompt: t.quickActions.imagingPrompt },
+  ];
+
   return (
     <div className="px-3 py-1.5 overflow-x-auto">
       <div className="flex gap-2">
-        {ACTIONS.map(action => (
+        {actions.map(action => (
           <button
             key={action.label}
             onClick={() => onAction(action.prompt)}

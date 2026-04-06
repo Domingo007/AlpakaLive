@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '@/lib/db';
 import { Card } from '@/components/shared/Card';
+import { useI18n } from '@/lib/i18n';
 import type { SupplementEntry } from '@/types';
 
 const DEFAULT_SUPPLEMENTS: SupplementEntry[] = [
@@ -16,9 +17,9 @@ export function SupplementTracker() {
   const [saved, setSaved] = useState(false);
   const [newName, setNewName] = useState('');
   const [newDose, setNewDose] = useState('');
+  const { t } = useI18n();
 
   useEffect(() => {
-    // Load today's supplements if they exist
     const today = new Date().toISOString().split('T')[0];
     db.supplements.where('date').equals(today).first().then(existing => {
       if (existing) setSupplements(existing.supplements);
@@ -60,7 +61,7 @@ export function SupplementTracker() {
   const taken = supplements.filter(s => s.taken).length;
 
   return (
-    <Card title={`Suplementy (${taken}/${supplements.length})`}>
+    <Card title={t.supplements.title(taken, supplements.length)}>
       <div className="space-y-2">
         {supplements.map((s, i) => (
           <div key={i} className="flex items-center gap-2 py-1">
@@ -82,11 +83,10 @@ export function SupplementTracker() {
           </div>
         ))}
 
-        {/* Add new */}
         <div className="border-t border-border pt-2 flex gap-1">
-          <input value={newName} onChange={e => setNewName(e.target.value)} placeholder="Nazwa"
+          <input value={newName} onChange={e => setNewName(e.target.value)} placeholder={t.supplements.name}
             className="flex-1 rounded border border-border px-2 py-1 text-[11px] bg-bg-primary" />
-          <input value={newDose} onChange={e => setNewDose(e.target.value)} placeholder="Dawka"
+          <input value={newDose} onChange={e => setNewDose(e.target.value)} placeholder={t.supplements.dose}
             className="w-20 rounded border border-border px-2 py-1 text-[11px] bg-bg-primary" />
           <button onClick={addSupplement} disabled={!newName.trim()}
             className="px-2 py-1 rounded bg-accent-dark text-accent-warm text-[11px] disabled:opacity-40">+</button>
@@ -94,11 +94,11 @@ export function SupplementTracker() {
 
         <button onClick={handleSave}
           className="w-full bg-accent-dark text-accent-warm rounded-xl py-2.5 text-sm font-medium">
-          {saved ? '✓ Zapisano!' : 'Zapisz'}
+          {saved ? t.common.saved : t.common.save}
         </button>
 
         <p className="text-[9px] text-text-secondary text-center">
-          * Informacje o suplementach z opublikowanych badań. Nie stanowią rekomendacji. Konsultuj z lekarzem.
+          {t.supplements.referenceNote}
         </p>
       </div>
     </Card>

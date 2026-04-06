@@ -5,11 +5,13 @@ import { HistoricalImport } from './HistoricalImport';
 import { NotificationSettings } from './NotificationSettings';
 import { AIProviderSettings } from './AIProviderSettings';
 import { exportAllData, importData, clearAllData, saveSettings } from '@/lib/db';
+import { useI18n, type Lang } from '@/lib/i18n';
 import type { DrugEntry, ThemeMode } from '@/types';
 
 export function SettingsView() {
   const { patient } = usePatient();
   const { settings } = useSettings();
+  const { t, lang, setLang } = useI18n();
 
   async function handleExport() {
     const json = await exportAllData();
@@ -37,24 +39,64 @@ export function SettingsView() {
   }
 
   async function handleReset() {
-    if (confirm('Na pewno chcesz usunąć WSZYSTKIE dane? Tej operacji nie można cofnąć.')) {
-      if (confirm('To jest OSTATECZNE. Czy jesteś pewien/pewna?')) {
+    if (confirm(t.settings.resetConfirm1)) {
+      if (confirm(t.settings.resetConfirm2)) {
         await clearAllData();
         window.location.reload();
       }
     }
   }
 
+  async function handleLanguageChange(newLang: Lang) {
+    setLang(newLang);
+    await saveSettings({ language: newLang });
+  }
+
   return (
     <div className="h-full overflow-y-auto px-3 py-4 space-y-4">
-      <h2 className="font-display text-lg font-semibold text-accent-dark">Ustawienia</h2>
+      <h2 className="font-display text-lg font-semibold text-accent-dark">{t.settings.title}</h2>
+
+      {/* Language */}
+      <Card title={t.settings.language}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Icon name="translate" size={20} className="text-lavender-500" />
+            <div>
+              <div className="text-xs font-medium">{t.settings.language}</div>
+              <div className="text-[10px] text-text-secondary">{t.settings.languageDesc}</div>
+            </div>
+          </div>
+          <div className="flex rounded-lg border border-border overflow-hidden">
+            <button
+              onClick={() => handleLanguageChange('pl')}
+              className={`px-3 py-1.5 text-xs font-medium transition-colors ${
+                lang === 'pl'
+                  ? 'bg-accent-dark text-accent-warm'
+                  : 'bg-bg-primary text-text-secondary hover:bg-accent-warm/20'
+              }`}
+            >
+              PL
+            </button>
+            <button
+              onClick={() => handleLanguageChange('en')}
+              className={`px-3 py-1.5 text-xs font-medium transition-colors ${
+                lang === 'en'
+                  ? 'bg-accent-dark text-accent-warm'
+                  : 'bg-bg-primary text-text-secondary hover:bg-accent-warm/20'
+              }`}
+            >
+              EN
+            </button>
+          </div>
+        </div>
+      </Card>
 
       {/* App Mode */}
-      <Card title="Tryb aplikacji">
+      <Card title={t.settings.appMode}>
         <div className="space-y-2">
           {[
-            { mode: 'ai' as const, icon: 'smart_toy', label: 'Z agentem AI', desc: 'Rozmowa z agentem, analiza zdjęć, predykcja. Wymaga klucza API.' },
-            { mode: 'notebook' as const, icon: 'note', label: 'Inteligentny notatnik', desc: 'Ręczne wpisywanie danych, wykresy, alerty. Darmowy, bez API.' },
+            { mode: 'ai' as const, icon: 'smart_toy', label: t.settings.aiMode, desc: t.settings.aiModeDesc },
+            { mode: 'notebook' as const, icon: 'note', label: t.settings.notebookMode, desc: t.settings.notebookModeDesc },
           ].map(opt => (
             <button
               key={opt.mode}
@@ -79,13 +121,13 @@ export function SettingsView() {
       </Card>
 
       {/* Theme */}
-      <Card title="Wygląd">
+      <Card title={t.settings.appearance}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Icon name={settings?.theme === 'dark' ? 'dark_mode' : 'light_mode'} size={20} className="text-lavender-500" />
             <div>
-              <div className="text-xs font-medium">Motyw</div>
-              <div className="text-[10px] text-text-secondary">{settings?.theme === 'dark' ? 'Ciemny' : 'Jasny'}</div>
+              <div className="text-xs font-medium">{t.settings.theme}</div>
+              <div className="text-[10px] text-text-secondary">{settings?.theme === 'dark' ? t.settings.themeDark : t.settings.themeLight}</div>
             </div>
           </div>
           <button
@@ -113,18 +155,18 @@ export function SettingsView() {
 
       {/* Patient Profile */}
       {patient && (
-        <Card title="Profil pacjenta">
+        <Card title={t.settings.patientProfile}>
           <div className="space-y-2 text-sm">
-            <ProfileRow label="Pseudonim" value={patient.displayName} />
-            <ProfileRow label="Diagnoza" value={patient.diagnosis} />
-            <ProfileRow label="Stadium" value={patient.stage} />
-            {patient.molecularSubtype && <ProfileRow label="Podtyp" value={patient.molecularSubtype} />}
-            <ProfileRow label="Schemat chemii" value={patient.currentChemo || 'Nie podano'} />
-            <ProfileRow label="Cykl" value={patient.chemoCycle || 'Nie podano'} />
+            <ProfileRow label={t.settings.nickname} value={patient.displayName} />
+            <ProfileRow label={t.settings.diagnosis} value={patient.diagnosis} />
+            <ProfileRow label={t.settings.stage} value={patient.stage} />
+            {patient.molecularSubtype && <ProfileRow label={t.settings.subtype} value={patient.molecularSubtype} />}
+            <ProfileRow label={t.settings.chemoRegimen} value={patient.currentChemo || t.common.notProvided} />
+            <ProfileRow label={t.settings.cycle} value={patient.chemoCycle || t.common.notProvided} />
 
             {patient.oncologyMeds.filter(m => m.active).length > 0 && (
               <div>
-                <div className="text-xs text-text-secondary mt-2 mb-1">Leki onkologiczne:</div>
+                <div className="text-xs text-text-secondary mt-2 mb-1">{t.settings.oncologyMeds}</div>
                 {patient.oncologyMeds.filter(m => m.active).map((med, i) => (
                   <DrugRow key={i} drug={med} />
                 ))}
@@ -133,7 +175,7 @@ export function SettingsView() {
 
             {patient.psychiatricMeds.filter(m => m.active).length > 0 && (
               <div>
-                <div className="text-xs text-text-secondary mt-2 mb-1">Leki psychiatryczne:</div>
+                <div className="text-xs text-text-secondary mt-2 mb-1">{t.settings.psychiatricMeds}</div>
                 {patient.psychiatricMeds.filter(m => m.active).map((med, i) => (
                   <DrugRow key={i} drug={med} />
                 ))}
@@ -148,59 +190,59 @@ export function SettingsView() {
 
       {/* Privacy */}
       {patient?.pii && (
-        <Card title="Ochrona prywatności">
+        <Card title={t.settings.privacy}>
           <div className="space-y-1 text-xs">
             <div className="flex items-center gap-2">
               <span className="material-symbols-rounded text-lavender-500" style={{fontSize:16}}>lock</span>
-              <span className="text-text-secondary">Imie:</span>
-              <span>{patient.pii.firstName || '(nie podano)'}</span>
+              <span className="text-text-secondary">{t.settings.firstName}</span>
+              <span>{patient.pii.firstName || `(${t.common.notProvided.toLowerCase()})`}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="material-symbols-rounded text-lavender-500" style={{fontSize:16}}>lock</span>
-              <span className="text-text-secondary">Nazwisko:</span>
-              <span>{patient.pii.lastName || '(nie podano)'}</span>
+              <span className="text-text-secondary">{t.settings.lastName}</span>
+              <span>{patient.pii.lastName || `(${t.common.notProvided.toLowerCase()})`}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="material-symbols-rounded text-lavender-500" style={{fontSize:16}}>lock</span>
-              <span className="text-text-secondary">PESEL:</span>
-              <span>{patient.pii.pesel ? '***' + patient.pii.pesel.slice(-4) : '(nie podano)'}</span>
+              <span className="text-text-secondary">{t.settings.pesel}</span>
+              <span>{patient.pii.pesel ? '***' + patient.pii.pesel.slice(-4) : `(${t.common.notProvided.toLowerCase()})`}</span>
             </div>
             <p className="text-[10px] text-text-secondary mt-2">
-              Te dane nie opuszczają Twojego urządzenia. Agent widzi Cię jako "{patient.displayName}".
+              {t.settings.privacyNote(patient.displayName)}
             </p>
           </div>
         </Card>
       )}
 
       {/* Data management */}
-      <Card title="Zarządzanie danymi">
+      <Card title={t.settings.dataManagement}>
         <div className="space-y-2">
           <button
             onClick={handleExport}
             className="w-full border border-accent-dark text-accent-dark rounded-lg py-2 text-sm"
           >
-            Eksportuj dane (JSON)
+            {t.settings.exportData}
           </button>
           <button
             onClick={handleImport}
             className="w-full border border-accent-dark text-accent-dark rounded-lg py-2 text-sm"
           >
-            Importuj dane (JSON)
+            {t.settings.importData}
           </button>
           <button
             onClick={handleReset}
             className="w-full border border-alert-critical text-alert-critical rounded-lg py-2 text-sm"
           >
-            Resetuj wszystkie dane
+            {t.settings.resetData}
           </button>
         </div>
       </Card>
 
       {/* PWA install hint */}
-      <Card title="Instalacja na telefonie">
+      <Card title={t.settings.pwaInstall}>
         <div className="text-xs text-text-secondary space-y-1">
-          <p><strong>iPhone:</strong> Safari → Udostępnij → Dodaj do ekranu początkowego</p>
-          <p><strong>Android:</strong> Chrome → Menu (3 kropki) → Zainstaluj aplikacje</p>
+          <p><strong>{t.settings.pwaIphone}</strong> {t.settings.pwaIphoneDesc}</p>
+          <p><strong>{t.settings.pwaAndroid}</strong> {t.settings.pwaAndroidDesc}</p>
         </div>
       </Card>
     </div>

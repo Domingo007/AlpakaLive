@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card } from '@/components/shared/Card';
 import { useSettings } from '@/hooks/useDatabase';
 import { PROVIDER_INFO, testConnection, type AIProvider } from '@/lib/ai-provider';
+import { useI18n } from '@/lib/i18n';
 
 const PROVIDERS: AIProvider[] = ['anthropic', 'openai', 'gemini'];
 
@@ -12,6 +13,7 @@ export function AIProviderSettings() {
   const [showKey, setShowKey] = useState(false);
   const [testing, setTesting] = useState(false);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
+  const { t } = useI18n();
 
   async function handleSave() {
     setTesting(true);
@@ -26,16 +28,15 @@ export function AIProviderSettings() {
       }
     } else {
       await update({ apiKey: '', aiProvider: provider });
-      setTestResult({ success: true, message: 'Zapisano (tryb demo — brak klucza API)' });
+      setTestResult({ success: true, message: t.aiProvider.savedDemo });
     }
 
     setTesting(false);
   }
 
   return (
-    <Card title="Model AI">
+    <Card title={t.aiProvider.title}>
       <div className="space-y-3">
-        {/* Provider selection */}
         <div className="space-y-2">
           {PROVIDERS.map(p => {
             const info = PROVIDER_INFO[p];
@@ -55,7 +56,7 @@ export function AIProviderSettings() {
                 <div className="text-[10px] text-text-secondary mt-0.5">{info.description}</div>
                 {p === 'gemini' && (
                   <div className="text-[9px] text-alert-warning mt-1">
-                    ⚠️ Darmowy tier — dane mogą być używane do trenowania modelu
+                    {t.aiProvider.geminiWarning}
                   </div>
                 )}
               </button>
@@ -63,9 +64,8 @@ export function AIProviderSettings() {
           })}
         </div>
 
-        {/* API Key */}
         <div>
-          <label className="text-xs text-text-secondary block mb-1">Klucz API</label>
+          <label className="text-xs text-text-secondary block mb-1">{t.aiProvider.apiKey}</label>
           <div className="relative">
             <input
               type={showKey ? 'text' : 'password'}
@@ -75,26 +75,23 @@ export function AIProviderSettings() {
               className="w-full rounded-lg border border-border px-3 py-2 text-sm bg-bg-primary pr-16"
             />
             <button onClick={() => setShowKey(!showKey)} className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-text-secondary">
-              {showKey ? 'Ukryj' : 'Pokaż'}
+              {showKey ? t.aiProvider.hideKey : t.aiProvider.showKey}
             </button>
           </div>
         </div>
 
-        {/* Link */}
         <p className="text-[10px] text-text-secondary">
-          🔗 Gdzie uzyskać klucz: <span className="font-medium">{PROVIDER_INFO[provider].link}</span>
+          {t.aiProvider.whereToGetKey} <span className="font-medium">{PROVIDER_INFO[provider].link}</span>
         </p>
 
-        {/* Save & Test */}
         <button
           onClick={handleSave}
           disabled={testing}
           className="w-full bg-accent-dark text-accent-warm rounded-lg py-2 text-sm font-medium disabled:opacity-50"
         >
-          {testing ? 'Testuję połączenie...' : 'Zapisz i testuj'}
+          {testing ? t.aiProvider.testing : t.aiProvider.saveAndTest}
         </button>
 
-        {/* Test result */}
         {testResult && (
           <div className={`rounded-lg px-3 py-2 text-xs ${
             testResult.success ? 'bg-alert-positive/10 text-alert-positive' : 'bg-alert-critical/10 text-alert-critical'
@@ -104,7 +101,7 @@ export function AIProviderSettings() {
         )}
 
         <p className="text-[10px] text-text-secondary">
-          Klucz przechowywany lokalnie. Dane osobowe filtrowane przez PII Sanitizer przed wysłaniem.
+          {t.aiProvider.keyStorageNote}
         </p>
       </div>
     </Card>

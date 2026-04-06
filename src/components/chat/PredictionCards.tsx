@@ -1,15 +1,18 @@
 import type { PredictionResult, DayPrediction } from '@/lib/prediction-engine';
 import { getPhaseColor } from '@/lib/phase-calculator';
+import { useI18n } from '@/lib/i18n';
 
 interface PredictionCardsProps {
   result: PredictionResult;
 }
 
 export function PredictionCards({ result }: PredictionCardsProps) {
+  const { t } = useI18n();
+
   if (result.insufficientData) {
     return (
       <div className="bg-accent-warm/30 rounded-xl p-4 text-sm space-y-2">
-        <div className="font-medium">Predykcja niedostępna</div>
+        <div className="font-medium">{t.predictions.unavailable}</div>
         <p className="text-xs text-text-secondary">{result.message}</p>
       </div>
     );
@@ -17,26 +20,23 @@ export function PredictionCards({ result }: PredictionCardsProps) {
 
   return (
     <div className="space-y-2">
-      {/* Header */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium">Predykcja 5 dni</span>
+        <span className="text-sm font-medium">{t.predictions.title5day}</span>
         <ConfidenceBadge confidence={result.overallConfidence} />
       </div>
       <div className="text-[10px] text-text-secondary">
-        Na podstawie: {result.basedOn.join(', ')}
+        {t.predictions.basedOn} {result.basedOn.join(', ')}
       </div>
 
-      {/* Day cards */}
       <div className="space-y-2">
         {result.days.map(day => (
           <DayCard key={day.date} day={day} />
         ))}
       </div>
 
-      {/* Patterns */}
       {result.patterns.length > 0 && (
         <div className="bg-bg-primary rounded-lg p-3 space-y-1">
-          <div className="text-xs font-medium text-accent-dark">Wykryte wzorce</div>
+          <div className="text-xs font-medium text-accent-dark">{t.predictions.patterns}</div>
           {result.patterns.map((p, i) => (
             <div key={i} className="text-[11px] text-text-secondary flex items-start gap-1.5">
               <span className="shrink-0 mt-0.5" style={{ opacity: p.strength }}>●</span>
@@ -46,10 +46,9 @@ export function PredictionCards({ result }: PredictionCardsProps) {
         </div>
       )}
 
-      {/* Risks */}
       {result.risks.length > 0 && (
         <div className="bg-alert-critical/5 border border-alert-critical/20 rounded-lg p-3 space-y-1">
-          <div className="text-xs font-medium text-alert-critical">⚠️ Ryzyka</div>
+          <div className="text-xs font-medium text-alert-critical">{t.predictions.risks}</div>
           {result.risks.map((r, i) => (
             <div key={i} className="text-[11px] text-alert-critical/80">• {r}</div>
           ))}
@@ -60,6 +59,7 @@ export function PredictionCards({ result }: PredictionCardsProps) {
 }
 
 function DayCard({ day }: { day: DayPrediction }) {
+  const { t } = useI18n();
   const phaseColor = getPhaseColor(day.phase);
   const isToday = day.date === new Date().toISOString().split('T')[0];
 
@@ -69,7 +69,6 @@ function DayCard({ day }: { day: DayPrediction }) {
         isToday ? 'border-accent-dark bg-bg-card shadow-sm' : 'border-border bg-bg-card/50'
       }`}
     >
-      {/* Header row */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div
@@ -79,25 +78,23 @@ function DayCard({ day }: { day: DayPrediction }) {
           <div>
             <span className="text-xs font-medium capitalize">{day.dayOfWeek}</span>
             <span className="text-[10px] text-text-secondary ml-1.5">{day.date.slice(5)}</span>
-            {isToday && <span className="text-[9px] bg-accent-dark text-accent-warm px-1.5 py-0.5 rounded-full ml-1.5">dziś</span>}
+            {isToday && <span className="text-[9px] bg-accent-dark text-accent-warm px-1.5 py-0.5 rounded-full ml-1.5">{t.predictions.today}</span>}
           </div>
         </div>
         <div className="text-right">
-          <div className="text-[10px] text-text-secondary">dzień {day.dayInCycle} cyklu</div>
+          <div className="text-[10px] text-text-secondary">{t.predictions.dayOfCycle(day.dayInCycle)}</div>
           <div className="text-[10px] font-medium" style={{ color: phaseColor }}>
             {day.phaseLabel}
           </div>
         </div>
       </div>
 
-      {/* Metrics */}
       <div className="grid grid-cols-3 gap-2">
-        <MetricBar label="Energia" value={day.energy.predicted} min={day.energy.min} max={day.energy.max} color="#7d9a6e" inverted={false} />
-        <MetricBar label="Ból" value={day.pain.predicted} min={day.pain.min} max={day.pain.max} color="#e74c3c" inverted={true} />
-        <MetricBar label="Nudności" value={day.nausea.predicted} min={day.nausea.min} max={day.nausea.max} color="#f39c12" inverted={true} />
+        <MetricBar label={t.predictions.energy} value={day.energy.predicted} min={day.energy.min} max={day.energy.max} color="#7d9a6e" inverted={false} />
+        <MetricBar label={t.predictions.pain} value={day.pain.predicted} min={day.pain.min} max={day.pain.max} color="#e74c3c" inverted={true} />
+        <MetricBar label={t.predictions.nausea} value={day.nausea.predicted} min={day.nausea.min} max={day.nausea.max} color="#f39c12" inverted={true} />
       </div>
 
-      {/* Recommendations */}
       {day.recommendations.length > 0 && (
         <div className="space-y-0.5">
           {day.recommendations.map((rec, i) => (
@@ -109,7 +106,6 @@ function DayCard({ day }: { day: DayPrediction }) {
         </div>
       )}
 
-      {/* Confidence */}
       <div className="flex items-center gap-1">
         <div className="flex-1 h-1 bg-border rounded-full overflow-hidden">
           <div
@@ -131,7 +127,6 @@ function MetricBar({ label, value, min, max, color, inverted }: {
   color: string;
   inverted: boolean;
 }) {
-  // For inverted metrics (pain, nausea), lower is better
   const fillPercent = (value / 10) * 100;
 
   return (
@@ -143,7 +138,6 @@ function MetricBar({ label, value, min, max, color, inverted }: {
         </span>
       </div>
       <div className="h-1.5 bg-border rounded-full overflow-hidden relative">
-        {/* Range indicator */}
         <div
           className="absolute h-full opacity-20 rounded-full"
           style={{
@@ -152,7 +146,6 @@ function MetricBar({ label, value, min, max, color, inverted }: {
             width: `${((max - min) / 10) * 100}%`,
           }}
         />
-        {/* Value indicator */}
         <div
           className="h-full rounded-full transition-all"
           style={{ backgroundColor: color, width: `${fillPercent}%` }}
@@ -166,8 +159,9 @@ function MetricBar({ label, value, min, max, color, inverted }: {
 }
 
 function ConfidenceBadge({ confidence }: { confidence: number }) {
+  const { t } = useI18n();
   const pct = Math.round(confidence * 100);
-  const label = pct >= 70 ? 'wysoka' : pct >= 40 ? 'średnia' : 'niska';
+  const label = pct >= 70 ? t.predictions.high : pct >= 40 ? t.predictions.medium : t.predictions.low;
   const color = pct >= 70 ? '#27ae60' : pct >= 40 ? '#f39c12' : '#e74c3c';
 
   return (
@@ -177,16 +171,16 @@ function ConfidenceBadge({ confidence }: { confidence: number }) {
   );
 }
 
-// ==================== ACCURACY DISPLAY ====================
-
 export function AccuracyCard({ accuracy, predictions }: {
   accuracy: number;
   predictions: { targetDate: string; prediction: string; actual?: string; accuracy?: number; match: boolean }[];
 }) {
+  const { t } = useI18n();
+
   return (
     <div className="bg-bg-card rounded-xl border border-border p-3 space-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium">Trafność predykcji</span>
+        <span className="text-xs font-medium">{t.predictions.accuracy}</span>
         <span className="text-sm font-bold" style={{ color: accuracy >= 70 ? '#27ae60' : accuracy >= 50 ? '#f39c12' : '#e74c3c' }}>
           {accuracy}%
         </span>

@@ -8,11 +8,13 @@ import {
   getNotificationPermission,
   restartNotificationScheduler,
 } from '@/lib/notification-scheduler';
+import { useI18n } from '@/lib/i18n';
 
 export function NotificationSettings() {
   const { settings, update } = useSettings();
   const [permission, setPermission] = useState<NotificationPermission | 'unsupported'>('default');
   const config = settings?.notifications ?? DEFAULT_NOTIFICATIONS;
+  const { t } = useI18n();
 
   useEffect(() => {
     setPermission(getNotificationPermission());
@@ -35,33 +37,31 @@ export function NotificationSettings() {
   }
 
   return (
-    <Card title="Przypomnienia">
+    <Card title={t.notifications.title}>
       {permission === 'unsupported' ? (
         <p className="text-xs text-text-secondary">
-          Twoja przeglądarka nie obsługuje powiadomień. Użyj Chrome lub Safari.
+          {t.notifications.unsupported}
         </p>
       ) : permission === 'denied' ? (
         <div className="text-xs text-alert-critical space-y-1">
-          <p>Powiadomienia zostały zablokowane w przeglądarce.</p>
-          <p className="text-text-secondary">Aby je włączyć: Ustawienia przeglądarki → Powiadomienia → Zezwól dla tej strony.</p>
+          <p>{t.notifications.blocked}</p>
+          <p className="text-text-secondary">{t.notifications.blockedHelp}</p>
         </div>
       ) : (
         <div className="space-y-4">
-          {/* Master toggle */}
           <ToggleRow
-            label="Włącz przypomnienia"
-            description={config.enabled ? 'Aktywne' : 'Wyłączone'}
+            label={t.notifications.enable}
+            description={config.enabled ? t.notifications.active : t.notifications.disabled}
             checked={config.enabled}
             onChange={handleToggle}
           />
 
           {config.enabled && (
             <>
-              {/* Morning */}
               <div className="border-t border-border pt-3 space-y-2">
                 <ToggleRow
-                  label="Raport poranny"
-                  description="Przypomnienie o wpisaniu samopoczucia"
+                  label={t.notifications.morningReport}
+                  description={t.notifications.morningDesc}
                   checked={config.morningEnabled}
                   onChange={v => updateConfig({ morningEnabled: v })}
                 />
@@ -74,11 +74,10 @@ export function NotificationSettings() {
                 )}
               </div>
 
-              {/* Evening */}
               <div className="border-t border-border pt-3 space-y-2">
                 <ToggleRow
-                  label="Podsumowanie wieczorne"
-                  description="Przypomnienie o diecie i suplementach"
+                  label={t.notifications.eveningSummary}
+                  description={t.notifications.eveningDesc}
                   checked={config.eveningEnabled}
                   onChange={v => updateConfig({ eveningEnabled: v })}
                 />
@@ -91,33 +90,32 @@ export function NotificationSettings() {
                 )}
               </div>
 
-              {/* Chemo reminder */}
               <div className="border-t border-border pt-3 space-y-2">
                 <ToggleRow
-                  label="Przypomnienie o chemii"
-                  description="Dzień przed zaplanowaną sesją"
+                  label={t.notifications.chemoReminder}
+                  description={t.notifications.chemoDesc}
                   checked={config.chemoReminderEnabled}
                   onChange={v => updateConfig({ chemoReminderEnabled: v })}
                 />
                 {config.chemoReminderEnabled && (
                   <div className="flex items-center gap-2 pl-2">
-                    <span className="text-[10px] text-text-secondary">Przypomnij</span>
+                    <span className="text-[10px] text-text-secondary">{t.notifications.remind}</span>
                     <select
                       value={config.chemoReminderDaysBefore}
                       onChange={e => updateConfig({ chemoReminderDaysBefore: parseInt(e.target.value) })}
                       className="rounded border border-border px-2 py-1 text-xs bg-bg-primary"
                     >
-                      <option value={1}>1 dzień</option>
-                      <option value={2}>2 dni</option>
-                      <option value={3}>3 dni</option>
+                      <option value={1}>{t.notifications.day1}</option>
+                      <option value={2}>{t.notifications.days2}</option>
+                      <option value={3}>{t.notifications.days3}</option>
                     </select>
-                    <span className="text-[10px] text-text-secondary">przed chemią</span>
+                    <span className="text-[10px] text-text-secondary">{t.notifications.beforeChemo}</span>
                   </div>
                 )}
               </div>
 
               <p className="text-[10px] text-text-secondary pt-1">
-                Przypomnienia działają gdy aplikacja jest otwarta lub zainstalowana jako PWA.
+                {t.notifications.pwaNote}
               </p>
             </>
           )}
@@ -160,11 +158,12 @@ function TimeInput({ hour, minute, onChange }: {
   minute: number;
   onChange: (h: number, m: number) => void;
 }) {
+  const { t } = useI18n();
   const timeStr = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
 
   return (
     <div className="flex items-center gap-2 pl-2">
-      <span className="text-[10px] text-text-secondary">Godzina:</span>
+      <span className="text-[10px] text-text-secondary">{t.notifications.hour}</span>
       <input
         type="time"
         value={timeStr}

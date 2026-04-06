@@ -1,5 +1,6 @@
 import type { BloodWork } from '@/types';
 import { BLOOD_NORMS, evaluateMarker, getStatusIcon } from '@/lib/blood-norms';
+import { useI18n } from '@/lib/i18n';
 
 interface BloodChartProps {
   data: BloodWork[];
@@ -8,10 +9,11 @@ interface BloodChartProps {
 const KEY_MARKERS = ['wbc', 'hgb', 'plt', 'albumin', 'neutrophils'];
 
 export function BloodChart({ data }: BloodChartProps) {
+  const { t } = useI18n();
   const sorted = [...data].sort((a, b) => a.date.localeCompare(b.date));
 
   if (sorted.length === 0) {
-    return <div className="text-center text-text-secondary text-xs py-4">Brak badań krwi</div>;
+    return <div className="text-center text-text-secondary text-xs py-4">{t.charts.noBloodTests}</div>;
   }
 
   return (

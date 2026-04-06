@@ -4,9 +4,8 @@ import { buildCalendarEvents, getEventsForDate, getPhaseForDate, DEFAULT_EVENT_C
 import { db } from '@/lib/db';
 import { getPhaseColor } from '@/lib/phase-calculator';
 import { Icon } from '@/components/shared/Icon';
+import { useI18n } from '@/lib/i18n';
 import type { CalendarEvent, CalendarEventType } from '@/types';
-
-const WEEKDAYS = ['Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'Sb', 'Nd'];
 
 export function CalendarView() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
@@ -17,6 +16,9 @@ export function CalendarView() {
   const [showAddMenu, setShowAddMenu] = useState(false);
   const [noteTitle, setNoteTitle] = useState('');
   const [noteType, setNoteType] = useState<'doctor_visit' | 'note'>('note');
+  const { t, lang } = useI18n();
+
+  const locale = lang === 'pl' ? 'pl-PL' : 'en-US';
 
   const loadEvents = useCallback(async () => {
     setLoading(true);
@@ -55,44 +57,37 @@ export function CalendarView() {
 
   const visibleEvents = events.filter(e => !hiddenTypes.has(e.type));
 
-  // Calendar grid
   const year = viewMonth.getFullYear();
   const month = viewMonth.getMonth();
-  const monthName = viewMonth.toLocaleDateString('pl-PL', { month: 'long', year: 'numeric' });
+  const monthName = viewMonth.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
   const startOffset = (firstDay.getDay() + 6) % 7;
   const daysInMonth = lastDay.getDate();
 
-  // Events for selected date
   const selectedEvents = selectedDate ? getEventsForDate(visibleEvents, selectedDate) : [];
   const selectedPhase = selectedDate ? getPhaseForDate(events, selectedDate) : null;
 
   return (
     <div className="h-full overflow-y-auto px-3 py-4 space-y-3">
-      {/* Month header */}
       <div className="flex items-center justify-between">
         <button onClick={() => shiftMonth(-1)} className="p-2 text-lg">◀</button>
         <h2 className="font-display text-base font-semibold text-accent-dark capitalize">{monthName}</h2>
         <button onClick={() => shiftMonth(1)} className="p-2 text-lg">▶</button>
       </div>
 
-      {/* Month grid */}
       {loading ? (
-        <div className="text-center py-8 text-text-secondary text-sm">Ładowanie...</div>
+        <div className="text-center py-8 text-text-secondary text-sm">{t.common.loading}</div>
       ) : (
         <div className="grid grid-cols-7 gap-px bg-border rounded-lg overflow-hidden">
-          {/* Weekday headers */}
-          {WEEKDAYS.map(d => (
+          {t.calendar.weekDays.map(d => (
             <div key={d} className="bg-bg-card text-center text-[9px] text-text-secondary font-medium py-1.5">{d}</div>
           ))}
 
-          {/* Empty cells */}
           {Array.from({ length: startOffset }).map((_, i) => (
             <div key={`e-${i}`} className="bg-bg-primary min-h-[52px]" />
           ))}
 
-          {/* Day cells */}
           {Array.from({ length: daysInMonth }).map((_, i) => {
             const day = i + 1;
             const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -128,7 +123,6 @@ export function CalendarView() {
         </div>
       )}
 
-      {/* Legend / filters */}
       <div className="flex flex-wrap gap-1.5">
         {(['chemo', 'blood_test', 'imaging', 'daily_log', 'supplement', 'doctor_visit', 'surgery', 'radiotherapy_session', 'immunotherapy_infusion', 'targeted_therapy', 'hormonal_therapy', 'wearable_alert', 'note'] as CalendarEventType[]).map(type => {
           const cfg = DEFAULT_EVENT_COLORS[type];
@@ -149,17 +143,16 @@ export function CalendarView() {
         })}
       </div>
 
-      {/* Selected day detail */}
       {selectedDate && (
         <div className="bg-bg-card rounded-xl border border-border p-3 space-y-2">
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm font-medium">
-                {new Date(selectedDate + 'T12:00').toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' })}
+                {new Date(selectedDate + 'T12:00').toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' })}
               </div>
               {selectedPhase && (
                 <div className="text-[10px] font-medium" style={{ color: getPhaseColor(selectedPhase as 'A' | 'B' | 'C') }}>
-                  Faza {selectedPhase} — {selectedPhase === 'A' ? 'kryzys' : selectedPhase === 'B' ? 'regeneracja' : 'odbudowa'}
+                  {lang === 'pl' ? 'Faza' : 'Phase'} {selectedPhase} — {selectedPhase === 'A' ? t.calendar.phaseCrisis : selectedPhase === 'B' ? t.calendar.phaseRecovery : t.calendar.phaseRebuild}
                 </div>
               )}
             </div>
@@ -167,11 +160,10 @@ export function CalendarView() {
               onClick={() => setShowAddMenu(!showAddMenu)}
               className="text-xs bg-accent-dark text-accent-warm px-3 py-1 rounded-lg"
             >
-              + Dodaj
+              {t.calendar.addButton}
             </button>
           </div>
 
-          {/* Add event menu */}
           {showAddMenu && (
             <div className="bg-bg-primary rounded-lg p-3 space-y-2">
               <div className="flex gap-2">
@@ -179,30 +171,29 @@ export function CalendarView() {
                   onClick={() => setNoteType('doctor_visit')}
                   className={`flex-1 py-1.5 rounded text-[10px] ${noteType === 'doctor_visit' ? 'bg-accent-dark text-accent-warm' : 'border border-border'}`}
                 >
-                  Wizyta lekarska
+                  {t.calendar.doctorVisit}
                 </button>
                 <button
                   onClick={() => setNoteType('note')}
                   className={`flex-1 py-1.5 rounded text-[10px] ${noteType === 'note' ? 'bg-accent-dark text-accent-warm' : 'border border-border'}`}
                 >
-                  Notatka
+                  {t.calendar.note}
                 </button>
               </div>
               <input
                 value={noteTitle}
                 onChange={e => setNoteTitle(e.target.value)}
-                placeholder={noteType === 'doctor_visit' ? 'np. Wizyta u onkologa' : 'Treść notatki...'}
+                placeholder={noteType === 'doctor_visit' ? t.calendar.visitPlaceholder : t.calendar.noteContentPlaceholder}
                 className="w-full rounded border border-border px-2 py-1.5 text-xs bg-bg-card"
               />
               <button onClick={addNote} disabled={!noteTitle.trim()} className="w-full bg-accent-dark text-accent-warm rounded py-1.5 text-xs disabled:opacity-40">
-                Zapisz
+                {t.common.save}
               </button>
             </div>
           )}
 
-          {/* Day events */}
           {selectedEvents.length === 0 ? (
-            <div className="text-xs text-text-secondary text-center py-3">Brak zdarzeń w tym dniu</div>
+            <div className="text-xs text-text-secondary text-center py-3">{t.calendar.noEvents}</div>
           ) : (
             <div className="space-y-2">
               {selectedEvents.map(ev => (
@@ -212,7 +203,7 @@ export function CalendarView() {
           )}
 
           <div className="text-[9px] text-text-secondary text-center pt-1">
-            * Wartości referencyjne z opublikowanej literatury. Konsultuj z lekarzem.
+            {t.calendar.referenceNote}
           </div>
         </div>
       )}

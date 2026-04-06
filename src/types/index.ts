@@ -632,11 +632,14 @@ export type AppMode = 'ai' | 'notebook';
 
 export type ThemeMode = 'light' | 'dark';
 
+export type AppLanguage = 'pl' | 'en';
+
 export interface AppSettings {
   apiKey: string;
   aiProvider: 'anthropic' | 'openai' | 'gemini';
   appMode: AppMode;
   theme: ThemeMode;
+  language: AppLanguage;
   onboardingCompleted: boolean;
   notifications: NotificationConfig;
   dataProcessingConsent?: {

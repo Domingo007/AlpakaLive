@@ -5,6 +5,7 @@ import { Icon } from '@/components/shared/Icon';
 import { db } from '@/lib/db';
 import { useSettings } from '@/hooks/useDatabase';
 import { BLOOD_NORMS } from '@/lib/blood-norms';
+import { useI18n } from '@/lib/i18n';
 import type { BloodWork, ChemoSession } from '@/types';
 
 type ImportTab = 'photos' | 'manual' | 'chemo';
@@ -41,18 +42,18 @@ interface PhotoItem {
 
 export function HistoricalImport() {
   const [tab, setTab] = useState<ImportTab>('manual');
+  const { t } = useI18n();
 
   return (
-    <Card title="Import danych historycznych">
+    <Card title={t.historicalImport.title}>
       <p className="text-xs text-text-secondary mb-3">
-        Dodaj historyczne dane aby model predykcji mógł analizować wzorce. Potrzebne minimum 2 pełne cykle chemii z wynikami krwi.
+        {t.historicalImport.description}
       </p>
 
-      {/* Tab switcher */}
       <div className="flex gap-1 mb-4 bg-bg-primary rounded-lg p-1">
-        <TabButton active={tab === 'manual'} onClick={() => setTab('manual')} icon="water_drop" label="Wyniki krwi" />
-        <TabButton active={tab === 'chemo'} onClick={() => setTab('chemo')} icon="vaccines" label="Daty chemii" />
-        <TabButton active={tab === 'photos'} onClick={() => setTab('photos')} icon="photo_camera" label="Zdjęcia" />
+        <TabButton active={tab === 'manual'} onClick={() => setTab('manual')} icon="water_drop" label={t.historicalImport.bloodResults} />
+        <TabButton active={tab === 'chemo'} onClick={() => setTab('chemo')} icon="vaccines" label={t.historicalImport.chemoDates} />
+        <TabButton active={tab === 'photos'} onClick={() => setTab('photos')} icon="photo_camera" label={t.historicalImport.photos} />
       </div>
 
       {tab === 'manual' && <ManualBloodImport />}
@@ -83,6 +84,7 @@ function ManualBloodImport() {
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const { t } = useI18n();
 
   const visibleMarkers = showAll ? ALL_MARKERS : BASIC_MARKERS;
 
@@ -137,7 +139,7 @@ function ManualBloodImport() {
       await db.blood.bulkPut(bloodRecords);
       setSaved(true);
     } catch {
-      alert('Błąd podczas zapisu danych');
+      alert(t.historicalImport.saveError);
     } finally {
       setSaving(false);
     }
@@ -145,23 +147,23 @@ function ManualBloodImport() {
 
   // Group markers by category for expanded view
   const markerCategories = showAll ? [
-    { label: 'Morfologia', markers: ['wbc', 'neutrophils', 'lymphocytes', 'hgb', 'hct', 'plt', 'rbc', 'mcv'] },
-    { label: 'Biochemia', markers: ['albumin', 'totalProtein', 'creatinine', 'urea', 'alt', 'ast', 'bilirubin', 'glucose', 'crp', 'sodium', 'potassium', 'calcium', 'ldh'] },
-    { label: 'Markery nowotw.', markers: ['ca153', 'cea', 'ca125'] },
-    { label: 'Koagulacja', markers: ['inr', 'dDimer'] },
+    { label: t.historicalImport.morphology, markers: ['wbc', 'neutrophils', 'lymphocytes', 'hgb', 'hct', 'plt', 'rbc', 'mcv'] },
+    { label: t.historicalImport.biochemistry, markers: ['albumin', 'totalProtein', 'creatinine', 'urea', 'alt', 'ast', 'bilirubin', 'glucose', 'crp', 'sodium', 'potassium', 'calcium', 'ldh'] },
+    { label: t.historicalImport.tumorMarkers, markers: ['ca153', 'cea', 'ca125'] },
+    { label: t.historicalImport.coagulation, markers: ['inr', 'dDimer'] },
   ] : null;
 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <p className="text-[10px] text-text-secondary">
-          Wpisz historyczne wyniki krwi. {showAll ? 'Pełny zakres markerów.' : 'Podstawowe markery.'}
+          {t.historicalImport.manualDesc(showAll)}
         </p>
         <button
           onClick={() => setShowAll(!showAll)}
           className="text-[10px] text-accent-dark underline whitespace-nowrap"
         >
-          {showAll ? 'Pokaż podstawowe' : 'Pokaż wszystkie markery'}
+          {showAll ? t.historicalImport.showBasic : t.historicalImport.showAll}
         </button>
       </div>
 
@@ -201,7 +203,7 @@ function ManualBloodImport() {
               <button
                 onClick={() => removeRow(row.id)}
                 className="text-alert-critical text-sm w-7 h-7 flex items-center justify-center"
-                title="Usuń wiersz"
+                title={t.historicalImport.removeRow}
               >
                 ×
               </button>
@@ -224,7 +226,7 @@ function ManualBloodImport() {
                   onClick={() => removeRow(row.id)}
                   className="text-alert-critical text-xs px-2 py-1"
                 >
-                  Usuń
+                  {t.historicalImport.remove}
                 </button>
               </div>
 
@@ -264,14 +266,14 @@ function ManualBloodImport() {
           onClick={addRow}
           className="flex-1 border border-border text-text-secondary rounded-lg py-2 text-xs"
         >
-          + Dodaj wiersz
+          {t.historicalImport.addRow}
         </button>
         <button
           onClick={handleSave}
           disabled={saving || rows.every(r => !r.date)}
           className="flex-1 bg-accent-dark text-accent-warm rounded-lg py-2 text-xs font-medium disabled:opacity-40"
         >
-          {saving ? 'Zapisuję...' : saved ? '✓ Zapisano' : 'Zapisz wszystko'}
+          {saving ? t.historicalImport.saving : saved ? t.common.saved : t.historicalImport.saveAll}
         </button>
       </div>
     </div>
@@ -286,6 +288,7 @@ function ChemoDateImport() {
   const [cycleLength, setCycleLength] = useState('21');
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const { t, lang } = useI18n();
   const [viewMonth, setViewMonth] = useState(() => {
     const d = new Date();
     d.setMonth(d.getMonth() - 3);
@@ -333,7 +336,7 @@ function ChemoDateImport() {
       await db.chemo.bulkPut(sessions);
       setSaved(true);
     } catch {
-      alert('Błąd podczas zapisu dat chemii');
+      alert(t.historicalImport.chemoSaveError);
     } finally {
       setSaving(false);
     }
@@ -341,7 +344,8 @@ function ChemoDateImport() {
 
   const year = viewMonth.getFullYear();
   const month = viewMonth.getMonth();
-  const monthName = viewMonth.toLocaleDateString('pl-PL', { month: 'long', year: 'numeric' });
+  const locale = lang === 'pl' ? 'pl-PL' : 'en-US';
+  const monthName = viewMonth.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
 
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
@@ -352,7 +356,7 @@ function ChemoDateImport() {
   return (
     <div className="space-y-3">
       <p className="text-[10px] text-text-secondary">
-        Kliknij daty kiedy odbywała się chemioterapia. Zaznaczono: <strong>{selectedDates.size}</strong> sesji.
+        {t.historicalImport.chemoClickDates(selectedDates.size)}
       </p>
 
       {/* Drug inputs */}
@@ -360,18 +364,18 @@ function ChemoDateImport() {
         <input
           value={drugs}
           onChange={e => setDrugs(e.target.value)}
-          placeholder="Leki, np. paklitaksel, gemcytabina"
+          placeholder={t.historicalImport.drugsPlaceholder}
           className="w-full rounded-lg border border-border px-3 py-2 text-xs bg-bg-primary"
         />
         <div className="flex gap-2 items-center">
-          <label className="text-[10px] text-text-secondary whitespace-nowrap">Cykl co</label>
+          <label className="text-[10px] text-text-secondary whitespace-nowrap">{t.historicalImport.cycleEvery}</label>
           <input
             type="number"
             value={cycleLength}
             onChange={e => setCycleLength(e.target.value)}
             className="w-16 rounded border border-border px-2 py-1 text-xs bg-bg-primary text-center"
           />
-          <span className="text-[10px] text-text-secondary">dni</span>
+          <span className="text-[10px] text-text-secondary">{t.historicalImport.days}</span>
         </div>
       </div>
 
@@ -384,7 +388,7 @@ function ChemoDateImport() {
 
       {/* Calendar grid */}
       <div className="grid grid-cols-7 gap-1 text-center">
-        {['Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'Sb', 'Nd'].map(d => (
+        {t.historicalImport.weekDays.map(d => (
           <div key={d} className="text-[9px] text-text-secondary font-medium py-1">{d}</div>
         ))}
 
@@ -423,7 +427,7 @@ function ChemoDateImport() {
         disabled={saving || selectedDates.size === 0}
         className="w-full bg-accent-dark text-accent-warm rounded-lg py-2 text-xs font-medium disabled:opacity-40"
       >
-        {saving ? 'Zapisuję...' : saved ? `✓ Zapisano ${selectedDates.size} sesji` : `Zapisz ${selectedDates.size} sesji chemii`}
+        {saving ? t.historicalImport.saving : saved ? t.historicalImport.savedSessions(selectedDates.size) : t.historicalImport.saveSessions(selectedDates.size)}
       </button>
     </div>
   );
@@ -433,6 +437,7 @@ function ChemoDateImport() {
 
 function PhotoBatchImport() {
   const { settings } = useSettings();
+  const { t } = useI18n();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
 
@@ -461,7 +466,7 @@ function PhotoBatchImport() {
 
   async function processQueue() {
     if (!settings?.apiKey) {
-      alert('Dodaj klucz API Anthropic w ustawieniach aby przetwarzać zdjęcia wyników krwi.');
+      alert(t.historicalImport.photoApiNeeded);
       return;
     }
 
@@ -522,14 +527,14 @@ INSTRUKCJE:
         // Extract JSON from response — support single object or array
         const arrayMatch = text.match(/\[[\s\S]*\]/);
         const objMatch = text.match(/\{[\s\S]*\}/);
-        if (!arrayMatch && !objMatch) throw new Error('Nie znaleziono danych');
+        if (!arrayMatch && !objMatch) throw new Error(t.historicalImport.photoNoData);
 
         let results: { date?: string; markers?: Record<string, number> }[];
         try {
           const raw = JSON.parse(arrayMatch ? arrayMatch[0] : objMatch![0]);
           results = Array.isArray(raw) ? raw : [raw];
         } catch {
-          throw new Error('Błąd parsowania danych ze zdjęcia');
+          throw new Error(t.historicalImport.photoParseError);
         }
 
         for (const parsed of results) {
@@ -538,7 +543,7 @@ INSTRUKCJE:
             date: parsed.date || new Date().toISOString().split('T')[0],
             source: 'photo_extraction',
             markers: parsed.markers || {},
-            notes: `Import ze zdjęcia (${Object.keys(parsed.markers || {}).length} markerów)`,
+            notes: t.historicalImport.photoImportNote(Object.keys(parsed.markers || {}).length),
           };
           await db.blood.put(bloodRecord);
         }
@@ -556,12 +561,12 @@ INSTRUKCJE:
   return (
     <div className="space-y-3">
       <p className="text-[10px] text-text-secondary">
-        Dodaj zdjęcia wyników krwi z ostatnich miesięcy. Agent odczyta wartości i zapisze do bazy.
+        {t.historicalImport.photoDesc}
       </p>
 
       {!settings?.apiKey && (
         <div className="bg-alert-warning/10 text-alert-warning text-[11px] rounded-lg p-2.5">
-          ⚠️ Przetwarzanie zdjęć wymaga klucza API Anthropic. Dodaj go powyżej w sekcji "Klucz API".
+          {t.historicalImport.photoApiWarning}
         </div>
       )}
 
@@ -569,7 +574,7 @@ INSTRUKCJE:
         onClick={() => fileInputRef.current?.click()}
         className="w-full border-2 border-dashed border-border rounded-lg py-4 text-xs text-text-secondary hover:border-accent-dark transition-colors"
       >
-        <span className="material-symbols-rounded" style={{fontSize:16}}>photo_camera</span> Kliknij aby dodać zdjęcia wyników krwi
+        <span className="material-symbols-rounded" style={{fontSize:16}}>photo_camera</span> {t.historicalImport.photoAddButton}
       </button>
       <input
         ref={fileInputRef}
@@ -589,9 +594,9 @@ INSTRUKCJE:
               <div className="flex-1 min-w-0">
                 <div className="text-[11px] truncate">{photo.file.name}</div>
                 <div className="text-[10px]">
-                  {photo.status === 'waiting' && <span className="text-text-secondary">Oczekuje</span>}
-                  {photo.status === 'processing' && <span className="text-alert-info">⏳ Przetwarzam...</span>}
-                  {photo.status === 'done' && <span className="text-alert-positive">✓ Zapisano</span>}
+                  {photo.status === 'waiting' && <span className="text-text-secondary">{t.historicalImport.photoWaiting}</span>}
+                  {photo.status === 'processing' && <span className="text-alert-info">{t.historicalImport.photoProcessing}</span>}
+                  {photo.status === 'done' && <span className="text-alert-positive">{t.historicalImport.photoSaved}</span>}
                   {photo.status === 'error' && <span className="text-alert-critical">✗ {photo.error}</span>}
                 </div>
               </div>
@@ -605,13 +610,13 @@ INSTRUKCJE:
               onClick={processQueue}
               className="w-full bg-accent-dark text-accent-warm rounded-lg py-2 text-xs font-medium"
             >
-              Przetwórz {waitingCount} {waitingCount === 1 ? 'zdjęcie' : waitingCount < 5 ? 'zdjęcia' : 'zdjęć'}
+              {t.historicalImport.photoProcess(waitingCount)}
             </button>
           )}
 
           {doneCount > 0 && waitingCount === 0 && (
             <div className="text-center text-xs text-alert-positive py-1">
-              ✓ Przetworzono {doneCount} {doneCount === 1 ? 'zdjęcie' : doneCount < 5 ? 'zdjęcia' : 'zdjęć'}
+              {t.historicalImport.photoProcessed(doneCount)}
             </div>
           )}
         </div>
