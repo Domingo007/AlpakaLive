@@ -1,46 +1,46 @@
-# Jak dołączyć do AlpacaLive
+# How to Contribute to AlpacaLive
 
-Dziękujemy za zainteresowanie! AlpacaLive to projekt tworzony przez i dla ludzi dotkniętych rakiem.
+Thank you for your interest! AlpacaLive is a project created by and for people affected by cancer.
 
-## Dla programistów
+## For Developers
 
-1. Fork repozytorium
-2. Stwórz branch: `git checkout -b feature/nazwa-funkcji`
-3. Commituj: `git commit -m "Dodaj: opis"`
-4. Push: `git push origin feature/nazwa-funkcji`
-5. Otwórz Pull Request
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/feature-name`
+3. Commit: `git commit -m "Add: description"`
+4. Push: `git push origin feature/feature-name`
+5. Open a Pull Request
 
-Standardy: TypeScript strict, Tailwind CSS, komentarze w kodzie po angielsku, UI po polsku.
+Standards: TypeScript strict, Tailwind CSS, code comments in English, UI in English (with i18n support for other languages).
 
-## Dla pacjentów i opiekunów
+## For Patients and Caregivers
 
-Twoje doświadczenie z chemioterapią jest bezcenne! Możesz:
-- Otworzyć Issue z szablonem "Wiedza medyczna" — np. "Po karboplatynie dzień 8-10 najgorszy spadek PLT"
-- Zgłosić błąd — agent dał złą radę? Powiedz nam
-- Zaproponować funkcję — czego brakuje?
+Your experience with chemotherapy is invaluable! You can:
+- Open an Issue using the "Medical Knowledge" template — e.g., "After carboplatin, days 8-10 have the worst PLT drop"
+- Report a bug — did the agent give bad advice? Let us know
+- Suggest a feature — what's missing?
 
-Nie musisz umieć programować. Wystarczy otworzyć Issue.
+You don't need to know how to code. Just open an Issue.
 
-## Dla lekarzy i farmaceutów
+## For Doctors and Pharmacists
 
-Szukamy recenzentów medycznych:
-- Recenzja bazy interakcji CYP450 (`docs/drug-interactions.md`)
-- Weryfikacja rekomendacji suplementacji (`docs/supplements.md`)
-- Sprawdzanie skill agenta AI (`docs/agent-skill.md`)
+We're looking for medical reviewers:
+- Review of the CYP450 interaction database (`docs/drug-interactions.md`)
+- Verification of supplement recommendations (`docs/supplements.md`)
+- Checking the AI agent skill (`docs/agent-skill.md`)
 
-Otwórz Issue z labelem `medical-review` lub wyślij PR.
+Open an Issue with the `medical-review` label or submit a PR.
 
-## Dla tłumaczy
+## For Translators
 
-Potrzebujemy wersji w: EN, DE, ES, FR, UA i innych. Skontaktuj się przez Issues lub email: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com).
+We need versions in: DE, ES, FR, UA, and others. Get in touch via Issues or email: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com).
 
-## Zasady
+## Rules
 
-- NIGDY nie dodawaj kodu wysyłającego dane osobowe pacjenta na zewnętrzne serwery
-- Brak trackingu, analytics, reklam
-- Rekomendacje medyczne muszą mieć źródło i poziom dowodów
-- Bądź empatyczny — za tym projektem stoją prawdziwi pacjenci
+- NEVER add code that sends patient personal data to external servers
+- No tracking, analytics, or ads
+- Medical recommendations must include a source and level of evidence
+- Be empathetic — real patients stand behind this project
 
-## Kontakt
+## Contact
 
 **Dominik Gaweł** · [Gravity Design](https://www.gravitydesign.pl/) · [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)

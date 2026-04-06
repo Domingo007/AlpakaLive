@@ -1,21 +1,21 @@
-# Polityka bezpieczeństwa
+# Security Policy
 
-## Prywatność pacjenta — priorytet nr 1
+## Patient Privacy — Priority #1
 
-- Wszystkie dane przechowywane LOKALNIE (IndexedDB)
-- Dane osobowe (PESEL, nazwisko, adres) filtrowane przez PII Sanitizer PRZED wysłaniem do API
-- Brak backendu, chmury, analytics, cookies śledzących
-- Klucz API przechowywany lokalnie na urządzeniu
+- All data stored LOCALLY (IndexedDB)
+- Personal data (SSN, name, address) filtered by PII Sanitizer BEFORE being sent to the API
+- No backend, cloud, analytics, or tracking cookies
+- API key stored locally on the device
 
-## Zgłaszanie luk
+## Reporting Vulnerabilities
 
-Jeśli znajdziesz lukę — szczególnie taką która mogłaby ujawnić dane pacjenta:
+If you find a vulnerability — especially one that could expose patient data:
 
-1. **NIE** otwieraj publicznego Issue
-2. Otwórz Issue z labelem `security` z OGÓLNYM opisem (bez szczegółów exploitu)
-3. Lub skontaktuj się bezpośrednio z maintainerem: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)
+1. **DO NOT** open a public Issue
+2. Open an Issue with the `security` label with a GENERAL description (no exploit details)
+3. Or contact the maintainer directly: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)
 
-Odpowiedź w ciągu 48h.
+Response within 48 hours.
 
 ## Maintainer
 

@@ -1,31 +1,31 @@
-> **WAŻNE ZASTRZEŻENIE PRAWNE**
+> **IMPORTANT LEGAL DISCLAIMER**
 >
-> AlpacaLive jest narzędziem do analizy danych dostarczonych przez użytkownika.
-> **NIE jest wyrobem medycznym, NIE stawia diagnoz, NIE zaleca leków ani suplementów.**
-> Informacje wyświetlane w aplikacji opierają się na danych użytkownika i opublikowanej literaturze naukowej.
-> Wszelkie decyzje dotyczące zdrowia powinny być podejmowane wyłącznie w konsultacji z lekarzem prowadzącym.
-> Twórcy aplikacji nie ponoszą odpowiedzialności za decyzje zdrowotne podjęte na podstawie informacji z aplikacji.
-> Pełne zastrzeżenie: [DISCLAIMER.md](DISCLAIMER.md) | [TERMS.md](TERMS.md)
+> AlpacaLive is a tool for analyzing data provided by the user.
+> **It is NOT a medical device, does NOT make diagnoses, does NOT recommend medications or supplements.**
+> Information displayed in the app is based on user data and published scientific literature.
+> All health-related decisions should be made solely in consultation with your treating physician.
+> The app creators bear no responsibility for health decisions made based on information from the app.
+> Full disclaimer: [DISCLAIMER.md](DISCLAIMER.md) | [TERMS.md](TERMS.md)
 
-# AlpacaLive — Holistyczny System Wsparcia Onkologicznego
+# AlpacaLive — Holistic Oncology Support System
 
-**Darmowa, open-source aplikacja webowa (PWA) wspierająca pacjentów onkologicznych i ich opiekunów w analizie danych zdrowotnych podczas chemioterapii.**
+**A free, open-source web app (PWA) supporting cancer patients and their caregivers in analyzing health data during chemotherapy.**
 
 ---
 
-## Co wyróżnia AlpacaLive
+## What Makes AlpacaLive Different
 
-| Funkcja | AlpacaLive | Inne apki onkologiczne |
-|---------|-----------|----------------------|
-| Dziennik zdrowia | Rozmowa z agentem AI | Ręczne formularze |
-| Wyniki krwi | Zdjęcie → automatyczna analiza | Ręczne wpisywanie |
-| Predykcja | Przewiduje samopoczucie wg cyklu chemii | Brak |
-| Interakcje leków | Dynamiczna baza CYP450 | Brak |
-| Obrazowanie | Analiza RTG/CT/PET z RECIST | Brak |
-| Prywatność | PII Sanitizer — dane osobowe nie opuszczają telefonu | Różnie |
-| Kod | Open source, AGPL-3.0 | Zamknięty |
+| Feature | AlpacaLive | Other Oncology Apps |
+|---------|-----------|---------------------|
+| Health journal | Conversation with an AI agent | Manual forms |
+| Blood results | Photo → automatic analysis | Manual entry |
+| Prediction | Predicts well-being by chemo cycle | None |
+| Drug interactions | Dynamic CYP450 database | None |
+| Imaging | RTG/CT/PET analysis with RECIST | None |
+| Privacy | PII Sanitizer — personal data never leaves your phone | Varies |
+| Code | Open source, AGPL-3.0 | Closed |
 
-## Szybki start
+## Quick Start
 
 ```bash
 git clone https://github.com/Domingo007/AlpacaLive.git
@@ -34,67 +34,67 @@ npm install
 npm run dev
 ```
 
-Wymagania: Node.js 18+, [klucz API Anthropic](https://console.anthropic.com/) (opcjonalny — aplikacja działa w trybie demo bez klucza)
+Requirements: Node.js 18+, [Anthropic API key](https://console.anthropic.com/) (optional — the app works in demo mode without a key)
 
-### Instalacja na telefonie
-1. Otwórz w przeglądarce (Safari/Chrome)
-2. **iPhone:** Udostępnij → "Dodaj do ekranu początkowego"
-3. **Android:** Menu → "Dodaj do ekranu głównego"
-4. Wpisz klucz API w ustawieniach
+### Install on Your Phone
+1. Open in your browser (Safari/Chrome)
+2. **iPhone:** Share → "Add to Home Screen"
+3. **Android:** Menu → "Add to Home Screen"
+4. Enter your API key in settings
 
-### Deploy własnej instancji
+### Deploy Your Own Instance
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Domingo007/AlpacaLive)
 
-## Architektura
+## Architecture
 
 ```
-AlpacaLive (100% lokalne — brak chmury)
+AlpacaLive (100% local — no cloud)
 ├── PWA (Vite + React + TypeScript + Tailwind)
-├── Dane (IndexedDB via Dexie.js — na urządzeniu)
-├── AI Agent (Claude API — klucz użytkownika)
-│   ├── PII Sanitizer → filtruje dane osobowe
-│   ├── Medical Skill → pełna wiedza onkologiczna
-│   ├── Data Extractor → parsuje odpowiedzi
-│   └── Vision API → analiza zdjęć wyników i obrazowania
-└── Brak backendu / brak analytics / brak reklam
+├── Data (IndexedDB via Dexie.js — on device)
+├── AI Agent (Claude API — user's key)
+│   ├── PII Sanitizer → filters personal data
+│   ├── Medical Skill → comprehensive oncology knowledge
+│   ├── Data Extractor → parses responses
+│   └── Vision API → analyzes photos of results and imaging
+└── No backend / no analytics / no ads
 ```
 
-## Stos technologiczny
+## Tech Stack
 
-| Warstwa | Technologia |
-|---------|-------------|
+| Layer | Technology |
+|-------|------------|
 | Framework | Vite + React 18 + TypeScript |
-| Style | Tailwind CSS |
-| Baza danych | IndexedDB via Dexie.js |
+| Styles | Tailwind CSS |
+| Database | IndexedDB via Dexie.js |
 | AI | Anthropic Claude API (claude-sonnet) |
-| Wykresy | Recharts |
-| Raporty PDF | jsPDF |
+| Charts | Recharts |
+| PDF Reports | jsPDF |
 | PWA | vite-plugin-pwa + Workbox |
 | Deploy | Vercel |
 
-## Jak dołączyć
+## How to Contribute
 
-Szukamy **pacjentów** (Twoje doświadczenie z chemią jest bezcenne!), **programistów**, **lekarzy** i **tłumaczy**. Przeczytaj [CONTRIBUTING.md](CONTRIBUTING.md).
+We're looking for **patients** (your experience with chemo is invaluable!), **developers**, **doctors**, and **translators**. Read [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Dokumentacja medyczna
+## Medical Documentation
 
-- [Baza wiedzy medycznej](docs/MEDICAL_KNOWLEDGE.md) — suplementy, interakcje, wzorce
-- [Kompatybilne opaski](docs/wearables.md) — ranking dla pacjentów onkologicznych
+- [Medical Knowledge Base](docs/MEDICAL_KNOWLEDGE.md) — supplements, interactions, patterns
+- [Compatible Wearables](docs/wearables.md) — ranking for cancer patients
 
-## Prywatność
+## Privacy
 
-Wszystkie dane przechowywane lokalnie w IndexedDB na urządzeniu użytkownika. Jedyna komunikacja zewnętrzna to zapytania do Claude API — przed wysłaniem dane osobowe są automatycznie zastępowane placeholderami (`[PACJENT]`, `[PESEL]` itp.). Szczegóły w [SECURITY.md](SECURITY.md).
+All data is stored locally in IndexedDB on the user's device. The only external communication is queries to the Claude API — before sending, personal data is automatically replaced with placeholders (`[PATIENT]`, `[SSN]`, etc.). Details in [SECURITY.md](SECURITY.md).
 
-## Licencja / License
+## License
 
-AGPL-3.0 — zobacz [LICENSE](LICENSE)
+AGPL-3.0 — see [LICENSE](LICENSE)
 
-Kod jest otwarty. Możesz go używać, modyfikować i dystrybuować pod warunkami AGPL-3.0.
-Jeśli zmodyfikujesz kod i udostępnisz go jako usługę (np. SaaS) — musisz udostępnić swoje zmiany na tej samej licencji.
+The code is open. You can use, modify, and distribute it under the terms of AGPL-3.0.
+If you modify the code and make it available as a service (e.g., SaaS) — you must release your changes under the same license.
 
-Zainteresowany licencją komercyjną (bez wymogów AGPL)? Skontaktuj się: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)
+Interested in a commercial license (without AGPL requirements)? Contact: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)
 
-## Kontakt
+## Contact
 
 **Dominik Gaweł** · [Gravity Design](https://www.gravitydesign.pl/)
 Email: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)

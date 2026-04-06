@@ -20,7 +20,7 @@ export const DEFAULT_EVENT_COLORS: Record<CalendarEventType, { color: string; ic
   prediction:         { color: '#2c3e50', icon: 'auto_graph', label: 'Predykcja' },
   medication_change:  { color: '#d35400', icon: 'sync', label: 'Zmiana leczenia' },
   note:               { color: '#95a5a6', icon: 'push_pin', label: 'Notatka' },
-  radiotherapy_session:   { color: '#f59e0b', icon: 'radiation', label: 'Radioterapia' },
+  radiotherapy_session:   { color: '#f59e0b', icon: 'radiology', label: 'Radioterapia' },
   immunotherapy_infusion: { color: '#06b6d4', icon: 'shield', label: 'Immunoterapia' },
   targeted_therapy:       { color: '#8b5cf6', icon: 'target', label: 'Terapia celowana' },
   hormonal_therapy:       { color: '#ec4899', icon: 'medication', label: 'Hormonoterapia' },

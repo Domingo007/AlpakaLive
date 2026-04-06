@@ -1,11 +1,11 @@
-# Kodeks postępowania
+# Code of Conduct
 
-AlpacaLive to projekt dla ludzi walczących z rakiem. Zobowiązujemy się do utrzymania bezpiecznej, wspierającej przestrzeni.
+AlpacaLive is a project for people fighting cancer. We are committed to maintaining a safe, supportive space.
 
-## Standardy
+## Standards
 
-**Pożądane:** Empatia, szacunek, konstruktywna krytyka, skupienie na dobru pacjentów, otwartość na wiedzę z różnych źródeł.
+**Expected:** Empathy, respect, constructive criticism, focus on patient well-being, openness to knowledge from diverse sources.
 
-**Niedopuszczalne:** Promowanie niezweryfikowanych "cudownych leków" bez oznaczenia dowodów, odradzanie konwencjonalnego leczenia, dyskryminacja, nękanie, spam, reklamy, udostępnianie danych pacjentów.
+**Unacceptable:** Promoting unverified "miracle cures" without evidence labeling, discouraging conventional treatment, discrimination, harassment, spam, advertising, sharing patient data.
 
-Naruszenia zgłaszaj przez Issues z labelem `conduct`.
+Report violations via Issues with the `conduct` label.
