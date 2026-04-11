@@ -1,37 +1,20 @@
-interface CYP450Profile {
-  substrate: string[];
-  inhibitor: string[];
-  inducer: string[];
-  serotonergic?: boolean;
-}
+/*
+ * AlpacaLive — CYP450 drug interaction checker
+ * Now uses the medical-data loader system with CDN support.
+ * Backward-compatible: CYP450_DATABASE and checkInteractions() work as before.
+ */
+import { getCYP450Database } from './medical-data/loader';
+import { BUNDLED_CYP450 } from './medical-data/bundled-cyp450';
+import type { CYP450Profile } from './medical-data/types';
 
-export const CYP450_DATABASE: Record<string, CYP450Profile> = {
-  paclitaxel: { substrate: ['CYP3A4', 'CYP2C8'], inhibitor: [], inducer: [] },
-  docetaxel: { substrate: ['CYP3A4'], inhibitor: [], inducer: [] },
-  gemcitabine: { substrate: [], inhibitor: [], inducer: [] },
-  carboplatin: { substrate: [], inhibitor: [], inducer: [] },
-  cisplatin: { substrate: [], inhibitor: [], inducer: [] },
-  etoposide: { substrate: ['CYP3A4'], inhibitor: [], inducer: [] },
-  cyclophosphamide: { substrate: ['CYP2B6', 'CYP3A4'], inhibitor: [], inducer: [] },
-  doxorubicin: { substrate: ['CYP3A4', 'CYP2D6'], inhibitor: [], inducer: [] },
-  tamoxifen: { substrate: ['CYP2D6', 'CYP3A4'], inhibitor: [], inducer: [] },
-  letrozole: { substrate: ['CYP2A6', 'CYP3A4'], inhibitor: [], inducer: [] },
-  trastuzumab: { substrate: [], inhibitor: [], inducer: [] },
-  pembrolizumab: { substrate: [], inhibitor: [], inducer: [] },
-  // Psychiatric
-  trazodone: { substrate: ['CYP3A4', 'CYP2D6'], inhibitor: [], inducer: [], serotonergic: true },
-  venlafaxine: { substrate: ['CYP2D6', 'CYP3A4'], inhibitor: ['CYP2D6_weak'], inducer: [], serotonergic: true },
-  sertraline: { substrate: ['CYP2C19', 'CYP2D6'], inhibitor: ['CYP2D6_moderate'], inducer: [], serotonergic: true },
-  escitalopram: { substrate: ['CYP2C19', 'CYP3A4'], inhibitor: [], inducer: [], serotonergic: true },
-  mirtazapine: { substrate: ['CYP1A2', 'CYP2D6', 'CYP3A4'], inhibitor: [], inducer: [], serotonergic: true },
-  // Experimental
-  fenbendazole: { substrate: ['CYP3A4', 'CYP2C19', 'CYP2J2'], inhibitor: [], inducer: [] },
-  ivermectin: { substrate: ['CYP3A4'], inhibitor: ['CYP3A4_weak', 'CYP2D6_weak'], inducer: [] },
-  // Supplements with interactions
-  st_johns_wort: { substrate: [], inhibitor: [], inducer: ['CYP3A4_strong', 'CYP2C9', 'CYP1A2'] },
-  curcumin: { substrate: [], inhibitor: ['CYP3A4_weak', 'CYP2C9_weak'], inducer: [] },
-  grapefruit: { substrate: [], inhibitor: ['CYP3A4_strong'], inducer: [] },
-};
+// Re-export types for backward compatibility
+export type { CYP450Profile };
+
+/**
+ * CYP450_DATABASE — backward compatible export.
+ * After initMedicalData() is called, getCYP450Database() returns potentially updated data.
+ */
+export const CYP450_DATABASE: Record<string, CYP450Profile> = BUNDLED_CYP450;
 
 export interface DrugInteraction {
   drug1: string;
@@ -42,7 +25,12 @@ export interface DrugInteraction {
   recommendation: string;
 }
 
+/**
+ * Check drug interactions using CYP450 metabolic pathways.
+ * Uses dynamically loaded database if available, falls back to bundled.
+ */
 export function checkInteractions(drugNames: string[]): DrugInteraction[] {
+  const database = getCYP450Database();
   const interactions: DrugInteraction[] = [];
   const normalizedDrugs = drugNames.map(d => d.toLowerCase().replace(/\s+/g, '_'));
 
@@ -50,8 +38,8 @@ export function checkInteractions(drugNames: string[]): DrugInteraction[] {
     for (let j = i + 1; j < normalizedDrugs.length; j++) {
       const d1 = normalizedDrugs[i];
       const d2 = normalizedDrugs[j];
-      const p1 = CYP450_DATABASE[d1];
-      const p2 = CYP450_DATABASE[d2];
+      const p1 = database[d1];
+      const p2 = database[d2];
       if (!p1 || !p2) continue;
 
       // Check substrate competition

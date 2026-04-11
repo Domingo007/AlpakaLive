@@ -4,7 +4,7 @@
  * Licensed under AGPL-3.0 — see LICENSE file
  */
 import type { PatientProfile, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, Prediction, BreastCancerSubtype } from '@/types';
-import { calculateCurrentPhase } from './phase-calculator';
+import { calculateCurrentPhase } from './treatment-cycle';
 import { checkInteractions } from './cyp450';
 
 function formatSubtype(subtype: BreastCancerSubtype): string {
@@ -18,6 +18,65 @@ function formatSubtype(subtype: BreastCancerSubtype): string {
     unknown: 'Nieznany — zapytaj pacjenta!',
   };
   return map[subtype] || subtype;
+}
+
+function buildTreatmentStatusSection(patient: PatientProfile, recentData: RecentData): string {
+  const lines: string[] = [];
+
+  // Chemo phase (legacy, always calculate if chemo data exists)
+  const chemoPhase = calculateCurrentPhase(recentData.chemo, patient.chemoCycle);
+  if (recentData.chemo.length > 0) {
+    lines.push(`### Chemioterapia`);
+    lines.push(`Aktualna faza: ${chemoPhase.phase || 'nieznana'} — ${chemoPhase.description}`);
+    lines.push(`Dzień w cyklu: ${chemoPhase.dayInCycle}`);
+    if (chemoPhase.daysUntilNextChemo !== undefined) {
+      lines.push(`Dni do następnej chemii: ${chemoPhase.daysUntilNextChemo}`);
+    }
+  }
+
+  // Other active treatments from patient profile
+  const treatments = patient.treatments || [];
+  for (const treatment of treatments) {
+    if (treatment.status !== 'active') continue;
+
+    if (treatment.type === 'radiotherapy' && treatment.radiotherapy) {
+      const rt = treatment.radiotherapy;
+      const completedSessions = rt.sessions.filter(s => s.completed).length;
+      lines.push(`\n### Radioterapia`);
+      lines.push(`Typ: ${rt.type}, region: ${rt.targetArea}`);
+      lines.push(`Frakcje: ${completedSessions}/${rt.fractions} (dawka kumulacyjna: ${completedSessions * rt.dosePerFractionGy}/${rt.totalDoseGy} Gy)`);
+      lines.push(`Zmęczenie kumulacyjne narastające. Monitoruj skórę (CTCAE 0-4).`);
+    }
+
+    if (treatment.type === 'immunotherapy') {
+      lines.push(`\n### Immunoterapia`);
+      lines.push(`Lek: ${treatment.drugs?.map(d => d.name).join(', ') || treatment.name}`);
+      lines.push(`Start: ${treatment.startDate}`);
+      lines.push(`AKTYWNIE monitoruj irAE: skóra, tarczyca (TSH), wątroba (ALT/AST), płuca, jelita.`);
+    }
+
+    if (treatment.type === 'targeted_therapy') {
+      lines.push(`\n### Terapia celowana`);
+      lines.push(`Lek: ${treatment.drugs?.map(d => d.name).join(', ') || treatment.name}`);
+      lines.push(`Start: ${treatment.startDate}`);
+    }
+
+    if (treatment.type === 'hormonal_therapy') {
+      lines.push(`\n### Hormonoterapia`);
+      lines.push(`Lek: ${treatment.drugs?.map(d => d.name).join(', ') || treatment.name}`);
+      lines.push(`Start: ${treatment.startDate}`);
+      const today = new Date();
+      const start = new Date(treatment.startDate);
+      const months = Math.round((today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 30));
+      lines.push(`Czas trwania: ${months} mies. Monitoruj: bóle stawów, uderzenia gorąca, densytometrię.`);
+    }
+  }
+
+  if (lines.length === 0) {
+    lines.push('Brak aktywnych danych o leczeniu.');
+  }
+
+  return lines.join('\n');
 }
 
 interface RecentData {
@@ -37,8 +96,6 @@ export function buildSystemPrompt(patient: PatientProfile, recentData: RecentDat
 
   const allDrugs = [...activePsych, ...activeOnco, ...activeOther].map(m => m.name);
   const interactions = checkInteractions(allDrugs);
-
-  const phase = calculateCurrentPhase(recentData.chemo, patient.chemoCycle);
 
   return `# SKILL: AlpacaLive — Narzędzie do analizy danych zdrowotnych
 
@@ -195,10 +252,8 @@ ${recentData.imaging.length > 0 ? JSON.stringify(recentData.imaging.slice(0, 2),
 ## INTERAKCJE LEKOW
 ${interactions.length > 0 ? interactions.map(i => `- ${i.severity.toUpperCase()}: ${i.drug1} + ${i.drug2}: ${i.description}`).join('\n') : 'Brak wykrytych interakcji'}
 
-## FAZY CYKLU CHEMII
-Aktualna faza: ${phase.phase || 'nieznana'} — ${phase.description}
-Dzien w cyklu: ${phase.dayInCycle}
-${phase.daysUntilNextChemo !== undefined ? `Dni do nastepnej chemii: ${phase.daysUntilNextChemo}` : ''}
+## AKTUALNY STATUS LECZENIA
+${buildTreatmentStatusSection(patient, recentData)}
 
 ## TWOJE ZADANIA
 1. CODZIENNY DZIENNIK — prowadź rozmowę naturalnie, 2-3 pytania na raz

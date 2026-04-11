@@ -20,7 +20,17 @@ import type {
   ChatMessage,
   AppSettings,
   CalendarNote,
+  TreatmentSession,
 } from '@/types';
+
+export interface ReferenceDataRecord {
+  id: string;
+  type: 'blood_norms' | 'cyp450' | 'disease_profiles';
+  version: string;
+  lastUpdated: string;
+  sourceUrl?: string;
+  data: unknown;
+}
 
 class AlpacaLiveDB extends Dexie {
   patient!: Table<PatientProfile>;
@@ -35,6 +45,8 @@ class AlpacaLiveDB extends Dexie {
   chat!: Table<ChatMessage>;
   settings!: Table<AppSettings>;
   calendarNotes!: Table<CalendarNote>;
+  treatmentSessions!: Table<TreatmentSession>;
+  referenceData!: Table<ReferenceDataRecord>;
 
   constructor() {
     super('AlpacaLiveDB');
@@ -51,6 +63,24 @@ class AlpacaLiveDB extends Dexie {
       chat: 'id, timestamp',
       settings: 'id',
       calendarNotes: 'id, date, type',
+    });
+
+    // Version 2: add treatmentSessions and referenceData tables
+    this.version(2).stores({
+      patient: 'id',
+      chemo: 'id, date, plannedDate, status',
+      blood: 'id, date',
+      daily: 'id, date',
+      wearable: 'id, date',
+      meals: 'id, date',
+      supplements: 'id, date',
+      imaging: 'id, date, type',
+      predictions: 'id, date, targetDate, type',
+      chat: 'id, timestamp',
+      settings: 'id',
+      calendarNotes: 'id, date, type',
+      treatmentSessions: 'id, date, treatmentType, status',
+      referenceData: 'id, type, version',
     });
   }
 }
@@ -115,6 +145,14 @@ export async function addChatMessage(message: ChatMessage): Promise<void> {
   await db.chat.add(message);
 }
 
+export async function getRecentTreatmentSessions(count = 10): Promise<TreatmentSession[]> {
+  return db.treatmentSessions.orderBy('date').reverse().limit(count).toArray();
+}
+
+export async function getTreatmentSessionsByType(type: string): Promise<TreatmentSession[]> {
+  return db.treatmentSessions.where('treatmentType').equals(type).toArray();
+}
+
 export async function clearAllData(): Promise<void> {
   await Promise.all([
     db.patient.clear(),
@@ -128,6 +166,8 @@ export async function clearAllData(): Promise<void> {
     db.predictions.clear(),
     db.chat.clear(),
     db.settings.clear(),
+    db.treatmentSessions.clear(),
+    db.referenceData.clear(),
   ]);
 }
 
@@ -144,8 +184,10 @@ export async function exportAllData(): Promise<string> {
     predictions: await db.predictions.toArray(),
     chat: await db.chat.toArray(),
     settings: await db.settings.toArray(),
+    treatmentSessions: await db.treatmentSessions.toArray(),
+    calendarNotes: await db.calendarNotes.toArray(),
     exportDate: new Date().toISOString(),
-    version: '1.0',
+    version: '2.0',
   };
   return JSON.stringify(data, null, 2);
 }
@@ -164,4 +206,6 @@ export async function importData(jsonString: string): Promise<void> {
   if (data.predictions) await db.predictions.bulkPut(data.predictions);
   if (data.chat) await db.chat.bulkPut(data.chat);
   if (data.settings) await db.settings.bulkPut(data.settings);
+  if (data.treatmentSessions) await db.treatmentSessions.bulkPut(data.treatmentSessions);
+  if (data.calendarNotes) await db.calendarNotes.bulkPut(data.calendarNotes);
 }

@@ -4,7 +4,8 @@
  * Licensed under AGPL-3.0 — see LICENSE file
  */
 import { db } from './db';
-import type { CalendarEvent, CalendarEventType, ChemoSession } from '@/types';
+import { CHEMO_PHASES, findPhaseForDay } from './treatment-cycle';
+import type { CalendarEvent, CalendarEventType } from '@/types';
 
 export const DEFAULT_EVENT_COLORS: Record<CalendarEventType, { color: string; icon: string; label: string }> = {
   chemo:              { color: '#e74c3c', icon: 'vaccines', label: 'Chemioterapia' },
@@ -61,7 +62,7 @@ export async function buildCalendarEvents(): Promise<CalendarEvent[]> {
     });
   }
 
-  // PHASE BACKGROUNDS
+  // PHASE BACKGROUNDS (dynamic from treatment cycle definitions)
   const completedChemos = chemos
     .filter(c => c.status === 'completed' || c.status === 'modified')
     .sort((a, b) => (a.actualDate || a.date).localeCompare(b.actualDate || b.date));
@@ -72,14 +73,45 @@ export async function buildCalendarEvents(): Promise<CalendarEvent[]> {
       const date = new Date(chemoDate);
       date.setDate(chemoDate.getDate() + d);
       const dateStr = date.toISOString().split('T')[0];
-      const phase = d <= 3 ? 'a' : d <= 7 ? 'b' : 'c';
+      const phaseDef = findPhaseForDay(d, CHEMO_PHASES);
+      const phaseKey = phaseDef?.id === 'crisis' ? 'a' : phaseDef?.id === 'recovery' ? 'b' : 'c';
       events.push({
         id: `phase-${dateStr}-${chemo.id}`,
         date: dateStr,
-        type: `phase_${phase}` as CalendarEventType,
-        title: '', color: DEFAULT_EVENT_COLORS[`phase_${phase}` as CalendarEventType].color,
+        type: `phase_${phaseKey}` as CalendarEventType,
+        title: '', color: DEFAULT_EVENT_COLORS[`phase_${phaseKey}` as CalendarEventType].color,
         icon: '', editable: false, allDay: true,
-        data: { phase: phase.toUpperCase(), dayInCycle: d },
+        data: { phase: phaseKey.toUpperCase(), dayInCycle: d, treatmentType: 'chemotherapy' },
+      });
+    }
+  }
+
+  // TREATMENT SESSIONS (from generic table)
+  const treatmentSessionsList = await db.treatmentSessions.toArray();
+  for (const session of treatmentSessionsList) {
+    const typeConfig = DEFAULT_EVENT_COLORS[
+      session.treatmentType === 'radiotherapy' ? 'radiotherapy_session' :
+      session.treatmentType === 'immunotherapy' ? 'immunotherapy_infusion' :
+      session.treatmentType === 'targeted_therapy' ? 'targeted_therapy' :
+      session.treatmentType === 'hormonal_therapy' ? 'hormonal_therapy' :
+      'note'
+    ];
+    if (typeConfig) {
+      events.push({
+        id: `ts-${session.id}`,
+        date: session.date,
+        type: (session.treatmentType === 'radiotherapy' ? 'radiotherapy_session' :
+               session.treatmentType === 'immunotherapy' ? 'immunotherapy_infusion' :
+               session.treatmentType === 'targeted_therapy' ? 'targeted_therapy' :
+               session.treatmentType === 'hormonal_therapy' ? 'hormonal_therapy' :
+               'note') as CalendarEventType,
+        title: `${typeConfig.label}${session.notes ? ': ' + session.notes : ''}`,
+        color: typeConfig.color,
+        icon: typeConfig.icon,
+        sourceId: session.id,
+        sourceType: 'treatmentSession',
+        editable: true,
+        allDay: true,
       });
     }
   }

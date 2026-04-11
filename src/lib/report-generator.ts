@@ -6,7 +6,7 @@
 import { jsPDF } from 'jspdf';
 import { db } from './db';
 import { BLOOD_NORMS, evaluateMarker, getStatusIcon } from './blood-norms';
-import { calculateCurrentPhase, getPhaseLabel } from './phase-calculator';
+import { calculateCurrentPhase, getPhaseLabel } from './treatment-cycle';
 import type { PatientProfile, DailyLog, BloodWork, ChemoSession, WearableData, SupplementLog } from '@/types';
 
 interface ReportData {

@@ -5,7 +5,7 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { db } from './db';
-import { calculateCurrentPhase, getPhaseLabel } from './phase-calculator';
+import { calculateCurrentPhase, getPhaseLabel, dayToChemoPhase } from './treatment-cycle';
 import { evaluateMarker } from './blood-norms';
 import type { DailyLog, ChemoSession, BloodWork, Prediction, ChemoPhase } from '@/types';
 
@@ -298,9 +298,7 @@ function estimateCycleLength(chemoSessions: ChemoSession[]): number {
 }
 
 function dayToPhase(dayInCycle: number): ChemoPhase {
-  if (dayInCycle <= 3) return 'A';
-  if (dayInCycle <= 7) return 'B';
-  return 'C';
+  return dayToChemoPhase(dayInCycle);
 }
 
 function closestDay(target: number, map: Map<number, CycleDayStats>): number {

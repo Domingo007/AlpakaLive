@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { buildCalendarEvents, getEventsForDate, getPhaseForDate, DEFAULT_EVENT_COLORS } from '@/lib/calendar-events';
 import { db } from '@/lib/db';
-import { getPhaseColor } from '@/lib/phase-calculator';
+import { getPhaseColor } from '@/lib/treatment-cycle';
 import { Icon } from '@/components/shared/Icon';
 import { useI18n } from '@/lib/i18n';
 import type { CalendarEvent, CalendarEventType, TabId, NotebookTab } from '@/types';

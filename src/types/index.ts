@@ -328,8 +328,23 @@ export interface DailyLog {
   bowel?: string;
   hydration?: number;
   notes: string;
-  chemoPhase: 'A' | 'B' | 'C' | null;
+  // Generic treatment phase (replaces chemo-only phase)
+  treatmentPhase?: string | null;
+  treatmentType?: TreatmentType | null;
   dayInCycle: number;
+  // Backward compat — computed from treatmentPhase for chemo
+  chemoPhase: 'A' | 'B' | 'C' | null;
+  // RT-specific
+  skinToxicityGrade?: 0 | 1 | 2 | 3 | 4;
+  radiationFatigue?: number;
+  // Immunotherapy-specific
+  iraeSymptoms?: string[];
+  // Hormonal therapy-specific
+  hotFlashes?: number;
+  jointPain?: number;
+  // Surgery-specific
+  woundStatus?: string;
+  drainOutput?: number;
 }
 
 export interface SleepData {
@@ -339,10 +354,20 @@ export interface SleepData {
   remSleep?: number;
 }
 
+export interface TreatmentSession {
+  id: string;
+  date: string;
+  treatmentType: TreatmentType;
+  treatmentProtocolId?: string;
+  status: 'planned' | 'completed' | 'postponed' | 'cancelled';
+  details: Record<string, unknown>;
+  notes?: string;
+}
+
 export interface WearableData {
   id: string;
   date: string;
-  source: 'amazfit_helio' | 'apple_health' | 'manual';
+  source: 'amazfit_helio' | 'apple_health' | 'withings' | 'garmin' | 'manual';
   rhr: number;
   hrv: number;
   spo2: number;
@@ -568,7 +593,8 @@ export interface ChemoReadinessAssessment {
 export type ChemoPhase = 'A' | 'B' | 'C' | null;
 
 export type TabId = 'chat' | 'calendar' | 'data' | 'imaging' | 'settings';
-export type NotebookTab = 'daily' | 'blood' | 'chemo' | 'supplements' | 'imaging';
+export type NotebookTab = 'daily' | 'blood' | 'chemo' | 'supplements' | 'imaging'
+  | 'radiotherapy' | 'immunotherapy' | 'targeted' | 'hormonal' | 'surgery';
 
 // Calendar types
 export type CalendarEventType =

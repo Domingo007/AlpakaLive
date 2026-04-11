@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import type { PatientProfile, PIIData, PatientLocation, PatientLanguages, BreastCancerSubtype, ReceptorStatus, HER2Status } from '@/types';
+import type { PatientProfile, PIIData, PatientLocation, PatientLanguages, BreastCancerSubtype, ReceptorStatus, HER2Status, TreatmentProtocol, RadiotherapyPlan } from '@/types';
 import { detectGuidelineRegion, DEFAULT_NOTIFICATIONS } from '@/types';
 import { savePatient, saveSettings } from '@/lib/db';
 
@@ -90,6 +90,51 @@ export function useOnboarding() {
       guidelineRegion: detectGuidelineRegion(treatmentCountry),
     };
 
+    // Build TreatmentProtocol[] from selected treatment types
+    const treatments: TreatmentProtocol[] = [];
+    const today = new Date().toISOString().split('T')[0];
+
+    for (const tt of treatmentTypes) {
+      const protocol: TreatmentProtocol = {
+        id: uuidv4(),
+        type: tt as TreatmentProtocol['type'],
+        name: tt,
+        startDate: today,
+        status: 'active',
+      };
+
+      if (tt === 'radiotherapy' && (rtRegion || rtFractions)) {
+        const fractions = rtFractions ? parseInt(rtFractions) : 25;
+        protocol.radiotherapy = {
+          type: 'external_beam',
+          targetArea: rtRegion || '',
+          totalDoseGy: fractions * 2, // default 2 Gy per fraction
+          fractions,
+          dosePerFractionGy: 2,
+          frequency: 'pon-pią',
+          startDate: today,
+          sessions: [],
+        } as RadiotherapyPlan;
+      }
+
+      if (tt === 'immunotherapy' && immunoDrug) {
+        protocol.name = immunoDrug;
+        protocol.drugs = [{ name: immunoDrug, genericName: immunoDrug, dose: '', frequency: '', startDate: today, cyp450: [], interactions: [], sideEffects: [], active: true }];
+      }
+
+      if (tt === 'targeted_therapy' && targetedDrug) {
+        protocol.name = targetedDrug;
+        protocol.drugs = [{ name: targetedDrug, genericName: targetedDrug, dose: '', frequency: '', startDate: today, cyp450: [], interactions: [], sideEffects: [], active: true }];
+      }
+
+      if (tt === 'hormonal_therapy' && hormonalDrug) {
+        protocol.name = hormonalDrug;
+        protocol.drugs = [{ name: hormonalDrug, genericName: hormonalDrug, dose: '', frequency: '', startDate: today, cyp450: [], interactions: [], sideEffects: [], active: true }];
+      }
+
+      treatments.push(protocol);
+    }
+
     const patient: PatientProfile = {
       id: uuidv4(),
       name: displayName || pii.firstName || 'Pacjent',
@@ -114,6 +159,7 @@ export function useOnboarding() {
         documentLanguages,
         preferredMedicalTerms: 'pl',
       },
+      treatments: treatments.length > 0 ? treatments : undefined,
       ...(isBreastCancer ? {
         breastCancerSubtype,
         erStatus,
@@ -139,6 +185,7 @@ export function useOnboarding() {
     return patient;
   }, [apiKey, pii, displayName, diagnosis, stage, molecularSubtype, currentChemo, chemoCycle,
       appMode, documentLanguages, residenceCountry, residenceCity, treatmentCountry, treatmentCity, treatmentFacility,
+      treatmentTypes, rtRegion, rtFractions, immunoDrug, targetedDrug, hormonalDrug,
       isBreastCancer, breastCancerSubtype, erStatus, prStatus, her2Status, ki67, brcaStatus, pdl1Status, piK3caStatus]);
 
   return {

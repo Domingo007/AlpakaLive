@@ -7,7 +7,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { I18nProvider } from './lib/i18n';
+import { initMedicalData } from './lib/medical-data/loader';
 import './index.css';
+
+// Initialize medical reference data (loads from cache/CDN, falls back to bundled)
+initMedicalData().catch(() => {
+  // Non-fatal — bundled defaults will be used
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { usePatient, useSettings } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
 import { Icon } from '@/components/shared/Icon';
@@ -5,6 +6,7 @@ import { HistoricalImport } from './HistoricalImport';
 import { NotificationSettings } from './NotificationSettings';
 import { AIProviderSettings } from './AIProviderSettings';
 import { exportAllData, importData, clearAllData, saveSettings } from '@/lib/db';
+import { loadDemoData } from '@/lib/demo-data';
 import { useI18n, type Lang } from '@/lib/i18n';
 import type { DrugEntry, ThemeMode } from '@/types';
 
@@ -12,6 +14,7 @@ export function SettingsView() {
   const { patient } = usePatient();
   const { settings } = useSettings();
   const { t, lang, setLang } = useI18n();
+  const [demoLoading, setDemoLoading] = useState(false);
 
   async function handleExport() {
     const json = await exportAllData();
@@ -88,6 +91,36 @@ export function SettingsView() {
               EN
             </button>
           </div>
+        </div>
+      </Card>
+
+      {/* Demo Mode */}
+      <Card title={t.settings.demoMode}>
+        <div className="space-y-3">
+          <p className="text-xs text-text-secondary leading-relaxed">
+            {t.settings.demoModeDesc}
+          </p>
+          <button
+            onClick={async () => {
+              if (!confirm(t.settings.loadDemoConfirm)) return;
+              setDemoLoading(true);
+              try {
+                await loadDemoData();
+                window.location.reload();
+              } catch {
+                setDemoLoading(false);
+              }
+            }}
+            disabled={demoLoading}
+            className={`w-full rounded-lg py-2.5 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
+              demoLoading
+                ? 'bg-lavender-200 text-text-secondary cursor-wait'
+                : 'bg-gradient-to-r from-lavender-500 to-accent-dark text-white hover:from-lavender-600 hover:to-accent-dark/90'
+            }`}
+          >
+            <Icon name={demoLoading ? 'hourglass_empty' : 'play_circle'} size={18} />
+            {demoLoading ? t.settings.loadingDemo : t.settings.loadDemo}
+          </button>
         </div>
       </Card>
 

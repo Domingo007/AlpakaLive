@@ -1,5 +1,5 @@
 import type { PredictionResult, DayPrediction } from '@/lib/prediction-engine';
-import { getPhaseColor } from '@/lib/phase-calculator';
+import { getPhaseColor } from '@/lib/treatment-cycle';
 import { useI18n } from '@/lib/i18n';
 
 interface PredictionCardsProps {
