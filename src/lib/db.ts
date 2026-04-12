@@ -187,8 +187,10 @@ export async function clearAllData(): Promise<void> {
     db.predictions.clear(),
     db.chat.clear(),
     db.settings.clear(),
+    db.calendarNotes.clear(),
     db.treatmentSessions.clear(),
     db.referenceData.clear(),
+    db.deviceConnections.clear(),
   ]);
 }
 
