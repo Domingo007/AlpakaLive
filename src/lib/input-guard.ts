@@ -23,7 +23,7 @@ export const ALLOWED_DOC_TYPES = ['application/pdf'];
 const INJECTION_PATTERNS: { pattern: RegExp; severity: 'block' | 'warn' }[] = [
   // Direct instruction override attempts
   { pattern: /ignore\s+(all\s+)?(previous|above|prior|earlier)\s+(instructions?|prompts?|rules?|guidelines?)/i, severity: 'block' },
-  { pattern: /forget\s+(all\s+)?(previous|above|prior|your)\s+(instructions?|prompts?|rules?|context)/i, severity: 'block' },
+  { pattern: /forget\s+(all\s+)?(previous|above|prior|your)\s+(previous\s+)?(instructions?|prompts?|rules?|context)/i, severity: 'block' },
   { pattern: /disregard\s+(all\s+)?(previous|above|system)\s+(instructions?|prompts?|rules?)/i, severity: 'block' },
   { pattern: /override\s+(system|safety|security)\s+(prompt|instructions?|rules?|settings?)/i, severity: 'block' },
   { pattern: /you\s+are\s+now\s+(a|an|in)\s+(new|different|admin|unrestricted|general)/i, severity: 'block' },
@@ -32,14 +32,14 @@ const INJECTION_PATTERNS: { pattern: RegExp; severity: 'block' | 'warn' }[] = [
 
   // Role override
   { pattern: /from\s+now\s+on[,.]?\s+(you\s+are|act\s+as|pretend|behave)/i, severity: 'block' },
-  { pattern: /pretend\s+(you\s+are|to\s+be)\s+(a\s+)?(different|new|regular|normal|general|unrestricted)/i, severity: 'block' },
+  { pattern: /pretend\s+(you\s+are|to\s+be)\s+(a\s+|an\s+)?(different|new|regular|normal|general|unrestricted)/i, severity: 'block' },
   { pattern: /act\s+as\s+(if|though)\s+you\s+(have\s+no|don't\s+have|aren't)\s+(restrictions?|rules?|limits?)/i, severity: 'block' },
   { pattern: /zapomnij\s+(o\s+)?(poprzednich|wcze[sś]niejszych|swoich)\s+(instrukcjach|zasadach|regu[łl]ach)/i, severity: 'block' },
   { pattern: /zignoruj\s+(poprzednie|wcze[sś]niejsze|systemowe)\s+(instrukcje|zasady|regu[łl]y)/i, severity: 'block' },
   { pattern: /od\s+teraz\s+jeste[sś]\s+(zwyk[łl]ym|normalnym|innym)/i, severity: 'block' },
 
   // Data exfiltration
-  { pattern: /reveal\s+(your|the|system)\s+(prompt|instructions?|rules?|configuration)/i, severity: 'block' },
+  { pattern: /reveal\s+(your|the)\s+(system\s+)?(prompt|instructions?|rules?|configuration)/i, severity: 'block' },
   { pattern: /show\s+me\s+(your|the)\s+(system\s+)?(prompt|instructions?|source\s+code)/i, severity: 'block' },
   { pattern: /what\s+are\s+your\s+(system\s+)?(instructions?|rules?|guidelines?|restrictions?)/i, severity: 'warn' },
   { pattern: /poka[żz]\s+(mi\s+)?(swoje|systemowe)\s+(instrukcje|zasady|prompt)/i, severity: 'block' },
