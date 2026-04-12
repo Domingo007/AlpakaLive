@@ -12,9 +12,11 @@ import type { DrugEntry, ThemeMode } from '@/types';
 
 export function SettingsView() {
   const { patient } = usePatient();
-  const { settings } = useSettings();
+  const { settings, update: updateSettings } = useSettings();
   const { t, lang, setLang } = useI18n();
   const [demoLoading, setDemoLoading] = useState(false);
+
+  const isDemo = settings?.demoMode === true;
 
   async function handleExport() {
     const json = await exportAllData();
@@ -97,30 +99,54 @@ export function SettingsView() {
       {/* Demo Mode */}
       <Card title={t.settings.demoMode}>
         <div className="space-y-3">
-          <p className="text-xs text-text-secondary leading-relaxed">
-            {t.settings.demoModeDesc}
-          </p>
-          <button
-            onClick={async () => {
-              if (!confirm(t.settings.loadDemoConfirm)) return;
-              setDemoLoading(true);
-              try {
-                await loadDemoData();
-                window.location.reload();
-              } catch {
-                setDemoLoading(false);
-              }
-            }}
-            disabled={demoLoading}
-            className={`w-full rounded-lg py-2.5 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
-              demoLoading
-                ? 'bg-lavender-200 text-text-secondary cursor-wait'
-                : 'bg-gradient-to-r from-lavender-500 to-accent-dark text-white hover:from-lavender-600 hover:to-accent-dark/90'
-            }`}
-          >
-            <Icon name={demoLoading ? 'hourglass_empty' : 'play_circle'} size={18} />
-            {demoLoading ? t.settings.loadingDemo : t.settings.loadDemo}
-          </button>
+          {isDemo ? (
+            <>
+              <div className="flex items-center gap-2 rounded-lg bg-lavender-100 dark:bg-lavender-200 p-2.5">
+                <Icon name="info" size={18} className="text-accent-dark shrink-0" />
+                <p className="text-xs text-accent-dark leading-relaxed">
+                  {t.settings.demoActiveInfo}
+                </p>
+              </div>
+              <button
+                onClick={async () => {
+                  if (!confirm(t.settings.exitDemoConfirm)) return;
+                  await clearAllData();
+                  window.location.reload();
+                }}
+                className="w-full rounded-lg py-2.5 text-sm font-medium border-2 border-alert-critical text-alert-critical hover:bg-alert-critical/10 transition-colors flex items-center justify-center gap-2"
+              >
+                <Icon name="logout" size={18} />
+                {t.settings.exitDemo}
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-xs text-text-secondary leading-relaxed">
+                {t.settings.demoModeDesc}
+              </p>
+              <button
+                onClick={async () => {
+                  if (!confirm(t.settings.loadDemoConfirm)) return;
+                  setDemoLoading(true);
+                  try {
+                    await loadDemoData();
+                    window.location.reload();
+                  } catch {
+                    setDemoLoading(false);
+                  }
+                }}
+                disabled={demoLoading}
+                className={`w-full rounded-lg py-2.5 text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
+                  demoLoading
+                    ? 'bg-lavender-200 text-text-secondary cursor-wait'
+                    : 'bg-gradient-to-r from-lavender-500 to-accent-dark text-white hover:from-lavender-600 hover:to-accent-dark/90'
+                }`}
+              >
+                <Icon name={demoLoading ? 'hourglass_empty' : 'play_circle'} size={18} />
+                {demoLoading ? t.settings.loadingDemo : t.settings.loadDemo}
+              </button>
+            </>
+          )}
         </div>
       </Card>
 
@@ -166,8 +192,8 @@ export function SettingsView() {
           <button
             onClick={async () => {
               const newTheme: ThemeMode = settings?.theme === 'dark' ? 'light' : 'dark';
-              await saveSettings({ theme: newTheme });
               document.documentElement.classList.toggle('dark', newTheme === 'dark');
+              await updateSettings({ theme: newTheme });
             }}
             className={`w-11 h-6 rounded-full relative transition-colors ${
               settings?.theme === 'dark' ? 'bg-lavender-600' : 'bg-lavender-200'

@@ -669,6 +669,7 @@ export interface AppSettings {
   language: AppLanguage;
   onboardingCompleted: boolean;
   notifications: NotificationConfig;
+  demoMode?: boolean;
   dataProcessingConsent?: {
     accepted: boolean;
     acceptedAt: string;

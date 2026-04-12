@@ -534,7 +534,7 @@ export async function loadDemoData(): Promise<void> {
     db.calendarNotes.bulkPut(calendarNotes),
   ]);
 
-  // Set settings to AI mode with onboarding completed
+  // Set settings with onboarding completed + demo flag
   await saveSettings({
     apiKey: '',
     aiProvider: 'anthropic',
@@ -542,6 +542,7 @@ export async function loadDemoData(): Promise<void> {
     theme: 'light',
     language: 'pl',
     onboardingCompleted: true,
+    demoMode: true,
     notifications: DEFAULT_NOTIFICATIONS,
   });
 }
