@@ -286,7 +286,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             <div className="space-y-3">
               {[
                 { id: 'chemotherapy', label: t.onboarding.chemotherapy, icon: 'vaccines' },
-                { id: 'radiotherapy', label: t.onboarding.radiotherapy, icon: 'radiation' },
+                { id: 'radiotherapy', label: t.onboarding.radiotherapy, icon: 'radiology' },
                 { id: 'immunotherapy', label: t.onboarding.immunotherapy, icon: 'shield' },
                 { id: 'targeted_therapy', label: t.onboarding.targetedTherapy, icon: 'target' },
                 { id: 'hormonal_therapy', label: t.onboarding.hormonalTherapy, icon: 'medication' },
