@@ -15,6 +15,8 @@ import { SettingsView } from '@/components/settings/SettingsView';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { getSettings } from '@/lib/db';
 import { startNotificationScheduler } from '@/lib/notification-scheduler';
+import { parseHealthDataFromUrl } from '@/lib/devices/apple-health-import';
+import { saveNormalizedData } from '@/lib/devices/data-mapper';
 import { useI18n } from '@/lib/i18n';
 import type { TabId, NotebookTab, AppMode } from '@/types';
 
@@ -24,6 +26,8 @@ export default function App() {
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
   const [appMode, setAppMode] = useState<AppMode>('notebook');
   const { t, setLang } = useI18n();
+
+  const [importToast, setImportToast] = useState<string | null>(null);
 
   useEffect(() => {
     getSettings().then(s => {
@@ -36,6 +40,20 @@ export default function App() {
         startNotificationScheduler();
       }
     });
+
+    // Handle device data import via URL (?source=apple_health&data=...)
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('source') && params.has('data')) {
+      const data = parseHealthDataFromUrl(params);
+      if (data && data.length > 0) {
+        saveNormalizedData(data).then(result => {
+          setImportToast(`Zaimportowano ${result.inserted} nowych, ${result.updated} zaktualizowanych`);
+          setTimeout(() => setImportToast(null), 5000);
+        });
+      }
+      // Clear URL params
+      window.history.replaceState({}, '', window.location.pathname);
+    }
   }, [setLang]);
 
   // Re-check mode when returning to app (e.g. after changing in settings)
@@ -71,6 +89,12 @@ export default function App() {
 
   return (
     <div className="h-screen flex flex-col bg-bg-primary">
+      {importToast && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-accent-green text-white px-4 py-2 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2 animate-bounce">
+          <span className="material-symbols-rounded" style={{ fontSize: 16 }}>check_circle</span>
+          {importToast}
+        </div>
+      )}
       <Header />
       <main className="flex-1 overflow-hidden">
         {activeTab === 'chat' && (appMode === 'ai' ? <ChatView /> : <NotebookView activeTab={notebookTab} onTabChange={setNotebookTab} />)}

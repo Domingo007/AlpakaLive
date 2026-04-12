@@ -368,7 +368,7 @@ export interface TreatmentSession {
 export interface WearableData {
   id: string;
   date: string;
-  source: 'amazfit_helio' | 'apple_health' | 'withings' | 'garmin' | 'manual';
+  source: 'amazfit_helio' | 'apple_health' | 'health_connect' | 'withings' | 'garmin' | 'csv_import' | 'manual';
   rhr: number;
   hrv: number;
   spo2: number;

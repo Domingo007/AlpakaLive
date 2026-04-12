@@ -3,6 +3,7 @@ import { usePatient, useSettings } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
 import { Icon } from '@/components/shared/Icon';
 import { HistoricalImport } from './HistoricalImport';
+import { ConnectedDevices } from './ConnectedDevices';
 import { NotificationSettings } from './NotificationSettings';
 import { AIProviderSettings } from './AIProviderSettings';
 import { EducationView } from '@/components/education/EducationView';
@@ -293,6 +294,9 @@ export function SettingsView() {
           </div>
         </Card>
       )}
+
+      {/* Connected Devices */}
+      <ConnectedDevices />
 
       {/* Historical Data Import */}
       <HistoricalImport />

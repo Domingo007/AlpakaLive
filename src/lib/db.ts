@@ -22,6 +22,7 @@ import type {
   CalendarNote,
   TreatmentSession,
 } from '@/types';
+import type { DeviceConnection } from './devices/types';
 
 export interface ReferenceDataRecord {
   id: string;
@@ -47,6 +48,7 @@ class AlpacaLiveDB extends Dexie {
   calendarNotes!: Table<CalendarNote>;
   treatmentSessions!: Table<TreatmentSession>;
   referenceData!: Table<ReferenceDataRecord>;
+  deviceConnections!: Table<DeviceConnection>;
 
   constructor() {
     super('AlpacaLiveDB');
@@ -81,6 +83,25 @@ class AlpacaLiveDB extends Dexie {
       calendarNotes: 'id, date, type',
       treatmentSessions: 'id, date, treatmentType, status',
       referenceData: 'id, type, version',
+    });
+
+    // Version 3: add deviceConnections table
+    this.version(3).stores({
+      patient: 'id',
+      chemo: 'id, date, plannedDate, status',
+      blood: 'id, date',
+      daily: 'id, date',
+      wearable: 'id, date',
+      meals: 'id, date',
+      supplements: 'id, date',
+      imaging: 'id, date, type',
+      predictions: 'id, date, targetDate, type',
+      chat: 'id, timestamp',
+      settings: 'id',
+      calendarNotes: 'id, date, type',
+      treatmentSessions: 'id, date, treatmentType, status',
+      referenceData: 'id, type, version',
+      deviceConnections: 'id',
     });
   }
 }
