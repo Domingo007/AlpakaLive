@@ -4,7 +4,7 @@
  * Uses a breast cancer patient scenario with chemo + radiotherapy.
  */
 import { v4 as uuidv4 } from 'uuid';
-import { db, savePatient, saveSettings } from './db';
+import { db, savePatient, saveSettings, exportAllData, importData, getSettings } from './db';
 import { DEFAULT_NOTIFICATIONS } from '@/types';
 import type {
   PatientProfile,
@@ -489,10 +489,52 @@ function createDemoCalendarNotes(): CalendarNote[] {
   ];
 }
 
-// ==================== MAIN FUNCTION ====================
+// ==================== USER DATA BACKUP (before demo) ====================
+
+const BACKUP_KEY = 'alpacalive_user_backup';
+
+async function backupUserData(): Promise<void> {
+  const settings = await getSettings();
+  // Only backup if there's real user data (not demo, has patient)
+  const patients = await db.patient.toArray();
+  if (patients.length === 0 && !settings?.onboardingCompleted) return;
+  if (settings?.demoMode) return; // Already in demo, don't overwrite backup
+
+  const json = await exportAllData();
+  localStorage.setItem(BACKUP_KEY, json);
+}
+
+async function restoreUserData(): Promise<boolean> {
+  const json = localStorage.getItem(BACKUP_KEY);
+  if (!json) return false;
+
+  try {
+    await importData(json);
+    localStorage.removeItem(BACKUP_KEY);
+    // Make sure demoMode is off after restore
+    await saveSettings({ demoMode: false });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function hasUserBackup(): boolean {
+  return localStorage.getItem(BACKUP_KEY) !== null;
+}
+
+// ==================== MAIN FUNCTIONS ====================
 
 export async function loadDemoData(): Promise<void> {
-  // Clear existing data first
+  // Backup current user data before loading demo
+  await backupUserData();
+
+  // Save current settings to preserve language/theme
+  const currentSettings = await getSettings();
+  const currentLang = currentSettings?.language || 'pl';
+  const currentTheme = currentSettings?.theme || 'light';
+
+  // Clear all data
   await Promise.all([
     db.patient.clear(),
     db.chemo.clear(),
@@ -508,7 +550,7 @@ export async function loadDemoData(): Promise<void> {
     db.calendarNotes.clear(),
   ]);
 
-  // Generate all data
+  // Generate all demo data
   const patient = createDemoPatient();
   const chemoSessions = createDemoChemo();
   const bloodWork = createDemoBlood();
@@ -520,7 +562,7 @@ export async function loadDemoData(): Promise<void> {
   const treatmentSessions = createDemoTreatmentSessions();
   const calendarNotes = createDemoCalendarNotes();
 
-  // Save all
+  // Save all demo data
   await Promise.all([
     savePatient(patient),
     db.chemo.bulkPut(chemoSessions),
@@ -534,15 +576,67 @@ export async function loadDemoData(): Promise<void> {
     db.calendarNotes.bulkPut(calendarNotes),
   ]);
 
-  // Set settings with onboarding completed + demo flag
+  // Set settings with demo flag, preserve user's language/theme
   await saveSettings({
     apiKey: '',
     aiProvider: 'anthropic',
     appMode: 'notebook',
-    theme: 'light',
-    language: 'pl',
+    theme: currentTheme,
+    language: currentLang,
     onboardingCompleted: true,
     demoMode: true,
     notifications: DEFAULT_NOTIFICATIONS,
   });
+}
+
+/**
+ * Exit demo mode: restore user's original data if available,
+ * otherwise go to clean onboarding.
+ */
+export async function exitDemoData(): Promise<'restored' | 'clean'> {
+  const currentSettings = await getSettings();
+  const currentLang = currentSettings?.language || 'pl';
+  const currentTheme = currentSettings?.theme || 'light';
+  const apiKey = currentSettings?.apiKey || '';
+
+  if (hasUserBackup()) {
+    // Restore user's original data
+    const restored = await restoreUserData();
+    if (restored) {
+      // Preserve current language/theme preferences
+      await saveSettings({ language: currentLang, theme: currentTheme });
+      return 'restored';
+    }
+  }
+
+  // No backup — clean slate, go to onboarding
+  await Promise.all([
+    db.patient.clear(),
+    db.chemo.clear(),
+    db.blood.clear(),
+    db.daily.clear(),
+    db.wearable.clear(),
+    db.meals.clear(),
+    db.supplements.clear(),
+    db.imaging.clear(),
+    db.predictions.clear(),
+    db.chat.clear(),
+    db.treatmentSessions.clear(),
+    db.calendarNotes.clear(),
+    db.settings.clear(),
+  ]);
+
+  // Restore basic settings
+  await saveSettings({
+    apiKey,
+    aiProvider: 'anthropic',
+    appMode: 'notebook',
+    theme: currentTheme,
+    language: currentLang,
+    onboardingCompleted: false,
+    demoMode: false,
+    notifications: DEFAULT_NOTIFICATIONS,
+  });
+
+  return 'clean';
 }

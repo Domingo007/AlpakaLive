@@ -72,7 +72,7 @@ export const pl = {
     loadDemoConfirm: 'To zastąpi wszystkie obecne dane danymi demonstracyjnymi. Kontynuować?',
     loadingDemo: 'Ładowanie danych demo...',
     demoLoaded: 'Dane demo załadowane!',
-    demoActiveInfo: 'Tryb demo jest aktywny. Przeglądasz przykładowe dane pacjentki. Wyłącz demo, aby wrócić do czystej aplikacji i wprowadzić własne dane.',
+    demoActiveInfo: 'Tryb demo jest aktywny. Przeglądasz przykładowe dane pacjentki. Twoje dane są bezpiecznie zachowane — po wyłączeniu demo wrócą automatycznie.',
     exitDemo: 'Wyłącz tryb demo',
     exitDemoConfirm: 'Wyłączenie trybu demo usunie wszystkie dane demonstracyjne i przywróci czystą aplikację. Kontynuować?',
     pwaInstall: 'Instalacja na telefonie',

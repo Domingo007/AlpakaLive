@@ -74,7 +74,7 @@ export const en: typeof pl = {
     loadDemoConfirm: 'This will replace all current data with demo data. Continue?',
     loadingDemo: 'Loading demo data...',
     demoLoaded: 'Demo data loaded!',
-    demoActiveInfo: 'Demo mode is active. You are viewing sample patient data. Exit demo to return to a clean app and enter your own data.',
+    demoActiveInfo: 'Demo mode is active. You are viewing sample patient data. Your data is safely preserved — it will return automatically when you exit demo.',
     exitDemo: 'Exit demo mode',
     exitDemoConfirm: 'Exiting demo will delete all demo data and restore a clean app. Continue?',
     pwaInstall: 'Install on phone',

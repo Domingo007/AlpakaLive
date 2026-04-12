@@ -8,7 +8,7 @@ import { NotificationSettings } from './NotificationSettings';
 import { AIProviderSettings } from './AIProviderSettings';
 import { EducationView } from '@/components/education/EducationView';
 import { exportAllData, importData, clearAllData, saveSettings } from '@/lib/db';
-import { loadDemoData } from '@/lib/demo-data';
+import { loadDemoData, exitDemoData } from '@/lib/demo-data';
 import {
   isFileSystemAccessSupported,
   pickBackupFolder,
@@ -161,17 +161,7 @@ export function SettingsView() {
               <button
                 onClick={async () => {
                   if (!confirm(t.settings.exitDemoConfirm)) return;
-                  // Save current settings before clearing
-                  const currentSettings = await import('@/lib/db').then(m => m.getSettings());
-                  await clearAllData();
-                  // Restore settings without demo flag, keep language/theme but reset onboarding
-                  if (currentSettings) {
-                    await saveSettings({
-                      ...currentSettings,
-                      demoMode: false,
-                      onboardingCompleted: false,
-                    });
-                  }
+                  await exitDemoData();
                   window.location.reload();
                 }}
                 className="w-full rounded-lg py-2.5 text-sm font-medium border-2 border-alert-critical text-alert-critical hover:bg-alert-critical/10 transition-colors flex items-center justify-center gap-2"
