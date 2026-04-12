@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "language": "pl",
+  "terms": {
+    "b.z.": "Bez zmian",
+    "w.n.": "W normie",
+    "w.g.": "Wartości graniczne",
+    "j.w.": "Jak wyżej",
+    "dz.": "Dziennie",
+    "tabl.": "Tabletka",
+    "amp.": "Ampułka",
+    "RTG": "Zdjęcie rentgenowskie",
+    "USG": "Ultrasonografia",
+    "TK": "Tomografia komputerowa (CT)",
+    "MR": "Rezonans magnetyczny (MRI)",
+    "PET": "Pozytonowa tomografia emisyjna",
+    "OB": "Odczyn Biernackiego (ESR)",
+    "KKCz": "Koncentrat krwinek czerwonych",
+    "kwalifikacja": "Ocena czy pacjent może otrzymać następny cykl chemii",
+    "nadir": "Najniższy punkt wartości krwi po chemii (dzień 10-14)",
+    "adjuwant": "Leczenie po operacji",
+    "neoadjuwant": "Leczenie przed operacją",
+    "remisja": "Ustąpienie lub zmniejszenie choroby",
+    "progresja": "Postęp choroby",
+    "wznowa": "Nawrót choroby po okresie remisji"
+  },
+  "documentTypes": {
+    "karta informacyjna": "Wypis ze szpitala",
+    "morfologia": "Pełna morfologia krwi (CBC)",
+    "opis badania": "Raport z badania obrazowego",
+    "wynik histopatologiczny": "Raport z analizy tkanki (biopsja)"
+  }
+}

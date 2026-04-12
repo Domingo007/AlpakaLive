@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "drugs": [
+    {
+      "id": "ondansetron",
+      "name": { "en": "Ondansetron", "pl": "Ondansetron", "de": "Ondansetron" },
+      "class": "antiemetic_5HT3",
+      "tradeNames": { "europe": ["Zofran", "Ondansetron"], "usa": ["Zofran"] },
+      "indication": { "en": "Chemotherapy-induced nausea", "pl": "Nudności wywołane chemioterapią" },
+      "cyp450": { "substrate": ["CYP3A4"], "inhibitor": [], "inducer": [] },
+      "sources": ["MASCC/ESMO antiemetic guidelines 2024"]
+    },
+    {
+      "id": "dexamethasone",
+      "name": { "en": "Dexamethasone", "pl": "Deksametazon", "de": "Dexamethason" },
+      "class": "corticosteroid",
+      "indication": { "en": "Antiemetic, anti-inflammatory, premedication", "pl": "Przeciwwymiotny, przeciwzapalny, premedykacja" },
+      "cyp450": { "substrate": ["CYP3A4"], "inhibitor": [], "inducer": ["CYP3A4_weak"] },
+      "sources": ["MASCC/ESMO antiemetic guidelines 2024"]
+    },
+    {
+      "id": "filgrastim",
+      "name": { "en": "Filgrastim (G-CSF)", "pl": "Filgrastym (G-CSF)", "de": "Filgrastim (G-CSF)" },
+      "class": "growth_factor",
+      "tradeNames": { "europe": ["Neupogen", "Zarzio", "Nivestim"], "usa": ["Neupogen", "Zarxio"] },
+      "indication": { "en": "Febrile neutropenia prophylaxis", "pl": "Profilaktyka gorączki neutropenicznej" },
+      "cyp450": { "substrate": [], "inhibitor": [], "inducer": [] },
+      "sources": ["EORTC guidelines", "NCCN Guidelines 2024"]
+    }
+  ]
+}

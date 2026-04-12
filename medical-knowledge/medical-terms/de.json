@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "language": "de",
+  "terms": {
+    "o.B.": "Ohne Befund (keine Auffälligkeiten)",
+    "ED": "Erstdiagnose",
+    "Z.n.": "Zustand nach",
+    "V.a.": "Verdacht auf",
+    "Befund": "Ergebnis/Beschreibung",
+    "Verlaufskontrolle": "Nachuntersuchung",
+    "Tumorboard": "Tumorkonferenz/Konsylium",
+    "Arztbrief": "Entlassungsbrief",
+    "Befundbericht": "Befundbericht",
+    "Laborbericht": "Laborergebnisse",
+    "CT-Befund": "CT-Beschreibung",
+    "Histologischer Befund": "Histopathologischer Bericht",
+    "Therapieplan": "Behandlungsplan",
+    "Strahlentherapie": "Radiotherapie",
+    "Chemotherapie": "Chemotherapie",
+    "Nachsorge": "Nachsorge/Follow-up"
+  },
+  "documentTypes": {
+    "Arztbrief": "Entlassungsbrief",
+    "Befundbericht": "Diagnostischer Bericht",
+    "Laborbericht": "Laborergebnisse",
+    "Histologischer Befund": "Histopathologischer Bericht"
+  }
+}

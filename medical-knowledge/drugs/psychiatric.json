@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "drugs": [
+    {
+      "id": "trazodone",
+      "name": { "en": "Trazodone", "pl": "Trazodon", "de": "Trazodon" },
+      "class": "SARI",
+      "cyp450": { "substrate": ["CYP3A4", "CYP2D6"], "inhibitor": [], "inducer": [], "serotonergic": true },
+      "sources": ["FDA prescribing information"]
+    },
+    {
+      "id": "venlafaxine",
+      "name": { "en": "Venlafaxine", "pl": "Wenlafaksyna", "de": "Venlafaxin" },
+      "class": "SNRI",
+      "cyp450": { "substrate": ["CYP2D6", "CYP3A4"], "inhibitor": ["CYP2D6_weak"], "inducer": [], "serotonergic": true },
+      "oncologyNote": { "en": "May help with hot flashes in hormonal therapy", "pl": "Może pomagać na uderzenia gorąca przy hormonoterapii" },
+      "sources": ["FDA prescribing information"]
+    },
+    {
+      "id": "sertraline",
+      "name": { "en": "Sertraline", "pl": "Sertralina", "de": "Sertralin" },
+      "class": "SSRI",
+      "cyp450": { "substrate": ["CYP2C19", "CYP2D6"], "inhibitor": ["CYP2D6_moderate"], "inducer": [], "serotonergic": true },
+      "oncologyNote": { "en": "CYP2D6 inhibition may reduce tamoxifen efficacy", "pl": "Hamowanie CYP2D6 może zmniejszyć skuteczność tamoksyfenu" },
+      "sources": ["FDA prescribing information", "Stearns V, et al. JNCI 2003"]
+    },
+    {
+      "id": "escitalopram",
+      "name": { "en": "Escitalopram", "pl": "Escitalopram", "de": "Escitalopram" },
+      "class": "SSRI",
+      "cyp450": { "substrate": ["CYP2C19", "CYP3A4"], "inhibitor": [], "inducer": [], "serotonergic": true },
+      "oncologyNote": { "en": "Preferred SSRI with tamoxifen (minimal CYP2D6 effect)", "pl": "Preferowany SSRI przy tamoksyfenie (minimalne działanie na CYP2D6)" },
+      "sources": ["FDA prescribing information"]
+    },
+    {
+      "id": "mirtazapine",
+      "name": { "en": "Mirtazapine", "pl": "Mirtazapina", "de": "Mirtazapin" },
+      "class": "NaSSA",
+      "cyp450": { "substrate": ["CYP1A2", "CYP2D6", "CYP3A4"], "inhibitor": [], "inducer": [], "serotonergic": true },
+      "oncologyNote": { "en": "May help with appetite and sleep in cancer patients", "pl": "Może pomagać z apetytem i snem u pacjentów onkologicznych" },
+      "sources": ["FDA prescribing information"]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "protocol": "",
+  "cyclePattern": "",
+  "cycleLengthDays": 21,
+  "contributions": [],
+  "aggregated": {
+    "sampleSize": 0,
+    "averagePattern": null,
+    "note": "Data will be aggregated when we collect at least 5 contributors"
+  }
+}

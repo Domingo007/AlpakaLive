@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "interactions": [
+    {
+      "drug1": "paclitaxel", "drug2": "fenbendazole", "pathway": "CYP3A4", "type": "competition", "severity": "major",
+      "description": { "en": "Both metabolized by CYP3A4. Concurrent use may alter paclitaxel levels.", "pl": "Oba metabolizowane przez CYP3A4. Jednoczesne stosowanie może zmienić poziom paklitakselu." },
+      "recommendation": { "en": "Discuss with oncologist before combining.", "pl": "Omów z onkologiem przed łączeniem." },
+      "evidenceLevel": "preclinical", "sources": ["Drug interaction databases"]
+    },
+    {
+      "drug1": "tamoxifen", "drug2": "sertraline", "pathway": "CYP2D6", "type": "inhibition", "severity": "major",
+      "description": { "en": "Sertraline inhibits CYP2D6, which converts tamoxifen to active metabolite endoxifen. May reduce tamoxifen efficacy.", "pl": "Sertralina hamuje CYP2D6, który konwertuje tamoksyfen do aktywnego metabolitu endoksyfenu. Może zmniejszyć skuteczność tamoksyfenu." },
+      "recommendation": { "en": "Consider escitalopram or venlafaxine instead.", "pl": "Rozważ escitalopram lub wenlafaksynę zamiast sertraliny." },
+      "evidenceLevel": "established", "sources": ["Stearns V, et al. JNCI 2003", "NCCN Guidelines"]
+    },
+    {
+      "drug1": "st_johns_wort", "drug2": "paclitaxel", "pathway": "CYP3A4", "type": "induction", "severity": "major",
+      "description": { "en": "St. John's Wort strongly induces CYP3A4, potentially reducing paclitaxel plasma levels and efficacy.", "pl": "Dziurawiec silnie indukuje CYP3A4, potencjalnie obniżając stężenie paklitakselu i jego skuteczność." },
+      "recommendation": { "en": "AVOID during any chemotherapy.", "pl": "UNIKAJ podczas jakiejkolwiek chemioterapii." },
+      "evidenceLevel": "established", "sources": ["FDA drug safety communication"]
+    },
+    {
+      "drug1": "grapefruit", "drug2": "olaparib", "pathway": "CYP3A4", "type": "inhibition", "severity": "moderate",
+      "description": { "en": "Grapefruit inhibits CYP3A4, may increase olaparib levels.", "pl": "Grejpfrut hamuje CYP3A4, może zwiększyć stężenie olaparibu." },
+      "recommendation": { "en": "Avoid grapefruit during olaparib treatment.", "pl": "Unikaj grejpfruta podczas leczenia olaparibem." },
+      "evidenceLevel": "established", "sources": ["Lynparza SmPC/EMA"]
+    }
+  ],
+  "serotonin_risk_pairs": [
+    { "drug1": "trazodone", "drug2": "venlafaxine", "severity": "high", "description": { "en": "Both serotonergic. Risk of serotonin syndrome.", "pl": "Oba serotoninergiczne. Ryzyko zespołu serotoninowego." } },
+    { "drug1": "trazodone", "drug2": "sertraline", "severity": "high", "description": { "en": "Both serotonergic. Risk of serotonin syndrome.", "pl": "Oba serotoninergiczne. Ryzyko zespołu serotoninowego." } },
+    { "drug1": "venlafaxine", "drug2": "mirtazapine", "severity": "moderate", "description": { "en": "Both serotonergic. Monitor for serotonin syndrome symptoms.", "pl": "Oba serotoninergiczne. Monitoruj objawy zespołu serotoninowego." } }
+  ]
+}

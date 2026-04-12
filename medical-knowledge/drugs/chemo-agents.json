@@ -1,0 +1,112 @@
+{
+  "version": "1.0.0",
+  "drugs": [
+    {
+      "id": "paclitaxel",
+      "name": { "en": "Paclitaxel", "pl": "Paklitaksel", "de": "Paclitaxel" },
+      "class": "taxane",
+      "administration": "iv",
+      "cyp450": { "substrate": ["CYP3A4", "CYP2C8"], "inhibitor": [], "inducer": [] },
+      "commonSideEffects": [
+        { "effect": "neuropathy", "frequency": 0.60, "severity": "dose-dependent" },
+        { "effect": "neutropenia", "frequency": 0.80, "severity": "grade3-4" },
+        { "effect": "alopecia", "frequency": 0.95, "severity": "grade2" },
+        { "effect": "myalgia", "frequency": 0.50, "severity": "grade1-2" }
+      ],
+      "monitoringRequired": ["WBC", "ANC", "neuropathy_grade"],
+      "doseReductions": {
+        "anc_below_1500": "delay until recovery",
+        "neuropathy_grade2": "reduce 20%",
+        "neuropathy_grade3": "discontinue"
+      },
+      "sources": ["NCCN Guidelines 2024", "ESMO Guidelines 2024"]
+    },
+    {
+      "id": "docetaxel",
+      "name": { "en": "Docetaxel", "pl": "Docetaksel", "de": "Docetaxel" },
+      "class": "taxane",
+      "administration": "iv",
+      "cyp450": { "substrate": ["CYP3A4"], "inhibitor": [], "inducer": [] },
+      "commonSideEffects": [
+        { "effect": "neutropenia", "frequency": 0.75, "severity": "grade3-4" },
+        { "effect": "edema", "frequency": 0.40, "severity": "grade1-2" },
+        { "effect": "neuropathy", "frequency": 0.30, "severity": "grade1-2" },
+        { "effect": "alopecia", "frequency": 0.90, "severity": "grade2" }
+      ],
+      "monitoringRequired": ["WBC", "ANC", "fluid_retention"],
+      "sources": ["NCCN Guidelines 2024"]
+    },
+    {
+      "id": "epirubicin",
+      "name": { "en": "Epirubicin", "pl": "Epirubicyna", "de": "Epirubicin" },
+      "class": "anthracycline",
+      "administration": "iv",
+      "cyp450": { "substrate": ["CYP3A4", "CYP2D6"], "inhibitor": [], "inducer": [] },
+      "commonSideEffects": [
+        { "effect": "nausea", "frequency": 0.70, "severity": "grade2-3" },
+        { "effect": "neutropenia", "frequency": 0.60, "severity": "grade3-4" },
+        { "effect": "alopecia", "frequency": 0.95, "severity": "grade2" },
+        { "effect": "cardiotoxicity", "frequency": 0.03, "severity": "cumulative" }
+      ],
+      "monitoringRequired": ["WBC", "LVEF", "cumulative_dose"],
+      "sources": ["ESMO Guidelines 2024"]
+    },
+    {
+      "id": "doxorubicin",
+      "name": { "en": "Doxorubicin", "pl": "Doksorubicyna", "de": "Doxorubicin" },
+      "class": "anthracycline",
+      "administration": "iv",
+      "cyp450": { "substrate": ["CYP3A4", "CYP2D6"], "inhibitor": [], "inducer": [] },
+      "commonSideEffects": [
+        { "effect": "nausea", "frequency": 0.75, "severity": "grade2-3" },
+        { "effect": "neutropenia", "frequency": 0.65, "severity": "grade3-4" },
+        { "effect": "alopecia", "frequency": 0.95, "severity": "grade2" },
+        { "effect": "cardiotoxicity", "frequency": 0.05, "severity": "cumulative" }
+      ],
+      "monitoringRequired": ["WBC", "LVEF", "cumulative_dose"],
+      "sources": ["NCCN Guidelines 2024"]
+    },
+    {
+      "id": "cyclophosphamide",
+      "name": { "en": "Cyclophosphamide", "pl": "Cyklofosfamid", "de": "Cyclophosphamid" },
+      "class": "alkylating_agent",
+      "administration": "iv",
+      "cyp450": { "substrate": ["CYP2B6", "CYP3A4"], "inhibitor": [], "inducer": [] },
+      "commonSideEffects": [
+        { "effect": "nausea", "frequency": 0.60, "severity": "grade1-2" },
+        { "effect": "leukopenia", "frequency": 0.50, "severity": "grade2-3" },
+        { "effect": "hemorrhagic_cystitis", "frequency": 0.05, "severity": "grade2-4" }
+      ],
+      "monitoringRequired": ["WBC", "urinalysis"],
+      "sources": ["NCCN Guidelines 2024"]
+    },
+    {
+      "id": "carboplatin",
+      "name": { "en": "Carboplatin", "pl": "Karboplatyna", "de": "Carboplatin" },
+      "class": "platinum",
+      "administration": "iv",
+      "cyp450": { "substrate": [], "inhibitor": [], "inducer": [] },
+      "commonSideEffects": [
+        { "effect": "thrombocytopenia", "frequency": 0.60, "severity": "grade3-4" },
+        { "effect": "nausea", "frequency": 0.65, "severity": "grade2-3" },
+        { "effect": "nephrotoxicity", "frequency": 0.10, "severity": "grade1-2" }
+      ],
+      "monitoringRequired": ["PLT", "creatinine", "GFR"],
+      "sources": ["NCCN Guidelines 2024"]
+    },
+    {
+      "id": "gemcitabine",
+      "name": { "en": "Gemcitabine", "pl": "Gemcytabina", "de": "Gemcitabin" },
+      "class": "antimetabolite",
+      "administration": "iv",
+      "cyp450": { "substrate": [], "inhibitor": [], "inducer": [] },
+      "commonSideEffects": [
+        { "effect": "flu_like_symptoms", "frequency": 0.40, "severity": "grade1-2" },
+        { "effect": "neutropenia", "frequency": 0.50, "severity": "grade2-3" },
+        { "effect": "fatigue", "frequency": 0.60, "severity": "grade1-2" }
+      ],
+      "monitoringRequired": ["WBC", "PLT", "LFTs"],
+      "sources": ["NCCN Guidelines 2024"]
+    }
+  ]
+}

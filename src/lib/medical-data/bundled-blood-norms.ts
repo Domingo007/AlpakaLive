@@ -1,8 +1,8 @@
 /*
  * AlpacaLive — Bundled blood reference norms (re-exported from JSON).
- * Source: medical-knowledge/common/blood-norms.json
+ * Source: medical-knowledge/reference-ranges/blood-markers.json
  */
-import bloodNormsJson from '../../../medical-knowledge/common/blood-norms.json';
+import bloodNormsJson from '../../../medical-knowledge/reference-ranges/blood-markers.json';
 import type { BloodMarkerNorm } from './types';
 
 export const BUNDLED_BLOOD_NORMS: Record<string, BloodMarkerNorm> =

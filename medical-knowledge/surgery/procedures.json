@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "procedures": [
+    {
+      "id": "mastectomy_total",
+      "name": { "en": "Total mastectomy", "pl": "Mastektomia całkowita" },
+      "recoveryDays": { "hospital": "2-4", "home": "21-42", "full": "42-84" },
+      "restrictions": { "en": ["No lifting >2kg for 4-6 weeks", "No driving for 2-3 weeks"], "pl": ["Nie dźwigaj >2kg przez 4-6 tyg.", "Nie prowadź auta przez 2-3 tyg."] },
+      "drains": true, "drainRemovalDays": "7-14",
+      "physiotherapy": true,
+      "sources": ["ESMO Breast Cancer Guidelines"]
+    },
+    {
+      "id": "lumpectomy",
+      "name": { "en": "Lumpectomy (breast-conserving surgery)", "pl": "Tumorektomia (operacja oszczędzająca)" },
+      "recoveryDays": { "hospital": "0-1", "home": "7-14", "full": "21-28" },
+      "restrictions": { "en": ["Gentle activity for 1-2 weeks"], "pl": ["Delikatna aktywność przez 1-2 tyg."] },
+      "drains": false,
+      "followUp": { "en": "Radiotherapy usually follows in 4-6 weeks", "pl": "Radioterapia zazwyczaj po 4-6 tygodniach" },
+      "sources": ["NCCN Guidelines"]
+    },
+    {
+      "id": "sentinel_node_biopsy",
+      "name": { "en": "Sentinel lymph node biopsy", "pl": "Biopsja węzła wartowniczego" },
+      "recoveryDays": { "hospital": "0-1", "home": "7-14", "full": "14-21" },
+      "restrictions": { "en": ["Avoid lifting >2kg on affected side for 2 weeks"], "pl": ["Unikaj dźwigania >2kg po stronie operacji przez 2 tyg."] },
+      "lymphedemaRisk": "low (5-8%)",
+      "sources": ["NSABP B-32 trial"]
+    },
+    {
+      "id": "axillary_dissection",
+      "name": { "en": "Axillary lymph node dissection", "pl": "Wycięcie węzłów chłonnych pachowych" },
+      "recoveryDays": { "hospital": "1-3", "home": "14-28", "full": "42-84" },
+      "drains": true, "drainRemovalDays": "7-21",
+      "lymphedemaRisk": "high (20-30%)",
+      "restrictions": { "en": ["No BP measurement on affected arm", "Physiotherapy mandatory"], "pl": ["Nie mierz ciśnienia na operowanej ręce", "Fizjoterapia obowiązkowa"] },
+      "sources": ["ESMO Guidelines"]
+    },
+    {
+      "id": "port_insertion",
+      "name": { "en": "Port-a-cath insertion", "pl": "Wszczepienie portu naczyniowego" },
+      "recoveryDays": { "hospital": "0-1", "home": "3-7", "full": "7-14" },
+      "restrictions": { "en": ["No swimming for 2 weeks", "Gentle arm movements"], "pl": ["Bez pływania przez 2 tyg.", "Delikatne ruchy ręką"] },
+      "sources": ["Clinical practice"]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "vitals": [
+    { "id": "heart_rate", "name": { "en": "Heart Rate", "pl": "Tętno" }, "unit": "bpm", "normalRange": { "min": 60, "max": 100 }, "alertHigh": 120, "alertLow": 40,
+      "chemoRelevance": { "en": "RHR >85 in chemo patients may indicate infection or dehydration", "pl": "RHR >85 u pacjentów po chemii może wskazywać na infekcję lub odwodnienie" } },
+    { "id": "blood_pressure_sys", "name": { "en": "Systolic BP", "pl": "Ciśnienie skurczowe" }, "unit": "mmHg", "normalRange": { "min": 90, "max": 140 }, "alertHigh": 180, "alertLow": 80 },
+    { "id": "blood_pressure_dia", "name": { "en": "Diastolic BP", "pl": "Ciśnienie rozkurczowe" }, "unit": "mmHg", "normalRange": { "min": 60, "max": 90 }, "alertHigh": 110, "alertLow": 50 },
+    { "id": "temperature", "name": { "en": "Temperature", "pl": "Temperatura" }, "unit": "°C", "normalRange": { "min": 36.1, "max": 37.2 }, "alertHigh": 38.0, "alertLow": 35.0,
+      "chemoRelevance": { "en": "Fever >38°C during chemo = possible febrile neutropenia — EMERGENCY", "pl": "Gorączka >38°C podczas chemii = możliwa gorączka neutropeniczna — PILNE" } },
+    { "id": "spo2", "name": { "en": "SpO2", "pl": "SpO2" }, "unit": "%", "normalRange": { "min": 95, "max": 100 }, "alertLow": 92,
+      "chemoRelevance": { "en": "SpO2 <92% requires immediate medical attention", "pl": "SpO2 <92% wymaga natychmiastowej pomocy medycznej" } },
+    { "id": "weight", "name": { "en": "Weight", "pl": "Waga" }, "unit": "kg",
+      "chemoRelevance": { "en": "Weight loss >2kg/week is clinically significant in oncology", "pl": "Spadek wagi >2kg/tydzień jest klinicznie istotny w onkologii" } }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "language": "en",
+  "terms": {
+    "ANC": "Absolute Neutrophil Count",
+    "CBC": "Complete Blood Count",
+    "CR": "Complete Response",
+    "PR": "Partial Response",
+    "SD": "Stable Disease",
+    "PD": "Progressive Disease",
+    "RECIST": "Response Evaluation Criteria In Solid Tumors",
+    "CTCAE": "Common Terminology Criteria for Adverse Events (grades 1-5)",
+    "ECOG": "Eastern Cooperative Oncology Group performance status (0-5)",
+    "irAE": "Immune-Related Adverse Event",
+    "LVEF": "Left Ventricular Ejection Fraction (heart function)",
+    "G-CSF": "Granulocyte Colony-Stimulating Factor",
+    "BSA": "Body Surface Area",
+    "GFR": "Glomerular Filtration Rate (kidney function)",
+    "DFS": "Disease-Free Survival",
+    "OS": "Overall Survival",
+    "PFS": "Progression-Free Survival",
+    "pCR": "Pathologic Complete Response",
+    "NAC": "Neoadjuvant Chemotherapy",
+    "AC": "Adjuvant Chemotherapy"
+  },
+  "documentTypes": {
+    "discharge summary": "Hospital discharge document",
+    "pathology report": "Tissue analysis from biopsy or surgery",
+    "radiology report": "Imaging study description",
+    "lab results": "Blood test results"
+  }
+}

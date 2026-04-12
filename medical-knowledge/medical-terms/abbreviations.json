@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "abbreviations": [
+    { "abbr": "RECIST", "full": { "en": "Response Evaluation Criteria In Solid Tumors", "pl": "Kryteria oceny odpowiedzi guzów litych" }, "category": "imaging" },
+    { "abbr": "CTCAE", "full": { "en": "Common Terminology Criteria for Adverse Events", "pl": "Wspólne kryteria terminologii zdarzeń niepożądanych" }, "category": "grading" },
+    { "abbr": "ECOG", "full": { "en": "Eastern Cooperative Oncology Group", "pl": "Skala sprawności ECOG" }, "category": "performance" },
+    { "abbr": "TNM", "full": { "en": "Tumor-Node-Metastasis staging", "pl": "Klasyfikacja TNM (guz-węzły-przerzuty)" }, "category": "staging" },
+    { "abbr": "ESMO", "full": { "en": "European Society for Medical Oncology", "pl": "Europejskie Towarzystwo Onkologii Klinicznej" }, "category": "guidelines" },
+    { "abbr": "NCCN", "full": { "en": "National Comprehensive Cancer Network", "pl": "Narodowa Sieć Kompleksowych Ośrodków Onkologicznych (USA)" }, "category": "guidelines" },
+    { "abbr": "EMA", "full": { "en": "European Medicines Agency", "pl": "Europejska Agencja Leków" }, "category": "regulatory" },
+    { "abbr": "FDA", "full": { "en": "Food and Drug Administration", "pl": "Agencja Żywności i Leków (USA)" }, "category": "regulatory" },
+    { "abbr": "NFZ", "full": { "en": "National Health Fund (Poland)", "pl": "Narodowy Fundusz Zdrowia" }, "category": "regulatory" },
+    { "abbr": "BRCA", "full": { "en": "BReast CAncer gene", "pl": "Gen raka piersi" }, "category": "genetics" },
+    { "abbr": "HER2", "full": { "en": "Human Epidermal Growth Factor Receptor 2", "pl": "Receptor ludzkiego naskórkowego czynnika wzrostu 2" }, "category": "biomarker" },
+    { "abbr": "ER", "full": { "en": "Estrogen Receptor", "pl": "Receptor estrogenowy" }, "category": "biomarker" },
+    { "abbr": "PR", "full": { "en": "Progesterone Receptor", "pl": "Receptor progesteronowy" }, "category": "biomarker" }
+  ]
+}

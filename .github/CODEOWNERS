@@ -1,0 +1,19 @@
+# Application code — requires developer review
+/src/ @Domingo007
+
+# Medical knowledge — requires medical review
+/medical-knowledge/drugs/ @Domingo007
+/medical-knowledge/cancers/ @Domingo007
+/medical-knowledge/supplements/ @Domingo007
+/medical-knowledge/reference-ranges/ @Domingo007
+/medical-knowledge/radiotherapy/ @Domingo007
+/medical-knowledge/surgery/ @Domingo007
+
+# Patient experience — lighter review (anonymity check)
+/medical-knowledge/patient-experience/ @Domingo007
+
+# Translations
+/medical-knowledge/medical-terms/ @Domingo007
+
+# Medical data loader (bridge between code and data)
+/src/lib/medical-data/ @Domingo007
