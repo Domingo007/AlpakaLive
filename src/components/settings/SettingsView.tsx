@@ -499,6 +499,9 @@ export function SettingsView() {
         </div>
       </Card>
 
+      {/* Feedback & Bug Reports */}
+      <FeedbackSection />
+
       {/* PWA install hint */}
       <Card title={t.settings.pwaInstall}>
         <div className="text-xs text-text-secondary space-y-1">
@@ -524,5 +527,224 @@ function DrugRow({ drug }: { drug: DrugEntry }) {
     <div className="text-xs py-0.5 pl-2 border-l-2 border-accent-green">
       {drug.name} {drug.dose} — {drug.frequency}
     </div>
+  );
+}
+
+// ==================== FEEDBACK SECTION ====================
+
+const GITHUB_REPO = 'Domingo007/AlpakaLive';
+
+type FeedbackType = 'bug' | 'feature' | 'improvement' | 'medical';
+
+function FeedbackSection() {
+  const [showForm, setShowForm] = useState(false);
+  const [feedbackType, setFeedbackType] = useState<FeedbackType>('bug');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [sent, setSent] = useState(false);
+  const { lang } = useI18n();
+
+  const labels = lang === 'pl' ? {
+    cardTitle: 'Zgłoszenia i pomysły',
+    subtitle: 'Pomóż nam ulepszać aplikację. Zgłoś błąd, zaproponuj nową funkcję lub podziel się opinią.',
+    openForm: 'Napisz do nas',
+    bug: 'Błąd',
+    bugDesc: 'Coś nie działa poprawnie',
+    feature: 'Nowa funkcja',
+    featureDesc: 'Czego brakuje w aplikacji',
+    improvement: 'Ulepszenie',
+    improvementDesc: 'Co można poprawić',
+    medical: 'Dane medyczne',
+    medicalDesc: 'Brakujący lek, norma, choroba',
+    titleLabel: 'Krótki opis',
+    titlePlaceholder: 'np. Brak formularza dla terapii protonowej',
+    descLabel: 'Szczegóły (opcjonalne)',
+    descPlaceholder: 'Opisz problem lub pomysł szczegółowo...',
+    sendGithub: 'Wyślij przez GitHub',
+    sendEmail: 'Wyślij mailem',
+    sentMsg: 'Dziękujemy za zgłoszenie!',
+    githubNote: 'Otworzy się GitHub — możesz tam zobaczyć odpowiedzi na swoje zgłoszenie.',
+    viewIssues: 'Zobacz zgłoszenia community',
+  } : {
+    cardTitle: 'Feedback & Ideas',
+    subtitle: 'Help us improve the app. Report a bug, suggest a feature, or share your feedback.',
+    openForm: 'Write to us',
+    bug: 'Bug',
+    bugDesc: 'Something isn\'t working',
+    feature: 'New feature',
+    featureDesc: 'What\'s missing in the app',
+    improvement: 'Improvement',
+    improvementDesc: 'What could be better',
+    medical: 'Medical data',
+    medicalDesc: 'Missing drug, norm, disease',
+    titleLabel: 'Short description',
+    titlePlaceholder: 'e.g., Missing form for proton therapy',
+    descLabel: 'Details (optional)',
+    descPlaceholder: 'Describe the problem or idea in detail...',
+    sendGithub: 'Submit via GitHub',
+    sendEmail: 'Send by email',
+    sentMsg: 'Thank you for your feedback!',
+    githubNote: 'GitHub will open — you can see responses to your submission there.',
+    viewIssues: 'View community submissions',
+  };
+
+  const typeOptions: { id: FeedbackType; icon: string; label: string; desc: string; ghLabel: string }[] = [
+    { id: 'bug', icon: 'bug_report', label: labels.bug, desc: labels.bugDesc, ghLabel: 'bug' },
+    { id: 'feature', icon: 'lightbulb', label: labels.feature, desc: labels.featureDesc, ghLabel: 'enhancement' },
+    { id: 'improvement', icon: 'tune', label: labels.improvement, desc: labels.improvementDesc, ghLabel: 'improvement' },
+    { id: 'medical', icon: 'medical_information', label: labels.medical, desc: labels.medicalDesc, ghLabel: 'medical-data' },
+  ];
+
+  function buildGitHubUrl(): string {
+    const typeInfo = typeOptions.find(t => t.id === feedbackType);
+    const ghLabel = typeInfo?.ghLabel || 'feedback';
+    const body = [
+      `## ${typeInfo?.label || feedbackType}`,
+      '',
+      description || '_(no details provided)_',
+      '',
+      '---',
+      `_Submitted from AlpacaLive app (${lang.toUpperCase()})_`,
+    ].join('\n');
+
+    const params = new URLSearchParams({
+      title: `[${ghLabel}] ${title}`,
+      body,
+      labels: ghLabel,
+    });
+
+    return `https://github.com/${GITHUB_REPO}/issues/new?${params.toString()}`;
+  }
+
+  function buildMailtoUrl(): string {
+    const typeInfo = typeOptions.find(t => t.id === feedbackType);
+    const subject = `[AlpacaLive ${typeInfo?.label}] ${title}`;
+    const body = `${description}\n\n---\nTyp: ${typeInfo?.label}\nJęzyk: ${lang.toUpperCase()}`;
+    return `mailto:feedback@alpacalive.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
+  if (sent) {
+    return (
+      <Card title={labels.cardTitle}>
+        <div className="text-center py-4 space-y-2">
+          <Icon name="check_circle" size={32} className="mx-auto text-accent-green" />
+          <div className="text-sm font-medium text-accent-green">{labels.sentMsg}</div>
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card title={labels.cardTitle}>
+      <div className="space-y-3">
+        {!showForm ? (
+          <>
+            <p className="text-[11px] text-text-secondary leading-relaxed">{labels.subtitle}</p>
+            <button
+              onClick={() => setShowForm(true)}
+              className="w-full flex items-center justify-center gap-2 bg-accent-dark text-white rounded-lg py-2.5 text-xs font-medium"
+            >
+              <Icon name="rate_review" size={18} />
+              {labels.openForm}
+            </button>
+            <a
+              href={`https://github.com/${GITHUB_REPO}/issues`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-1.5 text-[11px] text-accent-dark hover:underline"
+            >
+              <Icon name="open_in_new" size={14} />
+              {labels.viewIssues}
+            </a>
+          </>
+        ) : (
+          <>
+            {/* Type selector */}
+            <div className="grid grid-cols-2 gap-1.5">
+              {typeOptions.map(opt => (
+                <button
+                  key={opt.id}
+                  onClick={() => setFeedbackType(opt.id)}
+                  className={`flex items-center gap-1.5 p-2 rounded-lg text-left transition-colors ${
+                    feedbackType === opt.id
+                      ? 'bg-accent-dark text-white'
+                      : 'bg-bg-primary border border-border'
+                  }`}
+                >
+                  <Icon name={opt.icon} size={16} />
+                  <div>
+                    <div className="text-[11px] font-medium">{opt.label}</div>
+                    <div className={`text-[9px] ${feedbackType === opt.id ? 'text-white/70' : 'text-text-tertiary'}`}>{opt.desc}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Title */}
+            <div>
+              <label className="text-xs text-text-secondary block mb-1">{labels.titleLabel}</label>
+              <input
+                value={title}
+                onChange={e => setTitle(e.target.value)}
+                placeholder={labels.titlePlaceholder}
+                className="w-full rounded-lg border border-border px-3 py-2 text-xs bg-bg-primary"
+              />
+            </div>
+
+            {/* Description */}
+            <div>
+              <label className="text-xs text-text-secondary block mb-1">{labels.descLabel}</label>
+              <textarea
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+                placeholder={labels.descPlaceholder}
+                rows={3}
+                className="w-full rounded-lg border border-border px-3 py-2 text-xs bg-bg-primary resize-y"
+              />
+            </div>
+
+            {/* Submit buttons */}
+            <div className="space-y-2">
+              <a
+                href={buildGitHubUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => { setSent(true); setTimeout(() => { setSent(false); setShowForm(false); setTitle(''); setDescription(''); }, 5000); }}
+                className={`w-full flex items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-medium transition-colors ${
+                  !title.trim()
+                    ? 'bg-lavender-200 text-text-tertiary pointer-events-none'
+                    : 'bg-accent-dark text-white hover:bg-accent-dark/90'
+                }`}
+              >
+                <Icon name="open_in_new" size={16} />
+                {labels.sendGithub}
+              </a>
+
+              <a
+                href={buildMailtoUrl()}
+                onClick={() => { setSent(true); setTimeout(() => { setSent(false); setShowForm(false); setTitle(''); setDescription(''); }, 5000); }}
+                className={`w-full flex items-center justify-center gap-2 rounded-lg py-2 text-xs border transition-colors ${
+                  !title.trim()
+                    ? 'border-border text-text-tertiary pointer-events-none'
+                    : 'border-accent-dark text-accent-dark'
+                }`}
+              >
+                <Icon name="mail" size={16} />
+                {labels.sendEmail}
+              </a>
+            </div>
+
+            <p className="text-[10px] text-text-tertiary text-center">{labels.githubNote}</p>
+
+            <button
+              onClick={() => { setShowForm(false); setTitle(''); setDescription(''); }}
+              className="w-full text-[11px] text-text-tertiary hover:text-text-secondary text-center py-1"
+            >
+              {lang === 'pl' ? 'Anuluj' : 'Cancel'}
+            </button>
+          </>
+        )}
+      </div>
+    </Card>
   );
 }
