@@ -1,5 +1,6 @@
 import { db } from './db';
 import { v4 as uuidv4 } from 'uuid';
+import { sanitizeExtractedData } from './input-guard';
 
 const SAVE_REGEX = /\[SAVE:(\w+):(\{[\s\S]*?\})\]/g;
 const UPDATE_REGEX = /\[UPDATE:patient:(\{[\s\S]*?\})\]/g;
@@ -53,6 +54,9 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
     const id = uuidv4();
     const date = (item.data.date as string) || new Date().toISOString().split('T')[0];
 
+    // Sanitize: only allow whitelisted fields per type
+    const safe = sanitizeExtractedData(item.type, item.data);
+
     switch (item.type) {
       case 'daily':
         await db.daily.put({
@@ -68,7 +72,7 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
           notes: '',
           chemoPhase: null,
           dayInCycle: 0,
-          ...item.data,
+          ...safe,
         } as any);
         break;
 
@@ -79,7 +83,7 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
           source: 'manual' as const,
           markers: {},
           notes: '',
-          ...item.data,
+          ...safe,
         } as any);
         break;
 
@@ -93,7 +97,7 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
           cycle: 1,
           notes: '',
           sideEffects: [],
-          ...item.data,
+          ...safe,
         } as any);
         break;
 
@@ -112,7 +116,7 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
           steps: 0,
           activeMinutes: 0,
           biocharge: 0,
-          ...item.data,
+          ...safe,
         } as any);
         break;
 
@@ -123,7 +127,7 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
           mealType: 'lunch' as const,
           description: '',
           toleratedWell: true,
-          ...item.data,
+          ...safe,
         } as any);
         break;
 
@@ -132,7 +136,7 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
           id,
           date,
           supplements: [],
-          ...item.data,
+          ...safe,
         } as any);
         break;
 
@@ -145,7 +149,7 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
           images: [],
           findings: '',
           notes: '',
-          ...item.data,
+          ...safe,
         } as any);
         break;
 
@@ -158,7 +162,7 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
           prediction: '',
           confidence: 0.5,
           basedOn: [],
-          ...item.data,
+          ...safe,
         } as any);
         break;
     }

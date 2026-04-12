@@ -6,10 +6,12 @@ import { PredictionCards } from './PredictionCards';
 import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
 import { Icon } from '@/components/shared/Icon';
 import { useI18n } from '@/lib/i18n';
+import { guardMessage, guardFile, checkRateLimit, MAX_MESSAGE_LENGTH } from '@/lib/input-guard';
 
 export function ChatView() {
   const { messages, isLoading, error, send, lastPrediction, lastProviderInfo } = useChat();
   const [input, setInput] = useState('');
+  const [guardError, setGuardError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useI18n();
@@ -21,6 +23,24 @@ export function ChatView() {
   async function handleSend() {
     const text = input.trim();
     if (!text && !isLoading) return;
+
+    // Rate limit
+    const rateCheck = checkRateLimit();
+    if (!rateCheck.allowed) {
+      setGuardError(rateCheck.reason || null);
+      setTimeout(() => setGuardError(null), 3000);
+      return;
+    }
+
+    // Input guard
+    const guard = guardMessage(text);
+    if (!guard.allowed) {
+      setGuardError(guard.reason || null);
+      setTimeout(() => setGuardError(null), 5000);
+      return;
+    }
+
+    setGuardError(null);
     setInput('');
     await send(text);
   }
@@ -36,6 +56,25 @@ export function ChatView() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // File guard
+    const fileCheck = guardFile(file);
+    if (!fileCheck.allowed) {
+      setGuardError(fileCheck.reason || null);
+      setTimeout(() => setGuardError(null), 5000);
+      e.target.value = '';
+      return;
+    }
+
+    // Rate limit
+    const rateCheck = checkRateLimit();
+    if (!rateCheck.allowed) {
+      setGuardError(rateCheck.reason || null);
+      setTimeout(() => setGuardError(null), 3000);
+      e.target.value = '';
+      return;
+    }
+
+    setGuardError(null);
     const reader = new FileReader();
     reader.onload = async () => {
       const base64 = (reader.result as string).split(',')[1];
@@ -48,6 +87,8 @@ export function ChatView() {
   }
 
   function handleQuickAction(prompt: string) {
+    const rateCheck = checkRateLimit();
+    if (!rateCheck.allowed) return;
     send(prompt);
   }
 
@@ -81,9 +122,12 @@ export function ChatView() {
             <PredictionCards result={lastPrediction} />
           </div>
         )}
-        {error && (
-          <div className="bg-alert-critical/10 text-alert-critical text-sm rounded-lg p-3">
-            {error}
+        {(error || guardError) && (
+          <div className={`text-sm rounded-lg p-3 flex items-start gap-2 ${
+            guardError ? 'bg-alert-warning/10 text-alert-warning' : 'bg-alert-critical/10 text-alert-critical'
+          }`}>
+            <Icon name={guardError ? 'shield' : 'error'} size={18} className="shrink-0 mt-0.5" />
+            <span>{guardError || error}</span>
           </div>
         )}
         <div ref={messagesEndRef} />
@@ -109,20 +153,28 @@ export function ChatView() {
             className="hidden"
             onChange={handlePhotoUpload}
           />
-          <textarea
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={t.chat.placeholder}
-            rows={1}
-            className="flex-1 resize-none rounded-2xl border-[1.5px] border-lavender-200 px-4 py-3 text-[15px] bg-lavender-50 text-text-primary focus:outline-none focus:border-lavender-500 focus:shadow-[0_0_0_3px_rgba(155,122,232,0.15)] min-h-[44px] max-h-[120px]"
-            style={{ height: 'auto', overflow: 'hidden' }}
-            onInput={e => {
-              const ta = e.currentTarget;
-              ta.style.height = 'auto';
-              ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
-            }}
-          />
+          <div className="flex-1 relative">
+            <textarea
+              value={input}
+              onChange={e => setInput(e.target.value.slice(0, MAX_MESSAGE_LENGTH))}
+              onKeyDown={handleKeyDown}
+              placeholder={t.chat.placeholder}
+              maxLength={MAX_MESSAGE_LENGTH}
+              rows={1}
+              className="w-full resize-none rounded-2xl border-[1.5px] border-lavender-200 px-4 py-3 text-[15px] bg-lavender-50 text-text-primary focus:outline-none focus:border-lavender-500 focus:shadow-[0_0_0_3px_rgba(155,122,232,0.15)] min-h-[44px] max-h-[120px]"
+              style={{ height: 'auto', overflow: 'hidden' }}
+              onInput={e => {
+                const ta = e.currentTarget;
+                ta.style.height = 'auto';
+                ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
+              }}
+            />
+            {input.length > MAX_MESSAGE_LENGTH * 0.8 && (
+              <div className={`absolute right-2 bottom-1 text-[9px] ${input.length >= MAX_MESSAGE_LENGTH ? 'text-alert-critical' : 'text-text-tertiary'}`}>
+                {input.length}/{MAX_MESSAGE_LENGTH}
+              </div>
+            )}
+          </div>
           <button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
