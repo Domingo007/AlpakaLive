@@ -106,7 +106,90 @@ class AlpacaLiveDB extends Dexie {
   }
 }
 
-export const db = new AlpacaLiveDB();
+// ==================== DUAL DATABASE SYSTEM ====================
+// Two separate IndexedDB databases:
+// - AlpacaLiveDB: real user data (never touched by demo)
+// - AlpacaLiveDemoDB: demo data (created/deleted on demand)
+// The exported `db` always points to the currently active database.
+
+const DEMO_DB_NAME = 'AlpacaLiveDemoDB';
+const DEMO_FLAG_KEY = 'alpacalive_demo_active';
+
+class AlpacaLiveDemoDB extends Dexie {
+  patient!: Table<PatientProfile>;
+  chemo!: Table<ChemoSession>;
+  blood!: Table<BloodWork>;
+  daily!: Table<DailyLog>;
+  wearable!: Table<WearableData>;
+  meals!: Table<MealLog>;
+  supplements!: Table<SupplementLog>;
+  imaging!: Table<ImagingStudy>;
+  predictions!: Table<Prediction>;
+  chat!: Table<ChatMessage>;
+  settings!: Table<AppSettings>;
+  calendarNotes!: Table<CalendarNote>;
+  treatmentSessions!: Table<TreatmentSession>;
+  referenceData!: Table<ReferenceDataRecord>;
+  deviceConnections!: Table<DeviceConnection>;
+
+  constructor() {
+    super(DEMO_DB_NAME);
+    this.version(1).stores({
+      patient: 'id',
+      chemo: 'id, date, plannedDate, status',
+      blood: 'id, date',
+      daily: 'id, date',
+      wearable: 'id, date',
+      meals: 'id, date',
+      supplements: 'id, date',
+      imaging: 'id, date, type',
+      predictions: 'id, date, targetDate, type',
+      chat: 'id, timestamp',
+      settings: 'id',
+      calendarNotes: 'id, date, type',
+      treatmentSessions: 'id, date, treatmentType, status',
+      referenceData: 'id, type, version',
+      deviceConnections: 'id',
+    });
+  }
+}
+
+const userDb = new AlpacaLiveDB();
+let demoDb: AlpacaLiveDemoDB | null = null;
+
+function isDemoActive(): boolean {
+  try {
+    return localStorage.getItem(DEMO_FLAG_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function getDemoDb(): AlpacaLiveDemoDB {
+  if (!demoDb) demoDb = new AlpacaLiveDemoDB();
+  return demoDb;
+}
+
+/** The active database — all app code uses this. */
+export let db: AlpacaLiveDB | AlpacaLiveDemoDB = isDemoActive() ? getDemoDb() : userDb;
+
+/** Switch to demo database. */
+export function activateDemoDb(): void {
+  localStorage.setItem(DEMO_FLAG_KEY, 'true');
+  db = getDemoDb();
+}
+
+/** Switch back to user database and delete demo DB. */
+export async function deactivateDemoDb(): Promise<void> {
+  localStorage.removeItem(DEMO_FLAG_KEY);
+  db = userDb;
+  // Close and delete demo database entirely
+  if (demoDb) {
+    demoDb.close();
+    demoDb = null;
+  }
+  await Dexie.delete(DEMO_DB_NAME);
+}
 
 export async function getSettings(): Promise<AppSettings | undefined> {
   return db.settings.get('main');

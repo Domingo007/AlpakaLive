@@ -40,7 +40,7 @@ export function SettingsView() {
     getLatestBackupInfo().then(setBackupInfo);
   }, []);
 
-  const isDemo = settings?.demoMode === true;
+  const isDemo = settings?.demoMode === true || localStorage.getItem('alpacalive_demo_active') === 'true';
 
   if (showEducation) {
     return <EducationView onClose={() => setShowEducation(false)} />;
