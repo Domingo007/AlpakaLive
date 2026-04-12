@@ -34,6 +34,7 @@ export function CalendarView({ onNavigate }: CalendarViewProps) {
   const [hiddenTypes, setHiddenTypes] = useState<Set<CalendarEventType>>(new Set(['phase_a', 'phase_b', 'phase_c']));
   const [loading, setLoading] = useState(true);
   const [showAddMenu, setShowAddMenu] = useState(false);
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
   const [noteTitle, setNoteTitle] = useState('');
   const [noteType, setNoteType] = useState<CalendarEventType>('note');
   const { t, lang } = useI18n();
@@ -103,11 +104,76 @@ export function CalendarView({ onNavigate }: CalendarViewProps) {
 
   return (
     <div className="h-full overflow-y-auto px-3 py-4 space-y-3">
-      <div className="flex items-center justify-between">
-        <button onClick={() => shiftMonth(-1)} className="p-2 text-lg">◀</button>
-        <h2 className="font-display text-base font-semibold text-accent-dark capitalize">{monthName}</h2>
-        <button onClick={() => shiftMonth(1)} className="p-2 text-lg">▶</button>
+      {/* Month navigation header */}
+      <div className="flex items-center justify-between gap-2">
+        <button onClick={() => shiftMonth(-1)} className="p-1.5 rounded-lg hover:bg-bg-elevated transition-colors">
+          <Icon name="chevron_left" size={22} className="text-accent-dark" />
+        </button>
+        <button
+          onClick={() => setShowMonthPicker(!showMonthPicker)}
+          className="font-display text-base font-semibold text-accent-dark capitalize hover:bg-bg-elevated px-3 py-1 rounded-lg transition-colors flex items-center gap-1"
+        >
+          {monthName}
+          <Icon name={showMonthPicker ? 'expand_less' : 'expand_more'} size={18} />
+        </button>
+        <button onClick={() => shiftMonth(1)} className="p-1.5 rounded-lg hover:bg-bg-elevated transition-colors">
+          <Icon name="chevron_right" size={22} className="text-accent-dark" />
+        </button>
+        {/* Today button — show only when not viewing current month */}
+        {(viewMonth.getMonth() !== new Date().getMonth() || viewMonth.getFullYear() !== new Date().getFullYear()) && (
+          <button
+            onClick={() => { setViewMonth(new Date()); setSelectedDate(today); }}
+            className="text-[10px] font-medium text-accent-dark bg-accent-warm px-2 py-1 rounded-lg hover:bg-accent-dark hover:text-accent-warm transition-colors shrink-0"
+          >
+            {lang === 'pl' ? 'Dziś' : 'Today'}
+          </button>
+        )}
       </div>
+
+      {/* Month/Year picker dropdown */}
+      {showMonthPicker && (
+        <div className="bg-bg-card rounded-xl border border-border p-3 space-y-3">
+          {/* Year selector */}
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setViewMonth(prev => { const d = new Date(prev); d.setFullYear(d.getFullYear() - 1); return d; })}
+              className="p-1 rounded hover:bg-bg-elevated transition-colors"
+            >
+              <Icon name="chevron_left" size={18} className="text-text-secondary" />
+            </button>
+            <span className="text-sm font-semibold text-text-primary">{year}</span>
+            <button
+              onClick={() => setViewMonth(prev => { const d = new Date(prev); d.setFullYear(d.getFullYear() + 1); return d; })}
+              className="p-1 rounded hover:bg-bg-elevated transition-colors"
+            >
+              <Icon name="chevron_right" size={18} className="text-text-secondary" />
+            </button>
+          </div>
+          {/* Month grid */}
+          <div className="grid grid-cols-4 gap-1.5">
+            {Array.from({ length: 12 }).map((_, m) => {
+              const label = new Date(year, m).toLocaleDateString(locale, { month: 'short' });
+              const isCurrent = m === month;
+              const isNowMonth = m === new Date().getMonth() && year === new Date().getFullYear();
+              return (
+                <button
+                  key={m}
+                  onClick={() => { setViewMonth(new Date(year, m, 1)); setShowMonthPicker(false); setSelectedDate(null); }}
+                  className={`py-1.5 rounded-lg text-xs font-medium capitalize transition-colors ${
+                    isCurrent
+                      ? 'bg-accent-dark text-white'
+                      : isNowMonth
+                        ? 'bg-accent-warm text-accent-dark ring-1 ring-accent-dark'
+                        : 'hover:bg-bg-elevated text-text-primary'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {loading ? (
         <div className="text-center py-8 text-text-secondary text-sm">{t.common.loading}</div>
@@ -136,10 +202,16 @@ export function CalendarView({ onNavigate }: CalendarViewProps) {
                 onClick={() => setSelectedDate(isSelected ? null : dateStr)}
                 className={`min-h-[52px] p-1 text-left relative transition-colors ${
                   isSelected ? 'ring-2 ring-accent-dark' : ''
-                } ${isToday ? 'bg-accent-warm/30' : 'bg-bg-card'}`}
-                style={phaseBg ? { backgroundColor: phaseBg } : undefined}
+                } ${isToday ? 'bg-accent-warm/40' : 'bg-bg-card'}`}
+                style={phaseBg && !isToday ? { backgroundColor: phaseBg } : undefined}
               >
-                <div className={`text-[10px] ${isToday ? 'font-bold text-accent-dark' : 'text-text-primary'}`}>{day}</div>
+                <div className="flex items-center gap-0.5">
+                  <span className={`text-[10px] leading-none ${
+                    isToday
+                      ? 'font-bold text-white bg-accent-dark rounded-full w-[18px] h-[18px] flex items-center justify-center'
+                      : 'text-text-primary'
+                  }`}>{day}</span>
+                </div>
                 <div className="flex flex-wrap gap-0.5 mt-0.5">
                   {dayEvents.slice(0, 4).map(ev => (
                     <span key={ev.id} title={ev.title} style={{ color: ev.color }}>
