@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePatient, useSettings } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
 import { Icon } from '@/components/shared/Icon';
@@ -8,6 +8,16 @@ import { AIProviderSettings } from './AIProviderSettings';
 import { EducationView } from '@/components/education/EducationView';
 import { exportAllData, importData, clearAllData, saveSettings } from '@/lib/db';
 import { loadDemoData } from '@/lib/demo-data';
+import {
+  isFileSystemAccessSupported,
+  pickBackupFolder,
+  writeBackupToFolder,
+  removeBackupFolder,
+  getBackupFolderName,
+  getLatestBackupInfo,
+  restoreFromBackup,
+  downloadBackup,
+} from '@/lib/auto-backup';
 import { useI18n, type Lang } from '@/lib/i18n';
 import type { DrugEntry, ThemeMode } from '@/types';
 
@@ -17,6 +27,17 @@ export function SettingsView() {
   const { t, lang, setLang } = useI18n();
   const [demoLoading, setDemoLoading] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
+
+  // Auto-backup state
+  const [backupFolder, setBackupFolder] = useState<string | null>(null);
+  const [backupInfo, setBackupInfo] = useState<{ date: string; size: string } | null>(null);
+  const [backupStatus, setBackupStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const fsSupported = isFileSystemAccessSupported();
+
+  useEffect(() => {
+    getBackupFolderName().then(setBackupFolder);
+    getLatestBackupInfo().then(setBackupInfo);
+  }, []);
 
   const isDemo = settings?.demoMode === true;
 
@@ -302,89 +323,179 @@ export function SettingsView() {
         </Card>
       )}
 
-      {/* Where is your data */}
-      <Card title={lang === 'pl' ? 'Gdzie s\u0105 Twoje dane?' : 'Where is your data?'}>
+      {/* Data & Backup */}
+      <Card title={lang === 'pl' ? 'Twoje dane i kopia zapasowa' : 'Your data & backup'}>
         <div className="space-y-3">
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-lg bg-accent-green/15 flex items-center justify-center shrink-0 mt-0.5">
-              <Icon name="smartphone" size={20} className="text-accent-green" />
-            </div>
-            <div>
-              <div className="text-xs font-medium text-text-primary">
-                {lang === 'pl' ? 'Tylko na tym urz\u0105dzeniu' : 'Only on this device'}
-              </div>
-              <div className="text-[11px] text-text-secondary leading-relaxed mt-0.5">
-                {lang === 'pl'
-                  ? 'Wszystkie Twoje dane s\u0105 zapisane lokalnie w przegl\u0105darce tego telefonu (IndexedDB). Nie s\u0105 wysy\u0142ane na \u017caden serwer. \u017badna inna osoba nie ma do nich dost\u0119pu.'
-                  : 'All your data is stored locally in this phone\'s browser (IndexedDB). It is not sent to any server. No one else has access to it.'}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-lg bg-lavender-100 flex items-center justify-center shrink-0 mt-0.5">
-              <Icon name="folder" size={20} className="text-lavender-600" />
-            </div>
-            <div>
-              <div className="text-xs font-medium text-text-primary">
-                {lang === 'pl' ? 'Lokalizacja danych' : 'Data location'}
-              </div>
-              <div className="text-[11px] text-text-secondary leading-relaxed mt-0.5">
-                {lang === 'pl'
-                  ? 'Przegl\u0105darka \u2192 Ustawienia \u2192 Dane stron / Pami\u0119\u0107 podr\u0119czna \u2192 alpacalive (lub adres strony). Na iPhonie: Ustawienia \u2192 Safari \u2192 Zaawansowane \u2192 Dane witryn.'
-                  : 'Browser \u2192 Settings \u2192 Site data / Storage \u2192 alpacalive (or site URL). On iPhone: Settings \u2192 Safari \u2192 Advanced \u2192 Website Data.'}
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-alert-warning/10 rounded-lg px-3 py-2 flex items-start gap-2">
-            <Icon name="warning" size={16} className="text-alert-warning shrink-0 mt-0.5" />
-            <div className="text-[11px] text-text-primary leading-relaxed">
+          {/* Info about local storage */}
+          <div className="flex items-start gap-2.5">
+            <Icon name="smartphone" size={18} className="text-accent-green shrink-0 mt-0.5" />
+            <div className="text-[11px] text-text-secondary leading-relaxed">
               {lang === 'pl'
-                ? 'Je\u015bli wyczyszczysz dane przegl\u0105darki, usuniesz aplikacj\u0119 z ekranu lub zresetujesz telefon \u2014 dane zostan\u0105 utracone. Regularnie r\u00f3b kopi\u0119 zapasow\u0105 (przycisk poni\u017cej).'
-                : 'If you clear browser data, remove the app from home screen, or reset your phone \u2014 data will be lost. Regularly make backups (button below).'}
+                ? 'Dane zapisane w przeglądarce tego telefonu. Nie są wysyłane na serwer. Czyszczenie danych przeglądarki = utrata danych.'
+                : 'Data stored in this phone\'s browser. Not sent to any server. Clearing browser data = data loss.'}
             </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0 mt-0.5">
-              <Icon name="devices" size={20} className="text-blue-500" />
-            </div>
-            <div>
-              <div className="text-xs font-medium text-text-primary">
-                {lang === 'pl' ? 'Ka\u017cdy telefon = osobna kopia' : 'Each phone = separate copy'}
+          {/* Auto-backup to folder (Chrome/Android) */}
+          {fsSupported && (
+            <div className="bg-bg-primary rounded-xl border border-border p-3 space-y-2.5">
+              <div className="flex items-center gap-2">
+                <Icon name="folder_copy" size={18} className="text-accent-dark" />
+                <span className="text-xs font-semibold text-text-primary">
+                  {lang === 'pl' ? 'Auto-backup do folderu' : 'Auto-backup to folder'}
+                </span>
               </div>
-              <div className="text-[11px] text-text-secondary leading-relaxed mt-0.5">
+
+              {backupFolder ? (
+                <>
+                  <div className="flex items-center gap-2 bg-accent-green/10 rounded-lg px-3 py-2">
+                    <Icon name="check_circle" size={16} className="text-accent-green shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[11px] font-medium text-accent-green truncate">
+                        {lang === 'pl' ? 'Folder:' : 'Folder:'} {backupFolder}
+                      </div>
+                      {backupInfo && (
+                        <div className="text-[10px] text-text-secondary">
+                          {lang === 'pl' ? 'Ostatni backup:' : 'Last backup:'} {backupInfo.date} ({backupInfo.size})
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={async () => {
+                        setBackupStatus('saving');
+                        const ok = await writeBackupToFolder();
+                        setBackupStatus(ok ? 'saved' : 'error');
+                        if (ok) {
+                          const info = await getLatestBackupInfo();
+                          setBackupInfo(info);
+                        }
+                        setTimeout(() => setBackupStatus('idle'), 3000);
+                      }}
+                      disabled={backupStatus === 'saving'}
+                      className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-colors ${
+                        backupStatus === 'saved'
+                          ? 'bg-accent-green text-white'
+                          : backupStatus === 'error'
+                            ? 'bg-alert-critical text-white'
+                            : 'bg-accent-dark text-white hover:bg-accent-dark/90'
+                      }`}
+                    >
+                      <Icon name={backupStatus === 'saved' ? 'check' : backupStatus === 'error' ? 'error' : 'backup'} size={16} />
+                      {backupStatus === 'saving' ? (lang === 'pl' ? 'Zapisuję...' : 'Saving...')
+                        : backupStatus === 'saved' ? (lang === 'pl' ? 'Zapisano!' : 'Saved!')
+                        : backupStatus === 'error' ? (lang === 'pl' ? 'Błąd' : 'Error')
+                        : (lang === 'pl' ? 'Zapisz teraz' : 'Save now')}
+                    </button>
+
+                    <button
+                      onClick={async () => {
+                        if (!confirm(lang === 'pl'
+                          ? 'Przywrócić dane z ostatniego backupu? Obecne dane zostaną zastąpione.'
+                          : 'Restore from last backup? Current data will be replaced.')) return;
+                        const ok = await restoreFromBackup();
+                        if (ok) window.location.reload();
+                        else alert(lang === 'pl' ? 'Nie znaleziono backupu w folderze.' : 'No backup found in folder.');
+                      }}
+                      className="flex items-center justify-center gap-1.5 rounded-lg py-2 px-3 text-xs font-medium border border-accent-dark text-accent-dark"
+                    >
+                      <Icon name="restore" size={16} />
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={async () => {
+                      await removeBackupFolder();
+                      setBackupFolder(null);
+                      setBackupInfo(null);
+                    }}
+                    className="w-full text-[10px] text-text-tertiary hover:text-text-secondary text-center py-1"
+                  >
+                    {lang === 'pl' ? 'Odłącz folder' : 'Disconnect folder'}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="text-[11px] text-text-secondary leading-relaxed">
+                    {lang === 'pl'
+                      ? 'Wybierz folder na telefonie (np. w Dokumentach), gdzie aplikacja będzie zapisywać kopie zapasowe. Pliki będą bezpieczne nawet po czyszczeniu przeglądarki.'
+                      : 'Choose a folder on your phone (e.g., in Documents) where the app will save backups. Files will be safe even after clearing browser data.'}
+                  </div>
+                  <button
+                    onClick={async () => {
+                      const name = await pickBackupFolder();
+                      if (name) {
+                        setBackupFolder(name);
+                        // Immediately create first backup
+                        await writeBackupToFolder();
+                        const info = await getLatestBackupInfo();
+                        setBackupInfo(info);
+                      }
+                    }}
+                    className="w-full flex items-center justify-center gap-2 bg-accent-dark text-white rounded-lg py-2.5 text-xs font-medium"
+                  >
+                    <Icon name="create_new_folder" size={18} />
+                    {lang === 'pl' ? 'Wybierz folder backupu' : 'Choose backup folder'}
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* iOS/Safari fallback info */}
+          {!fsSupported && (
+            <div className="bg-lavender-50 rounded-xl border border-lavender-200 p-3 space-y-2">
+              <div className="flex items-center gap-2">
+                <Icon name="ios_share" size={18} className="text-lavender-600" />
+                <span className="text-xs font-semibold text-text-primary">
+                  {lang === 'pl' ? 'Kopia zapasowa (iPhone/Safari)' : 'Backup (iPhone/Safari)'}
+                </span>
+              </div>
+              <div className="text-[11px] text-text-secondary leading-relaxed">
                 {lang === 'pl'
-                  ? 'Dane NIE synchronizuj\u0105 si\u0119 mi\u0119dzy urz\u0105dzeniami. Je\u015bli chcesz przenie\u015b\u0107 dane na inny telefon, u\u017cyj eksportu i importu JSON.'
-                  : 'Data does NOT sync between devices. To transfer data to another phone, use JSON export and import.'}
+                  ? 'Twoja przeglądarka nie obsługuje auto-backupu do folderu. Użyj przycisku poniżej, aby pobrać kopię danych. Plik zostanie zapisany w Plikach → Pobrane.'
+                  : 'Your browser doesn\'t support auto-backup to folder. Use the button below to download a data copy. The file will be saved to Files → Downloads.'}
               </div>
+              <button
+                onClick={() => downloadBackup()}
+                className="w-full flex items-center justify-center gap-2 bg-accent-dark text-white rounded-lg py-2.5 text-xs font-medium"
+              >
+                <Icon name="download" size={18} />
+                {lang === 'pl' ? 'Pobierz kopię zapasową' : 'Download backup'}
+              </button>
             </div>
-          </div>
-        </div>
-      </Card>
+          )}
 
-      {/* Data management */}
-      <Card title={t.settings.dataManagement}>
-        <div className="space-y-2">
-          <button
-            onClick={handleExport}
-            className="w-full border border-accent-dark text-accent-dark rounded-lg py-2 text-sm"
-          >
-            {t.settings.exportData}
-          </button>
-          <button
-            onClick={handleImport}
-            className="w-full border border-accent-dark text-accent-dark rounded-lg py-2 text-sm"
-          >
-            {t.settings.importData}
-          </button>
-          <button
-            onClick={handleReset}
-            className="w-full border border-alert-critical text-alert-critical rounded-lg py-2 text-sm"
-          >
-            {t.settings.resetData}
-          </button>
+          {/* Manual export/import/reset */}
+          <div className="pt-1 space-y-2">
+            <div className="text-[10px] text-text-tertiary font-medium uppercase tracking-wider px-1">
+              {lang === 'pl' ? 'Ręczne zarządzanie' : 'Manual management'}
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={handleExport}
+                className="flex-1 border border-border text-text-secondary rounded-lg py-2 text-xs flex items-center justify-center gap-1"
+              >
+                <Icon name="upload" size={14} />
+                {lang === 'pl' ? 'Eksport JSON' : 'Export JSON'}
+              </button>
+              <button
+                onClick={handleImport}
+                className="flex-1 border border-border text-text-secondary rounded-lg py-2 text-xs flex items-center justify-center gap-1"
+              >
+                <Icon name="download" size={14} />
+                {lang === 'pl' ? 'Import JSON' : 'Import JSON'}
+              </button>
+            </div>
+            <button
+              onClick={handleReset}
+              className="w-full border border-alert-critical/30 text-alert-critical rounded-lg py-2 text-[11px]"
+            >
+              {t.settings.resetData}
+            </button>
+          </div>
         </div>
       </Card>
 
