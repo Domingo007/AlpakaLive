@@ -12,7 +12,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
   const ob = useOnboarding();
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
   const [dataConsentAccepted, setDataConsentAccepted] = useState(false);
-  const { t } = useI18n();
+  const { t, lang, setLang } = useI18n();
 
   async function handleComplete() {
     await ob.complete();
@@ -20,7 +20,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
   }
 
   return (
-    <div className="min-h-screen bg-bg-primary flex flex-col">
+    <div className="min-h-screen bg-bg-primary flex flex-col safe-top">
       <div className="h-1 bg-border">
         <div
           className="h-full bg-accent-dark transition-all duration-300"
@@ -31,6 +31,28 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
       <div className="flex-1 px-6 py-8 max-w-md mx-auto w-full">
         {ob.step === 'welcome' && (
           <div className="space-y-4 mt-4">
+            {/* Language switcher */}
+            <div className="flex justify-end">
+              <div className="flex rounded-lg border border-border overflow-hidden">
+                <button
+                  onClick={() => setLang('pl')}
+                  className={`px-3 py-1.5 text-xs font-medium transition-colors ${
+                    lang === 'pl' ? 'bg-accent-dark text-white' : 'bg-bg-primary text-text-secondary'
+                  }`}
+                >
+                  PL
+                </button>
+                <button
+                  onClick={() => setLang('en')}
+                  className={`px-3 py-1.5 text-xs font-medium transition-colors ${
+                    lang === 'en' ? 'bg-accent-dark text-white' : 'bg-bg-primary text-text-secondary'
+                  }`}
+                >
+                  EN
+                </button>
+              </div>
+            </div>
+
             <div className="text-center">
               <img src="/logo.png" alt="AlpacaLive" className="w-20 h-20 rounded-2xl mx-auto shadow-lg" onError={(e: any) => e.target.style.display="none"} />
               <h1 className="font-display text-2xl font-bold text-accent-dark">AlpacaLive</h1>

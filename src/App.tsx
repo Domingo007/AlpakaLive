@@ -88,7 +88,7 @@ export default function App() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-bg-primary">
+    <div className="flex flex-col bg-bg-primary" style={{ height: '100dvh' }}>
       {importToast && (
         <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-accent-green text-white px-4 py-2 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2 animate-bounce">
           <span className="material-symbols-rounded" style={{ fontSize: 16 }}>check_circle</span>

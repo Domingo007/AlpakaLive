@@ -70,8 +70,11 @@ h1, h2, h3 {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-lavender-300); border-radius: 2px; }
 
-/* Safe area */
+/* Safe areas for PWA standalone (notch, dynamic island, home indicator) */
+.safe-top { padding-top: env(safe-area-inset-top, 0px); }
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.safe-left { padding-left: env(safe-area-inset-left, 0px); }
+.safe-right { padding-right: env(safe-area-inset-right, 0px); }
 
 /* Animations */
 @keyframes card-enter {
