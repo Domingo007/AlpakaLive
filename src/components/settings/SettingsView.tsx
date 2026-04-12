@@ -302,6 +302,68 @@ export function SettingsView() {
         </Card>
       )}
 
+      {/* Where is your data */}
+      <Card title={lang === 'pl' ? 'Gdzie s\u0105 Twoje dane?' : 'Where is your data?'}>
+        <div className="space-y-3">
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 rounded-lg bg-accent-green/15 flex items-center justify-center shrink-0 mt-0.5">
+              <Icon name="smartphone" size={20} className="text-accent-green" />
+            </div>
+            <div>
+              <div className="text-xs font-medium text-text-primary">
+                {lang === 'pl' ? 'Tylko na tym urz\u0105dzeniu' : 'Only on this device'}
+              </div>
+              <div className="text-[11px] text-text-secondary leading-relaxed mt-0.5">
+                {lang === 'pl'
+                  ? 'Wszystkie Twoje dane s\u0105 zapisane lokalnie w przegl\u0105darce tego telefonu (IndexedDB). Nie s\u0105 wysy\u0142ane na \u017caden serwer. \u017badna inna osoba nie ma do nich dost\u0119pu.'
+                  : 'All your data is stored locally in this phone\'s browser (IndexedDB). It is not sent to any server. No one else has access to it.'}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 rounded-lg bg-lavender-100 flex items-center justify-center shrink-0 mt-0.5">
+              <Icon name="folder" size={20} className="text-lavender-600" />
+            </div>
+            <div>
+              <div className="text-xs font-medium text-text-primary">
+                {lang === 'pl' ? 'Lokalizacja danych' : 'Data location'}
+              </div>
+              <div className="text-[11px] text-text-secondary leading-relaxed mt-0.5">
+                {lang === 'pl'
+                  ? 'Przegl\u0105darka \u2192 Ustawienia \u2192 Dane stron / Pami\u0119\u0107 podr\u0119czna \u2192 alpacalive (lub adres strony). Na iPhonie: Ustawienia \u2192 Safari \u2192 Zaawansowane \u2192 Dane witryn.'
+                  : 'Browser \u2192 Settings \u2192 Site data / Storage \u2192 alpacalive (or site URL). On iPhone: Settings \u2192 Safari \u2192 Advanced \u2192 Website Data.'}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-alert-warning/10 rounded-lg px-3 py-2 flex items-start gap-2">
+            <Icon name="warning" size={16} className="text-alert-warning shrink-0 mt-0.5" />
+            <div className="text-[11px] text-text-primary leading-relaxed">
+              {lang === 'pl'
+                ? 'Je\u015bli wyczyszczysz dane przegl\u0105darki, usuniesz aplikacj\u0119 z ekranu lub zresetujesz telefon \u2014 dane zostan\u0105 utracone. Regularnie r\u00f3b kopi\u0119 zapasow\u0105 (przycisk poni\u017cej).'
+                : 'If you clear browser data, remove the app from home screen, or reset your phone \u2014 data will be lost. Regularly make backups (button below).'}
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0 mt-0.5">
+              <Icon name="devices" size={20} className="text-blue-500" />
+            </div>
+            <div>
+              <div className="text-xs font-medium text-text-primary">
+                {lang === 'pl' ? 'Ka\u017cdy telefon = osobna kopia' : 'Each phone = separate copy'}
+              </div>
+              <div className="text-[11px] text-text-secondary leading-relaxed mt-0.5">
+                {lang === 'pl'
+                  ? 'Dane NIE synchronizuj\u0105 si\u0119 mi\u0119dzy urz\u0105dzeniami. Je\u015bli chcesz przenie\u015b\u0107 dane na inny telefon, u\u017cyj eksportu i importu JSON.'
+                  : 'Data does NOT sync between devices. To transfer data to another phone, use JSON export and import.'}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+
       {/* Data management */}
       <Card title={t.settings.dataManagement}>
         <div className="space-y-2">
