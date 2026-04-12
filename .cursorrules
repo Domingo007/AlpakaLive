@@ -1,0 +1,64 @@
+# AlpacaLive — Cursor AI Rules
+
+## Project
+Open-source PWA oncology diary. React 19 + TypeScript + Vite + Tailwind + Dexie (IndexedDB).
+
+## CRITICAL RULES — NEVER BREAK
+
+1. MEDICAL DATA = JSON ONLY
+   - All medical facts live in `medical-knowledge/` as .json files
+   - App imports via `src/lib/medical-data/knowledge-registry.ts`
+   - NEVER hardcode drug names, norms, interactions, or side effects in .ts/.tsx files
+   - To add medical data → edit JSON in medical-knowledge/, NOT TypeScript
+
+2. PATIENT DATA = LOCAL ONLY
+   - IndexedDB via Dexie — data never leaves device
+   - PII sanitizer strips personal data before any AI API call
+   - NEVER add analytics, tracking, external data collection, or server-side storage
+
+3. AI = EXPLAIN ONLY, NEVER SUGGEST
+   - System prompt (`src/lib/system-prompt.ts`) has absolute bans
+   - AI must NEVER say "you should take", "I recommend", "stop taking"
+   - Every analysis needs disclaimer
+   - NEVER weaken system prompt constraints or input-guard.ts patterns
+
+4. SECURITY LAYERS
+   - `src/lib/input-guard.ts` — prompt injection detection (20+ patterns), file validation, rate limiting
+   - Data extraction whitelist — only whitelisted fields written to DB
+   - NEVER remove security patterns or bypass validation
+
+5. DEMO = SEPARATE DATABASE
+   - Real data: AlpacaLiveDB (never touched by demo)
+   - Demo data: AlpacaLiveDemoDB (separate IndexedDB)
+   - Switch in `src/lib/db.ts`
+
+## Stack
+React 19, TypeScript 6, Vite 8, Tailwind CSS 4, Dexie.js, Vitest (170+ tests)
+
+## File Structure
+- Components: `src/components/<feature>/<Name>.tsx`
+- Logic: `src/lib/<module>.ts`
+- Medical data: `medical-knowledge/<category>/<file>.json`
+- Tests: `src/__tests__/<module>.test.ts`
+- Types: `src/types/index.ts`
+- Translations: `src/lib/translations/{pl,en}.ts`
+
+## Before Committing
+- `npx tsc --noEmit` — 0 errors
+- `npm test` — all tests pass
+- `npm run build` — succeeds
+- New DB fields → add to `input-guard.ts` ALLOWED_FIELDS
+
+## Commit Format
+```
+Type: description (#issue)
+Types: Feat, Fix, Medical, Docs, Style, Refactor, Test, Chore, Security, Legal
+```
+
+## Do NOT
+- Add console.log to production code
+- Add npm dependencies without justification
+- Modify medical-knowledge/ structure without updating knowledge-registry.ts
+- Create files outside established directory structure
+- Add scope beyond what was asked
+- Weaken any security or privacy mechanism
