@@ -1,0 +1,48 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-04-11",
+  "bloodSchedule": [
+    {
+      "phase": "during_chemo",
+      "name": { "pl": "W trakcie chemioterapii", "en": "During chemotherapy" },
+      "tests": [
+        { "name": { "pl": "Morfologia z rozmazem", "en": "CBC with differential" }, "markers": ["wbc", "neutrophils", "hgb", "plt", "rbc"], "frequency": { "pl": "Przed każdym cyklem + dzień 10-14 (nadir)", "en": "Before each cycle + day 10-14 (nadir)" } },
+        { "name": { "pl": "Biochemia", "en": "Biochemistry" }, "markers": ["alt", "ast", "creatinine", "albumin"], "frequency": { "pl": "Przed każdym cyklem", "en": "Before each cycle" } },
+        { "name": { "pl": "Markery nowotworowe", "en": "Tumor markers" }, "markers": ["ca153", "cea"], "frequency": { "pl": "Co 3 miesiące", "en": "Every 3 months" } }
+      ]
+    },
+    {
+      "phase": "during_immunotherapy",
+      "name": { "pl": "W trakcie immunoterapii", "en": "During immunotherapy" },
+      "tests": [
+        { "name": { "pl": "Tarczyca", "en": "Thyroid" }, "markers": ["tsh", "ft4"], "frequency": { "pl": "Przed każdą infuzją", "en": "Before each infusion" } },
+        { "name": { "pl": "Wątroba", "en": "Liver" }, "markers": ["alt", "ast", "bilirubin"], "frequency": { "pl": "Przed każdą infuzją", "en": "Before each infusion" } },
+        { "name": { "pl": "Nadnercza", "en": "Adrenal" }, "markers": ["cortisol"], "frequency": { "pl": "Przy podejrzeniu irAE endokrynnego", "en": "When endocrine irAE suspected" } }
+      ]
+    },
+    {
+      "phase": "during_hormonal",
+      "name": { "pl": "W trakcie hormonoterapii", "en": "During hormonal therapy" },
+      "tests": [
+        { "name": { "pl": "Morfologia", "en": "CBC" }, "markers": ["wbc", "hgb", "plt"], "frequency": { "pl": "Co 6 miesięcy", "en": "Every 6 months" } },
+        { "name": { "pl": "Lipidogram + wątroba", "en": "Lipids + liver" }, "markers": ["alt", "ast"], "frequency": { "pl": "Co 6 miesięcy (AI) / co rok (tamoxifen)", "en": "Every 6 months (AI) / yearly (tamoxifen)" } },
+        { "name": { "pl": "Markery", "en": "Markers" }, "markers": ["ca153", "cea"], "frequency": { "pl": "Co 6 miesięcy", "en": "Every 6 months" } }
+      ]
+    },
+    {
+      "phase": "follow_up",
+      "name": { "pl": "Obserwacja po leczeniu", "en": "Follow-up after treatment" },
+      "tests": [
+        { "name": { "pl": "Morfologia + biochemia", "en": "CBC + biochemistry" }, "markers": ["wbc", "hgb", "plt", "alt", "ast", "creatinine"], "frequency": { "pl": "Co 3-6 mies. przez 2 lata, potem co rok", "en": "Every 3-6 mo for 2 years, then annually" } },
+        { "name": { "pl": "Markery nowotworowe", "en": "Tumor markers" }, "markers": ["ca153", "cea"], "frequency": { "pl": "Co 6 miesięcy przez 5 lat", "en": "Every 6 months for 5 years" } }
+      ]
+    }
+  ],
+  "imagingSchedule": [
+    { "type": "mammography", "name": { "pl": "Mammografia", "en": "Mammography" }, "frequency": { "pl": "Co 12 miesięcy (po leczeniu)", "en": "Every 12 months (after treatment)" }, "notes": { "pl": "Pierwsza 6 mies. po RT", "en": "First 6 mo after RT" } },
+    { "type": "USG", "name": { "pl": "USG piersi", "en": "Breast ultrasound" }, "frequency": { "pl": "Co 6 miesięcy w gęstych piersiach", "en": "Every 6 months in dense breasts" } },
+    { "type": "MRI", "name": { "pl": "MRI piersi", "en": "Breast MRI" }, "frequency": { "pl": "U nosicielek BRCA co 12 mies.", "en": "BRCA carriers every 12 months" } },
+    { "type": "bone_density", "name": { "pl": "Densytometria", "en": "Bone density (DEXA)" }, "frequency": { "pl": "Co 1-2 lata przy AI", "en": "Every 1-2 years on AI" }, "notes": { "pl": "Inhibitory aromatazy zwiększają ryzyko osteoporozy", "en": "Aromatase inhibitors increase osteoporosis risk" } },
+    { "type": "echo", "name": { "pl": "Echo serca (LVEF)", "en": "Echocardiogram (LVEF)" }, "frequency": { "pl": "Co 3 mies. przy trastuzumabie, wyjściowo przy antracyklinach", "en": "Every 3 mo on trastuzumab, baseline with anthracyclines" } }
+  ]
+}

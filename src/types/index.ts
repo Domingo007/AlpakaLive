@@ -64,6 +64,7 @@ export interface PatientProfile {
   pii: PIIData;
   displayName: string;
   diseaseProfile?: DiseaseProfile;
+  diseaseProfileId?: string;
   location?: PatientLocation;
   languages?: PatientLanguages;
   treatments?: TreatmentProtocol[];

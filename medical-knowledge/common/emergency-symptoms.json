@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "universal": [
+    { "severity": "emergency", "symptom": { "pl": "Gorączka > 38°C w trakcie chemioterapii", "en": "Fever > 38°C during chemotherapy" } },
+    { "severity": "emergency", "symptom": { "pl": "Duszność lub trudności z oddechem", "en": "Shortness of breath or difficulty breathing" } },
+    { "severity": "emergency", "symptom": { "pl": "Ból w klatce piersiowej", "en": "Chest pain" } },
+    { "severity": "emergency", "symptom": { "pl": "Niekontrolowane krwawienie", "en": "Uncontrolled bleeding" } },
+    { "severity": "emergency", "symptom": { "pl": "Silny ból brzucha", "en": "Severe abdominal pain" } },
+    { "severity": "emergency", "symptom": { "pl": "Zaburzenia świadomości", "en": "Altered consciousness" } },
+    { "severity": "urgent", "symptom": { "pl": "Wymioty > 24h uniemożliwiające picie", "en": "Vomiting > 24h preventing drinking" } },
+    { "severity": "urgent", "symptom": { "pl": "Biegunka > 6x/dobę", "en": "Diarrhea > 6x/day" } },
+    { "severity": "urgent", "symptom": { "pl": "Krew w moczu, stolcu lub wymiocinach", "en": "Blood in urine, stool, or vomit" } },
+    { "severity": "urgent", "symptom": { "pl": "Nowa wysypka lub obrzęk", "en": "New rash or swelling" } }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "",
+  "version": "1.0.0",
+  "lastUpdated": "",
+  "icd10Codes": [],
+  "name": { "pl": "", "en": "" },
+  "aliases": { "pl": [], "en": [] },
+  "subtypes": [],
+  "stages": [],
+  "relevantBloodMarkers": [],
+  "tumorMarkers": [],
+  "typicalMetastasisSites": [],
+  "biomarkerConfig": []
+}

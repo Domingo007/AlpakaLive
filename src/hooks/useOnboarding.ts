@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import type { PatientProfile, PIIData, PatientLocation, PatientLanguages, BreastCancerSubtype, ReceptorStatus, HER2Status, TreatmentProtocol, RadiotherapyPlan } from '@/types';
 import { detectGuidelineRegion, DEFAULT_NOTIFICATIONS } from '@/types';
 import { savePatient, saveSettings } from '@/lib/db';
+import { matchDiagnosis } from '@/lib/medical-data/disease-matcher';
 
 export type OnboardingStep = 'welcome' | 'data_transparency' | 'mode' | 'privacy' | 'apikey' | 'location' | 'languages' | 'diagnosis' | 'treatments' | 'biomarkers' | 'medications' | 'confirmation';
 
@@ -135,6 +136,9 @@ export function useOnboarding() {
       treatments.push(protocol);
     }
 
+    // Auto-match disease profile from diagnosis text
+    const diseaseProfileId = matchDiagnosis(diagnosis) || undefined;
+
     const patient: PatientProfile = {
       id: uuidv4(),
       name: displayName || pii.firstName || 'Pacjent',
@@ -143,6 +147,7 @@ export function useOnboarding() {
       weight: 0,
       diagnosis,
       stage,
+      diseaseProfileId,
       molecularSubtype: molecularSubtype || undefined,
       surgeries: [],
       currentChemo,

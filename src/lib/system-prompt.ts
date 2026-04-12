@@ -6,6 +6,73 @@
 import type { PatientProfile, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, Prediction, BreastCancerSubtype } from '@/types';
 import { calculateCurrentPhase } from './treatment-cycle';
 import { checkInteractions } from './cyp450';
+import { getDiseaseKnowledge } from './medical-data/knowledge-registry';
+import { localized } from './medical-data/content-utils';
+
+function buildDiseaseKnowledgeSection(patient: PatientProfile): string {
+  if (!patient.diseaseProfileId) return '';
+  const knowledge = getDiseaseKnowledge(patient.diseaseProfileId);
+  if (!knowledge) return '';
+
+  const lines: string[] = [];
+  const lang = patient.languages?.appLanguage || 'pl';
+
+  lines.push(`\n## WIEDZA O CHOROBIE: ${localized(knowledge.profile.name, lang)}`);
+
+  // Subtypes
+  if (knowledge.profile.subtypes.length > 0) {
+    lines.push(`\nPodtypy (dla kontekstu analizy):`);
+    for (const st of knowledge.profile.subtypes) {
+      lines.push(`- ${localized(st.name, lang)}${st.prognosis ? ': ' + localized(st.prognosis, lang) : ''}`);
+    }
+  }
+
+  // Relevant blood markers
+  lines.push(`\nKluczowe markery krwi dla tej choroby: ${knowledge.profile.relevantBloodMarkers.join(', ')}`);
+
+  // Tumor markers
+  if (knowledge.profile.tumorMarkers.length > 0) {
+    lines.push(`\nMarkery nowotworowe:`);
+    for (const tm of knowledge.profile.tumorMarkers) {
+      lines.push(`- ${localized(tm.name, lang)}: norma <${tm.normalMax} ${tm.unit}. ${tm.frequency ? localized(tm.frequency, lang) : ''}`);
+    }
+  }
+
+  // Typical metastasis sites
+  if (knowledge.profile.typicalMetastasisSites.length > 0) {
+    lines.push(`\nTypowe lokalizacje przerzutów (w opublikowanej literaturze):`);
+    for (const site of knowledge.profile.typicalMetastasisSites) {
+      lines.push(`- ${localized(site.name, lang)} (${site.frequency})`);
+    }
+  }
+
+  // Regimens for patient's subtype
+  const subtype = patient.breastCancerSubtype || patient.molecularSubtype;
+  if (subtype && knowledge.regimens.regimens.length > 0) {
+    const applicableRegimens = knowledge.regimens.regimens.filter(r =>
+      r.subtypes.includes(subtype) || r.subtypes.includes('all'),
+    );
+    if (applicableRegimens.length > 0) {
+      lines.push(`\nSchematy leczenia opisywane w wytycznych dla podtypu ${subtype}:`);
+      for (const reg of applicableRegimens) {
+        lines.push(`- ${reg.name} (${localized(reg.fullName, lang)}): ${reg.drugs.join(' + ')}, cykl ${reg.cycleLength}d × ${reg.cycles}. ${localized(reg.indication, lang)}`);
+      }
+    }
+  }
+
+  // Monitoring schedule
+  if (knowledge.monitoring.bloodSchedule.length > 0) {
+    lines.push(`\nHarmonogram badań (wg wytycznych):`);
+    for (const phase of knowledge.monitoring.bloodSchedule) {
+      lines.push(`${localized(phase.name, lang)}:`);
+      for (const test of phase.tests) {
+        lines.push(`  - ${localized(test.name, lang)}: ${localized(test.frequency, lang)}`);
+      }
+    }
+  }
+
+  return lines.join('\n');
+}
 
 function formatSubtype(subtype: BreastCancerSubtype): string {
   const map: Record<BreastCancerSubtype, string> = {
@@ -254,6 +321,7 @@ ${interactions.length > 0 ? interactions.map(i => `- ${i.severity.toUpperCase()}
 
 ## AKTUALNY STATUS LECZENIA
 ${buildTreatmentStatusSection(patient, recentData)}
+${buildDiseaseKnowledgeSection(patient)}
 
 ## TWOJE ZADANIA
 1. CODZIENNY DZIENNIK — prowadź rozmowę naturalnie, 2-3 pytania na raz

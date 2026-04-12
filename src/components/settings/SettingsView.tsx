@@ -5,6 +5,7 @@ import { Icon } from '@/components/shared/Icon';
 import { HistoricalImport } from './HistoricalImport';
 import { NotificationSettings } from './NotificationSettings';
 import { AIProviderSettings } from './AIProviderSettings';
+import { EducationView } from '@/components/education/EducationView';
 import { exportAllData, importData, clearAllData, saveSettings } from '@/lib/db';
 import { loadDemoData } from '@/lib/demo-data';
 import { useI18n, type Lang } from '@/lib/i18n';
@@ -15,8 +16,13 @@ export function SettingsView() {
   const { settings, update: updateSettings } = useSettings();
   const { t, lang, setLang } = useI18n();
   const [demoLoading, setDemoLoading] = useState(false);
+  const [showEducation, setShowEducation] = useState(false);
 
   const isDemo = settings?.demoMode === true;
+
+  if (showEducation) {
+    return <EducationView onClose={() => setShowEducation(false)} />;
+  }
 
   async function handleExport() {
     const json = await exportAllData();
@@ -95,6 +101,29 @@ export function SettingsView() {
           </div>
         </div>
       </Card>
+
+      {/* Patient Education */}
+      {patient?.diseaseProfileId && (
+        <Card title={lang === 'pl' ? 'Wiedza pacjenta' : 'Patient Education'}>
+          <button
+            onClick={() => setShowEducation(true)}
+            className="w-full flex items-center gap-3 p-2 rounded-xl bg-gradient-to-r from-accent-warm to-lavender-100 hover:from-lavender-100 hover:to-accent-warm transition-colors"
+          >
+            <div className="w-10 h-10 rounded-xl bg-accent-dark flex items-center justify-center shrink-0">
+              <Icon name="school" size={22} className="text-white" />
+            </div>
+            <div className="text-left flex-1">
+              <div className="text-xs font-medium text-text-primary">
+                {lang === 'pl' ? 'Słownik, poradniki faz, FAQ' : 'Glossary, phase guides, FAQ'}
+              </div>
+              <div className="text-[10px] text-text-secondary">
+                {lang === 'pl' ? 'Materiały edukacyjne dopasowane do Twojej choroby' : 'Educational materials tailored to your condition'}
+              </div>
+            </div>
+            <Icon name="chevron_right" size={18} className="text-text-tertiary shrink-0" />
+          </button>
+        </Card>
+      )}
 
       {/* Demo Mode */}
       <Card title={t.settings.demoMode}>
