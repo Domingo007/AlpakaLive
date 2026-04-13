@@ -43,10 +43,13 @@ export function SupplementTracker() {
   const [supplements, setSupplements] = useState<SupplementEntry[]>(DEFAULT_SUPPLEMENTS);
   const [saved, setSaved] = useState(false);
   const [newName, setNewName] = useState('');
-  const [newDose, setNewDose] = useState('');
+  const [newDoseValue, setNewDoseValue] = useState('');
+  const [newDoseUnit, setNewDoseUnit] = useState('mg');
   const [expandedEvidence, setExpandedEvidence] = useState<number | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const { t, lang } = useI18n();
+
+  const DOSE_UNITS = ['mg', 'g', 'mcg', 'IU', 'ml', 'krople', 'kaps.', 'tabl.'];
 
   // Autocomplete suggestions from evidence database
   const suggestions = newName.trim().length >= 2
@@ -57,7 +60,17 @@ export function SupplementTracker() {
 
   function selectSuggestion(s: { name: Record<string, string>; dosesInStudies: string }) {
     setNewName(localized(s.name, lang));
-    setNewDose(s.dosesInStudies !== 'N/A' ? s.dosesInStudies : '');
+    // Parse dose from evidence (e.g. "2000-4000 IU/day" → value=2000, unit=IU)
+    if (s.dosesInStudies && s.dosesInStudies !== 'N/A') {
+      const doseMatch = s.dosesInStudies.match(/^([\d,./-]+)\s*(mg|g|mcg|IU|ml)/i);
+      if (doseMatch) {
+        setNewDoseValue(doseMatch[1]);
+        const unit = doseMatch[2].toUpperCase() === 'IU' ? 'IU' : doseMatch[2].toLowerCase();
+        if (DOSE_UNITS.includes(unit)) setNewDoseUnit(unit);
+      } else {
+        setNewDoseValue('');
+      }
+    }
     setShowSuggestions(false);
   }
 
@@ -79,9 +92,10 @@ export function SupplementTracker() {
 
   function addSupplement() {
     if (!newName.trim()) return;
-    setSupplements(prev => [...prev, { name: newName.trim(), dose: newDose.trim(), taken: false }]);
+    const dose = newDoseValue.trim() ? `${newDoseValue.trim()} ${newDoseUnit}` : '';
+    setSupplements(prev => [...prev, { name: newName.trim(), dose, taken: false }]);
     setNewName('');
-    setNewDose('');
+    setNewDoseValue('');
   }
 
   function removeSupplement(index: number) {
@@ -208,10 +222,16 @@ export function SupplementTracker() {
                 </div>
               )}
             </div>
-            <input value={newDose} onChange={e => setNewDose(e.target.value)} placeholder={t.supplements.dose}
-              className="w-24 rounded border border-border px-2 py-1.5 text-[11px] bg-bg-primary" />
+            <input type="number" inputMode="decimal" value={newDoseValue}
+              onChange={e => setNewDoseValue(e.target.value)}
+              placeholder={lang === 'pl' ? 'Dawka' : 'Dose'}
+              className="w-16 rounded-l border border-border px-2 py-1.5 text-[11px] bg-bg-primary" />
+            <select value={newDoseUnit} onChange={e => setNewDoseUnit(e.target.value)}
+              className="w-16 rounded-r border border-l-0 border-border px-1 py-1.5 text-[11px] bg-bg-primary text-text-secondary">
+              {DOSE_UNITS.map(u => <option key={u} value={u}>{u}</option>)}
+            </select>
             <button onClick={() => { addSupplement(); setShowSuggestions(false); }} disabled={!newName.trim()}
-              className="px-2.5 py-1.5 rounded bg-accent-dark text-accent-warm text-[11px] disabled:opacity-40">+</button>
+              className="px-2.5 py-1.5 rounded bg-accent-dark text-accent-warm text-[11px] disabled:opacity-40 shrink-0">+</button>
           </div>
         </div>
 
