@@ -3,10 +3,10 @@
  * Copyright (C) 2025 AlpacaLive Contributors
  * Licensed under AGPL-3.0 — see LICENSE file
  */
-import type { PatientProfile, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, Prediction, BreastCancerSubtype } from '@/types';
+import type { PatientProfile, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, Prediction, BreastCancerSubtype, SupplementLog } from '@/types';
 import { calculateCurrentPhase } from './treatment-cycle';
 import { checkInteractions } from './cyp450';
-import { getDiseaseKnowledge } from './medical-data/knowledge-registry';
+import { getDiseaseKnowledge, SUPPLEMENTS } from './medical-data/knowledge-registry';
 import { localized } from './medical-data/content-utils';
 
 function buildDiseaseKnowledgeSection(patient: PatientProfile): string {
@@ -146,6 +146,51 @@ function buildTreatmentStatusSection(patient: PatientProfile, recentData: Recent
   return lines.join('\n');
 }
 
+function buildSupplementsSection(supplements: SupplementLog[]): string {
+  if (!supplements || supplements.length === 0) return 'Brak danych o suplementach';
+
+  // Get most recent supplement log
+  const latest = supplements[0];
+  if (!latest.supplements || latest.supplements.length === 0) return 'Brak suplementów';
+
+  const lines: string[] = [];
+
+  for (const s of latest.supplements) {
+    const name = s.name.toLowerCase();
+    // Match supplement to evidence database
+    const evidence = SUPPLEMENTS.supplements.find((ev: { id: string; name: Record<string, string> }) =>
+      name.includes(ev.id.replace(/_/g, ' ')) ||
+      Object.values(ev.name).some(n => name.includes(n.toLowerCase())) ||
+      (ev.id === 'vitamin_d3' && (name.includes('d3') || name.includes('witamina d'))) ||
+      (ev.id === 'omega3' && name.includes('omega')) ||
+      (ev.id === 'l_glutamine' && name.includes('glutamin')) ||
+      (ev.id === 'probiotics' && name.includes('probiot')) ||
+      (ev.id === 'curcumin' && name.includes('kurkum')) ||
+      (ev.id === 'magnesium' && name.includes('magnez')) ||
+      (ev.id === 'st_johns_wort' && (name.includes('dziurawiec') || name.includes('john')))
+    ) as { evidenceLevel: string; context: Record<string, string>; cautions?: Record<string, string>[] } | undefined;
+
+    let line = `- ${s.name} ${s.dose || ''}`;
+    if (s.taken) line += ' ✓ (wzięte)';
+
+    if (evidence) {
+      line += ` [dowody: ${evidence.evidenceLevel}]`;
+      if (evidence.evidenceLevel === 'CONTRAINDICATED') {
+        line += ' ⚠️ PRZECIWWSKAZANE w trakcie leczenia onkologicznego!';
+      }
+      if (evidence.cautions && evidence.cautions.length > 0) {
+        line += ` Uwagi: ${evidence.cautions.map(c => localized(c, 'pl')).join('; ')}`;
+      }
+    } else {
+      line += ' [brak danych w bazie — sprawdź interakcje z lekarzem]';
+    }
+
+    lines.push(line);
+  }
+
+  return lines.join('\n');
+}
+
 interface RecentData {
   daily: DailyLog[];
   blood: BloodWork[];
@@ -154,6 +199,7 @@ interface RecentData {
   chemo: ChemoSession[];
   imaging: ImagingStudy[];
   predictions: Prediction[];
+  supplements?: SupplementLog[];
 }
 
 export function buildSystemPrompt(patient: PatientProfile, recentData: RecentData): string {
@@ -331,6 +377,9 @@ ${recentData.wearable.length > 0 ? JSON.stringify(recentData.wearable.slice(0, 5
 
 ### Dieta (ostatnie dni):
 ${recentData.meals.length > 0 ? JSON.stringify(recentData.meals.slice(0, 5), null, 2) : 'Brak danych'}
+
+### Suplementy pacjenta:
+${buildSupplementsSection(recentData.supplements || [])}
 
 ### Chemie (ostatnie):
 ${recentData.chemo.length > 0 ? JSON.stringify(recentData.chemo.slice(0, 6), null, 2) : 'Brak danych'}

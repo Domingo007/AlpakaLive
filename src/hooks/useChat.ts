@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { ChatMessage, PatientProfile } from '@/types';
-import { getChatMessages, addChatMessage, getSettings, getPatient, getRecentDailyLogs, getRecentBloodWork, getRecentWearableData, getRecentMeals, getRecentChemo, getRecentImaging, getRecentPredictions } from '@/lib/db';
+import { getChatMessages, addChatMessage, getSettings, getPatient, getRecentDailyLogs, getRecentBloodWork, getRecentWearableData, getRecentMeals, getRecentChemo, getRecentImaging, getRecentPredictions, getRecentSupplements } from '@/lib/db';
 import { sendMessage, getWelcomeMessage } from '@/lib/ai';
 import { buildSystemPrompt } from '@/lib/system-prompt';
 import { extractDataFromResponse, saveExtractedData, cleanResponseFromTags } from '@/lib/data-extractor';
@@ -104,7 +104,7 @@ export function useChat() {
       let systemPrompt = 'Jesteś agentem medycznym AlpacaLive. Pomagasz pacjentowi onkologicznemu. Mów po polsku.';
 
       if (patient) {
-        const [daily, blood, wearable, meals, chemo, imaging, predictions] = await Promise.all([
+        const [daily, blood, wearable, meals, chemo, imaging, predictions, supplements] = await Promise.all([
           getRecentDailyLogs(),
           getRecentBloodWork(),
           getRecentWearableData(),
@@ -112,8 +112,9 @@ export function useChat() {
           getRecentChemo(),
           getRecentImaging(),
           getRecentPredictions(),
+          getRecentSupplements(),
         ]);
-        systemPrompt = buildSystemPrompt(patient, { daily, blood, wearable, meals, chemo, imaging, predictions });
+        systemPrompt = buildSystemPrompt(patient, { daily, blood, wearable, meals, chemo, imaging, predictions, supplements });
       }
 
       const allMessages = [...messages, userMessage];

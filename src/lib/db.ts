@@ -233,6 +233,10 @@ export async function getRecentChemo(count = 6): Promise<ChemoSession[]> {
   return db.chemo.orderBy('date').reverse().limit(count).toArray();
 }
 
+export async function getRecentSupplements(count = 7): Promise<SupplementLog[]> {
+  return db.supplements.orderBy('date').reverse().limit(count).toArray();
+}
+
 export async function getRecentImaging(count = 2): Promise<ImagingStudy[]> {
   return db.imaging.orderBy('date').reverse().limit(count).toArray();
 }
