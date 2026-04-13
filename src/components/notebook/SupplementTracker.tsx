@@ -225,7 +225,7 @@ export function SupplementTracker() {
             <input type="number" inputMode="decimal" value={newDoseValue}
               onChange={e => setNewDoseValue(e.target.value)}
               placeholder={lang === 'pl' ? 'Dawka' : 'Dose'}
-              className="w-16 rounded-l border border-border px-2 py-1.5 text-[11px] bg-bg-primary" />
+              className="w-20 rounded-l border border-border px-2 py-1.5 text-[11px] bg-bg-primary" />
             <select value={newDoseUnit} onChange={e => setNewDoseUnit(e.target.value)}
               className="w-16 rounded-r border border-l-0 border-border px-1 py-1.5 text-[11px] bg-bg-primary text-text-secondary">
               {DOSE_UNITS.map(u => <option key={u} value={u}>{u}</option>)}
