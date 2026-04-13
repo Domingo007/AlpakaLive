@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useOnboarding } from '@/hooks/useOnboarding';
 import { Icon } from '@/components/shared/Icon';
+import { LanguageSelector } from '@/components/shared/LanguageSelector';
 import { useI18n } from '@/lib/i18n';
 import type { AIProvider } from '@/lib/ai-provider';
 
@@ -12,7 +13,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
   const ob = useOnboarding();
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
   const [dataConsentAccepted, setDataConsentAccepted] = useState(false);
-  const { t, lang, setLang } = useI18n();
+  const { t, lang } = useI18n();
 
   async function handleComplete() {
     await ob.complete();
@@ -33,24 +34,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
           <div className="space-y-4 mt-4">
             {/* Language switcher */}
             <div className="flex justify-end">
-              <div className="flex rounded-lg border border-border overflow-hidden">
-                <button
-                  onClick={() => setLang('pl')}
-                  className={`px-3 py-1.5 text-xs font-medium transition-colors ${
-                    lang === 'pl' ? 'bg-accent-dark text-white' : 'bg-bg-primary text-text-secondary'
-                  }`}
-                >
-                  PL
-                </button>
-                <button
-                  onClick={() => setLang('en')}
-                  className={`px-3 py-1.5 text-xs font-medium transition-colors ${
-                    lang === 'en' ? 'bg-accent-dark text-white' : 'bg-bg-primary text-text-secondary'
-                  }`}
-                >
-                  EN
-                </button>
-              </div>
+              <LanguageSelector compact persist={false} />
             </div>
 
             <div className="text-center">

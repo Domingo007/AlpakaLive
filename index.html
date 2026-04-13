@@ -33,9 +33,17 @@ nav.scrolled { background:rgba(255,255,255,.92);backdrop-filter:blur(20px);box-s
 .nav-links a { text-decoration:none;color:var(--text-2);font-size:13px;font-weight:500;transition:color .2s;display:flex;align-items:center;gap:4px; }
 .nav-links a:hover { color:var(--lav-600); }
 .nav-links .material-symbols-rounded { font-size:18px;color:var(--lav-400); }
-.lang-toggle { display:flex;background:var(--lav-100);border-radius:999px;overflow:hidden;border:1px solid var(--lav-200); }
-.lang-btn { padding:6px 14px;font-size:12px;font-weight:600;border:none;cursor:pointer;background:transparent;color:var(--text-2);transition:all .2s;font-family:inherit; }
-.lang-btn.active { background:var(--lav-600);color:#fff; }
+.lang-selector { position:relative; }
+.lang-trigger { display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:10px;border:1px solid var(--lav-200);background:var(--lav-50);cursor:pointer;font-size:12px;font-weight:600;color:var(--text);font-family:inherit;transition:all .2s; }
+.lang-trigger:hover { border-color:var(--lav-400);background:var(--lav-100); }
+.lang-trigger .material-symbols-rounded { font-size:18px;color:var(--lav-500); }
+.lang-trigger .arrow { font-size:14px;color:var(--text-3); }
+.lang-dropdown { display:none;position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1px solid var(--lav-200);border-radius:12px;box-shadow:0 8px 24px rgba(45,31,84,.12);overflow:hidden;min-width:150px;z-index:200; }
+.lang-dropdown.open { display:block; }
+.lang-option { display:flex;align-items:center;gap:8px;padding:10px 14px;width:100%;border:none;background:transparent;cursor:pointer;font-size:13px;font-family:inherit;color:var(--text);transition:background .15s; }
+.lang-option:hover { background:var(--lav-50); }
+.lang-option.active { background:var(--lav-100);color:var(--lav-700);font-weight:600; }
+.lang-option .check { font-size:16px;color:var(--lav-600);margin-left:auto; }
 .nav-cta { background:var(--lav-600);color:#fff;padding:9px 20px;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;display:flex;align-items:center;gap:6px; }
 .nav-cta:hover { background:var(--lav-700);transform:translateY(-1px);box-shadow:0 4px 16px rgba(124,92,201,.3); }
 .nav-cta .material-symbols-rounded { font-size:18px; }
@@ -170,9 +178,16 @@ footer a { color:var(--lav-600);text-decoration:none; }
       <a href="#privacy"><span class="material-symbols-rounded">shield</span> <span class="lang-en">Privacy</span><span class="lang-pl">Prywatność</span></a>
       <a href="#open-source"><span class="material-symbols-rounded">code</span> <span class="lang-en">Open source</span><span class="lang-pl">Open source</span></a>
     </div>
-    <div class="lang-toggle">
-      <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
-      <button class="lang-btn active" onclick="setLang('pl')" id="btn-pl">PL</button>
+    <div class="lang-selector" id="lang-selector">
+      <button class="lang-trigger" onclick="toggleLangDropdown()">
+        <span class="material-symbols-rounded">language</span>
+        <span id="lang-current">EN</span>
+        <span class="material-symbols-rounded arrow">expand_more</span>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-option" onclick="setLang('en')">🇬🇧 English<span class="check material-symbols-rounded" id="check-en">check</span></button>
+        <button class="lang-option" onclick="setLang('pl')">🇵🇱 Polski<span class="check material-symbols-rounded" id="check-pl" style="display:none">check</span></button>
+      </div>
     </div>
     <a href="/app" class="nav-cta"><span class="material-symbols-rounded">open_in_new</span> <span class="lang-en">Launch App</span><span class="lang-pl">Otwórz</span></a>
   </div>
@@ -409,16 +424,28 @@ window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scr
 const observer=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-// Language switch
+// Language dropdown
+function toggleLangDropdown(){
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
 function setLang(lang){
   document.body.setAttribute('data-lang',lang);
-  document.getElementById('btn-en').classList.toggle('active',lang==='en');
-  document.getElementById('btn-pl').classList.toggle('active',lang==='pl');
+  document.getElementById('lang-current').textContent=lang.toUpperCase();
+  document.getElementById('check-en').style.display=lang==='en'?'':'none';
+  document.getElementById('check-pl').style.display=lang==='pl'?'':'none';
+  document.querySelectorAll('.lang-option').forEach(function(el){el.classList.remove('active')});
+  document.querySelector('.lang-option[onclick*="\''+lang+'\'"]').classList.add('active');
+  document.getElementById('lang-dropdown').classList.remove('open');
   document.documentElement.lang=lang;
   localStorage.setItem('alpacalive-lang',lang);
 }
+// Close dropdown on click outside
+document.addEventListener('mousedown',function(e){
+  var sel=document.getElementById('lang-selector');
+  if(sel&&!sel.contains(e.target))document.getElementById('lang-dropdown').classList.remove('open');
+});
 // Load saved language
-const saved=localStorage.getItem('alpacalive-lang');
+var saved=localStorage.getItem('alpacalive-lang');
 if(saved)setLang(saved); else setLang('en');
 </script>
 

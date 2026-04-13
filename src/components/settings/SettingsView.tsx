@@ -7,6 +7,7 @@ import { ConnectedDevices } from './ConnectedDevices';
 import { NotificationSettings } from './NotificationSettings';
 import { AIProviderSettings } from './AIProviderSettings';
 import { EducationView } from '@/components/education/EducationView';
+import { LanguageSelector } from '@/components/shared/LanguageSelector';
 import { exportAllData, importData, clearAllData, saveSettings } from '@/lib/db';
 import { loadDemoData, exitDemoData } from '@/lib/demo-data';
 import {
@@ -80,11 +81,6 @@ export function SettingsView() {
     }
   }
 
-  async function handleLanguageChange(newLang: Lang) {
-    setLang(newLang);
-    await saveSettings({ language: newLang });
-  }
-
   return (
     <div className="h-full overflow-y-auto px-3 py-4 space-y-4">
       <h2 className="font-display text-lg font-semibold text-accent-dark">{t.settings.title}</h2>
@@ -92,35 +88,11 @@ export function SettingsView() {
       {/* Language */}
       <Card title={t.settings.language}>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Icon name="translate" size={20} className="text-lavender-500" />
-            <div>
-              <div className="text-xs font-medium">{t.settings.language}</div>
-              <div className="text-[10px] text-text-secondary">{t.settings.languageDesc}</div>
-            </div>
+          <div>
+            <div className="text-xs font-medium">{t.settings.language}</div>
+            <div className="text-[10px] text-text-secondary">{t.settings.languageDesc}</div>
           </div>
-          <div className="flex rounded-lg border border-border overflow-hidden">
-            <button
-              onClick={() => handleLanguageChange('pl')}
-              className={`px-3 py-1.5 text-xs font-medium transition-colors ${
-                lang === 'pl'
-                  ? 'bg-accent-dark text-accent-warm'
-                  : 'bg-bg-primary text-text-secondary hover:bg-accent-warm/20'
-              }`}
-            >
-              PL
-            </button>
-            <button
-              onClick={() => handleLanguageChange('en')}
-              className={`px-3 py-1.5 text-xs font-medium transition-colors ${
-                lang === 'en'
-                  ? 'bg-accent-dark text-accent-warm'
-                  : 'bg-bg-primary text-text-secondary hover:bg-accent-warm/20'
-              }`}
-            >
-              EN
-            </button>
-          </div>
+          <LanguageSelector />
         </div>
       </Card>
 
