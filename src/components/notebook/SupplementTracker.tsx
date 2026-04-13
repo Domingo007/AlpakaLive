@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { db } from '@/lib/db';
 import { Card } from '@/components/shared/Card';
 import { Icon } from '@/components/shared/Icon';
+import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
 import { useI18n } from '@/lib/i18n';
 import { SUPPLEMENTS } from '@/lib/medical-data/knowledge-registry';
 import { localized } from '@/lib/medical-data/content-utils';
@@ -93,6 +94,7 @@ export function SupplementTracker() {
 
   return (
     <Card title={t.supplements.title(taken, supplements.length)}>
+      <DisclaimerBanner variant="supplement" />
       <div className="space-y-2">
         {supplements.map((s, i) => {
           const evidence = findEvidence(s.name);
@@ -150,6 +152,11 @@ export function SupplementTracker() {
                       {lang === 'pl' ? 'Źródła' : 'Sources'}: {evidence.sources.join(', ')}
                     </div>
                   )}
+                  <div className="mt-2 pt-1.5 border-t border-black/5 text-[9px] text-text-tertiary italic">
+                    {lang === 'pl'
+                      ? 'Informacje z opublikowanych badań. NIE stanowią porady medycznej ani rekomendacji. Decyzję o stosowaniu podejmij z lekarzem.'
+                      : 'Information from published studies. NOT medical advice or a recommendation. Discuss use with your doctor.'}
+                  </div>
                 </div>
               )}
             </div>
