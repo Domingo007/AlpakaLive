@@ -4,7 +4,7 @@ import type { ChatMessage, PatientProfile } from '@/types';
 import { getChatMessages, addChatMessage, getSettings, getPatient, getRecentDailyLogs, getRecentBloodWork, getRecentWearableData, getRecentMeals, getRecentChemo, getRecentImaging, getRecentPredictions, getRecentSupplements } from '@/lib/db';
 import { sendMessage, getWelcomeMessage } from '@/lib/ai';
 import { buildSystemPrompt } from '@/lib/system-prompt';
-import { extractDataFromResponse, saveExtractedData, cleanResponseFromTags } from '@/lib/data-extractor';
+import { extractDataFromResponse, extractAIProfileData, saveExtractedData, cleanResponseFromTags } from '@/lib/data-extractor';
 import { generatePrediction, savePrediction, formatPredictionForChat, checkPredictionAccuracy, type PredictionResult } from '@/lib/prediction-engine';
 
 const PREDICTION_TRIGGERS = ['predykcja', 'prognoza', 'przewiduj', 'jak będę się czuć', 'jak bede sie czuc', 'jak będę', 'co mnie czeka', 'najbliższe dni', 'ten tydzień', 'ten tydzien'];
@@ -130,6 +130,9 @@ export function useChat() {
       if (extracted.length > 0) {
         await saveExtractedData(extracted);
       }
+
+      // Extract AI clinical profile data (scores with basis, clinical findings)
+      extractAIProfileData(response.content);
 
       const cleanContent = cleanResponseFromTags(response.content);
       setLastProviderInfo({ provider: response.provider, model: response.model });

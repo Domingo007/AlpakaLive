@@ -14,10 +14,38 @@ export interface DailyProfile {
   treatmentContext: TreatmentContext;
   deviceData: DeviceDataSummary;
   patientReported: PatientReported | null;
+  aiExtracted: AIExtractedData | null;
   baseline: BaselineData;
   historicalContext: HistoricalContext | null;
   supplements: SupplementLog | null;
   alerts: ProfileAlert[];
+}
+
+// ==================== AI EXTRACTION TYPES ====================
+
+export interface AIExtractedData {
+  scores: Record<string, { value: number; basis: string; confidence: number }>;
+  clinicalFindings: ClinicalFinding[];
+  ecogEstimate?: { value: number; basis: string; note?: string };
+  flags: AIFlag[];
+  extractedAt: string;
+}
+
+export interface ClinicalFinding {
+  finding: string;
+  grade?: number;
+  grading?: string;
+  details: string;
+  basis: string;
+  relatedDrug?: string;
+  possibleCauses?: string[];
+  actionSuggested?: string;
+}
+
+export interface AIFlag {
+  type: 'critical' | 'attention' | 'monitor';
+  message: string;
+  urgency: 'high' | 'medium' | 'low';
 }
 
 export interface TreatmentContext {
@@ -86,6 +114,36 @@ export interface ProfileAlert {
 
 // ==================== BUILDER ====================
 
+// ==================== AI EXTRACTION STORAGE ====================
+
+const AI_EXTRACT_STORE = 'alpacalive_ai_extracts';
+
+export async function saveAIExtraction(date: string, data: AIExtractedData): Promise<void> {
+  try {
+    const store = JSON.parse(localStorage.getItem(AI_EXTRACT_STORE) || '{}');
+    store[date] = data;
+    // Keep last 60 days only
+    const keys = Object.keys(store).sort();
+    while (keys.length > 60) {
+      delete store[keys.shift()!];
+    }
+    localStorage.setItem(AI_EXTRACT_STORE, JSON.stringify(store));
+  } catch {
+    // localStorage full — non-fatal
+  }
+}
+
+function getAIExtraction(date: string): AIExtractedData | null {
+  try {
+    const store = JSON.parse(localStorage.getItem(AI_EXTRACT_STORE) || '{}');
+    return store[date] || null;
+  } catch {
+    return null;
+  }
+}
+
+// ==================== BUILDER ====================
+
 export async function buildDailyProfile(date: string, patient: PatientProfile): Promise<DailyProfile> {
   const [allChemo, allDaily, todayWearable, todayLog, recentBlood, todaySupplements] = await Promise.all([
     db.chemo.filter(c => c.status === 'completed' || c.status === 'modified').toArray(),
@@ -103,11 +161,25 @@ export async function buildDailyProfile(date: string, patient: PatientProfile): 
   const historicalContext = buildHistoricalContext(allDaily, allChemo, treatmentContext.cycleDay);
   const alerts = buildAlerts(deviceData, recentBlood);
 
+  const aiExtracted = getAIExtraction(date);
+
+  // Merge AI flags into alerts
+  if (aiExtracted?.flags) {
+    for (const flag of aiExtracted.flags) {
+      if (flag.urgency === 'high') {
+        alerts.push({ type: 'critical', message: flag.message });
+      } else if (flag.urgency === 'medium') {
+        alerts.push({ type: 'warning', message: flag.message });
+      }
+    }
+  }
+
   return {
     date,
     treatmentContext,
     deviceData,
     patientReported,
+    aiExtracted,
     baseline,
     historicalContext,
     supplements: todaySupplements ?? null,

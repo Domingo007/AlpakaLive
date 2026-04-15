@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { extractDataFromResponse, cleanResponseFromTags } from '../lib/data-extractor';
+import { extractDataFromResponse, extractAIProfileData, cleanResponseFromTags } from '../lib/data-extractor';
 import { sanitizeExtractedData } from '../lib/input-guard';
 
 // ==================== EXTRACTION ====================
@@ -79,9 +79,85 @@ describe('cleanResponseFromTags', () => {
     expect(cleaned).not.toContain('[DISEASE_PROFILE:');
   });
 
+  it('removes EXTRACT tags', () => {
+    const text = 'Answer. [EXTRACT:{"scores":{"energy":{"value":3,"basis":"test"}}}]';
+    const cleaned = cleanResponseFromTags(text);
+    expect(cleaned).not.toContain('[EXTRACT:');
+    expect(cleaned).toContain('Answer.');
+  });
+
   it('preserves text without tags', () => {
     const text = 'Normal text without tags.';
     expect(cleanResponseFromTags(text)).toBe(text);
+  });
+});
+
+// ==================== AI PROFILE EXTRACTION ====================
+
+describe('extractAIProfileData', () => {
+  it('extracts scores with basis', () => {
+    const text = 'Response [EXTRACT:{"date":"2026-04-16","scores":{"energy":{"value":3,"basis":"nie wstala z lozka","confidence":0.9},"pain":{"value":4,"basis":"drectwienie stop","confidence":0.8}},"clinicalFindings":[],"flags":[]}]';
+    const result = extractAIProfileData(text);
+    expect(result).not.toBeNull();
+    expect(result!.scores.energy.value).toBe(3);
+    expect(result!.scores.energy.basis).toBe('nie wstala z lozka');
+    expect(result!.scores.energy.confidence).toBe(0.9);
+    expect(result!.scores.pain.value).toBe(4);
+  });
+
+  it('extracts clinical findings', () => {
+    const text = '[EXTRACT:{"date":"2026-04-16","scores":{},"clinicalFindings":[{"finding":"neuropatia_obwodowa","grade":2,"grading":"CTCAE","details":"dretwienie stop","basis":"nie mogla utrzymac kubka","relatedDrug":"paklitaksel"}],"flags":[]}]';
+    const result = extractAIProfileData(text);
+    expect(result!.clinicalFindings).toHaveLength(1);
+    expect(result!.clinicalFindings[0].finding).toBe('neuropatia_obwodowa');
+    expect(result!.clinicalFindings[0].grade).toBe(2);
+    expect(result!.clinicalFindings[0].relatedDrug).toBe('paklitaksel');
+  });
+
+  it('extracts ECOG estimate', () => {
+    const text = '[EXTRACT:{"date":"2026-04-16","scores":{},"clinicalFindings":[],"flags":[],"ecogEstimate":{"value":3,"basis":"maz musial niesc do lazienki"}}]';
+    const result = extractAIProfileData(text);
+    expect(result!.ecogEstimate?.value).toBe(3);
+    expect(result!.ecogEstimate?.basis).toContain('maz');
+  });
+
+  it('extracts flags', () => {
+    const text = '[EXTRACT:{"date":"2026-04-16","scores":{},"clinicalFindings":[],"flags":[{"type":"monitor","message":"Temperatura 37.8 — monitoruj","urgency":"medium"}]}]';
+    const result = extractAIProfileData(text);
+    expect(result!.flags).toHaveLength(1);
+    expect(result!.flags[0].urgency).toBe('medium');
+  });
+
+  it('rejects scores without basis (transparency requirement)', () => {
+    const text = '[EXTRACT:{"date":"2026-04-16","scores":{"energy":{"value":5}},"clinicalFindings":[],"flags":[]}]';
+    const result = extractAIProfileData(text);
+    // Energy score has no basis → should be filtered out
+    expect(result!.scores.energy).toBeUndefined();
+  });
+
+  it('rejects clinical findings without basis', () => {
+    const text = '[EXTRACT:{"date":"2026-04-16","scores":{},"clinicalFindings":[{"finding":"bol","details":"boli"}],"flags":[]}]';
+    const result = extractAIProfileData(text);
+    // No basis → filtered out
+    expect(result!.clinicalFindings).toHaveLength(0);
+  });
+
+  it('clamps confidence to 0-1', () => {
+    const text = '[EXTRACT:{"date":"2026-04-16","scores":{"energy":{"value":5,"basis":"test","confidence":1.5}},"clinicalFindings":[],"flags":[]}]';
+    const result = extractAIProfileData(text);
+    expect(result!.scores.energy.confidence).toBe(1);
+  });
+
+  it('returns null for malformed JSON', () => {
+    expect(extractAIProfileData('[EXTRACT:{broken}]')).toBeNull();
+  });
+
+  it('returns null for text without EXTRACT', () => {
+    expect(extractAIProfileData('Normal AI response')).toBeNull();
+  });
+
+  it('returns null if no scores object', () => {
+    expect(extractAIProfileData('[EXTRACT:{"date":"2026-04-16"}]')).toBeNull();
   });
 });
 

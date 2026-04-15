@@ -229,6 +229,61 @@ export function DailyProfileView() {
         </Card>
       )}
 
+      {/* AI Clinical Findings */}
+      {profile.aiExtracted && profile.aiExtracted.clinicalFindings.length > 0 && (
+        <Card title={lang === 'pl' ? 'Objawy wyciągnięte z rozmowy' : 'Symptoms extracted from conversation'}>
+          <div className="space-y-2">
+            {profile.aiExtracted.clinicalFindings.map((f, i) => (
+              <div key={i} className="bg-lavender-50 rounded-lg p-2.5 space-y-1">
+                <div className="flex items-start gap-2">
+                  <span className="text-alert-warning mt-0.5">◆</span>
+                  <div className="flex-1">
+                    <div className="text-xs font-semibold text-text-primary">
+                      {f.finding.replace(/_/g, ' ')}{f.grade ? ` — ${lang === 'pl' ? 'stopień' : 'grade'} ${f.grade}` : ''}
+                      {f.grading ? ` (${f.grading})` : ''}
+                    </div>
+                    <div className="text-[11px] text-text-secondary">{f.details}</div>
+                    {f.relatedDrug && (
+                      <div className="text-[10px] text-text-tertiary">{lang === 'pl' ? 'Powiązane z' : 'Related to'}: {f.relatedDrug}</div>
+                    )}
+                    <div className="text-[10px] text-lavender-600 italic mt-0.5">"{f.basis}"</div>
+                    {f.actionSuggested && (
+                      <div className="text-[10px] text-accent-dark mt-1">{f.actionSuggested}</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+            {profile.aiExtracted.ecogEstimate && (
+              <div className="bg-lavender-50 rounded-lg p-2.5">
+                <div className="text-xs font-semibold text-text-primary">ECOG: {profile.aiExtracted.ecogEstimate.value}/4</div>
+                <div className="text-[10px] text-text-secondary">{profile.aiExtracted.ecogEstimate.basis}</div>
+                {profile.aiExtracted.ecogEstimate.note && (
+                  <div className="text-[10px] text-text-tertiary italic mt-0.5">{profile.aiExtracted.ecogEstimate.note}</div>
+                )}
+              </div>
+            )}
+            <p className="text-[9px] text-text-tertiary italic">
+              {lang === 'pl'
+                ? 'Objawy wyciągnięte przez AI z rozmowy. Nie stanowią diagnozy. Omów z lekarzem.'
+                : 'Symptoms extracted by AI from conversation. Not a diagnosis. Discuss with your doctor.'}
+            </p>
+          </div>
+        </Card>
+      )}
+
+      {/* AI suggestion when no extraction exists */}
+      {!profile.aiExtracted && profile.patientReported && (
+        <div className="bg-lavender-50 rounded-xl px-3 py-2.5 flex items-start gap-2">
+          <Icon name="smart_toy" size={16} className="text-lavender-500 shrink-0 mt-0.5" />
+          <p className="text-[11px] text-text-secondary leading-relaxed">
+            {lang === 'pl'
+              ? 'Porozmawiaj z agentem AI aby uzyskać pełniejszy profil dnia. AI wyciąga z rozmowy informacje których slidery nie łapią — rodzaj bólu, objawy uboczne, stan emocjonalny.'
+              : 'Talk to the AI agent for a richer daily profile. AI extracts information from conversation that sliders miss — pain type, side effects, emotional state.'}
+          </p>
+        </div>
+      )}
+
       {/* Historical context */}
       {profile.historicalContext && profile.historicalContext.sameDayEntries.length > 0 && (
         <Card title={l.history}>
