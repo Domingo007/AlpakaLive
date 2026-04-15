@@ -3,6 +3,7 @@ import { useDashboardData } from '@/hooks/useDatabase';
 import { Card } from '@/components/shared/Card';
 import { StatCard } from '@/components/shared/StatCard';
 import { Icon } from '@/components/shared/Icon';
+import { DailyProfileView } from './DailyProfileView';
 import { EnergyChart } from './EnergyChart';
 import { BloodChart } from './BloodChart';
 import { generateReportPDF } from '@/lib/report-generator';
@@ -44,6 +45,9 @@ export function DataView() {
 
   return (
     <div className="h-full overflow-y-auto px-3 py-4 space-y-4">
+      {/* Daily Profile — first thing patient sees */}
+      <DailyProfileView />
+
       <div className="flex items-center justify-between">
         <h2 className="font-display text-lg font-semibold text-accent-dark">{t.dataView.title}</h2>
         <button
