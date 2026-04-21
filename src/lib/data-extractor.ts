@@ -221,7 +221,7 @@ export async function saveExtractedData(items: ExtractedData[]): Promise<void> {
         break;
 
       case 'prediction':
-        await db.patternSummaries.put({
+        await db.predictions.put({
           id,
           date,
           targetDate: date,

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { db, getPatient, savePatient, getSettings, saveSettings, getRecentDailyLogs, getRecentBloodWork, getRecentWearableData, getRecentMeals, getRecentChemo, getRecentImaging, getRecentPredictions } from '@/lib/db';
-import type { PatientProfile, AppSettings, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, PatternSummary } from '@/types';
+import type { PatientProfile, AppSettings, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, Prediction } from '@/types';
 
 export function usePatient() {
   const [patient, setPatient] = useState<PatientProfile | undefined>();
@@ -43,7 +43,7 @@ export function useDashboardData() {
     meals: MealLog[];
     chemo: ChemoSession[];
     imaging: ImagingStudy[];
-    predictions: PatternSummary[];
+    predictions: Prediction[];
     counts: Record<string, number>;
   }>({
     daily: [], blood: [], wearable: [], meals: [], chemo: [], imaging: [], predictions: [],

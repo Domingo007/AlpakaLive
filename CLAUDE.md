@@ -65,7 +65,7 @@ Types: Feat, Fix, Medical, Docs, Style, Refactor, Test, Chore, Security, Legal
 ## Key Files
 | Purpose | File |
 |---------|------|
-| Database | `src/lib/db.ts` (Dexie, dual DB; `patternSummaries` table aliased over physical `predictions` — see interface comment) |
+| Database | `src/lib/db.ts` (Dexie, dual DB) |
 | AI messages | `src/lib/ai.ts` |
 | System prompt | `src/lib/system-prompt.ts` |
 | PII filter | `src/lib/pii-sanitizer.ts` |
@@ -84,4 +84,3 @@ Types: Feat, Fix, Medical, Docs, Style, Refactor, Test, Chore, Security, Legal
 - Create files outside established directory structure
 - Add features beyond what was asked — no scope creep
 - Add comments/docstrings to code you didn't change
-- Rename physical Dexie table `predictions` → requires `db.version(N+1).upgrade()` migration and data preservation tests; only use TypeScript alias `patternSummaries` for new code (see `src/lib/db.ts`)

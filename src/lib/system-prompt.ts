@@ -3,7 +3,7 @@
  * Copyright (C) 2025 AlpacaLive Contributors
  * Licensed under AGPL-3.0 — see LICENSE file
  */
-import type { PatientProfile, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, PatternSummary, BreastCancerSubtype, SupplementLog } from '@/types';
+import type { PatientProfile, DailyLog, BloodWork, WearableData, MealLog, ChemoSession, ImagingStudy, Prediction, BreastCancerSubtype, SupplementLog } from '@/types';
 import { calculateCurrentPhase } from './treatment-cycle';
 import { checkInteractions } from './cyp450';
 import { getDiseaseKnowledge, SUPPLEMENTS } from './medical-data/knowledge-registry';
@@ -198,7 +198,7 @@ interface RecentData {
   meals: MealLog[];
   chemo: ChemoSession[];
   imaging: ImagingStudy[];
-  predictions: PatternSummary[];
+  predictions: Prediction[];
   supplements?: SupplementLog[];
 }
 
