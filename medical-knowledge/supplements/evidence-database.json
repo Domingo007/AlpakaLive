@@ -1,55 +1,188 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "PubMed — various, see individual entries",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "version": "1.0.0",
   "supplements": [
     {
-      "id": "vitamin_d3", "name": { "en": "Vitamin D3", "pl": "Witamina D3", "de": "Vitamin D3" },
-      "dosesInStudies": "2000-4000 IU/day", "evidenceLevel": "strong",
-      "context": { "en": "Studied in the context of deficiency in cancer patients. Target level: 40-60 ng/ml.", "pl": "Badana w kontekście niedoboru u pacjentów onkologicznych. Cel: 40-60 ng/ml." },
-      "interactions": ["safe_with_most_chemo"], "cautions": [],
-      "sources": ["VITAL study", "Multiple meta-analyses"]
+      "id": "vitamin_d3",
+      "name": {
+        "en": "Vitamin D3",
+        "pl": "Witamina D3",
+        "de": "Vitamin D3"
+      },
+      "dosesInStudies": "2000-4000 IU/day",
+      "evidenceLevel": "strong",
+      "context": {
+        "en": "Studied in the context of deficiency in cancer patients. Target level: 40-60 ng/ml.",
+        "pl": "Badana w kontekście niedoboru u pacjentów onkologicznych. Cel: 40-60 ng/ml."
+      },
+      "interactions": [
+        "safe_with_most_chemo"
+      ],
+      "cautions": [],
+      "sources": [
+        "VITAL study",
+        "Multiple meta-analyses"
+      ]
     },
     {
-      "id": "omega3", "name": { "en": "Omega-3 (Fish Oil)", "pl": "Omega-3 (Olej rybi)", "de": "Omega-3 (Fischöl)" },
-      "dosesInStudies": "1000-3000 mg EPA+DHA/day", "evidenceLevel": "moderate",
-      "context": { "en": "Studied for joint pain reduction in AI therapy and anti-inflammatory effects.", "pl": "Badana pod kątem redukcji bólów stawów przy AI i działania przeciwzapalnego." },
-      "interactions": ["safe_with_most_chemo"], "cautions": [{ "en": "Discontinue 7 days before surgery (bleeding risk)", "pl": "Odstawić 7 dni przed operacją (ryzyko krwawienia)" }],
-      "sources": ["SWOG S0927", "Multiple observational studies"]
+      "id": "omega3",
+      "name": {
+        "en": "Omega-3 (Fish Oil)",
+        "pl": "Omega-3 (Olej rybi)",
+        "de": "Omega-3 (Fischöl)"
+      },
+      "dosesInStudies": "1000-3000 mg EPA+DHA/day",
+      "evidenceLevel": "moderate",
+      "context": {
+        "en": "Studied for joint pain reduction in AI therapy and anti-inflammatory effects.",
+        "pl": "Badana pod kątem redukcji bólów stawów przy AI i działania przeciwzapalnego."
+      },
+      "interactions": [
+        "safe_with_most_chemo"
+      ],
+      "cautions": [
+        {
+          "en": "Discontinue 7 days before surgery (bleeding risk)",
+          "pl": "Odstawić 7 dni przed operacją (ryzyko krwawienia)"
+        }
+      ],
+      "sources": [
+        "SWOG S0927",
+        "Multiple observational studies"
+      ]
     },
     {
-      "id": "magnesium", "name": { "en": "Magnesium", "pl": "Magnez", "de": "Magnesium" },
-      "dosesInStudies": "200-400 mg/day", "evidenceLevel": "moderate",
-      "context": { "en": "Deficiency common in chemo patients. May help with muscle cramps and sleep.", "pl": "Niedobór częsty u pacjentów po chemii. Może pomagać ze skurczami mięśni i snem." },
-      "interactions": ["safe_with_most_chemo"], "cautions": [{ "en": "Take 2h apart from cisplatin", "pl": "Przyjmuj 2h od cisplatyny" }],
-      "sources": ["Clinical practice"]
+      "id": "magnesium",
+      "name": {
+        "en": "Magnesium",
+        "pl": "Magnez",
+        "de": "Magnesium"
+      },
+      "dosesInStudies": "200-400 mg/day",
+      "evidenceLevel": "moderate",
+      "context": {
+        "en": "Deficiency common in chemo patients. May help with muscle cramps and sleep.",
+        "pl": "Niedobór częsty u pacjentów po chemii. Może pomagać ze skurczami mięśni i snem."
+      },
+      "interactions": [
+        "safe_with_most_chemo"
+      ],
+      "cautions": [
+        {
+          "en": "Take 2h apart from cisplatin",
+          "pl": "Przyjmuj 2h od cisplatyny"
+        }
+      ],
+      "sources": [
+        "Clinical practice"
+      ]
     },
     {
-      "id": "l_glutamine", "name": { "en": "L-Glutamine", "pl": "L-Glutamina", "de": "L-Glutamin" },
-      "dosesInStudies": "5-15 g/day", "evidenceLevel": "moderate",
-      "context": { "en": "Studied for neuropathy prevention with taxanes and mucositis.", "pl": "Badana w kontekście zapobiegania neuropatii przy taksanach i zapaleniu śluzówek." },
-      "interactions": ["safe_with_most_chemo"], "cautions": [],
-      "sources": ["Vahdat L, et al. Clin Cancer Res 2001"]
+      "id": "l_glutamine",
+      "name": {
+        "en": "L-Glutamine",
+        "pl": "L-Glutamina",
+        "de": "L-Glutamin"
+      },
+      "dosesInStudies": "5-15 g/day",
+      "evidenceLevel": "moderate",
+      "context": {
+        "en": "Studied for neuropathy prevention with taxanes and mucositis.",
+        "pl": "Badana w kontekście zapobiegania neuropatii przy taksanach i zapaleniu śluzówek."
+      },
+      "interactions": [
+        "safe_with_most_chemo"
+      ],
+      "cautions": [],
+      "sources": [
+        "Vahdat L, et al. Clin Cancer Res 2001"
+      ]
     },
     {
-      "id": "probiotics", "name": { "en": "Probiotics", "pl": "Probiotyki", "de": "Probiotika" },
-      "dosesInStudies": "various strains", "evidenceLevel": "moderate",
-      "context": { "en": "May help with chemo-related diarrhea. Avoid in neutropenic patients.", "pl": "Mogą pomagać z biegunką poochemioterapeutyczną. Unikać u pacjentów z neutropenią." },
-      "interactions": ["safe_with_most_chemo"], "cautions": [{ "en": "AVOID when neutropenic (ANC <1.0)", "pl": "UNIKAJ przy neutropenii (ANC <1.0)" }],
-      "sources": ["Cochrane review 2018"]
+      "id": "probiotics",
+      "name": {
+        "en": "Probiotics",
+        "pl": "Probiotyki",
+        "de": "Probiotika"
+      },
+      "dosesInStudies": "various strains",
+      "evidenceLevel": "moderate",
+      "context": {
+        "en": "May help with chemo-related diarrhea. Avoid in neutropenic patients.",
+        "pl": "Mogą pomagać z biegunką poochemioterapeutyczną. Unikać u pacjentów z neutropenią."
+      },
+      "interactions": [
+        "safe_with_most_chemo"
+      ],
+      "cautions": [
+        {
+          "en": "AVOID when neutropenic (ANC <1.0)",
+          "pl": "UNIKAJ przy neutropenii (ANC <1.0)"
+        }
+      ],
+      "sources": [
+        "Cochrane review 2018"
+      ]
     },
     {
-      "id": "curcumin", "name": { "en": "Curcumin", "pl": "Kurkumina", "de": "Curcumin" },
-      "dosesInStudies": "500-2000 mg/day", "evidenceLevel": "preclinical",
-      "context": { "en": "Anti-inflammatory properties studied. Inhibits CYP3A4 weakly — discuss with oncologist.", "pl": "Badane właściwości przeciwzapalne. Słabo hamuje CYP3A4 — omów z onkologiem." },
-      "interactions": ["cyp3a4_weak_inhibitor"], "cautions": [{ "en": "Discuss with oncologist due to CYP3A4 interaction", "pl": "Omów z onkologiem ze względu na interakcję z CYP3A4" }],
-      "sources": ["Preclinical studies", "Drug interaction databases"]
+      "id": "curcumin",
+      "name": {
+        "en": "Curcumin",
+        "pl": "Kurkumina",
+        "de": "Curcumin"
+      },
+      "dosesInStudies": "500-2000 mg/day",
+      "evidenceLevel": "preclinical",
+      "context": {
+        "en": "Anti-inflammatory properties studied. Inhibits CYP3A4 weakly — discuss with oncologist.",
+        "pl": "Badane właściwości przeciwzapalne. Słabo hamuje CYP3A4 — omów z onkologiem."
+      },
+      "interactions": [
+        "cyp3a4_weak_inhibitor"
+      ],
+      "cautions": [
+        {
+          "en": "Discuss with oncologist due to CYP3A4 interaction",
+          "pl": "Omów z onkologiem ze względu na interakcję z CYP3A4"
+        }
+      ],
+      "sources": [
+        "Preclinical studies",
+        "Drug interaction databases"
+      ]
     },
     {
-      "id": "st_johns_wort", "name": { "en": "St. John's Wort", "pl": "Dziurawiec", "de": "Johanniskraut" },
-      "dosesInStudies": "N/A", "evidenceLevel": "CONTRAINDICATED",
-      "context": { "en": "STRONGLY induces CYP3A4. REDUCES efficacy of most chemo, targeted, and hormonal therapies. DO NOT USE during cancer treatment.", "pl": "SILNIE indukuje CYP3A4. OBNIŻA skuteczność większości chemio, celowanych i hormonalnych terapii. NIE STOSOWAĆ podczas leczenia onkologicznego." },
-      "interactions": ["cyp3a4_strong_inducer", "CONTRAINDICATED_with_chemo"],
-      "cautions": [{ "en": "CONTRAINDICATED with all cancer therapies", "pl": "PRZECIWWSKAZANY przy wszystkich terapiach onkologicznych" }],
-      "sources": ["FDA drug safety communication", "Multiple clinical guidelines"]
+      "id": "st_johns_wort",
+      "name": {
+        "en": "St. John's Wort",
+        "pl": "Dziurawiec",
+        "de": "Johanniskraut"
+      },
+      "dosesInStudies": "N/A",
+      "evidenceLevel": "CONTRAINDICATED",
+      "context": {
+        "en": "STRONGLY induces CYP3A4. REDUCES efficacy of most chemo, targeted, and hormonal therapies. DO NOT USE during cancer treatment.",
+        "pl": "SILNIE indukuje CYP3A4. OBNIŻA skuteczność większości chemio, celowanych i hormonalnych terapii. NIE STOSOWAĆ podczas leczenia onkologicznego."
+      },
+      "interactions": [
+        "cyp3a4_strong_inducer",
+        "CONTRAINDICATED_with_chemo"
+      ],
+      "cautions": [
+        {
+          "en": "CONTRAINDICATED with all cancer therapies",
+          "pl": "PRZECIWWSKAZANY przy wszystkich terapiach onkologicznych"
+        }
+      ],
+      "sources": [
+        "FDA drug safety communication",
+        "Multiple clinical guidelines"
+      ]
     }
   ]
 }

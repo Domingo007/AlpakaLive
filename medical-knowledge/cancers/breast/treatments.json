@@ -1,145 +1,568 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "ESMO Breast Cancer Guidelines 2024, NCCN 2024",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "version": "1.0.0",
   "lastUpdated": "2026-04-11",
   "regimens": [
     {
       "id": "ec",
       "name": "EC",
-      "fullName": { "pl": "Epirubicyna + Cyklofosfamid", "en": "Epirubicin + Cyclophosphamide" },
-      "drugs": ["epirubicin", "cyclophosphamide"],
+      "fullName": {
+        "pl": "Epirubicyna + Cyklofosfamid",
+        "en": "Epirubicin + Cyclophosphamide"
+      },
+      "drugs": [
+        "epirubicin",
+        "cyclophosphamide"
+      ],
       "cycleLength": 21,
       "cycles": 4,
-      "administration": { "pl": "Dożylnie, dzień 1 cyklu", "en": "IV, day 1 of cycle" },
-      "indication": { "pl": "Neoadjuwant/adjuwant HR+ i TNBC (Europa, ESMO)", "en": "Neoadjuvant/adjuvant HR+ and TNBC (Europe, ESMO)" },
-      "subtypes": ["luminal_a", "luminal_b", "tnbc"],
-      "commonSideEffects": ["nausea", "neutropenia", "alopecia", "fatigue", "cardiotoxicity"],
+      "administration": {
+        "pl": "Dożylnie, dzień 1 cyklu",
+        "en": "IV, day 1 of cycle"
+      },
+      "indication": {
+        "pl": "Neoadjuwant/adjuwant HR+ i TNBC (Europa, ESMO)",
+        "en": "Neoadjuvant/adjuvant HR+ and TNBC (Europe, ESMO)"
+      },
+      "subtypes": [
+        "luminal_a",
+        "luminal_b",
+        "tnbc"
+      ],
+      "commonSideEffects": [
+        "nausea",
+        "neutropenia",
+        "alopecia",
+        "fatigue",
+        "cardiotoxicity"
+      ],
       "emetogenicRisk": "high",
-      "monitoringRequired": ["wbc", "neutrophils", "hgb", "plt", "alt", "ast"],
-      "preChemoChecks": { "wbc": 3.0, "neutrophils": 1.5, "plt": 100 },
+      "monitoringRequired": [
+        "wbc",
+        "neutrophils",
+        "hgb",
+        "plt",
+        "alt",
+        "ast"
+      ],
+      "preChemoChecks": {
+        "wbc": 3,
+        "neutrophils": 1.5,
+        "plt": 100
+      },
       "phaseProfile": {
-        "crisis": { "days": [0, 3], "energy": 3, "nausea": 7, "pain": 4, "mood": 4 },
-        "recovery": { "days": [4, 7], "energy": 5, "nausea": 3, "pain": 2, "mood": 5 },
-        "rebuild": { "days": [8, 20], "energy": 7, "nausea": 1, "pain": 1, "mood": 7 }
+        "crisis": {
+          "days": [
+            0,
+            3
+          ],
+          "energy": 3,
+          "nausea": 7,
+          "pain": 4,
+          "mood": 4
+        },
+        "recovery": {
+          "days": [
+            4,
+            7
+          ],
+          "energy": 5,
+          "nausea": 3,
+          "pain": 2,
+          "mood": 5
+        },
+        "rebuild": {
+          "days": [
+            8,
+            20
+          ],
+          "energy": 7,
+          "nausea": 1,
+          "pain": 1,
+          "mood": 7
+        }
       }
     },
     {
       "id": "ac",
       "name": "AC",
-      "fullName": { "pl": "Doksorubicyna + Cyklofosfamid", "en": "Doxorubicin + Cyclophosphamide" },
-      "drugs": ["doxorubicin", "cyclophosphamide"],
+      "fullName": {
+        "pl": "Doksorubicyna + Cyklofosfamid",
+        "en": "Doxorubicin + Cyclophosphamide"
+      },
+      "drugs": [
+        "doxorubicin",
+        "cyclophosphamide"
+      ],
       "cycleLength": 21,
       "cycles": 4,
-      "administration": { "pl": "Dożylnie, dzień 1 cyklu", "en": "IV, day 1 of cycle" },
-      "indication": { "pl": "Neoadjuwant/adjuwant (USA, NCCN)", "en": "Neoadjuvant/adjuvant (USA, NCCN)" },
-      "subtypes": ["luminal_a", "luminal_b", "tnbc"],
-      "commonSideEffects": ["nausea", "neutropenia", "alopecia", "fatigue", "cardiotoxicity"],
+      "administration": {
+        "pl": "Dożylnie, dzień 1 cyklu",
+        "en": "IV, day 1 of cycle"
+      },
+      "indication": {
+        "pl": "Neoadjuwant/adjuwant (USA, NCCN)",
+        "en": "Neoadjuvant/adjuvant (USA, NCCN)"
+      },
+      "subtypes": [
+        "luminal_a",
+        "luminal_b",
+        "tnbc"
+      ],
+      "commonSideEffects": [
+        "nausea",
+        "neutropenia",
+        "alopecia",
+        "fatigue",
+        "cardiotoxicity"
+      ],
       "emetogenicRisk": "high",
-      "monitoringRequired": ["wbc", "neutrophils", "hgb", "plt", "alt", "ast"],
-      "preChemoChecks": { "wbc": 3.0, "neutrophils": 1.5, "plt": 100 },
+      "monitoringRequired": [
+        "wbc",
+        "neutrophils",
+        "hgb",
+        "plt",
+        "alt",
+        "ast"
+      ],
+      "preChemoChecks": {
+        "wbc": 3,
+        "neutrophils": 1.5,
+        "plt": 100
+      },
       "phaseProfile": {
-        "crisis": { "days": [0, 3], "energy": 3, "nausea": 7, "pain": 4, "mood": 4 },
-        "recovery": { "days": [4, 7], "energy": 5, "nausea": 3, "pain": 2, "mood": 5 },
-        "rebuild": { "days": [8, 20], "energy": 7, "nausea": 1, "pain": 1, "mood": 7 }
+        "crisis": {
+          "days": [
+            0,
+            3
+          ],
+          "energy": 3,
+          "nausea": 7,
+          "pain": 4,
+          "mood": 4
+        },
+        "recovery": {
+          "days": [
+            4,
+            7
+          ],
+          "energy": 5,
+          "nausea": 3,
+          "pain": 2,
+          "mood": 5
+        },
+        "rebuild": {
+          "days": [
+            8,
+            20
+          ],
+          "energy": 7,
+          "nausea": 1,
+          "pain": 1,
+          "mood": 7
+        }
       }
     },
     {
       "id": "ac_t_weekly",
       "name": "AC → T (weekly)",
-      "fullName": { "pl": "AC × 4 → Paclitaxel co tydzień × 12", "en": "AC × 4 → Paclitaxel weekly × 12" },
-      "drugs": ["doxorubicin", "cyclophosphamide", "paclitaxel"],
+      "fullName": {
+        "pl": "AC × 4 → Paclitaxel co tydzień × 12",
+        "en": "AC × 4 → Paclitaxel weekly × 12"
+      },
+      "drugs": [
+        "doxorubicin",
+        "cyclophosphamide",
+        "paclitaxel"
+      ],
       "cycleLength": 7,
       "cycles": 12,
-      "administration": { "pl": "Faza 1: AC d1 co 21d × 4. Faza 2: Paclitaxel d1 co 7d × 12", "en": "Phase 1: AC d1 q21d × 4. Phase 2: Paclitaxel d1 q7d × 12" },
-      "indication": { "pl": "Wysokie ryzyko HR+, TNBC", "en": "High-risk HR+, TNBC" },
-      "subtypes": ["luminal_b", "tnbc"],
-      "commonSideEffects": ["nausea", "neutropenia", "alopecia", "neuropathy", "fatigue", "myalgia"],
+      "administration": {
+        "pl": "Faza 1: AC d1 co 21d × 4. Faza 2: Paclitaxel d1 co 7d × 12",
+        "en": "Phase 1: AC d1 q21d × 4. Phase 2: Paclitaxel d1 q7d × 12"
+      },
+      "indication": {
+        "pl": "Wysokie ryzyko HR+, TNBC",
+        "en": "High-risk HR+, TNBC"
+      },
+      "subtypes": [
+        "luminal_b",
+        "tnbc"
+      ],
+      "commonSideEffects": [
+        "nausea",
+        "neutropenia",
+        "alopecia",
+        "neuropathy",
+        "fatigue",
+        "myalgia"
+      ],
       "emetogenicRisk": "low",
-      "monitoringRequired": ["wbc", "neutrophils", "hgb", "plt"],
-      "preChemoChecks": { "wbc": 2.0, "neutrophils": 1.0, "plt": 75 },
+      "monitoringRequired": [
+        "wbc",
+        "neutrophils",
+        "hgb",
+        "plt"
+      ],
+      "preChemoChecks": {
+        "wbc": 2,
+        "neutrophils": 1,
+        "plt": 75
+      },
       "phaseProfile": {
-        "crisis": { "days": [0, 2], "energy": 5, "nausea": 2, "pain": 3, "mood": 5 },
-        "recovery": { "days": [3, 4], "energy": 6, "nausea": 1, "pain": 2, "mood": 6 },
-        "rebuild": { "days": [5, 6], "energy": 7, "nausea": 0, "pain": 1, "mood": 7 }
+        "crisis": {
+          "days": [
+            0,
+            2
+          ],
+          "energy": 5,
+          "nausea": 2,
+          "pain": 3,
+          "mood": 5
+        },
+        "recovery": {
+          "days": [
+            3,
+            4
+          ],
+          "energy": 6,
+          "nausea": 1,
+          "pain": 2,
+          "mood": 6
+        },
+        "rebuild": {
+          "days": [
+            5,
+            6
+          ],
+          "energy": 7,
+          "nausea": 0,
+          "pain": 1,
+          "mood": 7
+        }
       }
     },
     {
       "id": "ec_t_weekly",
       "name": "EC → T (weekly)",
-      "fullName": { "pl": "EC × 4 → Paclitaxel co tydzień × 12", "en": "EC × 4 → Paclitaxel weekly × 12" },
-      "drugs": ["epirubicin", "cyclophosphamide", "paclitaxel"],
+      "fullName": {
+        "pl": "EC × 4 → Paclitaxel co tydzień × 12",
+        "en": "EC × 4 → Paclitaxel weekly × 12"
+      },
+      "drugs": [
+        "epirubicin",
+        "cyclophosphamide",
+        "paclitaxel"
+      ],
       "cycleLength": 7,
       "cycles": 12,
-      "administration": { "pl": "Faza 1: EC d1 co 21d × 4. Faza 2: Paclitaxel d1 co 7d × 12", "en": "Phase 1: EC d1 q21d × 4. Phase 2: Paclitaxel d1 q7d × 12" },
-      "indication": { "pl": "Wysokie ryzyko HR+, TNBC (Europa)", "en": "High-risk HR+, TNBC (Europe)" },
-      "subtypes": ["luminal_b", "tnbc"],
-      "commonSideEffects": ["nausea", "neutropenia", "alopecia", "neuropathy", "fatigue"],
+      "administration": {
+        "pl": "Faza 1: EC d1 co 21d × 4. Faza 2: Paclitaxel d1 co 7d × 12",
+        "en": "Phase 1: EC d1 q21d × 4. Phase 2: Paclitaxel d1 q7d × 12"
+      },
+      "indication": {
+        "pl": "Wysokie ryzyko HR+, TNBC (Europa)",
+        "en": "High-risk HR+, TNBC (Europe)"
+      },
+      "subtypes": [
+        "luminal_b",
+        "tnbc"
+      ],
+      "commonSideEffects": [
+        "nausea",
+        "neutropenia",
+        "alopecia",
+        "neuropathy",
+        "fatigue"
+      ],
       "emetogenicRisk": "low",
-      "monitoringRequired": ["wbc", "neutrophils", "hgb", "plt"],
-      "preChemoChecks": { "wbc": 2.0, "neutrophils": 1.0, "plt": 75 },
+      "monitoringRequired": [
+        "wbc",
+        "neutrophils",
+        "hgb",
+        "plt"
+      ],
+      "preChemoChecks": {
+        "wbc": 2,
+        "neutrophils": 1,
+        "plt": 75
+      },
       "phaseProfile": {
-        "crisis": { "days": [0, 2], "energy": 5, "nausea": 2, "pain": 3, "mood": 5 },
-        "recovery": { "days": [3, 4], "energy": 6, "nausea": 1, "pain": 2, "mood": 6 },
-        "rebuild": { "days": [5, 6], "energy": 7, "nausea": 0, "pain": 1, "mood": 7 }
+        "crisis": {
+          "days": [
+            0,
+            2
+          ],
+          "energy": 5,
+          "nausea": 2,
+          "pain": 3,
+          "mood": 5
+        },
+        "recovery": {
+          "days": [
+            3,
+            4
+          ],
+          "energy": 6,
+          "nausea": 1,
+          "pain": 2,
+          "mood": 6
+        },
+        "rebuild": {
+          "days": [
+            5,
+            6
+          ],
+          "energy": 7,
+          "nausea": 0,
+          "pain": 1,
+          "mood": 7
+        }
       }
     },
     {
       "id": "tc",
       "name": "TC",
-      "fullName": { "pl": "Docetaxel + Cyklofosfamid", "en": "Docetaxel + Cyclophosphamide" },
-      "drugs": ["docetaxel", "cyclophosphamide"],
+      "fullName": {
+        "pl": "Docetaxel + Cyklofosfamid",
+        "en": "Docetaxel + Cyclophosphamide"
+      },
+      "drugs": [
+        "docetaxel",
+        "cyclophosphamide"
+      ],
       "cycleLength": 21,
       "cycles": 4,
-      "administration": { "pl": "Dożylnie, dzień 1 cyklu", "en": "IV, day 1 of cycle" },
-      "indication": { "pl": "Adjuwant HR+ niskie/średnie ryzyko (bez antracyklin)", "en": "Adjuvant HR+ low/intermediate risk (anthracycline-free)" },
-      "subtypes": ["luminal_a", "luminal_b"],
-      "commonSideEffects": ["neutropenia", "fatigue", "myalgia", "edema", "neuropathy"],
+      "administration": {
+        "pl": "Dożylnie, dzień 1 cyklu",
+        "en": "IV, day 1 of cycle"
+      },
+      "indication": {
+        "pl": "Adjuwant HR+ niskie/średnie ryzyko (bez antracyklin)",
+        "en": "Adjuvant HR+ low/intermediate risk (anthracycline-free)"
+      },
+      "subtypes": [
+        "luminal_a",
+        "luminal_b"
+      ],
+      "commonSideEffects": [
+        "neutropenia",
+        "fatigue",
+        "myalgia",
+        "edema",
+        "neuropathy"
+      ],
       "emetogenicRisk": "moderate",
-      "monitoringRequired": ["wbc", "neutrophils", "hgb", "plt"],
-      "preChemoChecks": { "wbc": 3.0, "neutrophils": 1.5, "plt": 100 },
+      "monitoringRequired": [
+        "wbc",
+        "neutrophils",
+        "hgb",
+        "plt"
+      ],
+      "preChemoChecks": {
+        "wbc": 3,
+        "neutrophils": 1.5,
+        "plt": 100
+      },
       "phaseProfile": {
-        "crisis": { "days": [0, 3], "energy": 3, "nausea": 4, "pain": 5, "mood": 4 },
-        "recovery": { "days": [4, 10], "energy": 5, "nausea": 2, "pain": 3, "mood": 5 },
-        "rebuild": { "days": [11, 20], "energy": 7, "nausea": 1, "pain": 1, "mood": 7 }
+        "crisis": {
+          "days": [
+            0,
+            3
+          ],
+          "energy": 3,
+          "nausea": 4,
+          "pain": 5,
+          "mood": 4
+        },
+        "recovery": {
+          "days": [
+            4,
+            10
+          ],
+          "energy": 5,
+          "nausea": 2,
+          "pain": 3,
+          "mood": 5
+        },
+        "rebuild": {
+          "days": [
+            11,
+            20
+          ],
+          "energy": 7,
+          "nausea": 1,
+          "pain": 1,
+          "mood": 7
+        }
       }
     },
     {
       "id": "tch",
       "name": "TCH",
-      "fullName": { "pl": "Docetaxel + Carboplatin + Trastuzumab", "en": "Docetaxel + Carboplatin + Trastuzumab" },
-      "drugs": ["docetaxel", "carboplatin", "trastuzumab"],
+      "fullName": {
+        "pl": "Docetaxel + Carboplatin + Trastuzumab",
+        "en": "Docetaxel + Carboplatin + Trastuzumab"
+      },
+      "drugs": [
+        "docetaxel",
+        "carboplatin",
+        "trastuzumab"
+      ],
       "cycleLength": 21,
       "cycles": 6,
-      "administration": { "pl": "Dożylnie d1, potem trastuzumab co 3 tyg. do 1 roku", "en": "IV d1, then trastuzumab q3w for 1 year" },
-      "indication": { "pl": "HER2+ (bez antracyklin, mniejsza kardiotoksyczność)", "en": "HER2+ (anthracycline-free, less cardiotoxicity)" },
-      "subtypes": ["her2_positive"],
-      "commonSideEffects": ["neutropenia", "neuropathy", "diarrhea", "fatigue", "cardiotoxicity_low"],
+      "administration": {
+        "pl": "Dożylnie d1, potem trastuzumab co 3 tyg. do 1 roku",
+        "en": "IV d1, then trastuzumab q3w for 1 year"
+      },
+      "indication": {
+        "pl": "HER2+ (bez antracyklin, mniejsza kardiotoksyczność)",
+        "en": "HER2+ (anthracycline-free, less cardiotoxicity)"
+      },
+      "subtypes": [
+        "her2_positive"
+      ],
+      "commonSideEffects": [
+        "neutropenia",
+        "neuropathy",
+        "diarrhea",
+        "fatigue",
+        "cardiotoxicity_low"
+      ],
       "emetogenicRisk": "moderate",
-      "monitoringRequired": ["wbc", "neutrophils", "hgb", "plt", "creatinine"],
-      "preChemoChecks": { "wbc": 3.0, "neutrophils": 1.5, "plt": 100 },
+      "monitoringRequired": [
+        "wbc",
+        "neutrophils",
+        "hgb",
+        "plt",
+        "creatinine"
+      ],
+      "preChemoChecks": {
+        "wbc": 3,
+        "neutrophils": 1.5,
+        "plt": 100
+      },
       "phaseProfile": {
-        "crisis": { "days": [0, 4], "energy": 3, "nausea": 5, "pain": 4, "mood": 4 },
-        "recovery": { "days": [5, 10], "energy": 5, "nausea": 2, "pain": 2, "mood": 5 },
-        "rebuild": { "days": [11, 20], "energy": 7, "nausea": 1, "pain": 1, "mood": 7 }
+        "crisis": {
+          "days": [
+            0,
+            4
+          ],
+          "energy": 3,
+          "nausea": 5,
+          "pain": 4,
+          "mood": 4
+        },
+        "recovery": {
+          "days": [
+            5,
+            10
+          ],
+          "energy": 5,
+          "nausea": 2,
+          "pain": 2,
+          "mood": 5
+        },
+        "rebuild": {
+          "days": [
+            11,
+            20
+          ],
+          "energy": 7,
+          "nausea": 1,
+          "pain": 1,
+          "mood": 7
+        }
       }
     },
     {
       "id": "pembrolizumab_chemo",
       "name": "Pembrolizumab + Chemo",
-      "fullName": { "pl": "Pembrolizumab + Chemioterapia (KEYNOTE-522)", "en": "Pembrolizumab + Chemotherapy (KEYNOTE-522)" },
-      "drugs": ["pembrolizumab", "paclitaxel", "carboplatin"],
+      "fullName": {
+        "pl": "Pembrolizumab + Chemioterapia (KEYNOTE-522)",
+        "en": "Pembrolizumab + Chemotherapy (KEYNOTE-522)"
+      },
+      "drugs": [
+        "pembrolizumab",
+        "paclitaxel",
+        "carboplatin"
+      ],
       "cycleLength": 21,
       "cycles": 8,
-      "administration": { "pl": "Neoadjuwant: Pembrolizumab + Paclitaxel/Carboplatin, potem Pembrolizumab + EC/AC", "en": "Neoadjuvant: Pembrolizumab + Paclitaxel/Carboplatin, then Pembrolizumab + EC/AC" },
-      "indication": { "pl": "TNBC stadium II-III (PD-L1 niezależnie)", "en": "TNBC stage II-III (regardless of PD-L1)" },
-      "subtypes": ["tnbc"],
-      "commonSideEffects": ["neutropenia", "fatigue", "nausea", "alopecia", "irAE_skin", "irAE_thyroid", "irAE_hepatic"],
+      "administration": {
+        "pl": "Neoadjuwant: Pembrolizumab + Paclitaxel/Carboplatin, potem Pembrolizumab + EC/AC",
+        "en": "Neoadjuvant: Pembrolizumab + Paclitaxel/Carboplatin, then Pembrolizumab + EC/AC"
+      },
+      "indication": {
+        "pl": "TNBC stadium II-III (PD-L1 niezależnie)",
+        "en": "TNBC stage II-III (regardless of PD-L1)"
+      },
+      "subtypes": [
+        "tnbc"
+      ],
+      "commonSideEffects": [
+        "neutropenia",
+        "fatigue",
+        "nausea",
+        "alopecia",
+        "irAE_skin",
+        "irAE_thyroid",
+        "irAE_hepatic"
+      ],
       "emetogenicRisk": "high",
-      "monitoringRequired": ["wbc", "neutrophils", "hgb", "plt", "tsh", "ft4", "alt", "ast", "creatinine", "cortisol"],
-      "preChemoChecks": { "wbc": 3.0, "neutrophils": 1.5, "plt": 100 },
+      "monitoringRequired": [
+        "wbc",
+        "neutrophils",
+        "hgb",
+        "plt",
+        "tsh",
+        "ft4",
+        "alt",
+        "ast",
+        "creatinine",
+        "cortisol"
+      ],
+      "preChemoChecks": {
+        "wbc": 3,
+        "neutrophils": 1.5,
+        "plt": 100
+      },
       "phaseProfile": {
-        "crisis": { "days": [0, 3], "energy": 3, "nausea": 6, "pain": 4, "mood": 4 },
-        "recovery": { "days": [4, 7], "energy": 5, "nausea": 3, "pain": 2, "mood": 5 },
-        "rebuild": { "days": [8, 20], "energy": 6, "nausea": 1, "pain": 1, "mood": 6 }
+        "crisis": {
+          "days": [
+            0,
+            3
+          ],
+          "energy": 3,
+          "nausea": 6,
+          "pain": 4,
+          "mood": 4
+        },
+        "recovery": {
+          "days": [
+            4,
+            7
+          ],
+          "energy": 5,
+          "nausea": 3,
+          "pain": 2,
+          "mood": 5
+        },
+        "rebuild": {
+          "days": [
+            8,
+            20
+          ],
+          "energy": 6,
+          "nausea": 1,
+          "pain": 1,
+          "mood": 6
+        }
       }
     }
   ]

@@ -1,106 +1,490 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "ESMO Breast Cancer Guidelines 2024, NCCN 2024",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "id": "breast-cancer",
   "version": "1.0.0",
   "lastUpdated": "2026-04-11",
-  "icd10Codes": ["C50", "C50.0", "C50.1", "C50.2", "C50.3", "C50.4", "C50.5", "C50.6", "C50.8", "C50.9"],
-  "name": { "pl": "Rak piersi", "en": "Breast cancer" },
+  "icd10Codes": [
+    "C50",
+    "C50.0",
+    "C50.1",
+    "C50.2",
+    "C50.3",
+    "C50.4",
+    "C50.5",
+    "C50.6",
+    "C50.8",
+    "C50.9"
+  ],
+  "name": {
+    "pl": "Rak piersi",
+    "en": "Breast cancer"
+  },
   "aliases": {
-    "pl": ["rak piersi", "nowotwór piersi", "guz piersi", "rak gruczołu piersiowego", "carcinoma mammae"],
-    "en": ["breast cancer", "breast carcinoma", "mammary carcinoma", "breast tumor", "breast neoplasm"]
+    "pl": [
+      "rak piersi",
+      "nowotwór piersi",
+      "guz piersi",
+      "rak gruczołu piersiowego",
+      "carcinoma mammae"
+    ],
+    "en": [
+      "breast cancer",
+      "breast carcinoma",
+      "mammary carcinoma",
+      "breast tumor",
+      "breast neoplasm"
+    ]
   },
   "subtypes": [
     {
       "id": "luminal_a",
-      "name": { "pl": "Luminal A (HR+/HER2−, Ki-67 niski)", "en": "Luminal A (HR+/HER2−, Ki-67 low)" },
-      "markers": { "er": "positive", "pr": "positive", "her2": "negative", "ki67_below": 20 },
-      "prognosis": { "pl": "Najlepsze rokowanie. Wolno rosnący.", "en": "Best prognosis. Slow-growing." }
+      "name": {
+        "pl": "Luminal A (HR+/HER2−, Ki-67 niski)",
+        "en": "Luminal A (HR+/HER2−, Ki-67 low)"
+      },
+      "markers": {
+        "er": "positive",
+        "pr": "positive",
+        "her2": "negative",
+        "ki67_below": 20
+      },
+      "prognosis": {
+        "pl": "Najlepsze rokowanie. Wolno rosnący.",
+        "en": "Best prognosis. Slow-growing."
+      }
     },
     {
       "id": "luminal_b",
-      "name": { "pl": "Luminal B (HR+/HER2−, Ki-67 wysoki lub HR+/HER2+)", "en": "Luminal B (HR+/HER2−, Ki-67 high or HR+/HER2+)" },
-      "markers": { "er": "positive", "her2": "variable", "ki67_above": 20 },
-      "prognosis": { "pl": "Dobre rokowanie. Bardziej agresywny niż Luminal A.", "en": "Good prognosis. More aggressive than Luminal A." }
+      "name": {
+        "pl": "Luminal B (HR+/HER2−, Ki-67 wysoki lub HR+/HER2+)",
+        "en": "Luminal B (HR+/HER2−, Ki-67 high or HR+/HER2+)"
+      },
+      "markers": {
+        "er": "positive",
+        "her2": "variable",
+        "ki67_above": 20
+      },
+      "prognosis": {
+        "pl": "Dobre rokowanie. Bardziej agresywny niż Luminal A.",
+        "en": "Good prognosis. More aggressive than Luminal A."
+      }
     },
     {
       "id": "her2_positive",
-      "name": { "pl": "HER2-dodatni (HR−/HER2+)", "en": "HER2-positive (HR−/HER2+)" },
-      "markers": { "er": "negative", "pr": "negative", "her2": "positive" },
-      "prognosis": { "pl": "Agresywny, ale dobrze odpowiada na terapie anty-HER2.", "en": "Aggressive but responds well to anti-HER2 therapies." }
+      "name": {
+        "pl": "HER2-dodatni (HR−/HER2+)",
+        "en": "HER2-positive (HR−/HER2+)"
+      },
+      "markers": {
+        "er": "negative",
+        "pr": "negative",
+        "her2": "positive"
+      },
+      "prognosis": {
+        "pl": "Agresywny, ale dobrze odpowiada na terapie anty-HER2.",
+        "en": "Aggressive but responds well to anti-HER2 therapies."
+      }
     },
     {
       "id": "tnbc",
-      "name": { "pl": "Potrójnie ujemny (TNBC)", "en": "Triple-negative (TNBC)" },
-      "markers": { "er": "negative", "pr": "negative", "her2": "negative" },
-      "prognosis": { "pl": "Najbardziej agresywny. Leczony głównie chemioterapią ± immunoterapią.", "en": "Most aggressive. Treated mainly with chemo ± immunotherapy." }
+      "name": {
+        "pl": "Potrójnie ujemny (TNBC)",
+        "en": "Triple-negative (TNBC)"
+      },
+      "markers": {
+        "er": "negative",
+        "pr": "negative",
+        "her2": "negative"
+      },
+      "prognosis": {
+        "pl": "Najbardziej agresywny. Leczony głównie chemioterapią ± immunoterapią.",
+        "en": "Most aggressive. Treated mainly with chemo ± immunotherapy."
+      }
     },
     {
       "id": "her2_low",
-      "name": { "pl": "HER2-low", "en": "HER2-low" },
-      "markers": { "her2": "low" },
-      "prognosis": { "pl": "Nowa kategoria. Kwalifikuje do T-DXd (trastuzumab deruxtecan).", "en": "New category. Eligible for T-DXd (trastuzumab deruxtecan)." }
+      "name": {
+        "pl": "HER2-low",
+        "en": "HER2-low"
+      },
+      "markers": {
+        "her2": "low"
+      },
+      "prognosis": {
+        "pl": "Nowa kategoria. Kwalifikuje do T-DXd (trastuzumab deruxtecan).",
+        "en": "New category. Eligible for T-DXd (trastuzumab deruxtecan)."
+      }
     }
   ],
   "stages": [
-    { "id": "0", "name": { "pl": "Stadium 0 (DCIS)", "en": "Stage 0 (DCIS)" } },
-    { "id": "IA", "name": { "pl": "Stadium IA", "en": "Stage IA" } },
-    { "id": "IB", "name": { "pl": "Stadium IB", "en": "Stage IB" } },
-    { "id": "IIA", "name": { "pl": "Stadium IIA", "en": "Stage IIA" } },
-    { "id": "IIB", "name": { "pl": "Stadium IIB", "en": "Stage IIB" } },
-    { "id": "IIIA", "name": { "pl": "Stadium IIIA", "en": "Stage IIIA" } },
-    { "id": "IIIB", "name": { "pl": "Stadium IIIB", "en": "Stage IIIB" } },
-    { "id": "IIIC", "name": { "pl": "Stadium IIIC", "en": "Stage IIIC" } },
-    { "id": "IV", "name": { "pl": "Stadium IV (przerzutowy)", "en": "Stage IV (metastatic)" } }
+    {
+      "id": "0",
+      "name": {
+        "pl": "Stadium 0 (DCIS)",
+        "en": "Stage 0 (DCIS)"
+      }
+    },
+    {
+      "id": "IA",
+      "name": {
+        "pl": "Stadium IA",
+        "en": "Stage IA"
+      }
+    },
+    {
+      "id": "IB",
+      "name": {
+        "pl": "Stadium IB",
+        "en": "Stage IB"
+      }
+    },
+    {
+      "id": "IIA",
+      "name": {
+        "pl": "Stadium IIA",
+        "en": "Stage IIA"
+      }
+    },
+    {
+      "id": "IIB",
+      "name": {
+        "pl": "Stadium IIB",
+        "en": "Stage IIB"
+      }
+    },
+    {
+      "id": "IIIA",
+      "name": {
+        "pl": "Stadium IIIA",
+        "en": "Stage IIIA"
+      }
+    },
+    {
+      "id": "IIIB",
+      "name": {
+        "pl": "Stadium IIIB",
+        "en": "Stage IIIB"
+      }
+    },
+    {
+      "id": "IIIC",
+      "name": {
+        "pl": "Stadium IIIC",
+        "en": "Stage IIIC"
+      }
+    },
+    {
+      "id": "IV",
+      "name": {
+        "pl": "Stadium IV (przerzutowy)",
+        "en": "Stage IV (metastatic)"
+      }
+    }
   ],
   "relevantBloodMarkers": [
-    "wbc", "neutrophils", "lymphocytes", "hgb", "plt", "rbc",
-    "alt", "ast", "creatinine", "albumin", "ldh", "crp",
-    "ca153", "cea",
-    "tsh", "sodium", "potassium", "calcium"
+    "wbc",
+    "neutrophils",
+    "lymphocytes",
+    "hgb",
+    "plt",
+    "rbc",
+    "alt",
+    "ast",
+    "creatinine",
+    "albumin",
+    "ldh",
+    "crp",
+    "ca153",
+    "cea",
+    "tsh",
+    "sodium",
+    "potassium",
+    "calcium"
   ],
   "tumorMarkers": [
-    { "id": "ca153", "name": { "pl": "CA 15-3", "en": "CA 15-3" }, "normalMax": 31.3, "unit": "U/ml", "frequency": { "pl": "Co 3 mies. w trakcie leczenia", "en": "Every 3 months during treatment" } },
-    { "id": "cea", "name": { "pl": "CEA", "en": "CEA" }, "normalMax": 5.0, "unit": "ng/ml", "frequency": { "pl": "Co 3 mies. w trakcie leczenia", "en": "Every 3 months during treatment" } }
+    {
+      "id": "ca153",
+      "name": {
+        "pl": "CA 15-3",
+        "en": "CA 15-3"
+      },
+      "normalMax": 31.3,
+      "unit": "U/ml",
+      "frequency": {
+        "pl": "Co 3 mies. w trakcie leczenia",
+        "en": "Every 3 months during treatment"
+      }
+    },
+    {
+      "id": "cea",
+      "name": {
+        "pl": "CEA",
+        "en": "CEA"
+      },
+      "normalMax": 5,
+      "unit": "ng/ml",
+      "frequency": {
+        "pl": "Co 3 mies. w trakcie leczenia",
+        "en": "Every 3 months during treatment"
+      }
+    }
   ],
   "typicalMetastasisSites": [
-    { "site": "bone", "name": { "pl": "Kości", "en": "Bones" }, "frequency": "50-70%" },
-    { "site": "liver", "name": { "pl": "Wątroba", "en": "Liver" }, "frequency": "30-40%" },
-    { "site": "lung", "name": { "pl": "Płuca", "en": "Lungs" }, "frequency": "20-30%" },
-    { "site": "brain", "name": { "pl": "Mózg", "en": "Brain" }, "frequency": "10-15%" },
-    { "site": "lymph_nodes", "name": { "pl": "Węzły chłonne", "en": "Lymph nodes" }, "frequency": "30-50%" }
+    {
+      "site": "bone",
+      "name": {
+        "pl": "Kości",
+        "en": "Bones"
+      },
+      "frequency": "50-70%"
+    },
+    {
+      "site": "liver",
+      "name": {
+        "pl": "Wątroba",
+        "en": "Liver"
+      },
+      "frequency": "30-40%"
+    },
+    {
+      "site": "lung",
+      "name": {
+        "pl": "Płuca",
+        "en": "Lungs"
+      },
+      "frequency": "20-30%"
+    },
+    {
+      "site": "brain",
+      "name": {
+        "pl": "Mózg",
+        "en": "Brain"
+      },
+      "frequency": "10-15%"
+    },
+    {
+      "site": "lymph_nodes",
+      "name": {
+        "pl": "Węzły chłonne",
+        "en": "Lymph nodes"
+      },
+      "frequency": "30-50%"
+    }
   ],
   "biomarkerConfig": [
-    { "id": "erStatus", "label": { "pl": "Status ER", "en": "ER status" }, "type": "select", "options": [
-      { "value": "positive", "label": { "pl": "Dodatni (+)", "en": "Positive (+)" } },
-      { "value": "negative", "label": { "pl": "Ujemny (−)", "en": "Negative (−)" } },
-      { "value": "unknown", "label": { "pl": "Nieznany", "en": "Unknown" } }
-    ]},
-    { "id": "prStatus", "label": { "pl": "Status PR", "en": "PR status" }, "type": "select", "options": [
-      { "value": "positive", "label": { "pl": "Dodatni (+)", "en": "Positive (+)" } },
-      { "value": "negative", "label": { "pl": "Ujemny (−)", "en": "Negative (−)" } },
-      { "value": "unknown", "label": { "pl": "Nieznany", "en": "Unknown" } }
-    ]},
-    { "id": "her2Status", "label": { "pl": "Status HER2", "en": "HER2 status" }, "type": "select", "options": [
-      { "value": "positive", "label": { "pl": "Dodatni (3+ lub FISH+)", "en": "Positive (3+ or FISH+)" } },
-      { "value": "negative", "label": { "pl": "Ujemny (0 lub 1+)", "en": "Negative (0 or 1+)" } },
-      { "value": "low", "label": { "pl": "HER2-low (1+ lub 2+/FISH−)", "en": "HER2-low (1+ or 2+/FISH−)" } },
-      { "value": "unknown", "label": { "pl": "Nieznany", "en": "Unknown" } }
-    ]},
-    { "id": "ki67", "label": { "pl": "Ki-67 (%)", "en": "Ki-67 (%)" }, "type": "number", "unit": "%" },
-    { "id": "brcaStatus", "label": { "pl": "BRCA", "en": "BRCA" }, "type": "select", "options": [
-      { "value": "brca1", "label": { "pl": "BRCA1 mutacja", "en": "BRCA1 mutation" } },
-      { "value": "brca2", "label": { "pl": "BRCA2 mutacja", "en": "BRCA2 mutation" } },
-      { "value": "negative", "label": { "pl": "Negatywny", "en": "Negative" } },
-      { "value": "not_tested", "label": { "pl": "Niebadany", "en": "Not tested" } }
-    ]},
-    { "id": "pdl1Status", "label": { "pl": "PD-L1", "en": "PD-L1" }, "type": "select", "options": [
-      { "value": "positive", "label": { "pl": "Dodatni (CPS ≥ 10)", "en": "Positive (CPS ≥ 10)" } },
-      { "value": "negative", "label": { "pl": "Ujemny", "en": "Negative" } },
-      { "value": "not_tested", "label": { "pl": "Niebadany", "en": "Not tested" } }
-    ]},
-    { "id": "piK3caStatus", "label": { "pl": "PIK3CA", "en": "PIK3CA" }, "type": "select", "options": [
-      { "value": "mutated", "label": { "pl": "Zmutowany", "en": "Mutated" } },
-      { "value": "wild_type", "label": { "pl": "Dziki typ", "en": "Wild type" } },
-      { "value": "not_tested", "label": { "pl": "Niebadany", "en": "Not tested" } }
-    ]}
+    {
+      "id": "erStatus",
+      "label": {
+        "pl": "Status ER",
+        "en": "ER status"
+      },
+      "type": "select",
+      "options": [
+        {
+          "value": "positive",
+          "label": {
+            "pl": "Dodatni (+)",
+            "en": "Positive (+)"
+          }
+        },
+        {
+          "value": "negative",
+          "label": {
+            "pl": "Ujemny (−)",
+            "en": "Negative (−)"
+          }
+        },
+        {
+          "value": "unknown",
+          "label": {
+            "pl": "Nieznany",
+            "en": "Unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prStatus",
+      "label": {
+        "pl": "Status PR",
+        "en": "PR status"
+      },
+      "type": "select",
+      "options": [
+        {
+          "value": "positive",
+          "label": {
+            "pl": "Dodatni (+)",
+            "en": "Positive (+)"
+          }
+        },
+        {
+          "value": "negative",
+          "label": {
+            "pl": "Ujemny (−)",
+            "en": "Negative (−)"
+          }
+        },
+        {
+          "value": "unknown",
+          "label": {
+            "pl": "Nieznany",
+            "en": "Unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "her2Status",
+      "label": {
+        "pl": "Status HER2",
+        "en": "HER2 status"
+      },
+      "type": "select",
+      "options": [
+        {
+          "value": "positive",
+          "label": {
+            "pl": "Dodatni (3+ lub FISH+)",
+            "en": "Positive (3+ or FISH+)"
+          }
+        },
+        {
+          "value": "negative",
+          "label": {
+            "pl": "Ujemny (0 lub 1+)",
+            "en": "Negative (0 or 1+)"
+          }
+        },
+        {
+          "value": "low",
+          "label": {
+            "pl": "HER2-low (1+ lub 2+/FISH−)",
+            "en": "HER2-low (1+ or 2+/FISH−)"
+          }
+        },
+        {
+          "value": "unknown",
+          "label": {
+            "pl": "Nieznany",
+            "en": "Unknown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ki67",
+      "label": {
+        "pl": "Ki-67 (%)",
+        "en": "Ki-67 (%)"
+      },
+      "type": "number",
+      "unit": "%"
+    },
+    {
+      "id": "brcaStatus",
+      "label": {
+        "pl": "BRCA",
+        "en": "BRCA"
+      },
+      "type": "select",
+      "options": [
+        {
+          "value": "brca1",
+          "label": {
+            "pl": "BRCA1 mutacja",
+            "en": "BRCA1 mutation"
+          }
+        },
+        {
+          "value": "brca2",
+          "label": {
+            "pl": "BRCA2 mutacja",
+            "en": "BRCA2 mutation"
+          }
+        },
+        {
+          "value": "negative",
+          "label": {
+            "pl": "Negatywny",
+            "en": "Negative"
+          }
+        },
+        {
+          "value": "not_tested",
+          "label": {
+            "pl": "Niebadany",
+            "en": "Not tested"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pdl1Status",
+      "label": {
+        "pl": "PD-L1",
+        "en": "PD-L1"
+      },
+      "type": "select",
+      "options": [
+        {
+          "value": "positive",
+          "label": {
+            "pl": "Dodatni (CPS ≥ 10)",
+            "en": "Positive (CPS ≥ 10)"
+          }
+        },
+        {
+          "value": "negative",
+          "label": {
+            "pl": "Ujemny",
+            "en": "Negative"
+          }
+        },
+        {
+          "value": "not_tested",
+          "label": {
+            "pl": "Niebadany",
+            "en": "Not tested"
+          }
+        }
+      ]
+    },
+    {
+      "id": "piK3caStatus",
+      "label": {
+        "pl": "PIK3CA",
+        "en": "PIK3CA"
+      },
+      "type": "select",
+      "options": [
+        {
+          "value": "mutated",
+          "label": {
+            "pl": "Zmutowany",
+            "en": "Mutated"
+          }
+        },
+        {
+          "value": "wild_type",
+          "label": {
+            "pl": "Dziki typ",
+            "en": "Wild type"
+          }
+        },
+        {
+          "value": "not_tested",
+          "label": {
+            "pl": "Niebadany",
+            "en": "Not tested"
+          }
+        }
+      ]
+    }
   ]
 }

@@ -1,80 +1,374 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "ESMO Breast Cancer Guidelines 2024, NCCN 2024",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "version": "1.0.0",
   "lastUpdated": "2026-04-11",
   "byDrug": {
     "epirubicin": {
-      "name": { "pl": "Epirubicyna", "en": "Epirubicin" },
+      "name": {
+        "pl": "Epirubicyna",
+        "en": "Epirubicin"
+      },
       "class": "anthracycline",
       "common": [
-        { "effect": { "pl": "Nudności/wymioty", "en": "Nausea/vomiting" }, "frequency": "60-80%", "timing": { "pl": "1-3 dni po podaniu", "en": "1-3 days post-infusion" } },
-        { "effect": { "pl": "Łysienie", "en": "Alopecia" }, "frequency": "95%", "timing": { "pl": "2-3 tygodnie po 1. cyklu", "en": "2-3 weeks after 1st cycle" } },
-        { "effect": { "pl": "Neutropenia", "en": "Neutropenia" }, "frequency": "50-70%", "timing": { "pl": "Nadir dzień 10-14", "en": "Nadir day 10-14" } },
-        { "effect": { "pl": "Zmęczenie", "en": "Fatigue" }, "frequency": "80%", "timing": { "pl": "Przez cały cykl, szczyt dzień 3-5", "en": "Throughout cycle, peaks day 3-5" } }
+        {
+          "effect": {
+            "pl": "Nudności/wymioty",
+            "en": "Nausea/vomiting"
+          },
+          "frequency": "60-80%",
+          "timing": {
+            "pl": "1-3 dni po podaniu",
+            "en": "1-3 days post-infusion"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Łysienie",
+            "en": "Alopecia"
+          },
+          "frequency": "95%",
+          "timing": {
+            "pl": "2-3 tygodnie po 1. cyklu",
+            "en": "2-3 weeks after 1st cycle"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Neutropenia",
+            "en": "Neutropenia"
+          },
+          "frequency": "50-70%",
+          "timing": {
+            "pl": "Nadir dzień 10-14",
+            "en": "Nadir day 10-14"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Zmęczenie",
+            "en": "Fatigue"
+          },
+          "frequency": "80%",
+          "timing": {
+            "pl": "Przez cały cykl, szczyt dzień 3-5",
+            "en": "Throughout cycle, peaks day 3-5"
+          }
+        }
       ],
       "serious": [
-        { "effect": { "pl": "Kardiotoksyczność", "en": "Cardiotoxicity" }, "frequency": "1-5%", "monitoring": { "pl": "LVEF przed i co 3 mies.", "en": "LVEF before and every 3 months" } },
-        { "effect": { "pl": "Gorączka neutropeniczna", "en": "Febrile neutropenia" }, "frequency": "10-20%", "action": { "pl": "PILNE — szpital!", "en": "URGENT — hospital!" } }
+        {
+          "effect": {
+            "pl": "Kardiotoksyczność",
+            "en": "Cardiotoxicity"
+          },
+          "frequency": "1-5%",
+          "monitoring": {
+            "pl": "LVEF przed i co 3 mies.",
+            "en": "LVEF before and every 3 months"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Gorączka neutropeniczna",
+            "en": "Febrile neutropenia"
+          },
+          "frequency": "10-20%",
+          "action": {
+            "pl": "PILNE — szpital!",
+            "en": "URGENT — hospital!"
+          }
+        }
       ]
     },
     "cyclophosphamide": {
-      "name": { "pl": "Cyklofosfamid", "en": "Cyclophosphamide" },
+      "name": {
+        "pl": "Cyklofosfamid",
+        "en": "Cyclophosphamide"
+      },
       "class": "alkylating_agent",
       "common": [
-        { "effect": { "pl": "Nudności", "en": "Nausea" }, "frequency": "50-70%", "timing": { "pl": "6-12h po podaniu", "en": "6-12h post-infusion" } },
-        { "effect": { "pl": "Leukopenia", "en": "Leukopenia" }, "frequency": "40-60%", "timing": { "pl": "Nadir dzień 8-14", "en": "Nadir day 8-14" } }
+        {
+          "effect": {
+            "pl": "Nudności",
+            "en": "Nausea"
+          },
+          "frequency": "50-70%",
+          "timing": {
+            "pl": "6-12h po podaniu",
+            "en": "6-12h post-infusion"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Leukopenia",
+            "en": "Leukopenia"
+          },
+          "frequency": "40-60%",
+          "timing": {
+            "pl": "Nadir dzień 8-14",
+            "en": "Nadir day 8-14"
+          }
+        }
       ],
       "serious": [
-        { "effect": { "pl": "Zapalenie pęcherza moczowego", "en": "Hemorrhagic cystitis" }, "frequency": "<5%", "monitoring": { "pl": "Nawodnienie, mesna przy wysokich dawkach", "en": "Hydration, mesna at high doses" } }
+        {
+          "effect": {
+            "pl": "Zapalenie pęcherza moczowego",
+            "en": "Hemorrhagic cystitis"
+          },
+          "frequency": "<5%",
+          "monitoring": {
+            "pl": "Nawodnienie, mesna przy wysokich dawkach",
+            "en": "Hydration, mesna at high doses"
+          }
+        }
       ]
     },
     "paclitaxel": {
-      "name": { "pl": "Paklitaksel", "en": "Paclitaxel" },
+      "name": {
+        "pl": "Paklitaksel",
+        "en": "Paclitaxel"
+      },
       "class": "taxane",
       "common": [
-        { "effect": { "pl": "Neuropatia obwodowa", "en": "Peripheral neuropathy" }, "frequency": "60-80%", "timing": { "pl": "Narastająca z liczbą cykli", "en": "Cumulative with cycles" } },
-        { "effect": { "pl": "Bóle mięśni/stawów", "en": "Myalgia/arthralgia" }, "frequency": "50-70%", "timing": { "pl": "2-5 dni po podaniu", "en": "2-5 days post-infusion" } },
-        { "effect": { "pl": "Łysienie", "en": "Alopecia" }, "frequency": "90%", "timing": { "pl": "2-3 tygodnie", "en": "2-3 weeks" } }
+        {
+          "effect": {
+            "pl": "Neuropatia obwodowa",
+            "en": "Peripheral neuropathy"
+          },
+          "frequency": "60-80%",
+          "timing": {
+            "pl": "Narastająca z liczbą cykli",
+            "en": "Cumulative with cycles"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Bóle mięśni/stawów",
+            "en": "Myalgia/arthralgia"
+          },
+          "frequency": "50-70%",
+          "timing": {
+            "pl": "2-5 dni po podaniu",
+            "en": "2-5 days post-infusion"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Łysienie",
+            "en": "Alopecia"
+          },
+          "frequency": "90%",
+          "timing": {
+            "pl": "2-3 tygodnie",
+            "en": "2-3 weeks"
+          }
+        }
       ],
       "serious": [
-        { "effect": { "pl": "Reakcja anafilaktyczna", "en": "Anaphylactic reaction" }, "frequency": "2-4%", "action": { "pl": "Premedykacja steroidami obowiązkowa", "en": "Steroid premedication mandatory" } }
+        {
+          "effect": {
+            "pl": "Reakcja anafilaktyczna",
+            "en": "Anaphylactic reaction"
+          },
+          "frequency": "2-4%",
+          "action": {
+            "pl": "Premedykacja steroidami obowiązkowa",
+            "en": "Steroid premedication mandatory"
+          }
+        }
       ]
     },
     "trastuzumab": {
-      "name": { "pl": "Trastuzumab", "en": "Trastuzumab" },
+      "name": {
+        "pl": "Trastuzumab",
+        "en": "Trastuzumab"
+      },
       "class": "anti_her2",
       "common": [
-        { "effect": { "pl": "Objawy grypopodobne", "en": "Flu-like symptoms" }, "frequency": "40%", "timing": { "pl": "Głównie 1. infuzja", "en": "Mainly 1st infusion" } },
-        { "effect": { "pl": "Biegunka", "en": "Diarrhea" }, "frequency": "25%", "timing": { "pl": "Zmienne", "en": "Variable" } }
+        {
+          "effect": {
+            "pl": "Objawy grypopodobne",
+            "en": "Flu-like symptoms"
+          },
+          "frequency": "40%",
+          "timing": {
+            "pl": "Głównie 1. infuzja",
+            "en": "Mainly 1st infusion"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Biegunka",
+            "en": "Diarrhea"
+          },
+          "frequency": "25%",
+          "timing": {
+            "pl": "Zmienne",
+            "en": "Variable"
+          }
+        }
       ],
       "serious": [
-        { "effect": { "pl": "Kardiotoksyczność (spadek LVEF)", "en": "Cardiotoxicity (LVEF decline)" }, "frequency": "5-15%", "monitoring": { "pl": "LVEF co 3 mies. OBOWIĄZKOWO", "en": "LVEF every 3 months MANDATORY" } }
+        {
+          "effect": {
+            "pl": "Kardiotoksyczność (spadek LVEF)",
+            "en": "Cardiotoxicity (LVEF decline)"
+          },
+          "frequency": "5-15%",
+          "monitoring": {
+            "pl": "LVEF co 3 mies. OBOWIĄZKOWO",
+            "en": "LVEF every 3 months MANDATORY"
+          }
+        }
       ]
     },
     "tamoxifen": {
-      "name": { "pl": "Tamoksyfen", "en": "Tamoxifen" },
+      "name": {
+        "pl": "Tamoksyfen",
+        "en": "Tamoxifen"
+      },
       "class": "serm",
       "common": [
-        { "effect": { "pl": "Uderzenia gorąca", "en": "Hot flashes" }, "frequency": "50-80%", "timing": { "pl": "Pierwsze miesiące, mogą się zmniejszyć", "en": "First months, may decrease" } },
-        { "effect": { "pl": "Bóle stawów", "en": "Joint pain" }, "frequency": "20-40%", "timing": { "pl": "Przewlekle", "en": "Chronic" } },
-        { "effect": { "pl": "Zmiany nastroju", "en": "Mood changes" }, "frequency": "15-25%", "timing": { "pl": "Zmienne", "en": "Variable" } }
+        {
+          "effect": {
+            "pl": "Uderzenia gorąca",
+            "en": "Hot flashes"
+          },
+          "frequency": "50-80%",
+          "timing": {
+            "pl": "Pierwsze miesiące, mogą się zmniejszyć",
+            "en": "First months, may decrease"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Bóle stawów",
+            "en": "Joint pain"
+          },
+          "frequency": "20-40%",
+          "timing": {
+            "pl": "Przewlekle",
+            "en": "Chronic"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Zmiany nastroju",
+            "en": "Mood changes"
+          },
+          "frequency": "15-25%",
+          "timing": {
+            "pl": "Zmienne",
+            "en": "Variable"
+          }
+        }
       ],
       "serious": [
-        { "effect": { "pl": "Zakrzepica żylna", "en": "Venous thromboembolism" }, "frequency": "1-2%", "action": { "pl": "Ból/obrzęk łydki → PILNE", "en": "Calf pain/swelling → URGENT" } },
-        { "effect": { "pl": "Rak endometrium", "en": "Endometrial cancer" }, "frequency": "<1%", "monitoring": { "pl": "Nieprawidłowe krwawienia → ginekolog", "en": "Abnormal bleeding → gynecologist" } }
+        {
+          "effect": {
+            "pl": "Zakrzepica żylna",
+            "en": "Venous thromboembolism"
+          },
+          "frequency": "1-2%",
+          "action": {
+            "pl": "Ból/obrzęk łydki → PILNE",
+            "en": "Calf pain/swelling → URGENT"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Rak endometrium",
+            "en": "Endometrial cancer"
+          },
+          "frequency": "<1%",
+          "monitoring": {
+            "pl": "Nieprawidłowe krwawienia → ginekolog",
+            "en": "Abnormal bleeding → gynecologist"
+          }
+        }
       ]
     },
     "pembrolizumab": {
-      "name": { "pl": "Pembrolizumab", "en": "Pembrolizumab" },
+      "name": {
+        "pl": "Pembrolizumab",
+        "en": "Pembrolizumab"
+      },
       "class": "checkpoint_inhibitor",
       "common": [
-        { "effect": { "pl": "Zmęczenie", "en": "Fatigue" }, "frequency": "30-40%", "timing": { "pl": "Zmienne", "en": "Variable" } },
-        { "effect": { "pl": "Wysypka", "en": "Rash" }, "frequency": "15-25%", "timing": { "pl": "Pierwsze tygodnie-miesiące", "en": "First weeks-months" } }
+        {
+          "effect": {
+            "pl": "Zmęczenie",
+            "en": "Fatigue"
+          },
+          "frequency": "30-40%",
+          "timing": {
+            "pl": "Zmienne",
+            "en": "Variable"
+          }
+        },
+        {
+          "effect": {
+            "pl": "Wysypka",
+            "en": "Rash"
+          },
+          "frequency": "15-25%",
+          "timing": {
+            "pl": "Pierwsze tygodnie-miesiące",
+            "en": "First weeks-months"
+          }
+        }
       ],
       "serious": [
-        { "effect": { "pl": "irAE tarczycy (niedoczynność)", "en": "Thyroid irAE (hypothyroidism)" }, "frequency": "10-20%", "monitoring": { "pl": "TSH przed każdą infuzją", "en": "TSH before each infusion" } },
-        { "effect": { "pl": "irAE wątroby", "en": "Hepatic irAE" }, "frequency": "5-10%", "monitoring": { "pl": "ALT/AST przed każdą infuzją", "en": "ALT/AST before each infusion" } },
-        { "effect": { "pl": "irAE płuc (zapalenie)", "en": "Pulmonary irAE (pneumonitis)" }, "frequency": "3-5%", "action": { "pl": "Kaszel + duszność → PILNE", "en": "Cough + dyspnea → URGENT" } },
-        { "effect": { "pl": "irAE jelitowe (zapalenie)", "en": "GI irAE (colitis)" }, "frequency": "10-20%", "action": { "pl": "Biegunka ≥4x/dobę → kontakt z lekarzem", "en": "Diarrhea ≥4x/day → contact doctor" } }
+        {
+          "effect": {
+            "pl": "irAE tarczycy (niedoczynność)",
+            "en": "Thyroid irAE (hypothyroidism)"
+          },
+          "frequency": "10-20%",
+          "monitoring": {
+            "pl": "TSH przed każdą infuzją",
+            "en": "TSH before each infusion"
+          }
+        },
+        {
+          "effect": {
+            "pl": "irAE wątroby",
+            "en": "Hepatic irAE"
+          },
+          "frequency": "5-10%",
+          "monitoring": {
+            "pl": "ALT/AST przed każdą infuzją",
+            "en": "ALT/AST before each infusion"
+          }
+        },
+        {
+          "effect": {
+            "pl": "irAE płuc (zapalenie)",
+            "en": "Pulmonary irAE (pneumonitis)"
+          },
+          "frequency": "3-5%",
+          "action": {
+            "pl": "Kaszel + duszność → PILNE",
+            "en": "Cough + dyspnea → URGENT"
+          }
+        },
+        {
+          "effect": {
+            "pl": "irAE jelitowe (zapalenie)",
+            "en": "GI irAE (colitis)"
+          },
+          "frequency": "10-20%",
+          "action": {
+            "pl": "Biegunka ≥4x/dobę → kontakt z lekarzem",
+            "en": "Diarrhea ≥4x/day → contact doctor"
+          }
+        }
       ]
     }
   }

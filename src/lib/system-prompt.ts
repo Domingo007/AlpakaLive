@@ -399,7 +399,7 @@ ${buildDiseaseKnowledgeSection(patient)}
 2. EKSTRAKCJA DANYCH — zapisuj dane jako [SAVE:typ:{dane}]
 3. ANALIZA WYNIKÓW KRWI — porównaj z normami referencyjnymi, sygnalizuj odchylenia, sugeruj pytania do lekarza
 4. ANALIZA OBRAZOWANIA — opisz co widzisz (z disclaimerem), porównaj z poprzednim
-5. PREDYKCJA — na podstawie wzorców w danych, podaj confidence level
+5. ANALIZA WZORCÓW — na podstawie wcześniejszych cykli pacjenta pokaż jak zwykle wygląda dany dzień; NIE przewiduj przyszłości, porównuj z przeszłością
 6. REJESTRACJA ZMIAN — gdy pacjent raportuje zmiany w leczeniu, aktualizuj dane
 7. SYGNALIZACJA — 🔴 wartości wymagające pilnej konsultacji z lekarzem, 🟡 wartości poza normami, 🟢 wartości w normach
 8. RAPORT DLA LEKARZA — na żądanie, profesjonalny i zwięzły

@@ -36,7 +36,32 @@ npm install
 npm run dev
 ```
 
-Requirements: Node.js 18+, [Anthropic API key](https://console.anthropic.com/) (optional — the app works in demo mode without a key)
+Requirements: Node.js 18+, [Anthropic API key](https://console.anthropic.com/) (optional — the app works in notebook mode without a key)
+
+### How to get an API key
+
+AlpacaLive works in two modes:
+1. **Free notebook mode** — no API key needed. Manual data entry, charts, alerts, calendar, supplement tracker with evidence levels.
+2. **AI-powered mode** — requires an API key from one of:
+
+**Anthropic Claude (recommended):**
+1. Go to [console.anthropic.com](https://console.anthropic.com/)
+2. Create an account (email verification)
+3. Go to API Keys → Create Key
+4. Copy the key and paste it in AlpacaLive Settings
+5. Cost: approximately €5-15/month with typical use (a few conversations per day)
+
+**OpenAI GPT:**
+1. Go to [platform.openai.com](https://platform.openai.com/)
+2. Create account → API Keys → Create
+3. Cost: similar to Claude
+
+**Google Gemini:**
+1. Go to [aistudio.google.com](https://aistudio.google.com/)
+2. Get API key (free tier available with limitations)
+3. Note: Google may use free-tier API data for model training
+
+The API key is stored locally on your device (IndexedDB) and never shared with AlpacaLive servers (there are none).
 
 ### Install on Your Phone
 

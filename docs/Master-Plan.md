@@ -54,7 +54,7 @@ alpacalive/
 │   │   ├── demo-data.ts            ← Demo mode data generator
 │   │   ├── input-guard.ts          ← Prompt injection detection + rate limiting
 │   │   ├── pii-sanitizer.ts        ← PII removal before AI calls
-│   │   ├── prediction-engine.ts    ← 5-day wellbeing forecast
+│   │   ├── prediction-engine.ts    ← 5-day wellbeing pattern summary
 │   │   ├── system-prompt.ts        ← AI system prompt (reads from JSON)
 │   │   └── treatment-cycle.ts      ← Generic treatment phase system
 │   ├── hooks/                       ← React hooks

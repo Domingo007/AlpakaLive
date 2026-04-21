@@ -1,45 +1,149 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "NCCN Guidelines 2024, ESMO Guidelines 2024",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "version": "1.0.0",
   "drugs": [
     {
       "id": "trastuzumab",
-      "name": { "en": "Trastuzumab", "pl": "Trastuzumab", "de": "Trastuzumab" },
+      "name": {
+        "en": "Trastuzumab",
+        "pl": "Trastuzumab",
+        "de": "Trastuzumab"
+      },
       "class": "anti_HER2",
-      "tradeNames": { "europe": ["Herceptin", "Herzuma", "Ogivri"], "usa": ["Herceptin", "Herzuma", "Ogivri"] },
-      "cyp450": { "substrate": [], "inhibitor": [], "inducer": [] },
+      "tradeNames": {
+        "europe": [
+          "Herceptin",
+          "Herzuma",
+          "Ogivri"
+        ],
+        "usa": [
+          "Herceptin",
+          "Herzuma",
+          "Ogivri"
+        ]
+      },
+      "cyp450": {
+        "substrate": [],
+        "inhibitor": [],
+        "inducer": []
+      },
       "commonSideEffects": [
-        { "effect": "cardiotoxicity_lvef", "frequency": 0.10, "severity": "reversible" },
-        { "effect": "flu_like_symptoms", "frequency": 0.40, "severity": "first_infusion" }
+        {
+          "effect": "cardiotoxicity_lvef",
+          "frequency": 0.1,
+          "severity": "reversible"
+        },
+        {
+          "effect": "flu_like_symptoms",
+          "frequency": 0.4,
+          "severity": "first_infusion"
+        }
       ],
-      "monitoringRequired": ["LVEF_echo_q3m"],
-      "sources": ["HERA trial", "NCCN Guidelines 2024"]
+      "monitoringRequired": [
+        "LVEF_echo_q3m"
+      ],
+      "sources": [
+        "HERA trial",
+        "NCCN Guidelines 2024"
+      ]
     },
     {
       "id": "palbociclib",
-      "name": { "en": "Palbociclib", "pl": "Palbocyklib", "de": "Palbociclib" },
+      "name": {
+        "en": "Palbociclib",
+        "pl": "Palbocyklib",
+        "de": "Palbociclib"
+      },
       "class": "CDK4_6_inhibitor",
-      "tradeNames": { "europe": ["Ibrance"], "usa": ["Ibrance"] },
-      "cyp450": { "substrate": ["CYP3A4"], "inhibitor": [], "inducer": [] },
+      "tradeNames": {
+        "europe": [
+          "Ibrance"
+        ],
+        "usa": [
+          "Ibrance"
+        ]
+      },
+      "cyp450": {
+        "substrate": [
+          "CYP3A4"
+        ],
+        "inhibitor": [],
+        "inducer": []
+      },
       "commonSideEffects": [
-        { "effect": "neutropenia", "frequency": 0.80, "severity": "grade3-4" },
-        { "effect": "fatigue", "frequency": 0.40, "severity": "grade1-2" }
+        {
+          "effect": "neutropenia",
+          "frequency": 0.8,
+          "severity": "grade3-4"
+        },
+        {
+          "effect": "fatigue",
+          "frequency": 0.4,
+          "severity": "grade1-2"
+        }
       ],
-      "monitoringRequired": ["WBC", "ANC_day1_day15"],
-      "sources": ["PALOMA-2", "ESMO Guidelines 2024"]
+      "monitoringRequired": [
+        "WBC",
+        "ANC_day1_day15"
+      ],
+      "sources": [
+        "PALOMA-2",
+        "ESMO Guidelines 2024"
+      ]
     },
     {
       "id": "olaparib",
-      "name": { "en": "Olaparib", "pl": "Olaparib", "de": "Olaparib" },
+      "name": {
+        "en": "Olaparib",
+        "pl": "Olaparib",
+        "de": "Olaparib"
+      },
       "class": "PARP_inhibitor",
-      "tradeNames": { "europe": ["Lynparza"], "usa": ["Lynparza"] },
-      "cyp450": { "substrate": ["CYP3A4"], "inhibitor": [], "inducer": [] },
+      "tradeNames": {
+        "europe": [
+          "Lynparza"
+        ],
+        "usa": [
+          "Lynparza"
+        ]
+      },
+      "cyp450": {
+        "substrate": [
+          "CYP3A4"
+        ],
+        "inhibitor": [],
+        "inducer": []
+      },
       "commonSideEffects": [
-        { "effect": "anemia", "frequency": 0.40, "severity": "grade2-3" },
-        { "effect": "nausea", "frequency": 0.60, "severity": "grade1-2" },
-        { "effect": "fatigue", "frequency": 0.50, "severity": "grade1-2" }
+        {
+          "effect": "anemia",
+          "frequency": 0.4,
+          "severity": "grade2-3"
+        },
+        {
+          "effect": "nausea",
+          "frequency": 0.6,
+          "severity": "grade1-2"
+        },
+        {
+          "effect": "fatigue",
+          "frequency": 0.5,
+          "severity": "grade1-2"
+        }
       ],
-      "monitoringRequired": ["CBC_monthly", "MDS_screening"],
-      "sources": ["OlympiA", "NCCN Guidelines 2024"]
+      "monitoringRequired": [
+        "CBC_monthly",
+        "MDS_screening"
+      ],
+      "sources": [
+        "OlympiA",
+        "NCCN Guidelines 2024"
+      ]
     }
   ]
 }

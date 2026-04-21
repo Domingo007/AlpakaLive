@@ -576,10 +576,10 @@ function identifyRisks(blood: BloodImpact, weight: WeightTrend, phase: ReturnTyp
 
 export function formatPredictionForChat(result: PredictionResult): string {
   if (result.insufficientData) {
-    return `📊 **Predykcja niedostępna**\n\n${result.message}`;
+    return `📊 **Analiza wzorców niedostępna**\n\n${result.message}`;
   }
 
-  let text = `📊 **Predykcja na najbliższe 5 dni**\n`;
+  let text = `📊 **Wzorce z Twoich ostatnich 5 dni**\n`;
   text += `Pewność: ${Math.round(result.overallConfidence * 100)}% (na podstawie: ${result.basedOn.join(', ')})\n\n`;
 
   for (const day of result.days) {

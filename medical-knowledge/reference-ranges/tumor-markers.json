@@ -1,11 +1,123 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "Clinical laboratory reference ranges, ESMO tumor marker guidelines",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "version": "1.0.0",
   "markers": [
-    { "id": "ca153", "name": { "en": "CA 15-3", "pl": "CA 15-3" }, "unit": "U/ml", "normalRange": { "min": 0, "max": 31.3 }, "cancers": ["breast"], "sources": ["Clinical laboratory standards"] },
-    { "id": "cea", "name": { "en": "CEA", "pl": "CEA" }, "unit": "ng/ml", "normalRange": { "min": 0, "max": 5.0 }, "cancers": ["breast", "colorectal", "lung"], "sources": ["Clinical laboratory standards"] },
-    { "id": "ca125", "name": { "en": "CA 125", "pl": "CA 125" }, "unit": "U/ml", "normalRange": { "min": 0, "max": 35 }, "cancers": ["ovarian"], "sources": ["Clinical laboratory standards"] },
-    { "id": "ca199", "name": { "en": "CA 19-9", "pl": "CA 19-9" }, "unit": "U/ml", "normalRange": { "min": 0, "max": 37 }, "cancers": ["pancreatic", "colorectal"], "sources": ["Clinical laboratory standards"] },
-    { "id": "psa", "name": { "en": "PSA", "pl": "PSA" }, "unit": "ng/ml", "normalRange": { "min": 0, "max": 4.0 }, "cancers": ["prostate"], "sources": ["Clinical laboratory standards"] },
-    { "id": "afp", "name": { "en": "AFP", "pl": "AFP" }, "unit": "ng/ml", "normalRange": { "min": 0, "max": 10 }, "cancers": ["liver", "testicular"], "sources": ["Clinical laboratory standards"] }
+    {
+      "id": "ca153",
+      "name": {
+        "en": "CA 15-3",
+        "pl": "CA 15-3"
+      },
+      "unit": "U/ml",
+      "normalRange": {
+        "min": 0,
+        "max": 31.3
+      },
+      "cancers": [
+        "breast"
+      ],
+      "sources": [
+        "Clinical laboratory standards"
+      ]
+    },
+    {
+      "id": "cea",
+      "name": {
+        "en": "CEA",
+        "pl": "CEA"
+      },
+      "unit": "ng/ml",
+      "normalRange": {
+        "min": 0,
+        "max": 5
+      },
+      "cancers": [
+        "breast",
+        "colorectal",
+        "lung"
+      ],
+      "sources": [
+        "Clinical laboratory standards"
+      ]
+    },
+    {
+      "id": "ca125",
+      "name": {
+        "en": "CA 125",
+        "pl": "CA 125"
+      },
+      "unit": "U/ml",
+      "normalRange": {
+        "min": 0,
+        "max": 35
+      },
+      "cancers": [
+        "ovarian"
+      ],
+      "sources": [
+        "Clinical laboratory standards"
+      ]
+    },
+    {
+      "id": "ca199",
+      "name": {
+        "en": "CA 19-9",
+        "pl": "CA 19-9"
+      },
+      "unit": "U/ml",
+      "normalRange": {
+        "min": 0,
+        "max": 37
+      },
+      "cancers": [
+        "pancreatic",
+        "colorectal"
+      ],
+      "sources": [
+        "Clinical laboratory standards"
+      ]
+    },
+    {
+      "id": "psa",
+      "name": {
+        "en": "PSA",
+        "pl": "PSA"
+      },
+      "unit": "ng/ml",
+      "normalRange": {
+        "min": 0,
+        "max": 4
+      },
+      "cancers": [
+        "prostate"
+      ],
+      "sources": [
+        "Clinical laboratory standards"
+      ]
+    },
+    {
+      "id": "afp",
+      "name": {
+        "en": "AFP",
+        "pl": "AFP"
+      },
+      "unit": "ng/ml",
+      "normalRange": {
+        "min": 0,
+        "max": 10
+      },
+      "cancers": [
+        "liver",
+        "testicular"
+      ],
+      "sources": [
+        "Clinical laboratory standards"
+      ]
+    }
   ]
 }

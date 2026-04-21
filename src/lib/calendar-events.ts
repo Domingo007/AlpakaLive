@@ -18,7 +18,7 @@ export const DEFAULT_EVENT_COLORS: Record<CalendarEventType, { color: string; ic
   side_effect:        { color: '#e67e22', icon: 'warning', label: 'Efekt uboczny' },
   weight:             { color: '#7f8c8d', icon: 'scale', label: 'Waga' },
   wearable_alert:     { color: '#c0392b', icon: 'watch', label: 'Alert opaski' },
-  prediction:         { color: '#2c3e50', icon: 'auto_graph', label: 'Predykcja' },
+  prediction:         { color: '#2c3e50', icon: 'auto_graph', label: 'Wzorzec' },
   medication_change:  { color: '#d35400', icon: 'sync', label: 'Zmiana leczenia' },
   note:               { color: '#95a5a6', icon: 'push_pin', label: 'Notatka' },
   radiotherapy_session:   { color: '#f59e0b', icon: 'radiology', label: 'Radioterapia' },

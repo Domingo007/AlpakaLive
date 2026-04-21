@@ -1,53 +1,178 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "NCCN Guidelines 2024, ESMO Guidelines 2024",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "version": "1.0.0",
   "drugs": [
     {
       "id": "pembrolizumab",
-      "name": { "en": "Pembrolizumab", "pl": "Pembrolizumab", "de": "Pembrolizumab" },
+      "name": {
+        "en": "Pembrolizumab",
+        "pl": "Pembrolizumab",
+        "de": "Pembrolizumab"
+      },
       "class": "anti_PD1",
-      "tradeNames": { "europe": ["Keytruda"], "usa": ["Keytruda"] },
+      "tradeNames": {
+        "europe": [
+          "Keytruda"
+        ],
+        "usa": [
+          "Keytruda"
+        ]
+      },
       "administration": "iv",
-      "cyp450": { "substrate": [], "inhibitor": [], "inducer": [] },
+      "cyp450": {
+        "substrate": [],
+        "inhibitor": [],
+        "inducer": []
+      },
       "iraeProfile": [
-        { "organ": "skin", "frequency": 0.25, "typicalGrade": "1-2" },
-        { "organ": "thyroid", "frequency": 0.15, "typicalGrade": "1-2" },
-        { "organ": "liver", "frequency": 0.08, "typicalGrade": "2-3" },
-        { "organ": "lung", "frequency": 0.04, "typicalGrade": "2-4" },
-        { "organ": "gi", "frequency": 0.15, "typicalGrade": "1-3" }
+        {
+          "organ": "skin",
+          "frequency": 0.25,
+          "typicalGrade": "1-2"
+        },
+        {
+          "organ": "thyroid",
+          "frequency": 0.15,
+          "typicalGrade": "1-2"
+        },
+        {
+          "organ": "liver",
+          "frequency": 0.08,
+          "typicalGrade": "2-3"
+        },
+        {
+          "organ": "lung",
+          "frequency": 0.04,
+          "typicalGrade": "2-4"
+        },
+        {
+          "organ": "gi",
+          "frequency": 0.15,
+          "typicalGrade": "1-3"
+        }
       ],
-      "monitoringRequired": ["TSH", "fT4", "ALT", "AST", "creatinine", "cortisol"],
-      "sources": ["KEYNOTE-522", "ESMO Guidelines 2024"]
+      "monitoringRequired": [
+        "TSH",
+        "fT4",
+        "ALT",
+        "AST",
+        "creatinine",
+        "cortisol"
+      ],
+      "sources": [
+        "KEYNOTE-522",
+        "ESMO Guidelines 2024"
+      ]
     },
     {
       "id": "nivolumab",
-      "name": { "en": "Nivolumab", "pl": "Niwolumab", "de": "Nivolumab" },
+      "name": {
+        "en": "Nivolumab",
+        "pl": "Niwolumab",
+        "de": "Nivolumab"
+      },
       "class": "anti_PD1",
-      "tradeNames": { "europe": ["Opdivo"], "usa": ["Opdivo"] },
+      "tradeNames": {
+        "europe": [
+          "Opdivo"
+        ],
+        "usa": [
+          "Opdivo"
+        ]
+      },
       "administration": "iv",
-      "cyp450": { "substrate": [], "inhibitor": [], "inducer": [] },
+      "cyp450": {
+        "substrate": [],
+        "inhibitor": [],
+        "inducer": []
+      },
       "iraeProfile": [
-        { "organ": "skin", "frequency": 0.30, "typicalGrade": "1-2" },
-        { "organ": "thyroid", "frequency": 0.12, "typicalGrade": "1-2" },
-        { "organ": "liver", "frequency": 0.05, "typicalGrade": "2-3" },
-        { "organ": "lung", "frequency": 0.03, "typicalGrade": "2-3" }
+        {
+          "organ": "skin",
+          "frequency": 0.3,
+          "typicalGrade": "1-2"
+        },
+        {
+          "organ": "thyroid",
+          "frequency": 0.12,
+          "typicalGrade": "1-2"
+        },
+        {
+          "organ": "liver",
+          "frequency": 0.05,
+          "typicalGrade": "2-3"
+        },
+        {
+          "organ": "lung",
+          "frequency": 0.03,
+          "typicalGrade": "2-3"
+        }
       ],
-      "monitoringRequired": ["TSH", "fT4", "ALT", "AST", "creatinine"],
-      "sources": ["CheckMate trials", "NCCN Guidelines 2024"]
+      "monitoringRequired": [
+        "TSH",
+        "fT4",
+        "ALT",
+        "AST",
+        "creatinine"
+      ],
+      "sources": [
+        "CheckMate trials",
+        "NCCN Guidelines 2024"
+      ]
     },
     {
       "id": "atezolizumab",
-      "name": { "en": "Atezolizumab", "pl": "Atezolizumab", "de": "Atezolizumab" },
+      "name": {
+        "en": "Atezolizumab",
+        "pl": "Atezolizumab",
+        "de": "Atezolizumab"
+      },
       "class": "anti_PDL1",
-      "tradeNames": { "europe": ["Tecentriq"], "usa": ["Tecentriq"] },
+      "tradeNames": {
+        "europe": [
+          "Tecentriq"
+        ],
+        "usa": [
+          "Tecentriq"
+        ]
+      },
       "administration": "iv",
-      "cyp450": { "substrate": [], "inhibitor": [], "inducer": [] },
+      "cyp450": {
+        "substrate": [],
+        "inhibitor": [],
+        "inducer": []
+      },
       "iraeProfile": [
-        { "organ": "skin", "frequency": 0.20, "typicalGrade": "1-2" },
-        { "organ": "thyroid", "frequency": 0.10, "typicalGrade": "1-2" },
-        { "organ": "liver", "frequency": 0.06, "typicalGrade": "2-3" }
+        {
+          "organ": "skin",
+          "frequency": 0.2,
+          "typicalGrade": "1-2"
+        },
+        {
+          "organ": "thyroid",
+          "frequency": 0.1,
+          "typicalGrade": "1-2"
+        },
+        {
+          "organ": "liver",
+          "frequency": 0.06,
+          "typicalGrade": "2-3"
+        }
       ],
-      "monitoringRequired": ["TSH", "ALT", "AST"],
-      "sources": ["IMpassion130", "ESMO Guidelines 2024"]
+      "monitoringRequired": [
+        "TSH",
+        "ALT",
+        "AST"
+      ],
+      "sources": [
+        "IMpassion130",
+        "ESMO Guidelines 2024"
+      ]
     }
   ]
 }

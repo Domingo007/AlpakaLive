@@ -1,48 +1,144 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "NCCN Guidelines 2024, ESMO Guidelines 2024",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "version": "1.0.0",
   "drugs": [
     {
       "id": "tamoxifen",
-      "name": { "en": "Tamoxifen", "pl": "Tamoksyfen", "de": "Tamoxifen" },
+      "name": {
+        "en": "Tamoxifen",
+        "pl": "Tamoksyfen",
+        "de": "Tamoxifen"
+      },
       "class": "SERM",
-      "cyp450": { "substrate": ["CYP2D6", "CYP3A4"], "inhibitor": [], "inducer": [] },
+      "cyp450": {
+        "substrate": [
+          "CYP2D6",
+          "CYP3A4"
+        ],
+        "inhibitor": [],
+        "inducer": []
+      },
       "duration": "5-10 years",
       "commonSideEffects": [
-        { "effect": "hot_flashes", "frequency": 0.60, "severity": "grade1-2" },
-        { "effect": "joint_pain", "frequency": 0.25, "severity": "grade1-2" },
-        { "effect": "thromboembolic_risk", "frequency": 0.02, "severity": "serious" },
-        { "effect": "endometrial_cancer_risk", "frequency": 0.005, "severity": "rare_serious" }
+        {
+          "effect": "hot_flashes",
+          "frequency": 0.6,
+          "severity": "grade1-2"
+        },
+        {
+          "effect": "joint_pain",
+          "frequency": 0.25,
+          "severity": "grade1-2"
+        },
+        {
+          "effect": "thromboembolic_risk",
+          "frequency": 0.02,
+          "severity": "serious"
+        },
+        {
+          "effect": "endometrial_cancer_risk",
+          "frequency": 0.005,
+          "severity": "rare_serious"
+        }
       ],
-      "monitoringRequired": ["gynecological_exam_yearly", "report_abnormal_bleeding"],
-      "sources": ["ATLAS trial", "aTTom trial", "ESMO Guidelines 2024"]
+      "monitoringRequired": [
+        "gynecological_exam_yearly",
+        "report_abnormal_bleeding"
+      ],
+      "sources": [
+        "ATLAS trial",
+        "aTTom trial",
+        "ESMO Guidelines 2024"
+      ]
     },
     {
       "id": "letrozole",
-      "name": { "en": "Letrozole", "pl": "Letrozol", "de": "Letrozol" },
+      "name": {
+        "en": "Letrozole",
+        "pl": "Letrozol",
+        "de": "Letrozol"
+      },
       "class": "aromatase_inhibitor",
-      "cyp450": { "substrate": ["CYP2A6", "CYP3A4"], "inhibitor": [], "inducer": [] },
+      "cyp450": {
+        "substrate": [
+          "CYP2A6",
+          "CYP3A4"
+        ],
+        "inhibitor": [],
+        "inducer": []
+      },
       "duration": "5-7 years",
       "commonSideEffects": [
-        { "effect": "joint_pain", "frequency": 0.50, "severity": "grade1-3" },
-        { "effect": "hot_flashes", "frequency": 0.40, "severity": "grade1-2" },
-        { "effect": "osteoporosis", "frequency": 0.15, "severity": "cumulative" }
+        {
+          "effect": "joint_pain",
+          "frequency": 0.5,
+          "severity": "grade1-3"
+        },
+        {
+          "effect": "hot_flashes",
+          "frequency": 0.4,
+          "severity": "grade1-2"
+        },
+        {
+          "effect": "osteoporosis",
+          "frequency": 0.15,
+          "severity": "cumulative"
+        }
       ],
-      "monitoringRequired": ["DEXA_q1_2y", "lipid_panel_yearly"],
-      "sources": ["BIG 1-98", "NCCN Guidelines 2024"]
+      "monitoringRequired": [
+        "DEXA_q1_2y",
+        "lipid_panel_yearly"
+      ],
+      "sources": [
+        "BIG 1-98",
+        "NCCN Guidelines 2024"
+      ]
     },
     {
       "id": "anastrozole",
-      "name": { "en": "Anastrozole", "pl": "Anastrozol", "de": "Anastrozol" },
+      "name": {
+        "en": "Anastrozole",
+        "pl": "Anastrozol",
+        "de": "Anastrozol"
+      },
       "class": "aromatase_inhibitor",
-      "cyp450": { "substrate": ["CYP3A4"], "inhibitor": [], "inducer": [] },
+      "cyp450": {
+        "substrate": [
+          "CYP3A4"
+        ],
+        "inhibitor": [],
+        "inducer": []
+      },
       "duration": "5-7 years",
       "commonSideEffects": [
-        { "effect": "joint_pain", "frequency": 0.45, "severity": "grade1-3" },
-        { "effect": "hot_flashes", "frequency": 0.35, "severity": "grade1-2" },
-        { "effect": "osteoporosis", "frequency": 0.12, "severity": "cumulative" }
+        {
+          "effect": "joint_pain",
+          "frequency": 0.45,
+          "severity": "grade1-3"
+        },
+        {
+          "effect": "hot_flashes",
+          "frequency": 0.35,
+          "severity": "grade1-2"
+        },
+        {
+          "effect": "osteoporosis",
+          "frequency": 0.12,
+          "severity": "cumulative"
+        }
       ],
-      "monitoringRequired": ["DEXA_q1_2y"],
-      "sources": ["ATAC trial", "ESMO Guidelines 2024"]
+      "monitoringRequired": [
+        "DEXA_q1_2y"
+      ],
+      "sources": [
+        "ATAC trial",
+        "ESMO Guidelines 2024"
+      ]
     }
   ]
 }

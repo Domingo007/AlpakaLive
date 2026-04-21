@@ -1,1 +1,10 @@
-{ "version": "1.0.0", "biomarkers": [] }
+{
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
+  "version": "1.0.0",
+  "biomarkers": []
+}

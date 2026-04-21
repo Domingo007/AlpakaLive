@@ -41,7 +41,7 @@ export const en: typeof pl = {
     languageDesc: 'Change the app interface language',
     appMode: 'App mode',
     aiMode: 'With AI agent',
-    aiModeDesc: 'Chat with AI, image analysis, prediction. Requires API key.',
+    aiModeDesc: 'Chat with AI, image analysis, pattern summaries. Requires API key.',
     notebookMode: 'Smart notebook',
     notebookModeDesc: 'Manual data entry, charts, alerts. Free, no API needed.',
     appearance: 'Appearance',
@@ -125,7 +125,7 @@ export const en: typeof pl = {
   // ==================== HISTORICAL IMPORT ====================
   historicalImport: {
     title: 'Historical data import',
-    description: 'Add historical data so the prediction model can analyze patterns. At least 2 full chemo cycles with blood results are needed.',
+    description: 'Add historical data so the pattern analysis can compare cycles. At least 2 full chemo cycles with blood results are needed.',
     bloodResults: 'Blood results',
     chemoDates: 'Chemo dates',
     photos: 'Photos',
@@ -181,20 +181,20 @@ export const en: typeof pl = {
     summary: 'Summary',
     afterChemo: 'After chemo',
     report: 'Report',
-    prediction: 'Prediction',
+    prediction: 'Pattern summary',
     imaging: 'Imaging',
     morningPrompt: 'I want to do a morning report — how I feel today.',
     summaryPrompt: "Let's do an evening summary of the day.",
     afterChemoPrompt: 'I just got back from chemo. Log the session.',
     reportPrompt: 'Generate a report for the doctor from the latest data.',
-    predictionPrompt: 'How will I feel this week? Prediction.',
+    predictionPrompt: 'How does this day of the cycle usually look for me?',
     imagingPrompt: 'I want to analyze my imaging results.',
   },
 
   // ==================== PREDICTION CARDS ====================
   predictions: {
-    unavailable: 'Prediction unavailable',
-    title5day: '5-day prediction',
+    unavailable: 'Pattern summary unavailable',
+    title5day: '5-day pattern (based on your cycles)',
     basedOn: 'Based on:',
     patterns: 'Detected patterns',
     risks: '⚠️ Risks',
@@ -206,7 +206,7 @@ export const en: typeof pl = {
     high: 'high',
     medium: 'medium',
     low: 'low',
-    accuracy: 'Prediction accuracy',
+    accuracy: 'Pattern match accuracy',
   },
 
   // ==================== CALENDAR ====================
@@ -323,7 +323,7 @@ export const en: typeof pl = {
     chemo: 'Chemo',
     supplements: 'Supplements',
     imaging: 'Imaging',
-    aiPromo: 'With AI: automatic analysis of result photos, wellbeing prediction, chat with the agent.',
+    aiPromo: 'With AI: automatic analysis of result photos, wellbeing patterns from your cycles, chat with the agent.',
     enableInSettings: 'Enable in Settings →',
   },
 
@@ -433,7 +433,7 @@ export const en: typeof pl = {
 
     howToUse: 'How do you want to use the app?',
     aiModeTitle: 'With AI agent',
-    aiModeDesc: 'Chat with AI, analyze result photos, wellbeing prediction. Requires API key (Anthropic/OpenAI/Gemini).',
+    aiModeDesc: 'Chat with AI, analyze result photos, wellbeing pattern analysis. Requires API key (Anthropic/OpenAI/Gemini).',
     notebookModeTitle: 'Smart notebook',
     notebookModeDesc: 'Manual data entry, charts, alerts. Free, no API needed.',
     canChangeLater: 'You can change the mode anytime in Settings.',

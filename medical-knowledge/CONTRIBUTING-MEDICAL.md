@@ -46,12 +46,64 @@ Everyone! But different types of data have different requirements:
 
 ## How to Add a New Drug or Interaction
 
-1. Edit the appropriate file in `drugs/`
-2. Every entry MUST have:
-   - `sources` with at least 1 source (PubMed PMID, DOI, guideline name)
-   - Evidence level when applicable
-3. Create a PR with label `medical-knowledge`
-4. A reviewer with `medical-review` tag will check it
+Edit files in `drugs/`. Required fields:
+
+```json
+{
+  "id": "paclitaxel",
+  "name": { "en": "Paclitaxel", "pl": "Paklitaksel", "de": "Paclitaxel" },
+  "class": "taxane",
+  "cyp450": {
+    "substrate": ["CYP3A4", "CYP2C8"],
+    "inhibitor": [],
+    "inducer": []
+  },
+  "sources": ["DrugBank", "NCCN Guidelines 2024"],
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "NCCN 2024"
+  }
+}
+```
+
+Create a PR with label `medical-knowledge`. A reviewer with `medical-review` tag will check it.
+
+---
+
+## How to Add a New Blood Marker or Reference Range
+
+Edit the appropriate file in `reference-ranges/`. Each marker entry:
+
+```json
+{
+  "id": "wbc",
+  "name": { "en": "White Blood Cells", "pl": "Leukocyty (WBC)", "de": "Leukozyten" },
+  "unit": "×10³/µL",
+  "normalRange": { "min": 4.0, "max": 10.0 },
+  "criticalLow": 2.0,
+  "criticalHigh": 30.0,
+  "oncologyContext": {
+    "en": "WBC below 2.0 may require chemo delay. Below 1.0 is critical neutropenia.",
+    "pl": "WBC poniżej 2.0 może wymagać odroczenia chemii. Poniżej 1.0 to krytyczna neutropenia."
+  },
+  "sources": ["ESMO Guidelines 2024"],
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "ESMO Guidelines 2024"
+  }
+}
+```
+
+---
+
+## Evidence Levels
+
+Use these in every entry where applicable:
+- `strong` — meta-analysis or multiple RCTs (🟢)
+- `moderate` — single RCT or observational studies (🟡)
+- `preclinical` — in vitro / in vivo only (🔴)
+- `patient_experience` — unverified clinically but valuable (🔵)
+- `CONTRAINDICATED` — known to cause harm (e.g., St. John's Wort + chemo) (⚫)
 
 ---
 

@@ -1,10 +1,22 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "id": "",
   "version": "1.0.0",
   "lastUpdated": "",
   "icd10Codes": [],
-  "name": { "pl": "", "en": "" },
-  "aliases": { "pl": [], "en": [] },
+  "name": {
+    "pl": "",
+    "en": ""
+  },
+  "aliases": {
+    "pl": [],
+    "en": []
+  },
   "subtypes": [],
   "stages": [],
   "relevantBloodMarkers": [],

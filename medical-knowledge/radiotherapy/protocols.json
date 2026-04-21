@@ -1,36 +1,77 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "ESTRO/ASTRO Guidelines",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "version": "1.0.0",
   "protocols": [
     {
       "id": "breast_whole",
-      "name": { "en": "Whole breast RT", "pl": "RT całej piersi" },
-      "indication": ["breast_after_lumpectomy"],
+      "name": {
+        "en": "Whole breast RT",
+        "pl": "RT całej piersi"
+      },
+      "indication": [
+        "breast_after_lumpectomy"
+      ],
       "totalDoseGy": 50,
       "fractions": 25,
-      "dosePerFractionGy": 2.0,
-      "frequency": { "en": "Mon-Fri, 5 weeks", "pl": "Pon-Pią, 5 tygodni" },
-      "boost": { "optional": true, "doseGy": 10, "fractions": 5 },
-      "sources": ["ESMO Breast Cancer Guidelines 2024"]
+      "dosePerFractionGy": 2,
+      "frequency": {
+        "en": "Mon-Fri, 5 weeks",
+        "pl": "Pon-Pią, 5 tygodni"
+      },
+      "boost": {
+        "optional": true,
+        "doseGy": 10,
+        "fractions": 5
+      },
+      "sources": [
+        "ESMO Breast Cancer Guidelines 2024"
+      ]
     },
     {
       "id": "breast_hypo",
-      "name": { "en": "Hypofractionated breast RT", "pl": "RT piersi hipofrakcjonowana" },
-      "indication": ["breast_after_lumpectomy"],
+      "name": {
+        "en": "Hypofractionated breast RT",
+        "pl": "RT piersi hipofrakcjonowana"
+      },
+      "indication": [
+        "breast_after_lumpectomy"
+      ],
       "totalDoseGy": 40,
       "fractions": 15,
       "dosePerFractionGy": 2.67,
-      "frequency": { "en": "Mon-Fri, 3 weeks", "pl": "Pon-Pią, 3 tygodnie" },
-      "notes": { "en": "Preferred in many centers (START B, FAST-Forward trials)", "pl": "Preferowana w wielu ośrodkach (badania START B, FAST-Forward)" },
-      "sources": ["START B trial", "FAST-Forward trial"]
+      "frequency": {
+        "en": "Mon-Fri, 3 weeks",
+        "pl": "Pon-Pią, 3 tygodnie"
+      },
+      "notes": {
+        "en": "Preferred in many centers (START B, FAST-Forward trials)",
+        "pl": "Preferowana w wielu ośrodkach (badania START B, FAST-Forward)"
+      },
+      "sources": [
+        "START B trial",
+        "FAST-Forward trial"
+      ]
     },
     {
       "id": "chest_wall",
-      "name": { "en": "Chest wall RT (post-mastectomy)", "pl": "RT ściany klatki piersiowej (po mastektomii)" },
-      "indication": ["breast_after_mastectomy_high_risk"],
+      "name": {
+        "en": "Chest wall RT (post-mastectomy)",
+        "pl": "RT ściany klatki piersiowej (po mastektomii)"
+      },
+      "indication": [
+        "breast_after_mastectomy_high_risk"
+      ],
       "totalDoseGy": 50,
       "fractions": 25,
-      "dosePerFractionGy": 2.0,
-      "sources": ["NCCN Guidelines 2024"]
+      "dosePerFractionGy": 2,
+      "sources": [
+        "NCCN Guidelines 2024"
+      ]
     }
   ]
 }

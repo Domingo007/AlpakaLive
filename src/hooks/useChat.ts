@@ -7,11 +7,11 @@ import { buildSystemPrompt } from '@/lib/system-prompt';
 import { extractDataFromResponse, extractAIProfileData, saveExtractedData, cleanResponseFromTags } from '@/lib/data-extractor';
 import { generatePrediction, savePrediction, formatPredictionForChat, checkPredictionAccuracy, type PredictionResult } from '@/lib/prediction-engine';
 
-const PREDICTION_TRIGGERS = ['predykcja', 'prognoza', 'przewiduj', 'jak będę się czuć', 'jak bede sie czuc', 'jak będę', 'co mnie czeka', 'najbliższe dni', 'ten tydzień', 'ten tydzien'];
+const PATTERN_TRIGGERS = ['wzorzec', 'wzorce', 'wzorcow', 'jak zwykle', 'pokaż wzorzec', 'pokaz wzorzec', 'predykcja', 'prognoza', 'przewiduj', 'jak będę się czuć', 'jak bede sie czuc', 'jak będę', 'co mnie czeka', 'najbliższe dni', 'ten tydzień', 'ten tydzien'];
 
-function isPredictionRequest(text: string): boolean {
+function isPatternRequest(text: string): boolean {
   const lower = text.toLowerCase();
-  return PREDICTION_TRIGGERS.some(t => lower.includes(t));
+  return PATTERN_TRIGGERS.some(t => lower.includes(t));
 }
 
 export function useChat() {
@@ -68,8 +68,8 @@ export function useChat() {
     try {
       const userText = typeof content === 'string' ? content : text;
 
-      // Check for prediction request — handle locally
-      if (isPredictionRequest(userText)) {
+      // Check for pattern analysis request — handle locally
+      if (isPatternRequest(userText)) {
         const predResult = await generatePrediction();
         setLastPrediction(predResult);
 

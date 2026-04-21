@@ -1,44 +1,182 @@
 {
+  "_metadata": {
+    "last_verified": "2025-01",
+    "source_version": "ESTRO/ASTRO Guidelines",
+    "verified_by": "community — unverified",
+    "language": "en"
+  },
   "version": "1.0.0",
   "regions": [
     {
       "id": "breast",
-      "name": { "en": "Breast / Chest wall", "pl": "Pierś / Ściana klatki" },
+      "name": {
+        "en": "Breast / Chest wall",
+        "pl": "Pierś / Ściana klatki"
+      },
       "acuteEffects": [
-        { "effect": { "en": "Skin erythema", "pl": "Zaczerwienienie skóry" }, "frequency": "90%", "timing": { "en": "Week 3-5", "pl": "Tydzień 3-5" }, "ctcaeGrade": "1-2" },
-        { "effect": { "en": "Fatigue", "pl": "Zmęczenie" }, "frequency": "80%", "timing": { "en": "Cumulative, peaks at end", "pl": "Narastające, szczyt pod koniec" } },
-        { "effect": { "en": "Breast swelling/edema", "pl": "Obrzęk piersi" }, "frequency": "30%", "timing": { "en": "During treatment", "pl": "W trakcie leczenia" } }
+        {
+          "effect": {
+            "en": "Skin erythema",
+            "pl": "Zaczerwienienie skóry"
+          },
+          "frequency": "90%",
+          "timing": {
+            "en": "Week 3-5",
+            "pl": "Tydzień 3-5"
+          },
+          "ctcaeGrade": "1-2"
+        },
+        {
+          "effect": {
+            "en": "Fatigue",
+            "pl": "Zmęczenie"
+          },
+          "frequency": "80%",
+          "timing": {
+            "en": "Cumulative, peaks at end",
+            "pl": "Narastające, szczyt pod koniec"
+          }
+        },
+        {
+          "effect": {
+            "en": "Breast swelling/edema",
+            "pl": "Obrzęk piersi"
+          },
+          "frequency": "30%",
+          "timing": {
+            "en": "During treatment",
+            "pl": "W trakcie leczenia"
+          }
+        }
       ],
       "lateEffects": [
-        { "effect": { "en": "Skin pigmentation changes", "pl": "Zmiany pigmentacji skóry" }, "frequency": "40%", "timing": { "en": "Months after", "pl": "Miesiące po" } },
-        { "effect": { "en": "Breast fibrosis", "pl": "Zwłóknienie piersi" }, "frequency": "10-15%", "timing": { "en": "Months-years", "pl": "Miesiące-lata" } },
-        { "effect": { "en": "Cardiotoxicity (left-sided)", "pl": "Kardiotoksyczność (lewa strona)" }, "frequency": "1-5%", "timing": { "en": "Years (left breast RT)", "pl": "Lata (RT lewej piersi)" } }
+        {
+          "effect": {
+            "en": "Skin pigmentation changes",
+            "pl": "Zmiany pigmentacji skóry"
+          },
+          "frequency": "40%",
+          "timing": {
+            "en": "Months after",
+            "pl": "Miesiące po"
+          }
+        },
+        {
+          "effect": {
+            "en": "Breast fibrosis",
+            "pl": "Zwłóknienie piersi"
+          },
+          "frequency": "10-15%",
+          "timing": {
+            "en": "Months-years",
+            "pl": "Miesiące-lata"
+          }
+        },
+        {
+          "effect": {
+            "en": "Cardiotoxicity (left-sided)",
+            "pl": "Kardiotoksyczność (lewa strona)"
+          },
+          "frequency": "1-5%",
+          "timing": {
+            "en": "Years (left breast RT)",
+            "pl": "Lata (RT lewej piersi)"
+          }
+        }
       ]
     },
     {
       "id": "head_neck",
-      "name": { "en": "Head & Neck", "pl": "Głowa i szyja" },
+      "name": {
+        "en": "Head & Neck",
+        "pl": "Głowa i szyja"
+      },
       "acuteEffects": [
-        { "effect": { "en": "Mucositis", "pl": "Zapalenie śluzówek" }, "frequency": "80%", "ctcaeGrade": "2-3" },
-        { "effect": { "en": "Dysphagia", "pl": "Dysfagia (utrudnione połykanie)" }, "frequency": "60%" },
-        { "effect": { "en": "Xerostomia (dry mouth)", "pl": "Suchość w ustach" }, "frequency": "70%" }
+        {
+          "effect": {
+            "en": "Mucositis",
+            "pl": "Zapalenie śluzówek"
+          },
+          "frequency": "80%",
+          "ctcaeGrade": "2-3"
+        },
+        {
+          "effect": {
+            "en": "Dysphagia",
+            "pl": "Dysfagia (utrudnione połykanie)"
+          },
+          "frequency": "60%"
+        },
+        {
+          "effect": {
+            "en": "Xerostomia (dry mouth)",
+            "pl": "Suchość w ustach"
+          },
+          "frequency": "70%"
+        }
       ],
       "lateEffects": [
-        { "effect": { "en": "Permanent xerostomia", "pl": "Trwała suchość w ustach" }, "frequency": "30%" },
-        { "effect": { "en": "Hypothyroidism", "pl": "Niedoczynność tarczycy" }, "frequency": "20-30%" }
+        {
+          "effect": {
+            "en": "Permanent xerostomia",
+            "pl": "Trwała suchość w ustach"
+          },
+          "frequency": "30%"
+        },
+        {
+          "effect": {
+            "en": "Hypothyroidism",
+            "pl": "Niedoczynność tarczycy"
+          },
+          "frequency": "20-30%"
+        }
       ]
     },
     {
       "id": "pelvis",
-      "name": { "en": "Pelvis", "pl": "Miednica" },
+      "name": {
+        "en": "Pelvis",
+        "pl": "Miednica"
+      },
       "acuteEffects": [
-        { "effect": { "en": "Diarrhea", "pl": "Biegunka" }, "frequency": "60%", "ctcaeGrade": "1-2" },
-        { "effect": { "en": "Urinary frequency", "pl": "Częstomocz" }, "frequency": "40%" },
-        { "effect": { "en": "Fatigue", "pl": "Zmęczenie" }, "frequency": "70%" }
+        {
+          "effect": {
+            "en": "Diarrhea",
+            "pl": "Biegunka"
+          },
+          "frequency": "60%",
+          "ctcaeGrade": "1-2"
+        },
+        {
+          "effect": {
+            "en": "Urinary frequency",
+            "pl": "Częstomocz"
+          },
+          "frequency": "40%"
+        },
+        {
+          "effect": {
+            "en": "Fatigue",
+            "pl": "Zmęczenie"
+          },
+          "frequency": "70%"
+        }
       ],
       "lateEffects": [
-        { "effect": { "en": "Bowel changes", "pl": "Zaburzenia jelit" }, "frequency": "15%" },
-        { "effect": { "en": "Bladder irritation", "pl": "Podrażnienie pęcherza" }, "frequency": "10%" }
+        {
+          "effect": {
+            "en": "Bowel changes",
+            "pl": "Zaburzenia jelit"
+          },
+          "frequency": "15%"
+        },
+        {
+          "effect": {
+            "en": "Bladder irritation",
+            "pl": "Podrażnienie pęcherza"
+          },
+          "frequency": "10%"
+        }
       ]
     }
   ]
