@@ -9,25 +9,27 @@
 
 # AlpacaLive — Holistic Oncology Support System
 
-**A free, open-source web app (PWA) supporting cancer patients and their caregivers in analyzing health data during chemotherapy.**
+**A free, open-source web app (PWA) supporting cancer patients and their caregivers in analyzing health data during chemotherapy, immunotherapy, radiotherapy, targeted therapy, hormone therapy, and recovery from surgery.**
 
 ---
 
 ## What Makes AlpacaLive Different
 
 | Feature | AlpacaLive | Other Oncology Apps |
-|---------|-----------|---------------------|
+| --- | --- | --- |
 | Health journal | Conversation with an AI agent | Manual forms |
 | Blood results | Photo → automatic analysis | Manual entry |
-| Prediction | Predicts well-being by chemo cycle | None |
+| Pattern-based summaries | Compares your data against your own baseline and previous cycles | None |
 | Drug interactions | Dynamic CYP450 database | None |
 | Imaging | RTG/CT/PET analysis with RECIST | None |
 | Privacy | PII Sanitizer — personal data never leaves your phone | Varies |
 | Code | Open source, AGPL-3.0 | Closed |
 
+> **Note on "pattern-based summaries":** AlpacaLive does not predict treatment outcomes or diagnose conditions. It shows how your current data compares to your own previous cycles and to reference ranges from published literature. Any interpretation of these patterns is for the patient's treating physician.
+
 ## Quick Start
 
-```bash
+```
 git clone https://github.com/Domingo007/AlpacaLive.git
 cd AlpacaLive
 npm install
@@ -37,12 +39,14 @@ npm run dev
 Requirements: Node.js 18+, [Anthropic API key](https://console.anthropic.com/) (optional — the app works in demo mode without a key)
 
 ### Install on Your Phone
+
 1. Open in your browser (Safari/Chrome)
 2. **iPhone:** Share → "Add to Home Screen"
 3. **Android:** Menu → "Add to Home Screen"
 4. Enter your API key in settings
 
 ### Deploy Your Own Instance
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Domingo007/AlpacaLive)
 
 ## Architecture
@@ -62,7 +66,7 @@ AlpacaLive (100% local — no cloud)
 ## Tech Stack
 
 | Layer | Technology |
-|-------|------------|
+| --- | --- |
 | Framework | Vite + React 18 + TypeScript |
 | Styles | Tailwind CSS |
 | Database | IndexedDB via Dexie.js |
@@ -78,8 +82,8 @@ We're looking for **patients** (your experience with chemo is invaluable!), **de
 
 ## Medical Documentation
 
-- [Medical Knowledge Base](docs/MEDICAL_KNOWLEDGE.md) — supplements, interactions, patterns
-- [Compatible Wearables](docs/wearables.md) — ranking for cancer patients
+* [Medical Knowledge Base](docs/MEDICAL_KNOWLEDGE.md) — supplements, interactions, patterns
+* [Compatible Wearables](docs/wearables.md) — ranking for cancer patients
 
 ## Privacy
 
@@ -99,3 +103,4 @@ Interested in a commercial license (without AGPL requirements)? Contact: [gravit
 **Dominik Gaweł** · [Gravity Design](https://www.gravitydesign.pl/)
 Email: [gravitydesigne@gmail.com](mailto:gravitydesigne@gmail.com)
 GitHub: [github.com/Domingo007](https://github.com/Domingo007)
+Website: [alpacalive.com](https://www.alpacalive.com/)
