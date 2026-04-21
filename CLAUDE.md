@@ -71,7 +71,7 @@ Types: Feat, Fix, Medical, Docs, Style, Refactor, Test, Chore, Security, Legal
 | PII filter | `src/lib/pii-sanitizer.ts` |
 | Security | `src/lib/input-guard.ts` |
 | Treatment phases | `src/lib/treatment-cycle.ts` |
-| Pattern analysis | `src/lib/prediction-engine.ts` |
+| Pattern analysis | `src/lib/pattern-engine.ts` |
 | Medical data loader | `src/lib/medical-data/knowledge-registry.ts` |
 | Disease matcher | `src/lib/medical-data/disease-matcher.ts` |
 | Types | `src/types/index.ts` |

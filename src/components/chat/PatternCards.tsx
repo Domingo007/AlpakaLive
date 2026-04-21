@@ -1,12 +1,12 @@
-import type { PredictionResult, DayPrediction } from '@/lib/prediction-engine';
+import type { PatternResult, DayPattern } from '@/lib/pattern-engine';
 import { getPhaseColor } from '@/lib/treatment-cycle';
 import { useI18n } from '@/lib/i18n';
 
-interface PredictionCardsProps {
-  result: PredictionResult;
+interface PatternCardsProps {
+  result: PatternResult;
 }
 
-export function PredictionCards({ result }: PredictionCardsProps) {
+export function PatternCards({ result }: PatternCardsProps) {
   const { t } = useI18n();
 
   if (result.insufficientData) {
@@ -58,7 +58,7 @@ export function PredictionCards({ result }: PredictionCardsProps) {
   );
 }
 
-function DayCard({ day }: { day: DayPrediction }) {
+function DayCard({ day }: { day: DayPattern }) {
   const { t } = useI18n();
   const phaseColor = getPhaseColor(day.phase);
   const isToday = day.date === new Date().toISOString().split('T')[0];
