@@ -516,7 +516,16 @@ export interface ImagingComparison {
   aiComparison?: string;
 }
 
-export interface Prediction {
+/**
+ * Pattern-based summary for a specific day, comparing patient's data against
+ * their own baseline and previous cycles.
+ *
+ * NOTE: The underlying IndexedDB table is physically named "predictions"
+ * for backward compatibility with existing user data. All TypeScript code
+ * uses `PatternSummary` + `db.patternSummaries`. Do not rename the physical
+ * table without a Dexie version migration (would risk data loss).
+ */
+export interface PatternSummary {
   id: string;
   date: string;
   targetDate: string;

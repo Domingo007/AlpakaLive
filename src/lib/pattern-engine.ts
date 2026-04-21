@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { db } from './db';
 import { calculateCurrentPhase, getPhaseLabel, dayToChemoPhase } from './treatment-cycle';
 import { evaluateMarker } from './blood-norms';
-import type { DailyLog, ChemoSession, BloodWork, Prediction, ChemoPhase } from '@/types';
+import type { DailyLog, ChemoSession, BloodWork, PatternSummary, ChemoPhase } from '@/types';
 
 // ==================== TYPES ====================
 
@@ -164,7 +164,7 @@ export async function generatePatternSummary(): Promise<PatternResult> {
 export async function savePatternSummary(result: PatternResult): Promise<void> {
   if (result.insufficientData || result.days.length === 0) return;
 
-  const predictions: (Prediction & { id: string })[] = result.days.map(day => ({
+  const predictions: (PatternSummary & { id: string })[] = result.days.map(day => ({
     id: uuidv4(),
     date: new Date().toISOString().split('T')[0],
     targetDate: day.date,
@@ -174,19 +174,19 @@ export async function savePatternSummary(result: PatternResult): Promise<void> {
     basedOn: result.basedOn,
   }));
 
-  await db.predictions.bulkPut(predictions);
+  await db.patternSummaries.bulkPut(predictions);
 }
 
 // ==================== CHECK ACCURACY ====================
 
 export async function checkPatternMatch(): Promise<{
-  predictions: (Prediction & { actualEnergy?: number; match: boolean })[];
+  predictions: (PatternSummary & { actualEnergy?: number; match: boolean })[];
   overallAccuracy: number;
 } | null> {
   const today = new Date().toISOString().split('T')[0];
 
   // Get predictions for dates that have passed
-  const pastPredictions = await db.predictions
+  const pastPredictions = await db.patternSummaries
     .where('targetDate')
     .below(today)
     .filter(p => !p.actual && p.type === 'wellbeing')
@@ -194,7 +194,7 @@ export async function checkPatternMatch(): Promise<{
 
   if (pastPredictions.length === 0) return null;
 
-  const results: (Prediction & { actualEnergy?: number; match: boolean })[] = [];
+  const results: (PatternSummary & { actualEnergy?: number; match: boolean })[] = [];
   let totalAccuracy = 0;
   let checked = 0;
 
@@ -212,7 +212,7 @@ export async function checkPatternMatch(): Promise<{
         const diff = Math.abs(predictedEnergy - actual.energy);
         const accuracy = Math.max(0, 1 - diff / 10);
 
-        await db.predictions.update(pred.id, {
+        await db.patternSummaries.update(pred.id, {
           actual: `energia: ${actual.energy}, ból: ${actual.pain}, nudności: ${actual.nausea}`,
           accuracy: Math.round(accuracy * 100),
         });
