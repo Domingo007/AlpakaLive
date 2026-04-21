@@ -516,7 +516,7 @@ export interface ImagingComparison {
   aiComparison?: string;
 }
 
-export interface Prediction {
+export interface PatternSummary {
   id: string;
   date: string;
   targetDate: string;

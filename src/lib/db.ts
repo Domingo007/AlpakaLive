@@ -16,7 +16,7 @@ import type {
   MealLog,
   SupplementLog,
   ImagingStudy,
-  Prediction,
+  PatternSummary,
   ChatMessage,
   AppSettings,
   CalendarNote,
@@ -42,7 +42,7 @@ class AlpacaLiveDB extends Dexie {
   meals!: Table<MealLog>;
   supplements!: Table<SupplementLog>;
   imaging!: Table<ImagingStudy>;
-  predictions!: Table<Prediction>;
+  patternSummaries!: Table<PatternSummary>;
   chat!: Table<ChatMessage>;
   settings!: Table<AppSettings>;
   calendarNotes!: Table<CalendarNote>;
@@ -103,6 +103,17 @@ class AlpacaLiveDB extends Dexie {
       referenceData: 'id, type, version',
       deviceConnections: 'id',
     });
+
+    // Version 4: rename table 'predictions' → 'patternSummaries'
+    this.version(4).stores({
+      predictions: null,
+      patternSummaries: 'id, date, targetDate, type',
+    }).upgrade(async tx => {
+      const oldRecords = await tx.table('predictions').toArray();
+      if (oldRecords.length > 0) {
+        await tx.table('patternSummaries').bulkAdd(oldRecords);
+      }
+    });
   }
 }
 
@@ -124,7 +135,7 @@ class AlpacaLiveDemoDB extends Dexie {
   meals!: Table<MealLog>;
   supplements!: Table<SupplementLog>;
   imaging!: Table<ImagingStudy>;
-  predictions!: Table<Prediction>;
+  patternSummaries!: Table<PatternSummary>;
   chat!: Table<ChatMessage>;
   settings!: Table<AppSettings>;
   calendarNotes!: Table<CalendarNote>;
@@ -150,6 +161,17 @@ class AlpacaLiveDemoDB extends Dexie {
       treatmentSessions: 'id, date, treatmentType, status',
       referenceData: 'id, type, version',
       deviceConnections: 'id',
+    });
+
+    // Version 4: rename table 'predictions' → 'patternSummaries' (matches AlpacaLiveDB)
+    this.version(4).stores({
+      predictions: null,
+      patternSummaries: 'id, date, targetDate, type',
+    }).upgrade(async tx => {
+      const oldRecords = await tx.table('predictions').toArray();
+      if (oldRecords.length > 0) {
+        await tx.table('patternSummaries').bulkAdd(oldRecords);
+      }
     });
   }
 }
@@ -241,8 +263,8 @@ export async function getRecentImaging(count = 2): Promise<ImagingStudy[]> {
   return db.imaging.orderBy('date').reverse().limit(count).toArray();
 }
 
-export async function getRecentPredictions(count = 3): Promise<Prediction[]> {
-  return db.predictions.orderBy('date').reverse().limit(count).toArray();
+export async function getRecentPredictions(count = 3): Promise<PatternSummary[]> {
+  return db.patternSummaries.orderBy('date').reverse().limit(count).toArray();
 }
 
 export async function getChatMessages(count = 50): Promise<ChatMessage[]> {
@@ -271,7 +293,7 @@ export async function clearAllData(): Promise<void> {
     db.meals.clear(),
     db.supplements.clear(),
     db.imaging.clear(),
-    db.predictions.clear(),
+    db.patternSummaries.clear(),
     db.chat.clear(),
     db.settings.clear(),
     db.calendarNotes.clear(),
@@ -291,7 +313,7 @@ export async function exportAllData(): Promise<string> {
     meals: await db.meals.toArray(),
     supplements: await db.supplements.toArray(),
     imaging: await db.imaging.toArray(),
-    predictions: await db.predictions.toArray(),
+    patternSummaries: await db.patternSummaries.toArray(),
     chat: await db.chat.toArray(),
     settings: await db.settings.toArray(),
     treatmentSessions: await db.treatmentSessions.toArray(),
@@ -313,7 +335,7 @@ export async function importData(jsonString: string): Promise<void> {
   if (data.meals) await db.meals.bulkPut(data.meals);
   if (data.supplements) await db.supplements.bulkPut(data.supplements);
   if (data.imaging) await db.imaging.bulkPut(data.imaging);
-  if (data.predictions) await db.predictions.bulkPut(data.predictions);
+  if (data.patternSummaries) await db.patternSummaries.bulkPut(data.patternSummaries);
   if (data.chat) await db.chat.bulkPut(data.chat);
   if (data.settings) await db.settings.bulkPut(data.settings);
   if (data.treatmentSessions) await db.treatmentSessions.bulkPut(data.treatmentSessions);
