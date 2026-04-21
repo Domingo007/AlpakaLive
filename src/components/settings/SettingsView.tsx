@@ -508,7 +508,7 @@ function DrugRow({ drug }: { drug: DrugEntry }) {
 
 // ==================== FEEDBACK SECTION ====================
 
-const GITHUB_REPO = 'Domingo007/AlpakaLive';
+const GITHUB_REPO = 'Domingo007/AlpacaLive';
 
 type FeedbackType = 'bug' | 'feature' | 'improvement' | 'medical';
 
