@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — AlpacaLive</title>
+<meta name="description" content="Privacy policy for AlpacaLive. All health data is stored locally on your device. No servers, no tracking, no analytics. GDPR-compliant by design.">
+<meta name="theme-color" content="#7c5cc9">
+<meta name="robots" content="index,follow">
+<link rel="icon" type="image/png" href="/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="/legal.css">
+</head>
+<body data-lang="en">
+
+<nav>
+  <a href="/" class="nav-left">
+    <img src="/logo.png" alt="AlpacaLive">
+    <span>AlpacaLive</span>
+  </a>
+  <div class="nav-right">
+    <div class="lang-selector" id="lang-selector">
+      <button class="lang-trigger" onclick="toggleLangDropdown()">
+        <span class="material-symbols-rounded">language</span>
+        <span id="lang-current">EN</span>
+        <span class="material-symbols-rounded arrow">expand_more</span>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-option active" onclick="setLang('en')">🇬🇧 English<span class="check material-symbols-rounded" id="check-en">check</span></button>
+        <button class="lang-option" onclick="setLang('pl')">🇵🇱 Polski<span class="check material-symbols-rounded" id="check-pl" style="display:none">check</span></button>
+      </div>
+    </div>
+    <a href="/" class="nav-back"><span class="material-symbols-rounded">arrow_back</span> <span class="lang-en">Home</span><span class="lang-pl">Strona główna</span></a>
+  </div>
+</nav>
+
+<main class="legal-wrap">
+  <header class="legal-header">
+    <div class="legal-kicker"><span class="material-symbols-rounded">shield</span> <span class="lang-en">Legal</span><span class="lang-pl">Prawne</span></div>
+    <h1><span class="lang-en">Privacy Policy</span><span class="lang-pl">Polityka prywatności</span></h1>
+    <div class="updated"><span class="lang-en">Last updated: April 2026</span><span class="lang-pl">Ostatnia aktualizacja: kwiecień 2026</span></div>
+  </header>
+
+  <!-- EN -->
+  <div class="lang-en">
+    <div class="legal-callout info">
+      <strong>AlpacaLive does not collect any data.</strong> All information is stored locally on your device. We have no servers. We have zero access to your data.
+    </div>
+
+    <section class="legal-section">
+      <h2>Data Controller</h2>
+      <p>AlpacaLive is an open source project maintained by:</p>
+      <p>
+        <strong>Dominik Gaweł</strong> / Gravity Design<br>
+        Email: <a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a><br>
+        Website: <a href="https://www.gravitydesign.pl/" target="_blank">gravitydesign.pl</a>
+      </p>
+    </section>
+
+    <section class="legal-section">
+      <h2>What data is collected</h2>
+      <p><strong>AlpacaLive does NOT collect any data.</strong> All information is stored locally on your device.</p>
+
+      <h3>Data stored on your device (IndexedDB)</h3>
+      <ul>
+        <li>Health data: blood results, symptoms, wellbeing scores, treatment timeline</li>
+        <li>Personal data: name, date of birth, national ID (if entered by user)</li>
+        <li>Conversation history with AI agent</li>
+        <li>Photos of medical documents</li>
+        <li>Device data imported from Apple Health / Health Connect</li>
+        <li>Application settings and preferences</li>
+      </ul>
+
+      <h3>Data sent to third-party AI providers</h3>
+      <ul>
+        <li>Conversation messages — with personal data removed by PII Sanitizer</li>
+        <li>Blood test values (numbers only, no patient identifiers)</li>
+        <li>Symptom descriptions and wellbeing scores</li>
+        <li>Photos of medical documents (may contain headers with personal data — AI is instructed to ignore these)</li>
+      </ul>
+
+      <h3>PII Sanitizer automatically replaces</h3>
+      <ul>
+        <li>Names → <code>[PATIENT]</code></li>
+        <li>National ID numbers → <code>[ID]</code></li>
+        <li>Addresses → <code>[ADDRESS]</code></li>
+        <li>Phone numbers → <code>[PHONE]</code></li>
+        <li>Email addresses → <code>[EMAIL]</code></li>
+      </ul>
+
+      <h3>Third-party AI providers</h3>
+      <ul>
+        <li><strong>Anthropic (Claude)</strong> — servers in USA. Policy: API data not used for model training.</li>
+        <li><strong>OpenAI (GPT)</strong> — servers in USA. Policy: API data not used for training.</li>
+        <li><strong>Google (Gemini)</strong> — servers in USA/EU. Policy: free tier data MAY be used for training.</li>
+      </ul>
+      <p>Data is transmitted via encrypted connection (HTTPS).</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>What data is NOT collected</h2>
+      <ul>
+        <li>AlpacaLive has no servers, no backend, no database</li>
+        <li>No analytics, tracking, cookies, or advertising</li>
+        <li>No user accounts or registration</li>
+        <li>The developers have zero access to any user data</li>
+        <li>No data is sold, shared, or transmitted to anyone other than the user's chosen AI provider</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Optional: Anonymized data sharing</h2>
+      <p>In the future, users may opt-in to share anonymized health data for research purposes. This is:</p>
+      <ul>
+        <li>Completely voluntary</li>
+        <li>Explicit opt-in (not pre-checked)</li>
+        <li>Revocable at any time</li>
+        <li>Anonymized (no personal identifiers)</li>
+        <li>Transparent (clear explanation of what is shared)</li>
+      </ul>
+      <p><strong>This feature is not yet active.</strong></p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Your rights (GDPR)</h2>
+      <p>Since all data is stored on your device, you have full control:</p>
+      <ul>
+        <li><strong>Access:</strong> open the app — all your data is there</li>
+        <li><strong>Rectification:</strong> edit any entry in the app</li>
+        <li><strong>Erasure:</strong> delete the app or clear IndexedDB — all data is permanently removed</li>
+        <li><strong>Portability:</strong> export your data (feature available in app)</li>
+        <li><strong>No consent withdrawal needed</strong> for data processing — because we don't process your data</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Children</h2>
+      <p>AlpacaLive is not intended for use by persons under 18 years of age.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Changes to this policy</h2>
+      <p>Changes will be published on this page with the update date.</p>
+      <p>Last updated: April 2026</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Contact</h2>
+      <p><a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a></p>
+    </section>
+  </div>
+
+  <!-- PL -->
+  <div class="lang-pl">
+    <div class="legal-callout info">
+      <strong>AlpacaLive nie zbiera żadnych danych.</strong> Wszystkie informacje przechowywane są lokalnie na urządzeniu użytkownika. Nie mamy serwerów. Mamy zero dostępu do Twoich danych.
+    </div>
+
+    <section class="legal-section">
+      <h2>Administrator danych</h2>
+      <p>AlpacaLive jest projektem open source utrzymywanym przez:</p>
+      <p>
+        <strong>Dominik Gaweł</strong> / Gravity Design<br>
+        Email: <a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a><br>
+        Strona: <a href="https://www.gravitydesign.pl/" target="_blank">gravitydesign.pl</a>
+      </p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Jakie dane są zbierane</h2>
+      <p><strong>AlpacaLive NIE zbiera żadnych danych.</strong> Wszystkie informacje przechowywane są lokalnie na urządzeniu użytkownika.</p>
+
+      <h3>Dane przechowywane na urządzeniu (IndexedDB)</h3>
+      <ul>
+        <li>Dane zdrowotne: wyniki krwi, objawy, samopoczucie, oś czasu leczenia</li>
+        <li>Dane osobowe: imię, nazwisko, PESEL (jeśli wprowadzone przez użytkownika)</li>
+        <li>Historia rozmów z agentem AI</li>
+        <li>Zdjęcia dokumentów medycznych</li>
+        <li>Dane z urządzeń importowane z Apple Health / Health Connect</li>
+        <li>Ustawienia aplikacji</li>
+      </ul>
+
+      <h3>Dane wysyłane do zewnętrznych dostawców AI</h3>
+      <ul>
+        <li>Wiadomości z rozmów — z danymi osobowymi usuniętymi przez PII Sanitizer</li>
+        <li>Wartości wyników krwi (tylko liczby, bez identyfikatorów pacjenta)</li>
+        <li>Opisy objawów i oceny samopoczucia</li>
+        <li>Zdjęcia dokumentów medycznych (mogą zawierać nagłówki z danymi — AI jest instruowane aby je ignorować)</li>
+      </ul>
+
+      <h3>PII Sanitizer automatycznie zamienia</h3>
+      <ul>
+        <li>Imiona i nazwiska → <code>[PACJENT]</code></li>
+        <li>PESEL → <code>[PESEL]</code></li>
+        <li>Adresy → <code>[ADRES]</code></li>
+        <li>Numery telefonów → <code>[TELEFON]</code></li>
+        <li>Adresy email → <code>[EMAIL]</code></li>
+      </ul>
+
+      <h3>Zewnętrzni dostawcy AI</h3>
+      <ul>
+        <li><strong>Anthropic (Claude)</strong> — serwery w USA. Polityka: dane z API nie są używane do trenowania modeli.</li>
+        <li><strong>OpenAI (GPT)</strong> — serwery w USA. Polityka: dane z API nie są używane do trenowania.</li>
+        <li><strong>Google (Gemini)</strong> — serwery w USA/UE. Polityka: darmowy tier MOŻE być używany do trenowania.</li>
+      </ul>
+      <p>Dane przesyłane szyfrowanym połączeniem (HTTPS).</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Jakie dane NIE są zbierane</h2>
+      <ul>
+        <li>AlpacaLive nie ma serwerów, backendu ani bazy danych</li>
+        <li>Brak analytics, trackingu, cookies, reklam</li>
+        <li>Brak kont użytkowników i rejestracji</li>
+        <li>Twórcy mają ZERO dostępu do danych użytkowników</li>
+        <li>Żadne dane nie są sprzedawane, udostępniane ani przesyłane do nikogo poza wybranym przez użytkownika dostawcą AI</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Opcjonalne: Anonimowe udostępnianie danych</h2>
+      <p>W przyszłości użytkownicy będą mogli dobrowolnie udostępnić zanonimizowane dane zdrowotne do celów badawczych. Będzie to:</p>
+      <ul>
+        <li>Całkowicie dobrowolne</li>
+        <li>Jawny opt-in (nie zaznaczony domyślnie)</li>
+        <li>Odwołalne w dowolnym momencie</li>
+        <li>Zanonimizowane (bez danych identyfikujących)</li>
+        <li>Transparentne (jasne wyjaśnienie co jest udostępniane)</li>
+      </ul>
+      <p><strong>Ta funkcja nie jest jeszcze aktywna.</strong></p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Twoje prawa (RODO)</h2>
+      <p>Ponieważ wszystkie dane przechowywane są na Twoim urządzeniu, masz pełną kontrolę:</p>
+      <ul>
+        <li><strong>Dostęp:</strong> otwórz aplikację — wszystkie Twoje dane są tam</li>
+        <li><strong>Sprostowanie:</strong> edytuj dowolny wpis w aplikacji</li>
+        <li><strong>Usunięcie:</strong> usuń aplikację lub wyczyść IndexedDB — dane usunięte trwale</li>
+        <li><strong>Przenoszenie:</strong> eksportuj dane (funkcja dostępna w aplikacji)</li>
+        <li><strong>Cofnięcie zgody nie jest potrzebne</strong> — bo nie przetwarzamy Twoich danych</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Dzieci</h2>
+      <p>AlpacaLive nie jest przeznaczone dla osób poniżej 18 roku życia.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Zmiany w polityce</h2>
+      <p>Zmiany będą publikowane na tej stronie z datą aktualizacji.</p>
+      <p>Ostatnia aktualizacja: kwiecień 2026</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Kontakt</h2>
+      <p><a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a></p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="links">
+    <a href="/disclaimer"><span class="lang-en">Disclaimer</span><span class="lang-pl">Zastrzeżenie</span></a>
+    <a href="/terms"><span class="lang-en">Terms</span><span class="lang-pl">Warunki</span></a>
+    <a href="/privacy-policy" class="current"><span class="lang-en">Privacy</span><span class="lang-pl">Prywatność</span></a>
+    <a href="https://github.com/Domingo007/AlpacaLive" target="_blank">GitHub</a>
+  </div>
+  <p><strong>AlpacaLive</strong> · Open Source (AGPL-3.0) · <a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a> · <a href="https://www.gravitydesign.pl/" target="_blank">Gravity Design</a></p>
+</footer>
+
+<script>
+function toggleLangDropdown(){
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+function setLang(lang){
+  document.body.setAttribute('data-lang',lang);
+  document.getElementById('lang-current').textContent=lang.toUpperCase();
+  document.getElementById('check-en').style.display=lang==='en'?'':'none';
+  document.getElementById('check-pl').style.display=lang==='pl'?'':'none';
+  document.querySelectorAll('.lang-option').forEach(function(el){el.classList.remove('active')});
+  document.querySelector('.lang-option[onclick*="\''+lang+'\'"]').classList.add('active');
+  document.getElementById('lang-dropdown').classList.remove('open');
+  document.documentElement.lang=lang;
+  localStorage.setItem('alpacalive-lang',lang);
+}
+document.addEventListener('mousedown',function(e){
+  var sel=document.getElementById('lang-selector');
+  if(sel&&!sel.contains(e.target))document.getElementById('lang-dropdown').classList.remove('open');
+});
+var saved=localStorage.getItem('alpacalive-lang');
+if(saved)setLang(saved); else setLang('en');
+</script>
+
+</body>
+</html>

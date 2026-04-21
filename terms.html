@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Use — AlpacaLive</title>
+<meta name="description" content="Terms of use for AlpacaLive — a free, open source health tracking tool. Understand your rights and responsibilities.">
+<meta name="theme-color" content="#7c5cc9">
+<meta name="robots" content="index,follow">
+<link rel="icon" type="image/png" href="/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="/legal.css">
+</head>
+<body data-lang="en">
+
+<nav>
+  <a href="/" class="nav-left">
+    <img src="/logo.png" alt="AlpacaLive">
+    <span>AlpacaLive</span>
+  </a>
+  <div class="nav-right">
+    <div class="lang-selector" id="lang-selector">
+      <button class="lang-trigger" onclick="toggleLangDropdown()">
+        <span class="material-symbols-rounded">language</span>
+        <span id="lang-current">EN</span>
+        <span class="material-symbols-rounded arrow">expand_more</span>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-option active" onclick="setLang('en')">🇬🇧 English<span class="check material-symbols-rounded" id="check-en">check</span></button>
+        <button class="lang-option" onclick="setLang('pl')">🇵🇱 Polski<span class="check material-symbols-rounded" id="check-pl" style="display:none">check</span></button>
+      </div>
+    </div>
+    <a href="/" class="nav-back"><span class="material-symbols-rounded">arrow_back</span> <span class="lang-en">Home</span><span class="lang-pl">Strona główna</span></a>
+  </div>
+</nav>
+
+<main class="legal-wrap">
+  <header class="legal-header">
+    <div class="legal-kicker"><span class="material-symbols-rounded">description</span> <span class="lang-en">Legal</span><span class="lang-pl">Prawne</span></div>
+    <h1><span class="lang-en">Terms of Use</span><span class="lang-pl">Warunki użytkowania</span></h1>
+    <div class="updated"><span class="lang-en">Last updated: April 2026</span><span class="lang-pl">Ostatnia aktualizacja: kwiecień 2026</span></div>
+  </header>
+
+  <!-- EN -->
+  <div class="lang-en">
+    <div class="legal-tldr">
+      <h3>In short</h3>
+      <ol style="padding-left:20px;line-height:1.8">
+        <li>AlpacaLive is a tool for analyzing YOUR data — not a medical advisor</li>
+        <li>Everything you see is data analysis + information from published research</li>
+        <li>ALWAYS consult health decisions with your doctor</li>
+        <li>Your data stays on your phone — we have no access to it</li>
+        <li>The application is free and open source (AGPL-3.0)</li>
+        <li>We bear no responsibility for health decisions</li>
+      </ol>
+    </div>
+
+    <section class="legal-section">
+      <h2>Use of the application</h2>
+      <ul>
+        <li>AlpacaLive is provided "as is" without warranties of any kind</li>
+        <li>You use the application at your own risk</li>
+        <li>You are responsible for the accuracy of data you enter</li>
+        <li>You are responsible for the security of your device and API key</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>AI Services</h2>
+      <ul>
+        <li>AI analysis requires an API key from a third-party provider (Anthropic, OpenAI, or Google)</li>
+        <li>You are subject to the terms of service of your chosen AI provider</li>
+        <li>AlpacaLive does not store or transmit your API key — it is stored locally on your device</li>
+        <li>AI responses may contain errors — always verify with your healthcare team</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Open Source</h2>
+      <ul>
+        <li>AlpacaLive is licensed under AGPL-3.0</li>
+        <li>You may use, modify, and distribute the code under the terms of AGPL-3.0</li>
+        <li>If you modify the code and make it available as a service, you must release your changes under the same license</li>
+        <li>Commercial licensing available — contact <a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a></li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Data</h2>
+      <ul>
+        <li>All health data is stored locally on your device (IndexedDB)</li>
+        <li>No data is sent to AlpacaLive servers (there are none)</li>
+        <li>Data sent to AI providers is filtered through PII Sanitizer</li>
+        <li>You may export or delete your data at any time</li>
+      </ul>
+      <p>Full details: <a href="/privacy-policy">Privacy Policy</a>.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Full legal disclaimer</h2>
+      <p>See the <a href="/disclaimer">Disclaimer</a> page for the complete legal statement regarding the application status, liability, AI analysis, and more.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Contact</h2>
+      <p><a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a><br>
+      Gravity Design — <a href="https://www.gravitydesign.pl/" target="_blank">gravitydesign.pl</a></p>
+    </section>
+  </div>
+
+  <!-- PL -->
+  <div class="lang-pl">
+    <div class="legal-tldr">
+      <h3>W skrócie</h3>
+      <ol style="padding-left:20px;line-height:1.8">
+        <li>AlpacaLive to narzędzie do analizy TWOICH danych — nie doradca medyczny</li>
+        <li>Wszystko co widzisz to analiza danych + informacje z opublikowanych badań</li>
+        <li>ZAWSZE konsultuj decyzje zdrowotne z lekarzem</li>
+        <li>Twoje dane zostają na Twoim telefonie — nie mamy do nich dostępu</li>
+        <li>Aplikacja jest darmowa i open source (AGPL-3.0)</li>
+        <li>Nie ponosimy odpowiedzialności za decyzje zdrowotne</li>
+      </ol>
+    </div>
+
+    <section class="legal-section">
+      <h2>Korzystanie z aplikacji</h2>
+      <ul>
+        <li>AlpacaLive jest udostępniane „tak jak jest" bez żadnych gwarancji</li>
+        <li>Korzystasz z aplikacji na własne ryzyko</li>
+        <li>Odpowiadasz za poprawność danych które wprowadzasz</li>
+        <li>Odpowiadasz za bezpieczeństwo swojego urządzenia i klucza API</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Usługi AI</h2>
+      <ul>
+        <li>Analiza AI wymaga klucza API od zewnętrznego dostawcy (Anthropic, OpenAI lub Google)</li>
+        <li>Podlegasz warunkom użytkowania wybranego dostawcy AI</li>
+        <li>AlpacaLive nie przechowuje ani nie przesyła Twojego klucza API — jest on zapisany lokalnie na urządzeniu</li>
+        <li>Odpowiedzi AI mogą zawierać błędy — zawsze weryfikuj z lekarzem</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Open Source</h2>
+      <ul>
+        <li>AlpacaLive jest licencjonowane na AGPL-3.0</li>
+        <li>Możesz używać, modyfikować i dystrybuować kod na warunkach AGPL-3.0</li>
+        <li>Jeśli zmodyfikujesz kod i udostępnisz jako usługę — musisz udostępnić zmiany na tej samej licencji</li>
+        <li>Licencja komercyjna dostępna — kontakt: <a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a></li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Dane</h2>
+      <ul>
+        <li>Wszystkie dane zdrowotne przechowywane lokalnie na urządzeniu (IndexedDB)</li>
+        <li>Żadne dane nie są wysyłane na serwery AlpacaLive (nie istnieją)</li>
+        <li>Dane wysyłane do dostawców AI filtrowane przez PII Sanitizer</li>
+        <li>Możesz wyeksportować lub usunąć swoje dane w dowolnym momencie</li>
+      </ul>
+      <p>Szczegóły: <a href="/privacy-policy">Polityka prywatności</a>.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Pełne zastrzeżenie prawne</h2>
+      <p>Zobacz stronę <a href="/disclaimer">Zastrzeżenie prawne</a> — pełne oświadczenie dotyczące statusu prawnego aplikacji, odpowiedzialności, analizy AI i innych aspektów.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Kontakt</h2>
+      <p><a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a><br>
+      Gravity Design — <a href="https://www.gravitydesign.pl/" target="_blank">gravitydesign.pl</a></p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="links">
+    <a href="/disclaimer"><span class="lang-en">Disclaimer</span><span class="lang-pl">Zastrzeżenie</span></a>
+    <a href="/terms" class="current"><span class="lang-en">Terms</span><span class="lang-pl">Warunki</span></a>
+    <a href="/privacy-policy"><span class="lang-en">Privacy</span><span class="lang-pl">Prywatność</span></a>
+    <a href="https://github.com/Domingo007/AlpacaLive" target="_blank">GitHub</a>
+  </div>
+  <p><strong>AlpacaLive</strong> · Open Source (AGPL-3.0) · <a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a> · <a href="https://www.gravitydesign.pl/" target="_blank">Gravity Design</a></p>
+</footer>
+
+<script>
+function toggleLangDropdown(){
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+function setLang(lang){
+  document.body.setAttribute('data-lang',lang);
+  document.getElementById('lang-current').textContent=lang.toUpperCase();
+  document.getElementById('check-en').style.display=lang==='en'?'':'none';
+  document.getElementById('check-pl').style.display=lang==='pl'?'':'none';
+  document.querySelectorAll('.lang-option').forEach(function(el){el.classList.remove('active')});
+  document.querySelector('.lang-option[onclick*="\''+lang+'\'"]').classList.add('active');
+  document.getElementById('lang-dropdown').classList.remove('open');
+  document.documentElement.lang=lang;
+  localStorage.setItem('alpacalive-lang',lang);
+}
+document.addEventListener('mousedown',function(e){
+  var sel=document.getElementById('lang-selector');
+  if(sel&&!sel.contains(e.target))document.getElementById('lang-dropdown').classList.remove('open');
+});
+var saved=localStorage.getItem('alpacalive-lang');
+if(saved)setLang(saved); else setLang('en');
+</script>
+
+</body>
+</html>

@@ -28,7 +28,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         navigateFallback: '/app.html',
-        navigateFallbackDenylist: [/^\/api/, /^\/landing/],
+        navigateFallbackDenylist: [/^\/api/, /^\/landing/, /^\/disclaimer/, /^\/terms/, /^\/privacy-policy/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\.anthropic\.com\/.*/i,
@@ -56,6 +56,9 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, 'index.html'),
         app: path.resolve(__dirname, 'app.html'),
+        disclaimer: path.resolve(__dirname, 'disclaimer.html'),
+        terms: path.resolve(__dirname, 'terms.html'),
+        privacy: path.resolve(__dirname, 'privacy-policy.html'),
       },
     },
   },

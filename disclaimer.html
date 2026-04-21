@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Disclaimer — AlpacaLive</title>
+<meta name="description" content="Legal disclaimer for AlpacaLive. AlpacaLive is not a medical device — it is an open source tool for analyzing user-provided health data.">
+<meta name="theme-color" content="#7c5cc9">
+<meta name="robots" content="index,follow">
+<link rel="icon" type="image/png" href="/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link rel="stylesheet" href="/legal.css">
+</head>
+<body data-lang="en">
+
+<nav>
+  <a href="/" class="nav-left">
+    <img src="/logo.png" alt="AlpacaLive">
+    <span>AlpacaLive</span>
+  </a>
+  <div class="nav-right">
+    <div class="lang-selector" id="lang-selector">
+      <button class="lang-trigger" onclick="toggleLangDropdown()">
+        <span class="material-symbols-rounded">language</span>
+        <span id="lang-current">EN</span>
+        <span class="material-symbols-rounded arrow">expand_more</span>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-option active" onclick="setLang('en')">🇬🇧 English<span class="check material-symbols-rounded" id="check-en">check</span></button>
+        <button class="lang-option" onclick="setLang('pl')">🇵🇱 Polski<span class="check material-symbols-rounded" id="check-pl" style="display:none">check</span></button>
+      </div>
+    </div>
+    <a href="/" class="nav-back"><span class="material-symbols-rounded">arrow_back</span> <span class="lang-en">Home</span><span class="lang-pl">Strona główna</span></a>
+  </div>
+</nav>
+
+<main class="legal-wrap">
+  <header class="legal-header">
+    <div class="legal-kicker"><span class="material-symbols-rounded">gavel</span> <span class="lang-en">Legal</span><span class="lang-pl">Prawne</span></div>
+    <h1><span class="lang-en">Legal Disclaimer</span><span class="lang-pl">Zastrzeżenie prawne</span></h1>
+    <div class="updated"><span class="lang-en">Last updated: April 2026</span><span class="lang-pl">Ostatnia aktualizacja: kwiecień 2026</span></div>
+  </header>
+
+  <!-- EN -->
+  <div class="lang-en">
+    <div class="legal-callout warn">
+      <strong>AlpacaLive is NOT a medical device.</strong> It does not provide medical advice, diagnoses, or treatment recommendations. Always consult your healthcare team for health decisions.
+    </div>
+
+    <section class="legal-section">
+      <h2>Application Status</h2>
+      <p>AlpacaLive is an open source application (AGPL-3.0) for analyzing health data provided by the user.</p>
+      <h3>AlpacaLive is NOT:</h3>
+      <ul>
+        <li>A medical device under EU MDR 2017/745 or US FDA regulations</li>
+        <li>A diagnostic tool</li>
+        <li>A substitute for medical, pharmaceutical, or dietary advice</li>
+        <li>Certified clinical decision support software</li>
+      </ul>
+      <h3>AlpacaLive IS:</h3>
+      <ul>
+        <li>A tool for collecting, visualizing, and analyzing user-provided data</li>
+        <li>A source of information based on published scientific literature (with cited sources)</li>
+        <li>A tool to support patient-doctor communication (generating questions, reports)</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Liability</h2>
+      <p>The creators, contributors, and maintainers of AlpacaLive:</p>
+      <ul>
+        <li>Bear NO responsibility for health decisions made based on information displayed in the application</li>
+        <li>Do NOT guarantee the correctness, completeness, or timeliness of medical information</li>
+        <li>Do NOT warrant that AI analysis is free from errors</li>
+        <li>Bear NO responsibility for health consequences resulting from use of the application</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>AI Analysis</h2>
+      <p>The application uses AI language models (Anthropic Claude, OpenAI GPT, Google Gemini) for data analysis.</p>
+      <ul>
+        <li>AI analysis may contain errors, inaccuracies, or be outdated</li>
+        <li>Medical imaging analysis (CT, MRI, PET) by AI is NOT a radiological report and cannot replace a physician's assessment</li>
+        <li>Comparisons with reference ranges are informational, not diagnostic</li>
+        <li>AI does not have access to the patient's full medical history — it analyzes only data entered into the application</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Pattern-Based Summaries</h2>
+      <p>AlpacaLive shows pattern-based summaries — trends over time, differences from previous cycles, and notable changes in data.</p>
+      <p><strong>These are NOT predictions of treatment outcomes.</strong> They do not tell you what will happen. They show what has happened in your data compared to your own history.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Supplements and Medications</h2>
+      <p>Information about supplements, vitamins, and experimental substances:</p>
+      <ul>
+        <li>Comes from published scientific studies (with source and evidence level indicated)</li>
+        <li>Does NOT constitute a recommendation for use</li>
+        <li>May interact with oncology, psychiatric, and other medications</li>
+        <li>The decision to use MUST be made in consultation with the treating oncologist</li>
+        <li>Doses listed are those used in cited studies, NOT recommendations</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Data Privacy</h2>
+      <ul>
+        <li>Personal data (name, national ID, address) stored ONLY on the user's device</li>
+        <li>Medical data sent to the AI API is filtered through PII Sanitizer (removal of personal data)</li>
+        <li>The application creators have no access to user data</li>
+        <li>The user is responsible for the security of their device and API key</li>
+      </ul>
+      <p>See <a href="/privacy-policy">Privacy Policy</a> for full details.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Governing Law</h2>
+      <p>This disclaimer is subject to European Union law. In case of disputes, the courts of the user's country of residence have jurisdiction.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Acceptance</h2>
+      <p>Using AlpacaLive means acknowledging and accepting this disclaimer.</p>
+    </section>
+  </div>
+
+  <!-- PL -->
+  <div class="lang-pl">
+    <div class="legal-callout warn">
+      <strong>AlpacaLive NIE jest wyrobem medycznym.</strong> Nie udziela porad medycznych, nie stawia diagnoz ani nie zaleca leczenia. Wszelkie decyzje zdrowotne konsultuj z lekarzem prowadzącym.
+    </div>
+
+    <section class="legal-section">
+      <h2>Status prawny aplikacji</h2>
+      <p>AlpacaLive jest otwartoźródłową aplikacją (AGPL-3.0) służącą do analizy danych zdrowotnych dostarczonych przez użytkownika.</p>
+      <h3>Aplikacja NIE jest:</h3>
+      <ul>
+        <li>Wyrobem medycznym w rozumieniu przepisów UE (MDR 2017/745) ani USA (FDA)</li>
+        <li>Narzędziem diagnostycznym</li>
+        <li>Substytutem porady medycznej, farmaceutycznej ani dietetycznej</li>
+        <li>Certyfikowanym oprogramowaniem do wspomagania decyzji klinicznych</li>
+      </ul>
+      <h3>Aplikacja JEST:</h3>
+      <ul>
+        <li>Narzędziem do gromadzenia, wizualizacji i analizy danych dostarczonych przez użytkownika</li>
+        <li>Źródłem informacji opartych na opublikowanej literaturze naukowej (z podanymi źródłami)</li>
+        <li>Narzędziem wspomagającym komunikację pacjent–lekarz</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Odpowiedzialność</h2>
+      <p>Twórcy, kontrybutorzy i opiekunowie projektu AlpacaLive:</p>
+      <ul>
+        <li>NIE ponoszą odpowiedzialności za decyzje zdrowotne podjęte na podstawie informacji wyświetlanych w aplikacji</li>
+        <li>NIE gwarantują poprawności, kompletności ani aktualności informacji medycznych</li>
+        <li>NIE zapewniają że analiza AI jest wolna od błędów</li>
+        <li>NIE ponoszą odpowiedzialności za skutki zdrowotne wynikające z użytkowania aplikacji</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Analiza AI</h2>
+      <p>Aplikacja wykorzystuje modele językowe AI (Anthropic Claude, OpenAI GPT, Google Gemini) do analizy danych.</p>
+      <ul>
+        <li>Analiza AI może zawierać błędy, nieścisłości lub być nieaktualna</li>
+        <li>Analiza obrazowania (RTG, CT, PET, MRI) przez AI NIE jest opisem radiologicznym i NIE może zastępować oceny lekarza</li>
+        <li>Porównania z normami referencyjnymi mają charakter informacyjny, nie diagnostyczny</li>
+        <li>AI nie ma dostępu do pełnej historii medycznej pacjenta — analizuje wyłącznie dane wprowadzone do aplikacji</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Podsumowania oparte o wzorce</h2>
+      <p>AlpacaLive pokazuje podsumowania oparte o wzorce — trendy w czasie, różnice względem poprzednich cykli oraz istotne zmiany w danych.</p>
+      <p><strong>NIE są to predykcje wyników leczenia.</strong> Nie mówią co się stanie. Pokazują co wydarzyło się w Twoich danych w porównaniu z Twoją własną historią.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Suplementacja i leki</h2>
+      <p>Informacje o suplementach, witaminach i substancjach eksperymentalnych:</p>
+      <ul>
+        <li>Pochodzą z opublikowanych badań naukowych (ze wskazaniem źródła i poziomu dowodów)</li>
+        <li>NIE stanowią rekomendacji stosowania</li>
+        <li>Mogą wchodzić w interakcje z lekami onkologicznymi, psychiatrycznymi i innymi</li>
+        <li>Decyzja o zastosowaniu MUSI być podjęta w konsultacji z lekarzem onkologiem</li>
+        <li>Dawki podawane w aplikacji to dawki stosowane w cytowanych badaniach, NIE zalecenia</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Dane prywatne</h2>
+      <ul>
+        <li>Dane osobowe (imię, nazwisko, PESEL, adres) przechowywane wyłącznie na urządzeniu użytkownika</li>
+        <li>Dane medyczne wysyłane do API AI są filtrowane przez PII Sanitizer (usunięcie danych osobowych)</li>
+        <li>Twórcy aplikacji nie mają dostępu do danych użytkowników</li>
+        <li>Użytkownik ponosi odpowiedzialność za bezpieczeństwo swojego urządzenia i klucza API</li>
+      </ul>
+      <p>Szczegóły: <a href="/privacy-policy">Polityka prywatności</a>.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Prawo właściwe</h2>
+      <p>Niniejsze zastrzeżenie podlega prawu Unii Europejskiej. W przypadku sporów, właściwość mają sądy kraju zamieszkania użytkownika.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Akceptacja</h2>
+      <p>Korzystanie z AlpacaLive oznacza zapoznanie się z powyższym zastrzeżeniem i jego akceptację.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="links">
+    <a href="/disclaimer" class="current"><span class="lang-en">Disclaimer</span><span class="lang-pl">Zastrzeżenie</span></a>
+    <a href="/terms"><span class="lang-en">Terms</span><span class="lang-pl">Warunki</span></a>
+    <a href="/privacy-policy"><span class="lang-en">Privacy</span><span class="lang-pl">Prywatność</span></a>
+    <a href="https://github.com/Domingo007/AlpacaLive" target="_blank">GitHub</a>
+  </div>
+  <p><strong>AlpacaLive</strong> · Open Source (AGPL-3.0) · <a href="mailto:gravitydesigne@gmail.com">gravitydesigne@gmail.com</a> · <a href="https://www.gravitydesign.pl/" target="_blank">Gravity Design</a></p>
+</footer>
+
+<script>
+function toggleLangDropdown(){
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+function setLang(lang){
+  document.body.setAttribute('data-lang',lang);
+  document.getElementById('lang-current').textContent=lang.toUpperCase();
+  document.getElementById('check-en').style.display=lang==='en'?'':'none';
+  document.getElementById('check-pl').style.display=lang==='pl'?'':'none';
+  document.querySelectorAll('.lang-option').forEach(function(el){el.classList.remove('active')});
+  document.querySelector('.lang-option[onclick*="\''+lang+'\'"]').classList.add('active');
+  document.getElementById('lang-dropdown').classList.remove('open');
+  document.documentElement.lang=lang;
+  localStorage.setItem('alpacalive-lang',lang);
+}
+document.addEventListener('mousedown',function(e){
+  var sel=document.getElementById('lang-selector');
+  if(sel&&!sel.contains(e.target))document.getElementById('lang-dropdown').classList.remove('open');
+});
+var saved=localStorage.getItem('alpacalive-lang');
+if(saved)setLang(saved); else setLang('en');
+</script>
+
+</body>
+</html>
