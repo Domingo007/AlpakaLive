@@ -5,7 +5,7 @@ import { getChatMessages, addChatMessage, getSettings, getPatient, getRecentDail
 import { sendMessage, getWelcomeMessage } from '@/lib/ai';
 import { buildSystemPrompt } from '@/lib/system-prompt';
 import { extractDataFromResponse, extractAIProfileData, saveExtractedData, cleanResponseFromTags } from '@/lib/data-extractor';
-import { generatePrediction, savePrediction, formatPredictionForChat, checkPredictionAccuracy, type PredictionResult } from '@/lib/prediction-engine';
+import { generatePatternSummary, savePatternSummary, formatPatternForChat, checkPatternMatch, type PatternResult } from '@/lib/pattern-engine';
 
 const PATTERN_TRIGGERS = ['wzorzec', 'wzorce', 'wzorcow', 'jak zwykle', 'pokaż wzorzec', 'pokaz wzorzec', 'predykcja', 'prognoza', 'przewiduj', 'jak będę się czuć', 'jak bede sie czuc', 'jak będę', 'co mnie czeka', 'najbliższe dni', 'ten tydzień', 'ten tydzien'];
 
@@ -18,7 +18,7 @@ export function useChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [lastPrediction, setLastPrediction] = useState<PredictionResult | null>(null);
+  const [lastPrediction, setLastPrediction] = useState<PatternResult | null>(null);
   const [lastProviderInfo, setLastProviderInfo] = useState<{ provider: string; model: string } | null>(null);
 
   useEffect(() => {
@@ -70,19 +70,20 @@ export function useChat() {
 
       // Check for pattern analysis request — handle locally
       if (isPatternRequest(userText)) {
-        const predResult = await generatePrediction();
+        const predResult = await generatePatternSummary();
         setLastPrediction(predResult);
 
         if (!predResult.insufficientData) {
-          await savePrediction(predResult);
+          await savePatternSummary(predResult);
         }
 
-        // Also check past prediction accuracy
-        const accuracyCheck = await checkPredictionAccuracy();
+        // Also check past pattern match accuracy
+        const accuracyCheck = await checkPatternMatch();
 
-        let responseText = formatPredictionForChat(predResult);
+        let responseText = formatPatternForChat(predResult);
         if (accuracyCheck) {
-          responseText += `\n\n🎯 **Trafność poprzednich predykcji:** ${accuracyCheck.overallAccuracy}%`;
+          // TODO: przenieś do translations/pl.ts zamiast hardcode
+          responseText += `\n\n🎯 **Trafność poprzednich analiz wzorców:** ${accuracyCheck.overallAccuracy}%`;
         }
 
         const assistantMessage: ChatMessage = {

@@ -123,7 +123,7 @@ export const pl = {
   // ==================== HISTORICAL IMPORT ====================
   historicalImport: {
     title: 'Import danych historycznych',
-    description: 'Dodaj historyczne dane aby model predykcji mógł analizować wzorce. Potrzebne minimum 2 pełne cykle chemii z wynikami krwi.',
+    description: 'Dodaj historyczne dane aby analiza wzorców mogła porównywać cykle. Potrzebne minimum 2 pełne cykle chemii z wynikami krwi.',
     bloodResults: 'Wyniki krwi',
     chemoDates: 'Daty chemii',
     photos: 'Zdjęcia',
@@ -204,7 +204,7 @@ export const pl = {
     high: 'wysoka',
     medium: 'średnia',
     low: 'niska',
-    accuracy: 'Trafność predykcji',
+    accuracy: 'Trafność analizy wzorców',
   },
 
   // ==================== CALENDAR ====================

@@ -457,7 +457,7 @@ export function getPhaseLabel(phase: 'A' | 'B' | 'C' | null): string {
 }
 
 /**
- * Map dayInCycle to legacy ChemoPhase — backward compat for prediction engine.
+ * Map dayInCycle to legacy ChemoPhase — backward compat for pattern engine.
  */
 export function dayToChemoPhase(dayInCycle: number): 'A' | 'B' | 'C' {
   if (dayInCycle <= 3) return 'A';

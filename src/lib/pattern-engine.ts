@@ -11,7 +11,7 @@ import type { DailyLog, ChemoSession, BloodWork, Prediction, ChemoPhase } from '
 
 // ==================== TYPES ====================
 
-export interface DayPrediction {
+export interface DayPattern {
   date: string;
   dayOfWeek: string;
   dayInCycle: number;
@@ -26,8 +26,8 @@ export interface DayPrediction {
   dataPoints: number;
 }
 
-export interface PredictionResult {
-  days: DayPrediction[];
+export interface PatternResult {
+  days: DayPattern[];
   patterns: Pattern[];
   risks: string[];
   overallConfidence: number;
@@ -54,7 +54,7 @@ const POLISH_DAYS = ['niedziela', 'poniedziałek', 'wtorek', 'środa', 'czwartek
 
 // ==================== MAIN ENGINE ====================
 
-export async function generatePrediction(): Promise<PredictionResult> {
+export async function generatePatternSummary(): Promise<PatternResult> {
   // 1. Load all needed data
   const [allDaily, allChemo, recentBlood] = await Promise.all([
     db.daily.orderBy('date').toArray(),
@@ -71,7 +71,7 @@ export async function generatePrediction(): Promise<PredictionResult> {
       overallConfidence: 0,
       basedOn: [],
       insufficientData: true,
-      message: `Potrzebuję minimum 2 sesji chemii do predykcji. Masz: ${allChemo.length}. Dodaj historyczne daty w Ustawieniach → Import danych historycznych.`,
+      message: `Potrzebuję minimum 2 sesji chemii do analizy wzorców. Masz: ${allChemo.length}. Dodaj historyczne daty w Ustawieniach → Import danych historycznych.`,
     };
   }
 
@@ -83,7 +83,7 @@ export async function generatePrediction(): Promise<PredictionResult> {
       overallConfidence: 0,
       basedOn: [],
       insufficientData: true,
-      message: `Potrzebuję minimum 5 wpisów dziennika do predykcji. Masz: ${allDaily.length}. Zacznij codziennie raportować samopoczucie.`,
+      message: `Potrzebuję minimum 5 wpisów dziennika do analizy wzorców. Masz: ${allDaily.length}. Zacznij codziennie raportować samopoczucie.`,
     };
   }
 
@@ -105,7 +105,7 @@ export async function generatePrediction(): Promise<PredictionResult> {
 
   // 7. Generate 5-day forecast
   const today = new Date();
-  const days: DayPrediction[] = [];
+  const days: DayPattern[] = [];
 
   for (let i = 0; i < 5; i++) {
     const targetDate = new Date(today);
@@ -117,7 +117,7 @@ export async function generatePrediction(): Promise<PredictionResult> {
     const phase = dayToPhase(dayInCycle);
     const stats = cycleDayMap.get(dayInCycle) || cycleDayMap.get(closestDay(dayInCycle, cycleDayMap));
 
-    const prediction = predictDay(dayInCycle, phase, stats, bloodImpact, weightTrend);
+    const prediction = analyzeDayPattern(dayInCycle, phase, stats, bloodImpact, weightTrend);
 
     days.push({
       date: dateStr,
@@ -161,7 +161,7 @@ export async function generatePrediction(): Promise<PredictionResult> {
 
 // ==================== SAVE TO DB ====================
 
-export async function savePrediction(result: PredictionResult): Promise<void> {
+export async function savePatternSummary(result: PatternResult): Promise<void> {
   if (result.insufficientData || result.days.length === 0) return;
 
   const predictions: (Prediction & { id: string })[] = result.days.map(day => ({
@@ -179,7 +179,7 @@ export async function savePrediction(result: PredictionResult): Promise<void> {
 
 // ==================== CHECK ACCURACY ====================
 
-export async function checkPredictionAccuracy(): Promise<{
+export async function checkPatternMatch(): Promise<{
   predictions: (Prediction & { actualEnergy?: number; match: boolean })[];
   overallAccuracy: number;
 } | null> {
@@ -330,13 +330,13 @@ function clamp(val: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, val));
 }
 
-function predictDay(
+function analyzeDayPattern(
   dayInCycle: number,
   phase: ChemoPhase,
   stats: CycleDayStats | undefined,
   bloodImpact: BloodImpact,
   weightTrend: WeightTrend,
-): Omit<DayPrediction, 'date' | 'dayOfWeek' | 'dayInCycle' | 'phase' | 'phaseLabel'> {
+): Omit<DayPattern, 'date' | 'dayOfWeek' | 'dayInCycle' | 'phase' | 'phaseLabel'> {
   let baseEnergy = stats ? avg(stats.energy) : phaseDefault(phase, 'energy');
   let basePain = stats ? avg(stats.pain) : phaseDefault(phase, 'pain');
   let baseNausea = stats ? avg(stats.nausea) : phaseDefault(phase, 'nausea');
@@ -574,7 +574,7 @@ function identifyRisks(blood: BloodImpact, weight: WeightTrend, phase: ReturnTyp
 
 // ==================== FORMAT FOR CHAT ====================
 
-export function formatPredictionForChat(result: PredictionResult): string {
+export function formatPatternForChat(result: PatternResult): string {
   if (result.insufficientData) {
     return `📊 **Analiza wzorców niedostępna**\n\n${result.message}`;
   }

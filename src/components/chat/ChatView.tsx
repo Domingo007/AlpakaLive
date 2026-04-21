@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useChat } from '@/hooks/useChat';
 import { MessageBubble } from './MessageBubble';
 import { QuickActions } from './QuickActions';
-import { PredictionCards } from './PredictionCards';
+import { PatternCards } from './PatternCards';
 import { DisclaimerBanner } from '@/components/shared/DisclaimerBanner';
 import { Icon } from '@/components/shared/Icon';
 import { useI18n } from '@/lib/i18n';
@@ -119,7 +119,7 @@ export function ChatView() {
         )}
         {lastPrediction && (
           <div className="px-1">
-            <PredictionCards result={lastPrediction} />
+            <PatternCards result={lastPrediction} />
           </div>
         )}
         {(error || guardError) && (
