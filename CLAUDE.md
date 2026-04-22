@@ -37,7 +37,7 @@ Open-source PWA oncology diary for cancer patients. React 19 + TypeScript + Vite
 ## Tech Stack
 - React 19, TypeScript 6, Vite 8, Tailwind CSS 4
 - Dexie.js (IndexedDB wrapper)
-- Vitest (170+ tests in `src/__tests__/`)
+- Vitest (297 tests in `src/__tests__/`)
 - PWA via vite-plugin-pwa
 
 ## File Conventions
@@ -50,7 +50,7 @@ Open-source PWA oncology diary for cancer patients. React 19 + TypeScript + Vite
 
 ## Before Making Changes
 1. Run `npx tsc --noEmit` — must pass with 0 errors
-2. Run `npm test` — all 170+ tests must pass
+2. Run `npm test` — all 297 tests must pass
 3. Run `npm run build` — must succeed
 4. If adding medical data → put in `medical-knowledge/` JSON, not in TypeScript
 5. If modifying AI behavior → check `system-prompt.ts` constraints are preserved
@@ -84,3 +84,4 @@ Types: Feat, Fix, Medical, Docs, Style, Refactor, Test, Chore, Security, Legal
 - Create files outside established directory structure
 - Add features beyond what was asked — no scope creep
 - Add comments/docstrings to code you didn't change
+- Change Dexie schema without bumping `this.version(N)` and adding `.upgrade()` — always preserve historic version stores so existing installations can migrate forward. Test migration manually in DevTools before merge. Note: IndexedDB shows `version * 10` (Dexie quirk — `this.version(4)` appears as `40` in DevTools)

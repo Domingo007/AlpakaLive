@@ -59,7 +59,7 @@ alpacalive/
 │   │   └── treatment-cycle.ts      ← Generic treatment phase system
 │   ├── hooks/                       ← React hooks
 │   ├── types/                       ← TypeScript type definitions
-│   └── __tests__/                   ← Test suite (Vitest, 170+ tests)
+│   └── __tests__/                   ← Test suite (Vitest, 297 tests)
 │
 ├── medical-knowledge/               ← MEDICAL DATA (doctors, pharmacists, patients)
 │   ├── cancers/                     ← Cancer types (one folder per cancer)
@@ -231,7 +231,7 @@ Format: `MAJOR.MINOR.PATCH`
 | AI security (prompt injection guard, input validation) | ✅ Done | 2.0 |
 | Feedback / bug report (GitHub Issues) | ✅ Done | 2.0 |
 | Device import (Apple Health, Android, CSV) | ✅ Done | 2.0 |
-| Test suite (Vitest, 170+ tests) | ✅ Done | 2.0 |
+| Test suite (Vitest, 297 tests) | ✅ Done | 2.0 |
 | CODEOWNERS + Issue templates | ✅ Done | 2.0 |
 | Community docs (CONTRIBUTING-MEDICAL, REVIEW-PROCESS) | ✅ Done | 2.0 |
 
@@ -261,7 +261,7 @@ Format: `MAJOR.MINOR.PATCH`
 [ ] Code compiles without errors (npm run build)
 [ ] No API keys, passwords, personal data in code
 [ ] PII Sanitizer intact
-[ ] Tests pass (npm test — 170+ tests)
+[ ] Tests pass (npm test — 297 tests)
 [ ] Responsive on mobile (tested on phone)
 [ ] No regressions — existing features still work
 [ ] Commits follow convention (Feat:/Fix:/etc.)
@@ -403,7 +403,7 @@ Layer 5: DUAL DATABASE (demo mode)
 | Charts | Recharts |
 | PDF | jsPDF |
 | PWA | vite-plugin-pwa (Workbox) |
-| Testing | Vitest (170+ tests) |
+| Testing | Vitest (297 tests) |
 | Hosting | Vercel |
 | License | AGPL-3.0 |
 
@@ -538,7 +538,7 @@ Typ: krótki opis (#numer-issue)
 | Zabezpieczenia AI (prompt injection, walidacja) | ✅ |
 | Feedback / zgłoszenia (GitHub Issues) | ✅ |
 | Import z urządzeń (Apple Health, Android, CSV) | ✅ |
-| Testy (Vitest, 170+ testów) | ✅ |
+| Testy (Vitest, 297 testów) | ✅ |
 | CODEOWNERS + szablony Issue | ✅ |
 | Dokumentacja community | ✅ |
 

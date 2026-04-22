@@ -8,7 +8,7 @@ argument-hint:
 Run the full AlpacaLive verification pipeline:
 
 1. **TypeScript check**: `npx tsc --noEmit` — must have 0 errors
-2. **Tests**: `npm test` — all 170+ tests must pass
+2. **Tests**: `npm test` — all 297 tests must pass
 3. **Build**: `npm run build` — must succeed
 
 Report results clearly:

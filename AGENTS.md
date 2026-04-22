@@ -126,7 +126,7 @@ src/
 │   └── *.ts             ← Core modules (db, ai, system-prompt, etc.)
 ├── hooks/               ← React hooks (useChat, useDatabase, useOnboarding)
 ├── types/               ← TypeScript types (index.ts)
-├── __tests__/           ← Vitest tests (170+)
+├── __tests__/           ← Vitest tests (297)
 └── lib/translations/    ← i18n (pl.ts, en.ts)
 
 medical-knowledge/       ← MEDICAL DATA (JSON only, doctors edit this)
@@ -151,7 +151,7 @@ medical-knowledge/       ← MEDICAL DATA (JSON only, doctors edit this)
 | Styling | Tailwind CSS 4 |
 | Database | Dexie.js (IndexedDB) |
 | AI | Anthropic Claude / OpenAI / Gemini |
-| Tests | Vitest (170+ tests) |
+| Tests | Vitest (297 tests) |
 | PWA | vite-plugin-pwa |
 | Hosting | Vercel |
 
@@ -161,7 +161,7 @@ medical-knowledge/       ← MEDICAL DATA (JSON only, doctors edit this)
 
 ```bash
 npx tsc --noEmit    # TypeScript — 0 errors required
-npm test            # Vitest — all 170+ tests must pass
+npm test            # Vitest — all 297 tests must pass
 npm run build       # Vite build — must succeed
 ```
 
@@ -213,3 +213,4 @@ Type: short description (#issue-number)
 | Modifying user DB in demo mode | Data loss risk | Use separate AlpacaLiveDemoDB |
 | Adding `console.log` | Leaks to production | Remove before commit |
 | Ignoring test failures | Regressions ship | Fix tests before committing |
+| Editing Dexie schema without version bump | Breaks existing installations | Bump `this.version(N+1)` + add `.upgrade()` migrating records; keep historic version blocks; test in DevTools |
