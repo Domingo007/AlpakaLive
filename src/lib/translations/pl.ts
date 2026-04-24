@@ -511,4 +511,65 @@ export const pl = {
     summaryClosing: 'Możesz zmienić te dane w dowolnym momencie w zakładce Ustawienia.',
     startUsing: 'Rozpocznij korzystanie z AlpacaLive',
   },
+
+  // ==================== HYDRATION TREND ====================
+  hydration: {
+    title: 'Trend nawodnienia',
+    patternsNormal: 'Wzorce w granicach Twojego baseline\'u.',
+    collecting: (days: number) =>
+      days === 0
+        ? 'Zbieramy dane. Jeszcze trochę i pokażę wzorce.'
+        : `Zbieramy dane. Wskaźnik dostępny za ${days} ${days === 1 ? 'dzień' : 'dni'}.`,
+    notMedicalAdvice: 'To nie jest porada medyczna.',
+    flag: {
+      gray: 'Zbieramy dane',
+      green: 'OK',
+      yellow: 'Zwróć uwagę',
+      red: 'Wzorzec wart uwagi',
+    },
+    summary: {
+      yellow: 'Dane wskazują wzorzec wart uwagi. Rozważ konsultację z zespołem leczącym.',
+      red: 'Dane wskazują istotny wzorzec. Zalecany kontakt z zespołem leczącym.',
+    },
+    reason: {
+      body_water_drop_moderate: (value?: number) =>
+        `Spadek masy wody o ${value?.toFixed(1) ?? '—'}% vs baseline`,
+      body_water_drop_severe: (value?: number) =>
+        `Znaczny spadek masy wody (${value?.toFixed(1) ?? '—'}%)`,
+      hr_elevation: (value?: number) =>
+        `Wyższe spoczynkowe HR o ${value?.toFixed(1) ?? '—'}% vs baseline`,
+      gi_symptoms_combined: (_?: number) => 'Nudności i luźne stolce utrzymują się',
+      creatinine_rise_moderate: (value?: number) =>
+        `Wzrost kreatyniny o ${value?.toFixed(1) ?? '—'}% vs poprzedni wynik`,
+      creatinine_rise_severe: (value?: number) =>
+        `Istotny wzrost kreatyniny (${value?.toFixed(1) ?? '—'}%)`,
+      insufficient_baseline: (_?: number) => 'Niewystarczająco danych do baseline',
+    },
+    severity: {
+      weak: 'słaby sygnał',
+      moderate: 'umiarkowany sygnał',
+      strong: 'istotny sygnał',
+    },
+    nudge: {
+      connectWithings: 'Połącz wagę Withings, aby widzieć trend masy wody.',
+      addBloodResults: 'Dodaj ostatnie wyniki krwi (kreatynina, sód).',
+      logToday: 'Uzupełnij dzisiejszy dziennik objawów.',
+      addWatch: 'Dodaj dane z zegarka (HR, HRV) dla pełniejszego obrazu.',
+    },
+    source: {
+      bodyWater: 'Masa wody (Withings)',
+      bloodResults: 'Wyniki krwi',
+      todayLog: 'Dzisiejszy dziennik',
+      watchData: 'Dane z zegarka',
+    },
+    drilldown: {
+      title: 'Szczegóły trendu nawodnienia',
+      activeReasons: 'Aktywne sygnały',
+      noActiveReasons: 'Brak aktywnych sygnałów — wzorce w granicach baseline.',
+      dataSources: 'Dostępne źródła danych',
+      suggestion: 'Rozważ kontakt z zespołem leczącym i omówienie tych wzorców.',
+      notMedicalAdviceFull:
+        'To nie jest porada medyczna. AlpacaLive nie diagnozuje odwodnienia, nie zaleca ilości płynów i nie zastępuje oceny lekarskiej. Wskaźnik pokazuje jedynie porównanie Twoich danych z Twoim własnym baseline\'em.',
+    },
+  },
 };

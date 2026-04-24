@@ -513,4 +513,65 @@ export const en: typeof pl = {
     summaryClosing: 'You can change this data anytime in the Settings tab.',
     startUsing: 'Start using AlpacaLive',
   },
+
+  // ==================== HYDRATION TREND ====================
+  hydration: {
+    title: 'Hydration trend',
+    patternsNormal: 'Patterns within your baseline range.',
+    collecting: (days: number) =>
+      days === 0
+        ? 'Collecting data. A bit more and the pattern will appear.'
+        : `Collecting data. Indicator available in ${days} ${days === 1 ? 'day' : 'days'}.`,
+    notMedicalAdvice: 'This is not medical advice.',
+    flag: {
+      gray: 'Collecting data',
+      green: 'OK',
+      yellow: 'Pay attention',
+      red: 'Pattern worth reviewing',
+    },
+    summary: {
+      yellow: 'Data suggests a pattern worth reviewing. Consider contacting your care team.',
+      red: 'Data suggests a notable pattern. Contact with your care team is recommended.',
+    },
+    reason: {
+      body_water_drop_moderate: (value?: number) =>
+        `Body water drop ${value?.toFixed(1) ?? '—'}% vs baseline`,
+      body_water_drop_severe: (value?: number) =>
+        `Significant body water drop (${value?.toFixed(1) ?? '—'}%)`,
+      hr_elevation: (value?: number) =>
+        `Resting HR elevated ${value?.toFixed(1) ?? '—'}% vs baseline`,
+      gi_symptoms_combined: (_?: number) => 'Ongoing nausea and loose stools',
+      creatinine_rise_moderate: (value?: number) =>
+        `Creatinine rise ${value?.toFixed(1) ?? '—'}% vs previous result`,
+      creatinine_rise_severe: (value?: number) =>
+        `Significant creatinine rise (${value?.toFixed(1) ?? '—'}%)`,
+      insufficient_baseline: (_?: number) => 'Insufficient data for baseline',
+    },
+    severity: {
+      weak: 'weak signal',
+      moderate: 'moderate signal',
+      strong: 'strong signal',
+    },
+    nudge: {
+      connectWithings: 'Connect a Withings scale to see body water trend.',
+      addBloodResults: 'Add recent blood results (creatinine, sodium).',
+      logToday: 'Fill in today\'s symptom log.',
+      addWatch: 'Add watch data (HR, HRV) for a fuller picture.',
+    },
+    source: {
+      bodyWater: 'Body water (Withings)',
+      bloodResults: 'Blood results',
+      todayLog: 'Today\'s log',
+      watchData: 'Watch data',
+    },
+    drilldown: {
+      title: 'Hydration trend details',
+      activeReasons: 'Active signals',
+      noActiveReasons: 'No active signals — patterns within baseline.',
+      dataSources: 'Available data sources',
+      suggestion: 'Consider contacting your care team and discussing these patterns.',
+      notMedicalAdviceFull:
+        'This is not medical advice. AlpacaLive does not diagnose dehydration, does not recommend fluid amounts, and does not replace medical evaluation. The indicator only compares your data against your own baseline.',
+    },
+  },
 };
