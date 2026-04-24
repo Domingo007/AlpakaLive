@@ -126,7 +126,7 @@ src/
 │   └── *.ts             ← Core modules (db, ai, system-prompt, etc.)
 ├── hooks/               ← React hooks (useChat, useDatabase, useOnboarding)
 ├── types/               ← TypeScript types (index.ts)
-├── __tests__/           ← Vitest tests (297)
+├── __tests__/           ← Vitest tests (327)
 └── lib/translations/    ← i18n (pl.ts, en.ts)
 
 medical-knowledge/       ← MEDICAL DATA (JSON only, doctors edit this)
@@ -151,7 +151,7 @@ medical-knowledge/       ← MEDICAL DATA (JSON only, doctors edit this)
 | Styling | Tailwind CSS 4 |
 | Database | Dexie.js (IndexedDB) |
 | AI | Anthropic Claude / OpenAI / Gemini |
-| Tests | Vitest (297 tests) |
+| Tests | Vitest (327 tests) |
 | PWA | vite-plugin-pwa |
 | Hosting | Vercel |
 
@@ -161,7 +161,7 @@ medical-knowledge/       ← MEDICAL DATA (JSON only, doctors edit this)
 
 ```bash
 npx tsc --noEmit    # TypeScript — 0 errors required
-npm test            # Vitest — all 297 tests must pass
+npm test            # Vitest — all 327 tests must pass
 npm run build       # Vite build — must succeed
 ```
 
@@ -214,3 +214,6 @@ Type: short description (#issue-number)
 | Adding `console.log` | Leaks to production | Remove before commit |
 | Ignoring test failures | Regressions ship | Fix tests before committing |
 | Editing Dexie schema without version bump | Breaks existing installations | Bump `this.version(N+1)` + add `.upgrade()` migrating records; keep historic version blocks; test in DevTools |
+| Mixing rule logic, Dexie reads, and React in one file | Untestable, coupled | Split into 3 files: `<feature>-engine.ts` (pure), `<feature>-adapter.ts` (Dexie bridge), `<Feature>Tile.tsx` (UI). See hydration-engine.ts as reference. |
+| Throwing when a data source is missing | Crashes tile for real patients | Engine must handle `undefined` fields gracefully; UI shows nudge ("Connect Withings") instead of error |
+| Adding `@testing-library/react` to test a tile | Unapproved dep | Test logic in engine + adapter (pure + mockable Dexie); verify UI manually via `npm run dev` |

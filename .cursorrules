@@ -33,7 +33,7 @@ Open-source PWA oncology diary. React 19 + TypeScript + Vite + Tailwind + Dexie 
    - Switch in `src/lib/db.ts`
 
 ## Stack
-React 19, TypeScript 6, Vite 8, Tailwind CSS 4, Dexie.js, Vitest (297 tests)
+React 19, TypeScript 6, Vite 8, Tailwind CSS 4, Dexie.js, Vitest (327 tests)
 
 ## File Structure
 - Components: `src/components/<feature>/<Name>.tsx`

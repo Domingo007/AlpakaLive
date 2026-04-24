@@ -6,7 +6,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
-- (next changes go here)
+- **Hydration Trend tile:** pattern-based hydration indicator on Data dashboard. Computes 4-color flag (gray/green/yellow/red) from body water mass, resting HR, creatinine rise, and GI symptoms. Conservative mapping (nausea ≥ 8 AND bowel = loose required together). 7-day rolling baseline. Nephrotoxic chemo day modifier (25% more sensitive). Drill-down modal shows active signals + data source availability with nudges for missing sources. PL + EN with "This is not medical advice" disclaimer throughout.
+- **Architecture pattern** for rule-based features: pure engine (`src/lib/<feature>-engine.ts`) + Dexie adapter (`<feature>-adapter.ts`) + UI tile (`src/components/dashboard/<Feature>Tile.tsx`). Reference: `hydration-*`.
+
+### Changed
+- **Dexie schema v3 → v4:** table `predictions` renamed to `patternSummaries` with `.upgrade()` migration (copies all records from old table to new, old removed via `predictions: null`). Applied to both AlpacaLiveDB and AlpacaLiveDemoDB. Historic versions v1-v3 preserved for existing installations.
+- **Refactor prediction → pattern-based (regulatory alignment):** eliminates "prediction" framing that could trigger MDR/FDA medical device definitions.
+  - `src/lib/prediction-engine.ts` → `src/lib/pattern-engine.ts`
+  - `src/components/chat/PredictionCards.tsx` → `PatternCards.tsx`
+  - 7 public API identifiers renamed: `DayPrediction` → `DayPattern`, `PredictionResult` → `PatternResult`, `generatePrediction` → `generatePatternSummary`, `savePrediction` → `savePatternSummary`, `checkPredictionAccuracy` → `checkPatternMatch`, `formatPredictionForChat` → `formatPatternForChat`, `PredictionCards` → `PatternCards`
+  - Interface `Prediction` → `PatternSummary` in `src/types/index.ts`
+  - User-visible PL strings: "Predykcja" → "Analiza wzorców", "Trafność predykcji" → "Trafność analizy wzorców", "model predykcji" → "analiza wzorców"
+- **Tests:** 297 → 327 (+30 hydration tests).
 
 ## [1.0.0] — 2026-04-21
 

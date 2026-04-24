@@ -34,10 +34,25 @@ Open-source PWA oncology diary for cancer patients. React 19 + TypeScript + Vite
 - `AlpacaLiveDemoDB` = demo data (separate IndexedDB, created/deleted on demand)
 - Demo switch via `localStorage` flag + `db` pointer in `src/lib/db.ts`
 
+### 6. Rule-based features: engine + adapter + UI split
+For any rule/analysis feature (hydration trend, pattern engine, future health signals), split into three files:
+- `src/lib/<feature>-engine.ts` — **pure functions**: takes typed inputs, returns typed flag/result. Zero DB, zero React, zero side effects. Easy to unit-test.
+- `src/lib/<feature>-adapter.ts` — **Dexie bridge**: reads tables, normalizes into engine input format, handles missing fields gracefully (returns `undefined` rather than throwing). Mockable in tests.
+- `src/components/<dashboard|feature>/<Feature>Tile.tsx` — **UI only**: calls adapter → engine → renders. Silent-fail on adapter error (unmount rather than broken tile).
+
+Reference implementations: `src/lib/hydration-engine.ts` + `src/lib/hydration-adapter.ts` + `src/components/dashboard/HydrationTile.tsx`. Also `src/lib/pattern-engine.ts`.
+
+### 7. Graceful degradation for partial data
+Patient data sources are variably wired. Always design for **some fields missing**:
+- Engine must produce sensible output with partial inputs (do not require full record).
+- UI must show **nudge** for missing sources ("Connect Withings", "Add blood results") instead of error.
+- Never throw on `undefined` — destructure with defaults, check presence before computing.
+- Drill-down modals should transparently show which data sources are available (✓ / ○).
+
 ## Tech Stack
 - React 19, TypeScript 6, Vite 8, Tailwind CSS 4
 - Dexie.js (IndexedDB wrapper)
-- Vitest (297 tests in `src/__tests__/`)
+- Vitest (327 tests in `src/__tests__/`)
 - PWA via vite-plugin-pwa
 
 ## File Conventions
@@ -50,7 +65,7 @@ Open-source PWA oncology diary for cancer patients. React 19 + TypeScript + Vite
 
 ## Before Making Changes
 1. Run `npx tsc --noEmit` — must pass with 0 errors
-2. Run `npm test` — all 297 tests must pass
+2. Run `npm test` — all 327 tests must pass
 3. Run `npm run build` — must succeed
 4. If adding medical data → put in `medical-knowledge/` JSON, not in TypeScript
 5. If modifying AI behavior → check `system-prompt.ts` constraints are preserved
@@ -72,6 +87,8 @@ Types: Feat, Fix, Medical, Docs, Style, Refactor, Test, Chore, Security, Legal
 | Security | `src/lib/input-guard.ts` |
 | Treatment phases | `src/lib/treatment-cycle.ts` |
 | Pattern analysis | `src/lib/pattern-engine.ts` |
+| Hydration engine + adapter | `src/lib/hydration-engine.ts` + `hydration-adapter.ts` |
+| Dashboard tiles | `src/components/dashboard/` |
 | Medical data loader | `src/lib/medical-data/knowledge-registry.ts` |
 | Disease matcher | `src/lib/medical-data/disease-matcher.ts` |
 | Types | `src/types/index.ts` |
@@ -85,3 +102,4 @@ Types: Feat, Fix, Medical, Docs, Style, Refactor, Test, Chore, Security, Legal
 - Add features beyond what was asked — no scope creep
 - Add comments/docstrings to code you didn't change
 - Change Dexie schema without bumping `this.version(N)` and adding `.upgrade()` — always preserve historic version stores so existing installations can migrate forward. Test migration manually in DevTools before merge. Note: IndexedDB shows `version * 10` (Dexie quirk — `this.version(4)` appears as `40` in DevTools)
+- Add `@testing-library/react` or similar UI test deps without explicit approval. Test business logic in pure engine files + adapter files (mockable Dexie layer); verify UI manually via `npm run dev`.
