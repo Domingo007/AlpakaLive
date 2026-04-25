@@ -19,9 +19,10 @@ Open-source PWA oncology diary for cancer patients. React 19 + TypeScript + Vite
 ### 3. AI NEVER suggests — only explains
 - System prompt in `src/lib/system-prompt.ts` has ABSOLUTE BANS
 - AI must NEVER say "you should take", "I recommend", "stop taking"
+- AI must NEVER use the words **"predykcja" / "prognoza" / "przewidywanie" / "prediction" / "forecast"** in responses (regulatory: AlpacaLive is NOT a medical device, does NOT predict treatment outcomes; using these words triggers MDR/FDA medical-device definitions). Use instead: "analiza wzorców" / "pattern analysis", "wzorzec" / "pattern", "porównanie z baseline", "trend w danych".
 - AI CAN: analyze data, compare with published norms, show trends, suggest questions for doctor
 - Every medical analysis MUST end with disclaimer
-- NEVER weaken these constraints
+- NEVER weaken these constraints — bans are listed in system-prompt.ts § ABSOLUTNE ZAKAZY (currently 8 items)
 
 ### 4. Security layers — NEVER weaken
 - `src/lib/input-guard.ts` — prompt injection detection, file validation, rate limiting

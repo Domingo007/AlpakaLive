@@ -65,6 +65,7 @@ The AI agent in this app has **absolute bans** defined in `src/lib/system-prompt
 - Every medical analysis must end with a disclaimer
 - NEVER weaken, remove, or bypass these constraints
 - NEVER modify the ZABEZPIECZENIA (security) section of system-prompt.ts
+- NEVER use the words **"predykcja" / "prognoza" / "przewidywanie" / "prediction" / "forecast"** — regulatory: triggers MDR/FDA medical-device definitions. Use "analiza wzorców" / "pattern analysis" / "wzorzec" / "porównanie z baseline" instead.
 
 ### 4. SECURITY LAYERS — DO NOT WEAKEN
 
