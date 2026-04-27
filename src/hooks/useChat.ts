@@ -6,6 +6,8 @@ import { sendMessage, getWelcomeMessage } from '@/lib/ai';
 import { buildSystemPrompt } from '@/lib/system-prompt';
 import { extractDataFromResponse, extractAIProfileData, saveExtractedData, cleanResponseFromTags } from '@/lib/data-extractor';
 import { generatePatternSummary, savePatternSummary, formatPatternForChat, checkPatternMatch, type PatternResult } from '@/lib/pattern-engine';
+import { detectUnknownDrugs } from '@/lib/medical-data/drug-resolver';
+import { filterNewUnknowns } from '@/lib/medical-data/unknown-drug-feedback';
 
 const PATTERN_TRIGGERS = ['wzorzec', 'wzorce', 'wzorcow', 'jak zwykle', 'pokaż wzorzec', 'pokaz wzorzec', 'predykcja', 'prognoza', 'przewiduj', 'jak będę się czuć', 'jak bede sie czuc', 'jak będę', 'co mnie czeka', 'najbliższe dni', 'ten tydzień', 'ten tydzien'];
 
@@ -20,6 +22,8 @@ export function useChat() {
   const [error, setError] = useState<string | null>(null);
   const [lastPrediction, setLastPrediction] = useState<PatternResult | null>(null);
   const [lastProviderInfo, setLastProviderInfo] = useState<{ provider: string; model: string } | null>(null);
+  const [unknownDrugs, setUnknownDrugs] = useState<string[]>([]);
+  const [reportedDrugs, setReportedDrugs] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadMessages();
@@ -64,6 +68,12 @@ export function useChat() {
     await addChatMessage(userMessage);
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
+
+    const detected = detectUnknownDrugs(typeof content === 'string' ? content : text);
+    if (detected.length > 0) {
+      const fresh = filterNewUnknowns(detected, reportedDrugs);
+      if (fresh.length > 0) setUnknownDrugs(fresh);
+    }
 
     try {
       const userText = typeof content === 'string' ? content : text;
@@ -154,7 +164,26 @@ export function useChat() {
     } finally {
       setIsLoading(false);
     }
-  }, [messages]);
+  }, [messages, reportedDrugs]);
 
-  return { messages, isLoading, error, send, reload: loadMessages, lastPrediction, lastProviderInfo };
+  const dismissUnknownDrugs = useCallback(() => {
+    setReportedDrugs(prev => {
+      const next = new Set(prev);
+      for (const d of unknownDrugs) next.add(d.toLowerCase());
+      return next;
+    });
+    setUnknownDrugs([]);
+  }, [unknownDrugs]);
+
+  return {
+    messages,
+    isLoading,
+    error,
+    send,
+    reload: loadMessages,
+    lastPrediction,
+    lastProviderInfo,
+    unknownDrugs,
+    dismissUnknownDrugs,
+  };
 }
